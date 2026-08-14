@@ -1,0 +1,9 @@
+{
+  "suite": "CIVILINA Reasoning Core V2 benchmark",
+  "generatedAt": "2026-08-14T14:47:14.087Z",
+  "iterations": 10000,
+  "durationMs": 11037.62,
+  "averageMs": 1.1038,
+  "evaluationsPerSecond": 906,
+  "passedGate": true
+}

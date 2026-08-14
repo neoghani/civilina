@@ -1,0 +1,86 @@
+{
+  "origin": "http://127.0.0.1:8000",
+  "scenarioResults": [
+    {
+      "scenario": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "immediate": [
+        "executive-reporting"
+      ],
+      "explore": [
+        "data-reporting"
+      ],
+      "editRecalculated": true,
+      "consoleErrors": 0,
+      "pageErrors": 0
+    },
+    {
+      "scenario": "organisation",
+      "primaryDomain": "organisation",
+      "relatedDomains": [],
+      "immediate": [
+        "decision-workflows",
+        "roles-responsibilities"
+      ],
+      "explore": [
+        "digital-workflows",
+        "process-management"
+      ],
+      "editRecalculated": false,
+      "consoleErrors": 0,
+      "pageErrors": 0
+    },
+    {
+      "scenario": "managementSystems",
+      "primaryDomain": "managementSystems",
+      "relatedDomains": [],
+      "immediate": [
+        "document-control",
+        "process-management",
+        "quality-management"
+      ],
+      "explore": [],
+      "editRecalculated": false,
+      "consoleErrors": 0,
+      "pageErrors": 0
+    },
+    {
+      "scenario": "digitalisation",
+      "primaryDomain": "digitalisation",
+      "relatedDomains": [
+        "organisation"
+      ],
+      "immediate": [
+        "digital-workflows"
+      ],
+      "explore": [],
+      "editRecalculated": false,
+      "consoleErrors": 0,
+      "pageErrors": 0
+    }
+  ],
+  "ambiguity": {
+    "clarification": true
+  },
+  "multiDomain": {
+    "primary": "managementSystems",
+    "related": [
+      "organisation",
+      "digitalisation"
+    ],
+    "expert": true,
+    "safeMailto": true
+  },
+  "peopleGuardrail": {
+    "primary": "people",
+    "guardrail": true,
+    "recommendations": 0
+  },
+  "unknownDelay": {
+    "uncertainty": "project-delay-cause",
+    "nextQuestion": "delayCause",
+    "planningImmediate": false
+  },
+  "passed": true
+}

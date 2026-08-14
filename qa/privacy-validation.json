@@ -1,0 +1,454 @@
+{
+  "suite": "Civilina Privacy and Storage Adversarial",
+  "total": 53,
+  "passed": 53,
+  "failed": 0,
+  "categories": {
+    "privacy-positive": {
+      "total": 18,
+      "passed": 18,
+      "failed": 0
+    },
+    "privacy-negative": {
+      "total": 16,
+      "passed": 16,
+      "failed": 0
+    },
+    "people-context": {
+      "total": 12,
+      "passed": 12,
+      "failed": 0
+    },
+    "storage": {
+      "total": 7,
+      "passed": 7,
+      "failed": 0
+    }
+  },
+  "tests": [
+    {
+      "name": "01 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager notre contrat.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "02 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager notre devis.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "03 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager une facture.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "04 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager les fiches de paie.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "05 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager les salaires.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "06 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager nos marges.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "07 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager notre tresorerie.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "08 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager notre liste clients.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "09 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager nos donnees fournisseurs.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "10 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager nos prix confidentiels.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "11 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager notre offre commerciale.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "12 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager notre budget.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "13 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager nos donnees financieres.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "14 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager une procedure interne.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "15 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager un document interne.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "16 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager nos donnees RH.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "17 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager un document confidentiel.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "18 transmit intent plus sensitive object",
+      "category": "privacy-positive",
+      "input": "Je veux partager notre NDA.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "19 sensitive object without transmit intent",
+      "category": "privacy-negative",
+      "input": "Comment mieux gerer nos contrats ?",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "20 sensitive object without transmit intent",
+      "category": "privacy-negative",
+      "input": "Nous avons plusieurs devis a structurer.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "21 sensitive object without transmit intent",
+      "category": "privacy-negative",
+      "input": "Le suivi des factures est lent.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "22 sensitive object without transmit intent",
+      "category": "privacy-negative",
+      "input": "Notre paie doit etre fiabilisee.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "23 sensitive object without transmit intent",
+      "category": "privacy-negative",
+      "input": "Nous voulons mieux piloter les marges.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "24 sensitive object without transmit intent",
+      "category": "privacy-negative",
+      "input": "La tresorerie est un enjeu de pilotage.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "25 sensitive object without transmit intent",
+      "category": "privacy-negative",
+      "input": "Il faut segmenter les clients.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "26 sensitive object without transmit intent",
+      "category": "privacy-negative",
+      "input": "Nous evaluons nos fournisseurs.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "27 sensitive object without transmit intent",
+      "category": "privacy-negative",
+      "input": "La politique de prix doit etre clarifiee.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "28 sensitive object without transmit intent",
+      "category": "privacy-negative",
+      "input": "Comment construire une offre commerciale ?",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "29 sensitive object without transmit intent",
+      "category": "privacy-negative",
+      "input": "Nous travaillons sur le budget annuel.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "30 sensitive object without transmit intent",
+      "category": "privacy-negative",
+      "input": "Notre procedure interne doit etre simplifiee.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "31 transmit intent without sensitive object",
+      "category": "privacy-negative",
+      "input": "Je veux partager une idee generale.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "32 transmit intent without sensitive object",
+      "category": "privacy-negative",
+      "input": "Je peux envoyer une question sans document.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "33 transmit intent without sensitive object",
+      "category": "privacy-negative",
+      "input": "Je souhaite transmettre un retour public.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "34 transmit intent without sensitive object",
+      "category": "privacy-negative",
+      "input": "Je veux montrer le fonctionnement general.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "35 manager project is not people signal",
+      "category": "people-context",
+      "input": "Comment manager un projet EPC ?",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "35 manager project is not people decision",
+      "category": "people-context",
+      "input": "Comment manager un projet EPC ?",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "36 project risk profile is not people signal",
+      "category": "people-context",
+      "input": "Construire le profil de risque du projet.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "36 project risk profile is not people decision",
+      "category": "people-context",
+      "input": "Construire le profil de risque du projet.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "37 candidate profile is people signal",
+      "category": "people-context",
+      "input": "Analyser le profil candidat.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "37 candidate profile is people decision",
+      "category": "people-context",
+      "input": "Analyser le profil candidat.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "38 MBTI discussion is people but not decision signal",
+      "category": "people-context",
+      "input": "Le MBTI comme support de discussion.",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "38 MBTI discussion is people but not decision decision",
+      "category": "people-context",
+      "input": "Le MBTI comme support de discussion.",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "39 candidate selection is people decision signal",
+      "category": "people-context",
+      "input": "Quel candidat choisir pour ce poste ?",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "39 candidate selection is people decision decision",
+      "category": "people-context",
+      "input": "Quel candidat choisir pour ce poste ?",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "40 employee promotion is people decision signal",
+      "category": "people-context",
+      "input": "Qui devrait promouvoir cet employe ?",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "40 employee promotion is people decision decision",
+      "category": "people-context",
+      "input": "Qui devrait promouvoir cet employe ?",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "name": "41 initial free text is excluded from storage",
+      "category": "storage",
+      "input": "initialText",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "42 short free answer is redacted",
+      "category": "storage",
+      "input": "answers.shortAnswer",
+      "expected": "[free-text-answer]",
+      "actual": "[free-text-answer]",
+      "passed": true
+    },
+    {
+      "name": "43 long free answer is redacted",
+      "category": "storage",
+      "input": "answers.longAnswer",
+      "expected": "[free-text-answer]",
+      "actual": "[free-text-answer]",
+      "passed": true
+    },
+    {
+      "name": "44 sensitive user message is redacted",
+      "category": "storage",
+      "input": "messages[1]",
+      "expected": "[Information sensible non conservée]",
+      "actual": "[Information sensible non conservée]",
+      "passed": true
+    },
+    {
+      "name": "45 secret phrase does not leak",
+      "category": "storage",
+      "input": "serialized storage",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "name": "46 assistant message remains available",
+      "category": "storage",
+      "input": "assistant message",
+      "expected": "Question Civilina",
+      "actual": "Question Civilina",
+      "passed": true
+    },
+    {
+      "name": "47 state version remains explicit",
+      "category": "storage",
+      "input": "version",
+      "expected": 3,
+      "actual": 3,
+      "passed": true
+    }
+  ]
+}

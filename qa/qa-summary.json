@@ -1,0 +1,129 @@
+{
+  "suite": "Civilina Sprint 2.1.2 Reasoning Core V1 Freeze QA Summary",
+  "generatedAt": "2026-08-14T13:09:33.798Z",
+  "target": 9.3,
+  "scorecard": {
+    "UX": {
+      "score": 9.5,
+      "evidence": [
+        "8 browser journey checks",
+        "13 accessibility checks",
+        "People decision action"
+      ]
+    },
+    "Architecture": {
+      "score": 9.7,
+      "evidence": [
+        "single authority",
+        "55-case parity contract",
+        "LARAVEL_REASONING_TARGET.md"
+      ]
+    },
+    "Responsive": {
+      "score": 9.6,
+      "evidence": [
+        "45 baseline captures",
+        "10 impacted captures",
+        "5 widths",
+        "0 overflow",
+        "0 console error"
+      ]
+    },
+    "Privacy": {
+      "score": 9.8,
+      "evidence": [
+        "53 baseline privacy checks",
+        "12 external privacy checks",
+        "8 browser leakage channels"
+      ]
+    },
+    "Raisonnement métier": {
+      "score": 9.7,
+      "evidence": [
+        "80 baseline reasoning checks",
+        "82 external adversarial checks",
+        "55 golden parity cases",
+        "NBQ V2"
+      ]
+    },
+    "Multi-domaines": {
+      "score": 9.6,
+      "evidence": [
+        "5 business domains",
+        "5 separate capabilities",
+        "capability display gate",
+        "document semantics"
+      ]
+    },
+    "People Guardrail": {
+      "score": 9.7,
+      "evidence": [
+        "10 positive external cases",
+        "8 negative external cases",
+        "10 mandatory manual cases",
+        "mutation bypass sentinel"
+      ]
+    }
+  },
+  "suites": {
+    "reasoning": {
+      "total": 80,
+      "passed": 80,
+      "failed": 0
+    },
+    "privacy": {
+      "total": 53,
+      "passed": 53,
+      "failed": 0
+    },
+    "journey": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0
+    },
+    "storage": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0
+    },
+    "accessibility": {
+      "total": 13,
+      "passed": 13,
+      "failed": 0
+    },
+    "responsive": {
+      "total": 45,
+      "passed": 45,
+      "failed": 0
+    },
+    "externalAdversarial": {
+      "total": 82,
+      "passed": 82,
+      "failed": 0
+    },
+    "goldenParity": {
+      "total": 55,
+      "passed": 55,
+      "failed": 0
+    },
+    "impactedResponsive": {
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    }
+  },
+  "totals": {
+    "total": 354,
+    "passed": 354,
+    "failed": 0
+  },
+  "widths": [
+    1440,
+    1024,
+    768,
+    430,
+    390
+  ],
+  "captures": 55,
+  "acceptancePassed": true
+}

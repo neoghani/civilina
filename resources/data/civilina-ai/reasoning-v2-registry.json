@@ -1,0 +1,2571 @@
+{
+  "version": "2.0.0",
+  "interactionModes": [
+    "diagnose",
+    "explain",
+    "review",
+    "critique",
+    "create",
+    "design",
+    "prioritize",
+    "compare",
+    "plan",
+    "audit",
+    "troubleshoot",
+    "calculate",
+    "decide"
+  ],
+  "personas": [
+    "executive",
+    "projectManager",
+    "projectControls",
+    "pmo",
+    "engineeringManager",
+    "siteManager",
+    "qualityManager",
+    "hseManager",
+    "procurementManager",
+    "contractManager",
+    "isoManager",
+    "digitalManager",
+    "peopleManager",
+    "unknown"
+  ],
+  "businessScopes": [
+    "enterprise",
+    "portfolio",
+    "program",
+    "project",
+    "wbs",
+    "workPackage",
+    "activity",
+    "ouvrage",
+    "zone",
+    "process",
+    "department",
+    "team",
+    "person"
+  ],
+  "businessDomains": {
+    "executiveControl": {
+      "label": "Executive Control"
+    },
+    "projects": {
+      "label": "Projects"
+    },
+    "organisation": {
+      "label": "Organisation"
+    },
+    "managementSystems": {
+      "label": "Management Systems / ISO"
+    },
+    "digitalisation": {
+      "label": "Digitalisation"
+    },
+    "people": {
+      "label": "People / décisions humaines"
+    }
+  },
+  "capabilities": {
+    "projectControls": {
+      "label": "Project Controls"
+    },
+    "planning": {
+      "label": "Planning"
+    },
+    "costControl": {
+      "label": "Cost Control"
+    },
+    "riskManagement": {
+      "label": "Risk Management"
+    },
+    "changeControl": {
+      "label": "Change Control"
+    },
+    "contractsClaims": {
+      "label": "Contracts & Claims"
+    },
+    "engineering": {
+      "label": "Engineering"
+    },
+    "technicalDocumentManagement": {
+      "label": "Technical Document Management"
+    },
+    "procurement": {
+      "label": "Procurement"
+    },
+    "quality": {
+      "label": "Quality"
+    },
+    "hse": {
+      "label": "HSE"
+    },
+    "construction": {
+      "label": "Construction"
+    },
+    "resourcesProductivity": {
+      "label": "Resources & Productivity"
+    },
+    "documentControl": {
+      "label": "Document Control"
+    },
+    "processManagement": {
+      "label": "Process Management"
+    },
+    "dataReporting": {
+      "label": "Data & Reporting"
+    },
+    "integrationAutomation": {
+      "label": "Integration & Automation"
+    }
+  },
+  "businessEntities": [
+    "portfolio",
+    "program",
+    "project",
+    "wbs",
+    "workPackage",
+    "activity",
+    "ouvrage",
+    "zone",
+    "baseline",
+    "milestone",
+    "document",
+    "drawing",
+    "rfi",
+    "submittal",
+    "transmittal",
+    "contract",
+    "claim",
+    "change",
+    "risk",
+    "purchaseOrder",
+    "material",
+    "supplier",
+    "subcontractor",
+    "inspection",
+    "itp",
+    "ncr",
+    "correctiveAction",
+    "resource",
+    "equipment",
+    "cost",
+    "commitment",
+    "progress",
+    "kpi",
+    "decision"
+  ],
+  "controlDimensions": [
+    "scope",
+    "time",
+    "cost",
+    "progress",
+    "quality",
+    "risk",
+    "change",
+    "contract",
+    "procurement",
+    "resource",
+    "engineering",
+    "document",
+    "safety",
+    "data",
+    "decision"
+  ],
+  "answerabilityStatuses": [
+    "CAN_ANSWER",
+    "NEED_CLARIFICATION",
+    "NEED_DATA",
+    "NEED_DOCUMENT",
+    "EXTERNAL_VERIFICATION_REQUIRED",
+    "HUMAN_EXPERT_RECOMMENDED",
+    "OUT_OF_SCOPE"
+  ],
+  "decisionHorizons": [
+    "today",
+    "thisWeek",
+    "thisMonth",
+    "nextMilestone",
+    "projectCompletion",
+    "strategic",
+    "unknown"
+  ],
+  "expertLenses": [
+    "Executive",
+    "Project Controls",
+    "Engineering",
+    "Construction",
+    "Quality",
+    "HSE",
+    "Procurement",
+    "Contracts",
+    "ISO",
+    "Organisation",
+    "Digital",
+    "Data",
+    "People"
+  ],
+  "conceptMap": {
+    "projectControls": {
+      "domains": [
+        "projects"
+      ],
+      "capabilities": [
+        "projectControls"
+      ],
+      "dimensions": [
+        "time",
+        "cost",
+        "progress",
+        "data"
+      ]
+    },
+    "evm": {
+      "domains": [
+        "projects",
+        "executiveControl"
+      ],
+      "capabilities": [
+        "projectControls",
+        "costControl",
+        "dataReporting"
+      ],
+      "dimensions": [
+        "time",
+        "cost",
+        "progress",
+        "decision"
+      ],
+      "entities": [
+        "kpi",
+        "cost",
+        "progress"
+      ]
+    },
+    "wbs": {
+      "domains": [
+        "projects"
+      ],
+      "capabilities": [
+        "projectControls",
+        "planning"
+      ],
+      "dimensions": [
+        "scope",
+        "time",
+        "cost",
+        "progress"
+      ],
+      "entities": [
+        "wbs"
+      ]
+    },
+    "planning": {
+      "domains": [
+        "projects"
+      ],
+      "capabilities": [
+        "planning",
+        "projectControls"
+      ],
+      "dimensions": [
+        "time"
+      ],
+      "entities": [
+        "baseline",
+        "milestone"
+      ]
+    },
+    "costControl": {
+      "domains": [
+        "projects",
+        "executiveControl"
+      ],
+      "capabilities": [
+        "costControl",
+        "projectControls"
+      ],
+      "dimensions": [
+        "cost"
+      ],
+      "entities": [
+        "cost",
+        "commitment"
+      ]
+    },
+    "progressControl": {
+      "domains": [
+        "projects"
+      ],
+      "capabilities": [
+        "projectControls",
+        "quality"
+      ],
+      "dimensions": [
+        "progress",
+        "quality"
+      ],
+      "entities": [
+        "progress"
+      ]
+    },
+    "riskManagement": {
+      "domains": [
+        "projects",
+        "executiveControl"
+      ],
+      "capabilities": [
+        "riskManagement"
+      ],
+      "dimensions": [
+        "risk"
+      ],
+      "entities": [
+        "risk"
+      ]
+    },
+    "changeControl": {
+      "domains": [
+        "projects"
+      ],
+      "capabilities": [
+        "changeControl"
+      ],
+      "dimensions": [
+        "change",
+        "cost",
+        "time"
+      ],
+      "entities": [
+        "change"
+      ]
+    },
+    "contractsClaims": {
+      "domains": [
+        "projects"
+      ],
+      "capabilities": [
+        "contractsClaims",
+        "changeControl"
+      ],
+      "dimensions": [
+        "contract",
+        "change",
+        "time",
+        "cost"
+      ],
+      "entities": [
+        "contract",
+        "claim",
+        "change"
+      ]
+    },
+    "engineering": {
+      "domains": [
+        "projects"
+      ],
+      "capabilities": [
+        "engineering"
+      ],
+      "dimensions": [
+        "engineering"
+      ],
+      "entities": [
+        "drawing"
+      ]
+    },
+    "technicalDocuments": {
+      "domains": [
+        "projects"
+      ],
+      "capabilities": [
+        "engineering",
+        "technicalDocumentManagement"
+      ],
+      "dimensions": [
+        "engineering",
+        "document"
+      ],
+      "entities": [
+        "document",
+        "drawing"
+      ]
+    },
+    "documentControl": {
+      "domains": [
+        "managementSystems",
+        "digitalisation"
+      ],
+      "capabilities": [
+        "documentControl"
+      ],
+      "dimensions": [
+        "document",
+        "data"
+      ],
+      "entities": [
+        "document"
+      ]
+    },
+    "quality": {
+      "domains": [
+        "managementSystems",
+        "projects"
+      ],
+      "capabilities": [
+        "quality"
+      ],
+      "dimensions": [
+        "quality"
+      ],
+      "entities": [
+        "inspection",
+        "itp",
+        "ncr",
+        "correctiveAction"
+      ]
+    },
+    "hse": {
+      "domains": [
+        "managementSystems",
+        "projects"
+      ],
+      "capabilities": [
+        "hse"
+      ],
+      "dimensions": [
+        "safety",
+        "risk"
+      ],
+      "entities": [
+        "correctiveAction"
+      ]
+    },
+    "construction": {
+      "domains": [
+        "projects"
+      ],
+      "capabilities": [
+        "construction"
+      ],
+      "dimensions": [
+        "scope",
+        "progress",
+        "resource"
+      ],
+      "entities": [
+        "activity",
+        "ouvrage",
+        "zone"
+      ]
+    },
+    "productivity": {
+      "domains": [
+        "projects"
+      ],
+      "capabilities": [
+        "construction",
+        "resourcesProductivity",
+        "projectControls"
+      ],
+      "dimensions": [
+        "resource",
+        "progress"
+      ],
+      "entities": [
+        "resource",
+        "equipment",
+        "progress"
+      ]
+    },
+    "procurement": {
+      "domains": [
+        "projects"
+      ],
+      "capabilities": [
+        "procurement"
+      ],
+      "dimensions": [
+        "procurement",
+        "time",
+        "cost"
+      ],
+      "entities": [
+        "purchaseOrder",
+        "material",
+        "supplier"
+      ]
+    },
+    "organisation": {
+      "domains": [
+        "organisation"
+      ],
+      "capabilities": [
+        "processManagement"
+      ],
+      "dimensions": [
+        "decision"
+      ],
+      "entities": [
+        "decision"
+      ]
+    },
+    "managementSystem": {
+      "domains": [
+        "managementSystems"
+      ],
+      "capabilities": [
+        "quality",
+        "processManagement"
+      ],
+      "dimensions": [
+        "quality",
+        "risk",
+        "document"
+      ]
+    },
+    "digitalisation": {
+      "domains": [
+        "digitalisation"
+      ],
+      "capabilities": [
+        "integrationAutomation"
+      ],
+      "dimensions": [
+        "data"
+      ]
+    },
+    "dataGovernance": {
+      "domains": [
+        "digitalisation",
+        "organisation"
+      ],
+      "capabilities": [
+        "dataReporting",
+        "integrationAutomation"
+      ],
+      "dimensions": [
+        "data",
+        "decision"
+      ],
+      "entities": [
+        "kpi"
+      ]
+    },
+    "executiveControl": {
+      "domains": [
+        "executiveControl"
+      ],
+      "capabilities": [
+        "dataReporting",
+        "projectControls"
+      ],
+      "dimensions": [
+        "decision",
+        "cost",
+        "time",
+        "risk"
+      ],
+      "entities": [
+        "portfolio",
+        "decision"
+      ]
+    },
+    "people": {
+      "domains": [
+        "people",
+        "organisation"
+      ],
+      "capabilities": [
+        "processManagement"
+      ],
+      "dimensions": [
+        "decision"
+      ],
+      "entities": [
+        "decision"
+      ]
+    }
+  },
+  "recommendations": {
+    "executive-control": {
+      "label": "Executive Control",
+      "capability": "dataReporting",
+      "concepts": [
+        "executiveControl",
+        "evm"
+      ],
+      "minEvidence": 1
+    },
+    "wbs-integration": {
+      "label": "WBS Integration",
+      "capability": "projectControls",
+      "concepts": [
+        "wbs"
+      ],
+      "minEvidence": 1
+    },
+    "evm-decision-support": {
+      "label": "EVM Decision Support",
+      "capability": "projectControls",
+      "concepts": [
+        "evm"
+      ],
+      "minEvidence": 1
+    },
+    "schedule-assurance": {
+      "label": "Schedule Assurance",
+      "capability": "planning",
+      "concepts": [
+        "planning"
+      ],
+      "minEvidence": 1,
+      "blockedBy": [
+        "CAUSE_UNKNOWN"
+      ]
+    },
+    "cost-forecast-control": {
+      "label": "Cost & Forecast Control",
+      "capability": "costControl",
+      "concepts": [
+        "costControl"
+      ],
+      "minEvidence": 1
+    },
+    "progress-governance": {
+      "label": "Progress Governance",
+      "capability": "projectControls",
+      "concepts": [
+        "progressControl"
+      ],
+      "minEvidence": 1
+    },
+    "risk-control": {
+      "label": "Risk Control",
+      "capability": "riskManagement",
+      "concepts": [
+        "riskManagement"
+      ],
+      "minEvidence": 1
+    },
+    "change-claims-control": {
+      "label": "Change, Claims & Contracts Control",
+      "capability": "contractsClaims",
+      "concepts": [
+        "changeControl",
+        "contractsClaims"
+      ],
+      "minEvidence": 1
+    },
+    "engineering-flow": {
+      "label": "Engineering Deliverables Flow",
+      "capability": "technicalDocumentManagement",
+      "concepts": [
+        "engineering",
+        "technicalDocuments"
+      ],
+      "minEvidence": 1
+    },
+    "document-governance": {
+      "label": "Document Control Governance",
+      "capability": "documentControl",
+      "concepts": [
+        "documentControl",
+        "technicalDocuments"
+      ],
+      "minEvidence": 1
+    },
+    "quality-control-integration": {
+      "label": "Quality Control Integration",
+      "capability": "quality",
+      "concepts": [
+        "quality"
+      ],
+      "minEvidence": 1
+    },
+    "hse-action-control": {
+      "label": "HSE Action Control",
+      "capability": "hse",
+      "concepts": [
+        "hse"
+      ],
+      "minEvidence": 1
+    },
+    "construction-productivity": {
+      "label": "Construction Productivity",
+      "capability": "resourcesProductivity",
+      "concepts": [
+        "construction",
+        "productivity"
+      ],
+      "minEvidence": 1
+    },
+    "procurement-schedule": {
+      "label": "Procurement Schedule Integration",
+      "capability": "procurement",
+      "concepts": [
+        "procurement"
+      ],
+      "minEvidence": 1
+    },
+    "organisation-governance": {
+      "label": "Organisation & Decision Governance",
+      "capability": "processManagement",
+      "concepts": [
+        "organisation"
+      ],
+      "minEvidence": 1
+    },
+    "management-system": {
+      "label": "Management System",
+      "capability": "quality",
+      "concepts": [
+        "managementSystem"
+      ],
+      "minEvidence": 1
+    },
+    "data-governance": {
+      "label": "Data Governance",
+      "capability": "dataReporting",
+      "concepts": [
+        "dataGovernance"
+      ],
+      "minEvidence": 1
+    },
+    "integration-architecture": {
+      "label": "Integration Architecture",
+      "capability": "integrationAutomation",
+      "concepts": [
+        "digitalisation"
+      ],
+      "minEvidence": 1
+    },
+    "people-decision-framework": {
+      "label": "People Decision Framework",
+      "capability": "processManagement",
+      "concepts": [
+        "people"
+      ],
+      "minEvidence": 1
+    }
+  },
+  "lexicon": [
+    {
+      "id": "interactionMode:diagnose",
+      "category": "interactionMode",
+      "value": "diagnose",
+      "terms": [
+        "pourquoi",
+        "diagnostiquer",
+        "diagnostic",
+        "cause de",
+        "root cause"
+      ],
+      "order": 0
+    },
+    {
+      "id": "interactionMode:explain",
+      "category": "interactionMode",
+      "value": "explain",
+      "terms": [
+        "expliquer",
+        "explique",
+        "comprendre",
+        "what does",
+        "explain"
+      ],
+      "order": 1
+    },
+    {
+      "id": "interactionMode:review",
+      "category": "interactionMode",
+      "value": "review",
+      "terms": [
+        "review",
+        "revoir",
+        "analyser",
+        "analyse de",
+        "examiner"
+      ],
+      "order": 2
+    },
+    {
+      "id": "interactionMode:critique",
+      "category": "interactionMode",
+      "value": "critique",
+      "terms": [
+        "critiquer",
+        "critique",
+        "challenger",
+        "challenge",
+        "evaluate critically"
+      ],
+      "order": 3
+    },
+    {
+      "id": "interactionMode:create",
+      "category": "interactionMode",
+      "value": "create",
+      "terms": [
+        "creer",
+        "cree moi",
+        "create",
+        "generer",
+        "produire un"
+      ],
+      "order": 4
+    },
+    {
+      "id": "interactionMode:design",
+      "category": "interactionMode",
+      "value": "design",
+      "terms": [
+        "concevoir",
+        "designer",
+        "mettre en place",
+        "structure de",
+        "design"
+      ],
+      "order": 5
+    },
+    {
+      "id": "interactionMode:prioritize",
+      "category": "interactionMode",
+      "value": "prioritize",
+      "terms": [
+        "prioriser",
+        "priorite",
+        "en premier",
+        "most important",
+        "prioritize"
+      ],
+      "order": 6
+    },
+    {
+      "id": "interactionMode:compare",
+      "category": "interactionMode",
+      "value": "compare",
+      "terms": [
+        "comparer",
+        "compare",
+        "versus",
+        "lequel",
+        "a ou b"
+      ],
+      "order": 7
+    },
+    {
+      "id": "interactionMode:plan",
+      "category": "interactionMode",
+      "value": "plan",
+      "terms": [
+        "planifier",
+        "plan de",
+        "feuille de route",
+        "roadmap",
+        "plan for"
+      ],
+      "order": 8
+    },
+    {
+      "id": "interactionMode:audit",
+      "category": "interactionMode",
+      "value": "audit",
+      "terms": [
+        "auditer",
+        "audit de",
+        "assess compliance",
+        "evaluation de conformite"
+      ],
+      "order": 9
+    },
+    {
+      "id": "interactionMode:troubleshoot",
+      "category": "interactionMode",
+      "value": "troubleshoot",
+      "terms": [
+        "resoudre",
+        "depanner",
+        "corriger le probleme",
+        "troubleshoot"
+      ],
+      "order": 10
+    },
+    {
+      "id": "interactionMode:calculate",
+      "category": "interactionMode",
+      "value": "calculate",
+      "terms": [
+        "calculer",
+        "calcule",
+        "compute",
+        "calculation"
+      ],
+      "order": 11
+    },
+    {
+      "id": "interactionMode:decide",
+      "category": "interactionMode",
+      "value": "decide",
+      "terms": [
+        "decider",
+        "decision prendre",
+        "dois je",
+        "arbitrer",
+        "choisir"
+      ],
+      "order": 12
+    },
+    {
+      "id": "persona:executive",
+      "category": "persona",
+      "value": "executive",
+      "terms": [
+        "dg",
+        "directeur general",
+        "direction generale",
+        "ceo",
+        "comex",
+        "executive",
+        "direction"
+      ],
+      "order": 13
+    },
+    {
+      "id": "persona:projectManager",
+      "category": "persona",
+      "value": "projectManager",
+      "terms": [
+        "chef de projet",
+        "project manager",
+        "directeur de projet"
+      ],
+      "order": 14
+    },
+    {
+      "id": "persona:projectControls",
+      "category": "persona",
+      "value": "projectControls",
+      "terms": [
+        "project controls manager",
+        "cost controller",
+        "planning engineer",
+        "controle projet"
+      ],
+      "order": 15
+    },
+    {
+      "id": "persona:pmo",
+      "category": "persona",
+      "value": "pmo",
+      "terms": [
+        "pmo",
+        "project management office"
+      ],
+      "order": 16
+    },
+    {
+      "id": "persona:engineeringManager",
+      "category": "persona",
+      "value": "engineeringManager",
+      "terms": [
+        "engineering manager",
+        "responsable engineering",
+        "directeur technique"
+      ],
+      "order": 17
+    },
+    {
+      "id": "persona:siteManager",
+      "category": "persona",
+      "value": "siteManager",
+      "terms": [
+        "site manager",
+        "construction manager",
+        "chef de chantier",
+        "directeur travaux"
+      ],
+      "order": 18
+    },
+    {
+      "id": "persona:qualityManager",
+      "category": "persona",
+      "value": "qualityManager",
+      "terms": [
+        "quality manager",
+        "responsable qualite",
+        "qa qc manager"
+      ],
+      "order": 19
+    },
+    {
+      "id": "persona:hseManager",
+      "category": "persona",
+      "value": "hseManager",
+      "terms": [
+        "hse manager",
+        "responsable hse",
+        "qhse manager"
+      ],
+      "order": 20
+    },
+    {
+      "id": "persona:procurementManager",
+      "category": "persona",
+      "value": "procurementManager",
+      "terms": [
+        "procurement manager",
+        "responsable achats",
+        "supply chain manager"
+      ],
+      "order": 21
+    },
+    {
+      "id": "persona:contractManager",
+      "category": "persona",
+      "value": "contractManager",
+      "terms": [
+        "contract manager",
+        "claims manager",
+        "responsable contrats"
+      ],
+      "order": 22
+    },
+    {
+      "id": "persona:isoManager",
+      "category": "persona",
+      "value": "isoManager",
+      "terms": [
+        "iso manager",
+        "responsable systeme de management",
+        "qms manager"
+      ],
+      "order": 23
+    },
+    {
+      "id": "persona:digitalManager",
+      "category": "persona",
+      "value": "digitalManager",
+      "terms": [
+        "digital manager",
+        "responsable digital",
+        "cio",
+        "dsi"
+      ],
+      "order": 24
+    },
+    {
+      "id": "persona:peopleManager",
+      "category": "persona",
+      "value": "peopleManager",
+      "terms": [
+        "responsable rh",
+        "hr manager",
+        "people manager",
+        "recruteur"
+      ],
+      "order": 25
+    },
+    {
+      "id": "scope:enterprise",
+      "category": "scope",
+      "value": "enterprise",
+      "terms": [
+        "entreprise",
+        "organisation entiere",
+        "company wide",
+        "enterprise wide"
+      ],
+      "order": 26
+    },
+    {
+      "id": "scope:portfolio",
+      "category": "scope",
+      "value": "portfolio",
+      "terms": [
+        "portefeuille",
+        "portfolio",
+        "tous nos projets"
+      ],
+      "order": 27
+    },
+    {
+      "id": "scope:program",
+      "category": "scope",
+      "value": "program",
+      "terms": [
+        "programme",
+        "program level"
+      ],
+      "order": 28
+    },
+    {
+      "id": "scope:project",
+      "category": "scope",
+      "value": "project",
+      "terms": [
+        "projet",
+        "project",
+        "epc"
+      ],
+      "order": 29
+    },
+    {
+      "id": "scope:wbs",
+      "category": "scope",
+      "value": "wbs",
+      "terms": [
+        "wbs",
+        "work breakdown structure",
+        "structure de decoupage"
+      ],
+      "order": 30
+    },
+    {
+      "id": "scope:workPackage",
+      "category": "scope",
+      "value": "workPackage",
+      "terms": [
+        "work package",
+        "lot de travaux",
+        "lot de travail"
+      ],
+      "order": 31
+    },
+    {
+      "id": "scope:activity",
+      "category": "scope",
+      "value": "activity",
+      "terms": [
+        "activite",
+        "activity",
+        "tache"
+      ],
+      "order": 32
+    },
+    {
+      "id": "scope:ouvrage",
+      "category": "scope",
+      "value": "ouvrage",
+      "terms": [
+        "ouvrage",
+        "structure physique",
+        "asset element"
+      ],
+      "order": 33
+    },
+    {
+      "id": "scope:zone",
+      "category": "scope",
+      "value": "zone",
+      "terms": [
+        "zone",
+        "area",
+        "secteur chantier"
+      ],
+      "order": 34
+    },
+    {
+      "id": "scope:process",
+      "category": "scope",
+      "value": "process",
+      "terms": [
+        "processus",
+        "process",
+        "workflow"
+      ],
+      "order": 35
+    },
+    {
+      "id": "scope:department",
+      "category": "scope",
+      "value": "department",
+      "terms": [
+        "departement",
+        "department",
+        "direction metier"
+      ],
+      "order": 36
+    },
+    {
+      "id": "scope:team",
+      "category": "scope",
+      "value": "team",
+      "terms": [
+        "equipe",
+        "team"
+      ],
+      "order": 37
+    },
+    {
+      "id": "scope:person",
+      "category": "scope",
+      "value": "person",
+      "terms": [
+        "personne",
+        "candidat",
+        "salarie",
+        "collaborateur"
+      ],
+      "order": 38
+    },
+    {
+      "id": "concept:executiveControl",
+      "category": "concept",
+      "value": "executiveControl",
+      "terms": [
+        "arbitrage",
+        "decision direction",
+        "portfolio health",
+        "menacent notre marge",
+        "perdons de argent",
+        "necessitent mon attention",
+        "executive control"
+      ],
+      "order": 39
+    },
+    {
+      "id": "concept:projectControls",
+      "category": "concept",
+      "value": "projectControls",
+      "terms": [
+        "project controls",
+        "controle projet",
+        "pilotage projet",
+        "performance projet"
+      ],
+      "order": 40
+    },
+    {
+      "id": "concept:evm",
+      "category": "concept",
+      "value": "evm",
+      "terms": [
+        "evm",
+        "earned value management",
+        "pv ev ac",
+        "spi",
+        "cpi",
+        "eac",
+        "etc",
+        "vac",
+        "earned value",
+        "schedule variance",
+        "cost variance"
+      ],
+      "order": 41
+    },
+    {
+      "id": "concept:wbs",
+      "category": "concept",
+      "value": "wbs",
+      "terms": [
+        "wbs",
+        "cbs",
+        "obs",
+        "wbs coding",
+        "work breakdown structure",
+        "structure de decoupage"
+      ],
+      "order": 42
+    },
+    {
+      "id": "concept:planning",
+      "category": "concept",
+      "value": "planning",
+      "terms": [
+        "baseline",
+        "current schedule",
+        "forecast schedule",
+        "critical path",
+        "chemin critique",
+        "near critical",
+        "float",
+        "marge totale",
+        "constraints",
+        "contraintes planning",
+        "calendar",
+        "calendrier",
+        "milestone",
+        "jalon",
+        "lookahead",
+        "recovery plan",
+        "schedule update",
+        "mise a jour planning",
+        "sequencement"
+      ],
+      "order": 43
+    },
+    {
+      "id": "concept:costControl",
+      "category": "concept",
+      "value": "costControl",
+      "terms": [
+        "budget",
+        "committed cost",
+        "cout engage",
+        "commitment",
+        "engagement",
+        "actual cost",
+        "cout reel",
+        "accrual",
+        "provision",
+        "forecast cost",
+        "forecast to complete",
+        "estimate to complete",
+        "estimate at completion",
+        "cash flow",
+        "tresorerie",
+        "revenue",
+        "chiffre affaires",
+        "valuation",
+        "valorisation",
+        "margin",
+        "marge",
+        "remaining commitment",
+        "reste a engager",
+        "budget at completion"
+      ],
+      "order": 44
+    },
+    {
+      "id": "concept:progressControl",
+      "category": "concept",
+      "value": "progressControl",
+      "terms": [
+        "planned progress",
+        "avancement planifie",
+        "progres planifie",
+        "executed progress",
+        "avancement execute",
+        "progres execute",
+        "accepted progress",
+        "avancement accepte",
+        "progres accepte",
+        "valued progress",
+        "avancement valorise",
+        "progres valorise",
+        "forecast progress",
+        "progres previsionnel",
+        "physical progress",
+        "earned progress",
+        "quantite executee"
+      ],
+      "order": 45
+    },
+    {
+      "id": "concept:riskManagement",
+      "category": "concept",
+      "value": "riskManagement",
+      "terms": [
+        "risk register",
+        "registre risques",
+        "registre des risques",
+        "risques projet",
+        "risque residuel",
+        "residual risk",
+        "mitigation",
+        "contingency",
+        "probability impact",
+        "probabilite impact",
+        "opportunity",
+        "opportunite",
+        "risk owner",
+        "proprietaire du risque"
+      ],
+      "order": 46
+    },
+    {
+      "id": "concept:changeControl",
+      "category": "concept",
+      "value": "changeControl",
+      "terms": [
+        "change request",
+        "change order",
+        "variation order",
+        "variation",
+        "variations",
+        "changement",
+        "changements",
+        "avenant",
+        "modification contractuelle",
+        "change control",
+        "vo",
+        "co"
+      ],
+      "order": 47
+    },
+    {
+      "id": "concept:contractsClaims",
+      "category": "concept",
+      "value": "contractsClaims",
+      "terms": [
+        "claim",
+        "claims",
+        "reclamation",
+        "eot",
+        "extension of time",
+        "notice",
+        "notification contractuelle",
+        "entitlement",
+        "contractual milestone",
+        "jalon contractuel",
+        "contract basis",
+        "base contractuelle",
+        "commercial impact",
+        "contrat"
+      ],
+      "order": 48
+    },
+    {
+      "id": "concept:engineering",
+      "category": "concept",
+      "value": "engineering",
+      "terms": [
+        "engineering",
+        "etudes",
+        "calculations",
+        "notes de calcul",
+        "ifc",
+        "ifa",
+        "ifr",
+        "method statement",
+        "methode execution",
+        "topographic verification",
+        "verification topographique"
+      ],
+      "order": 49
+    },
+    {
+      "id": "concept:technicalDocuments",
+      "category": "concept",
+      "value": "technicalDocuments",
+      "terms": [
+        "drawing",
+        "drawings",
+        "shop drawing",
+        "plans techniques",
+        "technical submittal",
+        "submittal",
+        "rfi",
+        "request for information",
+        "tq",
+        "technical query",
+        "engineering deliverable",
+        "transmittal",
+        "commentaires client",
+        "revision technique"
+      ],
+      "order": 50
+    },
+    {
+      "id": "concept:documentControl",
+      "category": "concept",
+      "value": "documentControl",
+      "terms": [
+        "document control",
+        "controle documentaire",
+        "maitrise documentaire",
+        "gestion documentaire",
+        "document register",
+        "registre documentaire",
+        "metadata",
+        "metadonnees",
+        "obsolete document",
+        "document obsolete",
+        "distribution list",
+        "approval cycle",
+        "cycle approbation",
+        "ged",
+        "dms"
+      ],
+      "order": 51
+    },
+    {
+      "id": "concept:quality",
+      "category": "concept",
+      "value": "quality",
+      "terms": [
+        "qa qc",
+        "qa/qc",
+        "itp",
+        "inspection test plan",
+        "inspection request",
+        "hold point",
+        "witness point",
+        "ncr",
+        "non conformite",
+        "car",
+        "corrective action",
+        "action corrective",
+        "punch list",
+        "snag",
+        "laboratory test",
+        "essai laboratoire",
+        "material approval",
+        "acceptance qualite",
+        "betonnage"
+      ],
+      "order": 52
+    },
+    {
+      "id": "concept:hse",
+      "category": "concept",
+      "value": "hse",
+      "terms": [
+        "hse",
+        "qhse",
+        "incident",
+        "accident",
+        "near miss",
+        "presque accident",
+        "unsafe act",
+        "unsafe condition",
+        "permis de travail",
+        "work permit",
+        "toolbox talk",
+        "quart heure securite",
+        "risk assessment",
+        "evaluation des risques hse",
+        "observation hse"
+      ],
+      "order": 53
+    },
+    {
+      "id": "concept:construction",
+      "category": "concept",
+      "value": "construction",
+      "terms": [
+        "construction",
+        "chantier",
+        "ressources chantier",
+        "equipements chantier",
+        "productivite chantier",
+        "daily report",
+        "rapport journalier",
+        "work front",
+        "front de travail",
+        "installed quantity",
+        "quantite installee",
+        "weather",
+        "meteo",
+        "site constraint",
+        "contrainte chantier",
+        "progress photo",
+        "photo chantier",
+        "ancrages",
+        "coffrage",
+        "beton"
+      ],
+      "order": 54
+    },
+    {
+      "id": "concept:productivity",
+      "category": "concept",
+      "value": "productivity",
+      "terms": [
+        "productivity",
+        "productivite",
+        "rendement",
+        "production rate",
+        "cadence production",
+        "planned quantity",
+        "quantite prevue",
+        "actual quantity",
+        "quantite reelle",
+        "planned hours",
+        "heures prevues",
+        "actual hours",
+        "heures reelles",
+        "manpower",
+        "main oeuvre",
+        "equipment",
+        "engins"
+      ],
+      "order": 55
+    },
+    {
+      "id": "concept:procurement",
+      "category": "concept",
+      "value": "procurement",
+      "terms": [
+        "material requisition",
+        "mr",
+        "rfq",
+        "request for quotation",
+        "quotation",
+        "technical bid evaluation",
+        "commercial bid evaluation",
+        "po",
+        "purchase order",
+        "bon de commande",
+        "vendor",
+        "supplier",
+        "fournisseur",
+        "expediting",
+        "lead time",
+        "long lead item",
+        "long lead items",
+        "required on site",
+        "ros date",
+        "date besoin",
+        "date besoin chantier",
+        "delivery",
+        "livraison",
+        "logistics",
+        "logistique",
+        "approvisionnement"
+      ],
+      "order": 56
+    },
+    {
+      "id": "concept:organisation",
+      "category": "concept",
+      "value": "organisation",
+      "terms": [
+        "raci",
+        "roles et responsabilites",
+        "delegation of authority",
+        "delegation autorite",
+        "doa",
+        "approval threshold",
+        "seuil approbation",
+        "decision rights",
+        "droits de decision",
+        "process owner",
+        "proprietaire processus",
+        "kpi owner",
+        "proprietaire kpi",
+        "governance",
+        "gouvernance",
+        "meeting cadence",
+        "cadence reunion",
+        "escalation"
+      ],
+      "order": 57
+    },
+    {
+      "id": "concept:managementSystem",
+      "category": "concept",
+      "value": "managementSystem",
+      "terms": [
+        "iso 9001",
+        "iso 14001",
+        "iso 45001",
+        "integrated management system",
+        "systeme de management integre",
+        "qms",
+        "ems",
+        "ohs",
+        "management review",
+        "revue de direction",
+        "process approach",
+        "approche processus",
+        "risk based thinking",
+        "documented information",
+        "information documentee",
+        "audit iso",
+        "objectifs qualite"
+      ],
+      "order": 58
+    },
+    {
+      "id": "concept:digitalisation",
+      "category": "concept",
+      "value": "digitalisation",
+      "terms": [
+        "digitalisation",
+        "workflow",
+        "paper process",
+        "processus papier",
+        "excel",
+        "email",
+        "erp",
+        "sharepoint",
+        "ged",
+        "dms",
+        "bi",
+        "dashboard",
+        "tableau de bord",
+        "manual entry",
+        "saisie manuelle",
+        "double entry",
+        "double saisie",
+        "automation",
+        "automatisation",
+        "api",
+        "integration"
+      ],
+      "order": 59
+    },
+    {
+      "id": "concept:dataGovernance",
+      "category": "concept",
+      "value": "dataGovernance",
+      "terms": [
+        "master data",
+        "donnees maitres",
+        "data quality",
+        "qualite des donnees",
+        "qualite des kpi",
+        "sources des kpi",
+        "reconciliation des donnees",
+        "kpi definition",
+        "definition kpi",
+        "data owner",
+        "proprietaire donnees",
+        "proprietaires des donnees",
+        "single source of truth",
+        "source unique de verite",
+        "duplicate data",
+        "donnees dupliquees",
+        "project codes",
+        "codes projet",
+        "supplier codes",
+        "codes fournisseurs",
+        "data lineage",
+        "ligneage donnees",
+        "chiffres differents",
+        "valeurs differentes"
+      ],
+      "order": 60
+    },
+    {
+      "id": "concept:people",
+      "category": "concept",
+      "value": "people",
+      "terms": [
+        "competence",
+        "criteres professionnels",
+        "experience",
+        "disponibilite",
+        "availability",
+        "workload",
+        "charge de travail",
+        "performance individuelle",
+        "role requirements",
+        "exigences du poste",
+        "project complexity",
+        "complexite projet",
+        "team complementarity",
+        "complementarite equipe",
+        "mbti",
+        "candidat",
+        "candidats",
+        "comparer deux candidats"
+      ],
+      "order": 61
+    },
+    {
+      "id": "entity:portfolio",
+      "category": "entity",
+      "value": "portfolio",
+      "terms": [
+        "portfolio",
+        "portefeuille"
+      ],
+      "order": 62
+    },
+    {
+      "id": "entity:program",
+      "category": "entity",
+      "value": "program",
+      "terms": [
+        "program",
+        "programme"
+      ],
+      "order": 63
+    },
+    {
+      "id": "entity:project",
+      "category": "entity",
+      "value": "project",
+      "terms": [
+        "project",
+        "projet"
+      ],
+      "order": 64
+    },
+    {
+      "id": "entity:wbs",
+      "category": "entity",
+      "value": "wbs",
+      "terms": [
+        "wbs",
+        "work breakdown structure"
+      ],
+      "order": 65
+    },
+    {
+      "id": "entity:workPackage",
+      "category": "entity",
+      "value": "workPackage",
+      "terms": [
+        "work package",
+        "lot de travaux"
+      ],
+      "order": 66
+    },
+    {
+      "id": "entity:activity",
+      "category": "entity",
+      "value": "activity",
+      "terms": [
+        "activity",
+        "activite",
+        "tache"
+      ],
+      "order": 67
+    },
+    {
+      "id": "entity:ouvrage",
+      "category": "entity",
+      "value": "ouvrage",
+      "terms": [
+        "ouvrage",
+        "ouvrages"
+      ],
+      "order": 68
+    },
+    {
+      "id": "entity:zone",
+      "category": "entity",
+      "value": "zone",
+      "terms": [
+        "zone",
+        "zones",
+        "area"
+      ],
+      "order": 69
+    },
+    {
+      "id": "entity:baseline",
+      "category": "entity",
+      "value": "baseline",
+      "terms": [
+        "baseline",
+        "planning de reference"
+      ],
+      "order": 70
+    },
+    {
+      "id": "entity:milestone",
+      "category": "entity",
+      "value": "milestone",
+      "terms": [
+        "milestone",
+        "jalon"
+      ],
+      "order": 71
+    },
+    {
+      "id": "entity:document",
+      "category": "entity",
+      "value": "document",
+      "terms": [
+        "document",
+        "procedure",
+        "documented information"
+      ],
+      "order": 72
+    },
+    {
+      "id": "entity:drawing",
+      "category": "entity",
+      "value": "drawing",
+      "terms": [
+        "drawing",
+        "plan ifc",
+        "shop drawing"
+      ],
+      "order": 73
+    },
+    {
+      "id": "entity:rfi",
+      "category": "entity",
+      "value": "rfi",
+      "terms": [
+        "rfi",
+        "request for information"
+      ],
+      "order": 74
+    },
+    {
+      "id": "entity:submittal",
+      "category": "entity",
+      "value": "submittal",
+      "terms": [
+        "submittal",
+        "technical submittal"
+      ],
+      "order": 75
+    },
+    {
+      "id": "entity:transmittal",
+      "category": "entity",
+      "value": "transmittal",
+      "terms": [
+        "transmittal",
+        "bordereau envoi"
+      ],
+      "order": 76
+    },
+    {
+      "id": "entity:contract",
+      "category": "entity",
+      "value": "contract",
+      "terms": [
+        "contract",
+        "contrat"
+      ],
+      "order": 77
+    },
+    {
+      "id": "entity:claim",
+      "category": "entity",
+      "value": "claim",
+      "terms": [
+        "claim",
+        "reclamation"
+      ],
+      "order": 78
+    },
+    {
+      "id": "entity:change",
+      "category": "entity",
+      "value": "change",
+      "terms": [
+        "change order",
+        "variation",
+        "avenant"
+      ],
+      "order": 79
+    },
+    {
+      "id": "entity:risk",
+      "category": "entity",
+      "value": "risk",
+      "terms": [
+        "risk",
+        "risque",
+        "opportunity"
+      ],
+      "order": 80
+    },
+    {
+      "id": "entity:purchaseOrder",
+      "category": "entity",
+      "value": "purchaseOrder",
+      "terms": [
+        "purchase order",
+        "bon de commande",
+        "po critique"
+      ],
+      "order": 81
+    },
+    {
+      "id": "entity:material",
+      "category": "entity",
+      "value": "material",
+      "terms": [
+        "material",
+        "materiau",
+        "long lead item"
+      ],
+      "order": 82
+    },
+    {
+      "id": "entity:supplier",
+      "category": "entity",
+      "value": "supplier",
+      "terms": [
+        "supplier",
+        "vendor",
+        "fournisseur"
+      ],
+      "order": 83
+    },
+    {
+      "id": "entity:subcontractor",
+      "category": "entity",
+      "value": "subcontractor",
+      "terms": [
+        "subcontractor",
+        "sous traitant",
+        "sous traitance"
+      ],
+      "order": 84
+    },
+    {
+      "id": "entity:inspection",
+      "category": "entity",
+      "value": "inspection",
+      "terms": [
+        "inspection",
+        "inspection request",
+        "hold point"
+      ],
+      "order": 85
+    },
+    {
+      "id": "entity:itp",
+      "category": "entity",
+      "value": "itp",
+      "terms": [
+        "itp",
+        "inspection test plan"
+      ],
+      "order": 86
+    },
+    {
+      "id": "entity:ncr",
+      "category": "entity",
+      "value": "ncr",
+      "terms": [
+        "ncr",
+        "non conformite"
+      ],
+      "order": 87
+    },
+    {
+      "id": "entity:correctiveAction",
+      "category": "entity",
+      "value": "correctiveAction",
+      "terms": [
+        "corrective action",
+        "action corrective"
+      ],
+      "order": 88
+    },
+    {
+      "id": "entity:resource",
+      "category": "entity",
+      "value": "resource",
+      "terms": [
+        "resource",
+        "ressource",
+        "manpower",
+        "main oeuvre"
+      ],
+      "order": 89
+    },
+    {
+      "id": "entity:equipment",
+      "category": "entity",
+      "value": "equipment",
+      "terms": [
+        "equipment",
+        "engin"
+      ],
+      "order": 90
+    },
+    {
+      "id": "entity:cost",
+      "category": "entity",
+      "value": "cost",
+      "terms": [
+        "cost",
+        "cout",
+        "budget",
+        "eac"
+      ],
+      "order": 91
+    },
+    {
+      "id": "entity:commitment",
+      "category": "entity",
+      "value": "commitment",
+      "terms": [
+        "commitment",
+        "engagement",
+        "committed cost"
+      ],
+      "order": 92
+    },
+    {
+      "id": "entity:progress",
+      "category": "entity",
+      "value": "progress",
+      "terms": [
+        "progress",
+        "avancement"
+      ],
+      "order": 93
+    },
+    {
+      "id": "entity:kpi",
+      "category": "entity",
+      "value": "kpi",
+      "terms": [
+        "kpi",
+        "indicateur"
+      ],
+      "order": 94
+    },
+    {
+      "id": "entity:decision",
+      "category": "entity",
+      "value": "decision",
+      "terms": [
+        "decision",
+        "arbitrage"
+      ],
+      "order": 95
+    },
+    {
+      "id": "symptom:delay",
+      "category": "symptom",
+      "value": "delay",
+      "terms": [
+        "retard",
+        "late",
+        "en retard",
+        "delai depasse",
+        "arrivent apres",
+        "apres la date besoin"
+      ],
+      "order": 96
+    },
+    {
+      "id": "symptom:costOverrun",
+      "category": "symptom",
+      "value": "costOverrun",
+      "terms": [
+        "depasse le budget",
+        "cost overrun",
+        "surcout",
+        "eac depasse",
+        "cout engage depasse"
+      ],
+      "order": 97
+    },
+    {
+      "id": "symptom:marginErosion",
+      "category": "symptom",
+      "value": "marginErosion",
+      "terms": [
+        "marge baisse",
+        "perdons de argent",
+        "margin erosion",
+        "menace notre marge"
+      ],
+      "order": 98
+    },
+    {
+      "id": "symptom:unreliableForecast",
+      "category": "symptom",
+      "value": "unreliableForecast",
+      "terms": [
+        "forecast pas fiable",
+        "forecast n est pas fiable",
+        "prevision non fiable",
+        "baseline plus realiste"
+      ],
+      "order": 99
+    },
+    {
+      "id": "symptom:progressGap",
+      "category": "symptom",
+      "value": "progressGap",
+      "terms": [
+        "execute superieur",
+        "seulement valorise",
+        "accepted lower",
+        "progress gap",
+        "avancement accepte inferieur"
+      ],
+      "order": 100
+    },
+    {
+      "id": "symptom:openActions",
+      "category": "symptom",
+      "value": "openActions",
+      "terms": [
+        "restent ouvertes",
+        "open too long",
+        "actions non cloturees",
+        "ncr ouvertes"
+      ],
+      "order": 101
+    },
+    {
+      "id": "symptom:safetyTrend",
+      "category": "symptom",
+      "value": "safetyTrend",
+      "terms": [
+        "near misses augmentent",
+        "incidents augmentent",
+        "unsafe trend"
+      ],
+      "order": 102
+    },
+    {
+      "id": "symptom:dataInconsistency",
+      "category": "symptom",
+      "value": "dataInconsistency",
+      "terms": [
+        "chiffres differents",
+        "valeurs differentes",
+        "codes differents",
+        "data inconsistency"
+      ],
+      "order": 103
+    },
+    {
+      "id": "symptom:lowProductivity",
+      "category": "symptom",
+      "value": "lowProductivity",
+      "terms": [
+        "productivite inferieure",
+        "rendement inferieur",
+        "below forecast productivity"
+      ],
+      "order": 104
+    },
+    {
+      "id": "symptom:approvalDelay",
+      "category": "symptom",
+      "value": "approvalDelay",
+      "terms": [
+        "attendent les reponses",
+        "pas approuve",
+        "approval delay",
+        "commentaires bloquent"
+      ],
+      "order": 105
+    },
+    {
+      "id": "symptom:lateDelivery",
+      "category": "symptom",
+      "value": "lateDelivery",
+      "terms": [
+        "arrivent apres",
+        "livraison tardive",
+        "late delivery",
+        "apres la date besoin"
+      ],
+      "order": 106
+    },
+    {
+      "id": "symptom:decisionGap",
+      "category": "symptom",
+      "value": "decisionGap",
+      "terms": [
+        "ne sait pas quelles decisions",
+        "besoin arbitrage",
+        "decision non prise",
+        "qui decide"
+      ],
+      "order": 107
+    },
+    {
+      "id": "horizon:today",
+      "category": "horizon",
+      "value": "today",
+      "terms": [
+        "aujourd hui",
+        "today",
+        "immediatement"
+      ],
+      "order": 108
+    },
+    {
+      "id": "horizon:thisWeek",
+      "category": "horizon",
+      "value": "thisWeek",
+      "terms": [
+        "cette semaine",
+        "this week",
+        "hebdomadaire"
+      ],
+      "order": 109
+    },
+    {
+      "id": "horizon:thisMonth",
+      "category": "horizon",
+      "value": "thisMonth",
+      "terms": [
+        "ce mois",
+        "this month",
+        "trois prochains mois",
+        "monthly"
+      ],
+      "order": 110
+    },
+    {
+      "id": "horizon:nextMilestone",
+      "category": "horizon",
+      "value": "nextMilestone",
+      "terms": [
+        "prochain jalon",
+        "next milestone",
+        "date besoin"
+      ],
+      "order": 111
+    },
+    {
+      "id": "horizon:projectCompletion",
+      "category": "horizon",
+      "value": "projectCompletion",
+      "terms": [
+        "fin de projet",
+        "project completion",
+        "a terminaison",
+        "at completion"
+      ],
+      "order": 112
+    },
+    {
+      "id": "horizon:strategic",
+      "category": "horizon",
+      "value": "strategic",
+      "terms": [
+        "strategique",
+        "long terme",
+        "strategic",
+        "plan directeur"
+      ],
+      "order": 113
+    },
+    {
+      "id": "flag:externalVerification",
+      "category": "flag",
+      "value": "externalVerification",
+      "terms": [
+        "reglementation actuelle",
+        "exigences legales",
+        "legal requirements",
+        "applicable en algerie",
+        "edition de la norme",
+        "edition actuelle",
+        "norme applicable actuelle",
+        "reglementation pays"
+      ],
+      "order": 114
+    },
+    {
+      "id": "flag:contractInterpretation",
+      "category": "flag",
+      "value": "contractInterpretation",
+      "terms": [
+        "interpretation contractuelle",
+        "entitlement",
+        "avis juridique",
+        "responsabilite contractuelle"
+      ],
+      "order": 115
+    },
+    {
+      "id": "flag:safetyCritical",
+      "category": "flag",
+      "value": "safetyCritical",
+      "terms": [
+        "accident grave",
+        "danger imminent",
+        "fatalite",
+        "unsafe condition",
+        "incident hse",
+        "hold point non leve"
+      ],
+      "order": 116
+    }
+  ],
+  "questions": [
+    {
+      "id": "domain-objective",
+      "text": "Quel résultat métier souhaitez-vous obtenir en priorité ?",
+      "resolves": [
+        "DOMAIN_UNKNOWN"
+      ],
+      "uncertaintyReduction": 5,
+      "causalDiscrimination": 2,
+      "decisionImpact": 5,
+      "riskImportance": 2,
+      "artifactReadiness": 2,
+      "userBurden": 1
+    },
+    {
+      "id": "observed-symptom",
+      "text": "Quel symptôme observable vous conduit à demander cette analyse ?",
+      "resolves": [
+        "SYMPTOM_UNKNOWN"
+      ],
+      "uncertaintyReduction": 4,
+      "causalDiscrimination": 4,
+      "decisionImpact": 4,
+      "riskImportance": 3,
+      "artifactReadiness": 2,
+      "userBurden": 1
+    },
+    {
+      "id": "cause-evidence",
+      "text": "Quels faits permettent de confirmer la cause, au-delà d’une simple hypothèse ?",
+      "resolves": [
+        "CAUSE_UNKNOWN",
+        "CAUSE_SUSPECTED_NOT_CONFIRMED"
+      ],
+      "uncertaintyReduction": 5,
+      "causalDiscrimination": 5,
+      "decisionImpact": 5,
+      "riskImportance": 4,
+      "artifactReadiness": 2,
+      "userBurden": 2
+    },
+    {
+      "id": "decision-required",
+      "text": "Quelle décision devez-vous préparer, et pour quelle échéance ?",
+      "resolves": [
+        "DECISION_UNKNOWN"
+      ],
+      "uncertaintyReduction": 3,
+      "causalDiscrimination": 2,
+      "decisionImpact": 5,
+      "riskImportance": 3,
+      "artifactReadiness": 3,
+      "userBurden": 1
+    },
+    {
+      "id": "review-document",
+      "text": "Pouvez-vous préciser le document, la version et les critères à examiner ?",
+      "resolves": [
+        "DOCUMENT_REQUIRED"
+      ],
+      "uncertaintyReduction": 4,
+      "causalDiscrimination": 3,
+      "decisionImpact": 4,
+      "riskImportance": 3,
+      "artifactReadiness": 5,
+      "userBurden": 2
+    },
+    {
+      "id": "calculation-inputs",
+      "text": "Quelles valeurs, unités, périodes et hypothèses doivent être utilisées pour le calcul ?",
+      "resolves": [
+        "CALCULATION_DATA_REQUIRED"
+      ],
+      "uncertaintyReduction": 5,
+      "causalDiscrimination": 2,
+      "decisionImpact": 5,
+      "riskImportance": 4,
+      "artifactReadiness": 5,
+      "userBurden": 2
+    },
+    {
+      "id": "creation-audience",
+      "text": "À qui le livrable est-il destiné et quelle décision doit-il soutenir ?",
+      "resolves": [
+        "CREATION_AUDIENCE_REQUIRED"
+      ],
+      "uncertaintyReduction": 3,
+      "causalDiscrimination": 1,
+      "decisionImpact": 5,
+      "riskImportance": 2,
+      "artifactReadiness": 5,
+      "userBurden": 1
+    },
+    {
+      "id": "creation-format",
+      "text": "Quel format, niveau de détail et horizon attendez-vous pour ce livrable ?",
+      "resolves": [
+        "CREATION_FORMAT_REQUIRED"
+      ],
+      "uncertaintyReduction": 3,
+      "causalDiscrimination": 1,
+      "decisionImpact": 4,
+      "riskImportance": 2,
+      "artifactReadiness": 5,
+      "userBurden": 1
+    },
+    {
+      "id": "wbs-alignment",
+      "text": "La WBS représente-t-elle le périmètre à produire, et comment est-elle reliée aux zones et ouvrages ?",
+      "resolves": [
+        "WBS_ALIGNMENT_REQUIRED"
+      ],
+      "uncertaintyReduction": 4,
+      "causalDiscrimination": 4,
+      "decisionImpact": 4,
+      "riskImportance": 3,
+      "artifactReadiness": 3,
+      "userBurden": 2
+    },
+    {
+      "id": "progress-basis",
+      "text": "Parlez-vous d’avancement planifié, exécuté, accepté, valorisé ou prévisionnel ?",
+      "resolves": [
+        "PROGRESS_BASIS_REQUIRED"
+      ],
+      "uncertaintyReduction": 5,
+      "causalDiscrimination": 5,
+      "decisionImpact": 5,
+      "riskImportance": 4,
+      "artifactReadiness": 3,
+      "userBurden": 1
+    },
+    {
+      "id": "evm-period",
+      "text": "Quelle est la date de statut et disposez-vous de PV, EV et AC sur un même périmètre ?",
+      "resolves": [
+        "EVM_DATA_REQUIRED"
+      ],
+      "uncertaintyReduction": 5,
+      "causalDiscrimination": 4,
+      "decisionImpact": 5,
+      "riskImportance": 4,
+      "artifactReadiness": 5,
+      "userBurden": 2
+    },
+    {
+      "id": "contract-basis",
+      "text": "Quel événement, quelle clause, quelle notification et quelles preuves contemporaines encadrent la situation ?",
+      "resolves": [
+        "CONTRACT_BASIS_REQUIRED"
+      ],
+      "uncertaintyReduction": 5,
+      "causalDiscrimination": 5,
+      "decisionImpact": 5,
+      "riskImportance": 5,
+      "artifactReadiness": 4,
+      "userBurden": 3
+    },
+    {
+      "id": "safety-control",
+      "text": "Le danger est-il immédiatement maîtrisé et quelles mesures de protection sont actuellement en place ?",
+      "resolves": [
+        "SAFETY_CONTROL_REQUIRED"
+      ],
+      "uncertaintyReduction": 5,
+      "causalDiscrimination": 3,
+      "decisionImpact": 5,
+      "riskImportance": 5,
+      "artifactReadiness": 2,
+      "userBurden": 1
+    },
+    {
+      "id": "people-criteria",
+      "text": "Quels critères professionnels vérifiables, indépendants du MBTI, doivent guider cette décision ?",
+      "resolves": [
+        "PEOPLE_CRITERIA_REQUIRED"
+      ],
+      "uncertaintyReduction": 4,
+      "causalDiscrimination": 3,
+      "decisionImpact": 5,
+      "riskImportance": 5,
+      "artifactReadiness": 4,
+      "userBurden": 2
+    },
+    {
+      "id": "data-source",
+      "text": "Quelle source fait autorité, qui en est responsable et comment les écarts sont-ils réconciliés ?",
+      "resolves": [
+        "DATA_LINEAGE_REQUIRED"
+      ],
+      "uncertaintyReduction": 5,
+      "causalDiscrimination": 4,
+      "decisionImpact": 5,
+      "riskImportance": 4,
+      "artifactReadiness": 4,
+      "userBurden": 2
+    }
+  ]
+}

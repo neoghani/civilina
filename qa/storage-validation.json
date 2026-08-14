@@ -1,0 +1,15 @@
+{
+  "sentinel": "CIVILINA_SECRET_TEST_92841",
+  "checks": {
+    "sessionStorage": true,
+    "localStorage": true,
+    "url": true,
+    "console": true,
+    "mailto": true,
+    "datasetDOM": true,
+    "noUpload": true,
+    "sensitivePlaceholder": true
+  },
+  "consoleMessageCount": 0,
+  "passed": true
+}

@@ -1,0 +1,62 @@
+{
+  "suite": "CIVILINA Reasoning Core V2 validation",
+  "generatedAt": "2026-08-14T14:46:39.908Z",
+  "version": "2.0.0",
+  "total": 782,
+  "passed": 782,
+  "failed": 0,
+  "categories": {
+    "lexicon:interactionMode": {
+      "total": 62,
+      "passed": 62,
+      "failed": 0
+    },
+    "lexicon:persona": {
+      "total": 46,
+      "passed": 46,
+      "failed": 0
+    },
+    "lexicon:scope": {
+      "total": 39,
+      "passed": 39,
+      "failed": 0
+    },
+    "lexicon:concept": {
+      "total": 363,
+      "passed": 363,
+      "failed": 0
+    },
+    "lexicon:entity": {
+      "total": 84,
+      "passed": 84,
+      "failed": 0
+    },
+    "lexicon:symptom": {
+      "total": 50,
+      "passed": 50,
+      "failed": 0
+    },
+    "lexicon:horizon": {
+      "total": 21,
+      "passed": 21,
+      "failed": 0
+    },
+    "lexicon:flag": {
+      "total": 18,
+      "passed": 18,
+      "failed": 0
+    },
+    "composite-business": {
+      "total": 96,
+      "passed": 96,
+      "failed": 0
+    },
+    "architecture": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0
+    }
+  },
+  "failures": [],
+  "passedGate": true
+}

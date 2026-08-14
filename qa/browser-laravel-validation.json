@@ -1,0 +1,32 @@
+{
+  "suite": "CIVILINA Laravel browser validation",
+  "generatedAt": "2026-08-14T15:45:06+01:00",
+  "baseUrl": "http://127.0.0.1:8000",
+  "total": 34,
+  "passed": 34,
+  "failed": 0,
+  "reasoningCoreVersion": "2.0.0",
+  "viewports": [
+    { "width": 1440, "height": 900, "h1Count": 1, "scrollWidth": 1425, "overflow": false, "imageFailures": 0, "menuButtonVisible": false, "capture": "captures/laravel-1440.png" },
+    { "width": 1024, "height": 900, "h1Count": 1, "scrollWidth": 1009, "overflow": false, "imageFailures": 0, "menuButtonVisible": true, "capture": "captures/laravel-1024.png" },
+    { "width": 768, "height": 1024, "h1Count": 1, "scrollWidth": 753, "overflow": false, "imageFailures": 0, "menuButtonVisible": true, "capture": "captures/laravel-768.png" },
+    { "width": 430, "height": 932, "h1Count": 1, "scrollWidth": 415, "overflow": false, "imageFailures": 0, "menuButtonVisible": true, "capture": "captures/laravel-430.png" },
+    { "width": 390, "height": 844, "h1Count": 1, "scrollWidth": 375, "overflow": false, "imageFailures": 0, "menuButtonVisible": true, "capture": "captures/laravel-390.png" }
+  ],
+  "interaction": {
+    "input": "Pourquoi notre projet EPC est en retard sans cause identifiée ?",
+    "unknownCausePreserved": true,
+    "nextBestQuestionRendered": true,
+    "contextConfirmationRendered": true,
+    "firstReadingRendered": true,
+    "recommendationsHaveJustification": true,
+    "consoleErrors": 0
+  },
+  "accessibility": {
+    "singleH1": true,
+    "menuAriaExpanded": true,
+    "escapeClosesMenu": true,
+    "focusRetained": true
+  },
+  "passedGate": true
+}

@@ -1,0 +1,73 @@
+{
+  "release": "CIVILINA Sprint 2.2 Expert Core + Laravel",
+  "generatedAt": "2026-08-14T14:54:02.196Z",
+  "version": "2.0.0",
+  "suites": [
+    {
+      "file": "reasoning-v2-validation.json",
+      "total": 782,
+      "passed": 782,
+      "failed": 0,
+      "passedGate": true
+    },
+    {
+      "file": "expert-domain-validation.json",
+      "total": 76,
+      "passed": 76,
+      "failed": 0,
+      "passedGate": true
+    },
+    {
+      "file": "negative-validation.json",
+      "total": 80,
+      "passed": 80,
+      "failed": 0,
+      "passedGate": true
+    },
+    {
+      "file": "golden-v2-validation.json",
+      "total": 180,
+      "passed": 180,
+      "failed": 0,
+      "passedGate": true
+    },
+    {
+      "file": "reasoning-v2-benchmark.json",
+      "total": 10000,
+      "failed": 0,
+      "passedGate": true
+    },
+    {
+      "file": "laravel-parity-validation.json",
+      "total": 180,
+      "passed": 180,
+      "failed": 0,
+      "passedGate": true
+    },
+    {
+      "file": "browser-laravel-validation.json",
+      "total": 34,
+      "passed": 34,
+      "failed": 0,
+      "passedGate": true
+    }
+  ],
+  "aggregateExecutions": 11332,
+  "failed": 0,
+  "v1Regression": {
+    "reasoning": "80/80",
+    "privacy": "53/53",
+    "externalAdversarial": "82/82",
+    "golden": "55/55",
+    "journey": "passed",
+    "accessibility": "passed",
+    "storage": "passed"
+  },
+  "laravel": {
+    "phpTests": "5 tests / 191 assertions",
+    "route": "GET /",
+    "runtime": "client",
+    "httpStatus": 200
+  },
+  "passedGate": true
+}

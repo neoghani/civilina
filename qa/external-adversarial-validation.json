@@ -1,0 +1,1150 @@
+{
+  "suite": "Civilina External Adversarial Hardening",
+  "reasoningCoreVersion": "1.0.0",
+  "total": 82,
+  "passed": 82,
+  "failed": 0,
+  "categories": {
+    "people-decisions": {
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "people-negatives": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0
+    },
+    "unknown-causality": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0
+    },
+    "document-semantics": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0
+    },
+    "capability-threshold": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0
+    },
+    "cross-domain": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0
+    },
+    "privacy": {
+      "total": 12,
+      "passed": 12,
+      "failed": 0
+    },
+    "ranking": {
+      "total": 6,
+      "passed": 6,
+      "failed": 0
+    },
+    "next-best-question-v2": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0
+    },
+    "mutation": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0
+    },
+    "manual-external": {
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "rule-mutation-sentinel": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0
+    }
+  },
+  "tests": [
+    {
+      "name": "people-decision-1",
+      "category": "people-decisions",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Quel manager mettre sur le projet Atlas ?",
+        "primaryDomain": "people",
+        "guardrail": true
+      }
+    },
+    {
+      "name": "people-decision-2",
+      "category": "people-decisions",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Promouvoir notre meilleur chef de projet.",
+        "primaryDomain": "people",
+        "guardrail": true
+      }
+    },
+    {
+      "name": "people-decision-3",
+      "category": "people-decisions",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Qui nommer responsable chantier ?",
+        "primaryDomain": "people",
+        "guardrail": true
+      }
+    },
+    {
+      "name": "people-decision-4",
+      "category": "people-decisions",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Lequel de mes chefs affecter au projet X ?",
+        "primaryDomain": "people",
+        "guardrail": true
+      }
+    },
+    {
+      "name": "people-decision-5",
+      "category": "people-decisions",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Qui peut prendre la direction de ce projet ?",
+        "primaryDomain": "people",
+        "guardrail": true
+      }
+    },
+    {
+      "name": "people-decision-6",
+      "category": "people-decisions",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Quelle collaboratrice choisir comme responsable qualité ?",
+        "primaryDomain": "people",
+        "guardrail": true
+      }
+    },
+    {
+      "name": "people-decision-7",
+      "category": "people-decisions",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Qui dois-je recruter pour ce poste ?",
+        "primaryDomain": "people",
+        "guardrail": true
+      }
+    },
+    {
+      "name": "people-decision-8",
+      "category": "people-decisions",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Sélectionner le candidat à nommer directeur de projet.",
+        "primaryDomain": "people",
+        "guardrail": true
+      }
+    },
+    {
+      "name": "people-decision-9",
+      "category": "people-decisions",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Quel technicien promouvoir responsable de chantier ?",
+        "primaryDomain": "people",
+        "guardrail": true
+      }
+    },
+    {
+      "name": "people-decision-10",
+      "category": "people-decisions",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "À qui confier la responsabilité de cette équipe ?",
+        "primaryDomain": "people",
+        "guardrail": true
+      }
+    },
+    {
+      "name": "people-negative-1",
+      "category": "people-negatives",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Comment manager un projet EPC complexe ?",
+        "primaryDomain": "projects",
+        "peopleSignal": false
+      }
+    },
+    {
+      "name": "people-negative-2",
+      "category": "people-negatives",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Construire le profil de risque du projet Atlas.",
+        "primaryDomain": "projects",
+        "peopleSignal": false
+      }
+    },
+    {
+      "name": "people-negative-3",
+      "category": "people-negatives",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Améliorer le profil de coût du portefeuille.",
+        "primaryDomain": "projects",
+        "peopleSignal": false
+      }
+    },
+    {
+      "name": "people-negative-4",
+      "category": "people-negatives",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Revoir le management du chantier.",
+        "primaryDomain": "projects",
+        "peopleSignal": false
+      }
+    },
+    {
+      "name": "people-negative-5",
+      "category": "people-negatives",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Notre équipe projet doit mieux collaborer.",
+        "primaryDomain": "people",
+        "peopleSignal": true
+      }
+    },
+    {
+      "name": "people-negative-6",
+      "category": "people-negatives",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Comment manager notre portefeuille de projets ?",
+        "primaryDomain": "projects",
+        "peopleSignal": false
+      }
+    },
+    {
+      "name": "people-negative-7",
+      "category": "people-negatives",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Quel est le profil planning du projet ?",
+        "primaryDomain": "projects",
+        "peopleSignal": false
+      }
+    },
+    {
+      "name": "people-negative-8",
+      "category": "people-negatives",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Structurer la gestion du projet et du chantier.",
+        "primaryDomain": "projects",
+        "peopleSignal": false
+      }
+    },
+    {
+      "name": "delay-unknown-signal",
+      "category": "unknown-causality",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "uncertainties": [
+          "project-delay-cause"
+        ],
+        "recommendations": [
+          "executive-reporting"
+        ]
+      }
+    },
+    {
+      "name": "delay-answer-unknown",
+      "category": "unknown-causality",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "immediate": [
+          "executive-reporting"
+        ],
+        "explore": []
+      }
+    },
+    {
+      "name": "delay-planning-explicit",
+      "category": "unknown-causality",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "immediate": [
+          "planning-wbs"
+        ]
+      }
+    },
+    {
+      "name": "delay-procurement-explicit",
+      "category": "unknown-causality",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "immediate": [
+          "procurement"
+        ]
+      }
+    },
+    {
+      "name": "delay-engineering-explicit",
+      "category": "unknown-causality",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "immediate": [
+          "engineering-documents"
+        ]
+      }
+    },
+    {
+      "name": "delay-approvals-explicit",
+      "category": "unknown-causality",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "immediate": [
+          "decision-workflows"
+        ]
+      }
+    },
+    {
+      "name": "delay-subcontractor-stays-uncertain",
+      "category": "unknown-causality",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "uncertainties": [
+          "project-delay-cause",
+          "subcontractor-delay-nature"
+        ],
+        "capabilities": [
+          "projectControls",
+          "data"
+        ]
+      }
+    },
+    {
+      "name": "delay-multiple-remains-blocking",
+      "category": "unknown-causality",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "uncertainties": [
+          "project-delay-cause",
+          "project-delay-multiple"
+        ],
+        "immediate": [
+          "executive-reporting"
+        ]
+      }
+    },
+    {
+      "name": "management-document-1",
+      "category": "document-semantics",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Digitaliser le contrôle documentaire qualité.",
+        "primaryDomain": "digitalisation",
+        "relatedDomains": [
+          "managementSystems"
+        ],
+        "capabilities": [
+          "quality",
+          "data"
+        ]
+      }
+    },
+    {
+      "name": "management-document-2",
+      "category": "document-semantics",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Améliorer la maîtrise documentaire ISO 9001.",
+        "primaryDomain": "managementSystems",
+        "relatedDomains": [],
+        "capabilities": [
+          "quality"
+        ]
+      }
+    },
+    {
+      "name": "management-document-3",
+      "category": "document-semantics",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Structurer la gestion documentaire et les versions documentaires.",
+        "primaryDomain": "managementSystems",
+        "relatedDomains": [],
+        "capabilities": [
+          "quality"
+        ]
+      }
+    },
+    {
+      "name": "management-document-4",
+      "category": "document-semantics",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Centraliser les documents qualité dans une GED.",
+        "primaryDomain": "managementSystems",
+        "relatedDomains": [
+          "digitalisation"
+        ],
+        "capabilities": [
+          "quality",
+          "data"
+        ]
+      }
+    },
+    {
+      "name": "management-document-5",
+      "category": "document-semantics",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "La documentation qualité doit être digitalisée.",
+        "primaryDomain": "digitalisation",
+        "relatedDomains": [
+          "managementSystems"
+        ],
+        "capabilities": [
+          "quality",
+          "data"
+        ]
+      }
+    },
+    {
+      "name": "management-document-6",
+      "category": "document-semantics",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Mettre en place un document control pour le SMQ.",
+        "primaryDomain": "managementSystems",
+        "relatedDomains": [],
+        "capabilities": [
+          "quality"
+        ]
+      }
+    },
+    {
+      "name": "technical-document-1",
+      "category": "document-semantics",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Plans IFC et drawings à maîtriser.",
+        "recommendations": [
+          "engineering-documents"
+        ],
+        "capabilities": [
+          "engineering"
+        ]
+      }
+    },
+    {
+      "name": "technical-document-2",
+      "category": "document-semantics",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Les technical submittals du projet sont en retard.",
+        "recommendations": [
+          "engineering-documents",
+          "executive-reporting"
+        ],
+        "capabilities": [
+          "engineering",
+          "projectControls",
+          "data"
+        ]
+      }
+    },
+    {
+      "name": "epc-alone-hides-engineering",
+      "category": "capability-threshold",
+      "passed": true,
+      "error": null,
+      "snapshot": []
+    },
+    {
+      "name": "engineering-evidence-displays-capability",
+      "category": "capability-threshold",
+      "passed": true,
+      "error": null,
+      "snapshot": [
+        "engineering"
+      ]
+    },
+    {
+      "name": "digital-context-alone-hides-data",
+      "category": "capability-threshold",
+      "passed": true,
+      "error": null,
+      "snapshot": []
+    },
+    {
+      "name": "quality-evidence-displays-capability",
+      "category": "capability-threshold",
+      "passed": true,
+      "error": null,
+      "snapshot": [
+        "quality"
+      ]
+    },
+    {
+      "name": "cross-digital-quality-documents",
+      "category": "cross-domain",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "primary": "digitalisation",
+        "related": [
+          "managementSystems"
+        ]
+      }
+    },
+    {
+      "name": "cross-iso-project-delay",
+      "category": "cross-domain",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "primary": "managementSystems",
+        "related": [
+          "projects"
+        ]
+      }
+    },
+    {
+      "name": "cross-people-project-decision",
+      "category": "cross-domain",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "entry": "projects",
+        "primary": "people"
+      }
+    },
+    {
+      "name": "subcontractor-is-not-domain",
+      "category": "cross-domain",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "primary": "projects",
+        "related": []
+      }
+    },
+    {
+      "name": "privacy-positive-1",
+      "category": "privacy",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Je vais partager notre business plan.",
+        "sensitive": true
+      }
+    },
+    {
+      "name": "privacy-positive-2",
+      "category": "privacy",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Puis-je transmettre nos prévisions financières ?",
+        "sensitive": true
+      }
+    },
+    {
+      "name": "privacy-positive-3",
+      "category": "privacy",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Je souhaite envoyer le P&L et le compte de résultat.",
+        "sensitive": true
+      }
+    },
+    {
+      "name": "privacy-positive-4",
+      "category": "privacy",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Je vais joindre le bilan et le cash-flow.",
+        "sensitive": true
+      }
+    },
+    {
+      "name": "privacy-positive-5",
+      "category": "privacy",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Je peux uploader le BPU et le DQE.",
+        "sensitive": true
+      }
+    },
+    {
+      "name": "privacy-positive-6",
+      "category": "privacy",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Je vais communiquer une offre fournisseur.",
+        "sensitive": true
+      }
+    },
+    {
+      "name": "privacy-positive-7",
+      "category": "privacy",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Je souhaite transmettre le devis fournisseur.",
+        "sensitive": true
+      }
+    },
+    {
+      "name": "privacy-positive-8",
+      "category": "privacy",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Je vais fournir des données personnelles nominatives.",
+        "sensitive": true
+      }
+    },
+    {
+      "name": "privacy-negative-1",
+      "category": "privacy",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Nous devons préparer un business plan.",
+        "sensitive": false
+      }
+    },
+    {
+      "name": "privacy-negative-2",
+      "category": "privacy",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Analyser les prévisions financières sans les transmettre.",
+        "sensitive": false
+      }
+    },
+    {
+      "name": "privacy-negative-3",
+      "category": "privacy",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Structurer le processus fournisseurs.",
+        "sensitive": false
+      }
+    },
+    {
+      "name": "privacy-negative-4",
+      "category": "privacy",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": "Améliorer le cash-flow prévisionnel.",
+        "sensitive": false
+      }
+    },
+    {
+      "name": "ranking-cost-delay-three-priorities",
+      "category": "ranking",
+      "passed": true,
+      "error": null,
+      "snapshot": [
+        "executive-reporting",
+        "cost-control",
+        "planning-wbs"
+      ]
+    },
+    {
+      "name": "ranking-procurement-before-planning",
+      "category": "ranking",
+      "passed": true,
+      "error": null,
+      "snapshot": [
+        "procurement"
+      ]
+    },
+    {
+      "name": "ranking-no-evidence-no-recommendation",
+      "category": "ranking",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "immediate": [],
+        "explore": []
+      }
+    },
+    {
+      "name": "ranking-every-item-has-proof",
+      "category": "ranking",
+      "passed": true,
+      "error": null,
+      "snapshot": [
+        "document-control"
+      ]
+    },
+    {
+      "name": "ranking-limits",
+      "category": "ranking",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "immediate": [
+          "executive-reporting",
+          "cost-control",
+          "engineering-documents"
+        ],
+        "explore": [
+          "procurement",
+          "qa-qc"
+        ]
+      }
+    },
+    {
+      "name": "ranking-blocked-causal-goes-explore",
+      "category": "ranking",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "immediate": [],
+        "explore": [
+          "engineering-documents",
+          "executive-reporting"
+        ]
+      }
+    },
+    {
+      "name": "nbq-delay-has-decision-value",
+      "category": "next-best-question-v2",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "id": "delayCause",
+        "decisionValue": {
+          "uncertaintyReduction": 170,
+          "recommendationDiscrimination": 41,
+          "domainDiscrimination": 3,
+          "riskImportance": 100,
+          "alreadyKnownPenalty": 0,
+          "total": 314
+        }
+      }
+    },
+    {
+      "name": "nbq-subcontractor-most-impactful",
+      "category": "next-best-question-v2",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "id": "subcontractorBlockage",
+        "decisionValue": {
+          "uncertaintyReduction": 190,
+          "recommendationDiscrimination": 41,
+          "domainDiscrimination": 3,
+          "riskImportance": 110,
+          "alreadyKnownPenalty": 0,
+          "total": 344
+        }
+      }
+    },
+    {
+      "name": "nbq-domain-clarification",
+      "category": "next-best-question-v2",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "id": "domainClarification",
+        "decisionValue": {
+          "uncertaintyReduction": 180,
+          "recommendationDiscrimination": 6,
+          "domainDiscrimination": 93,
+          "riskImportance": 90,
+          "alreadyKnownPenalty": 0,
+          "total": 369
+        }
+      }
+    },
+    {
+      "name": "nbq-stops-when-sufficient",
+      "category": "next-best-question-v2",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "immediate": [
+          "executive-reporting",
+          "cost-control",
+          "planning-wbs"
+        ]
+      }
+    },
+    {
+      "name": "mutation-invariant-1",
+      "category": "mutation",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "primary": "people",
+        "guardrail": true,
+        "sensitive": false,
+        "facts": [
+          "domain:people",
+          "domain:projects",
+          "people:decision",
+          "people:signal"
+        ],
+        "immediate": [],
+        "uncertainties": []
+      }
+    },
+    {
+      "name": "mutation-invariant-2",
+      "category": "mutation",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "primary": "digitalisation",
+        "guardrail": false,
+        "sensitive": false,
+        "facts": [
+          "digital:documents",
+          "domain:digitalisation",
+          "management:documents"
+        ],
+        "immediate": [
+          "document-control"
+        ],
+        "uncertainties": []
+      }
+    },
+    {
+      "name": "mutation-invariant-3",
+      "category": "mutation",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "primary": null,
+        "guardrail": false,
+        "sensitive": true,
+        "facts": [],
+        "immediate": [],
+        "uncertainties": [
+          "domain-clarification"
+        ]
+      }
+    },
+    {
+      "name": "mutation-invariant-4",
+      "category": "mutation",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "primary": "projects",
+        "guardrail": false,
+        "sensitive": false,
+        "facts": [
+          "domain:projects",
+          "project:delay"
+        ],
+        "immediate": [],
+        "uncertainties": [
+          "project-delay-cause"
+        ]
+      }
+    },
+    {
+      "name": "manual-01-manager-atlas",
+      "category": "manual-external",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": {
+          "freeText": "Quel manager mettre sur le projet Atlas ?",
+          "answers": {}
+        },
+        "primaryDomain": "people",
+        "capabilities": [],
+        "immediate": [],
+        "uncertainties": [],
+        "peopleGuardrail": true,
+        "sensitiveIntent": false
+      }
+    },
+    {
+      "name": "manual-02-promote-project-chief",
+      "category": "manual-external",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": {
+          "freeText": "Je veux promouvoir le meilleur chef de projet.",
+          "answers": {}
+        },
+        "primaryDomain": "people",
+        "capabilities": [],
+        "immediate": [],
+        "uncertainties": [],
+        "peopleGuardrail": true,
+        "sensitiveIntent": false
+      }
+    },
+    {
+      "name": "manual-03-manage-projects",
+      "category": "manual-external",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": {
+          "freeText": "Comment manager nos projets ?",
+          "answers": {}
+        },
+        "primaryDomain": "projects",
+        "capabilities": [],
+        "immediate": [],
+        "uncertainties": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false
+      }
+    },
+    {
+      "name": "manual-04-manage-team",
+      "category": "manual-external",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": {
+          "freeText": "Je veux manager mon équipe projet.",
+          "answers": {}
+        },
+        "primaryDomain": "people",
+        "capabilities": [],
+        "immediate": [],
+        "uncertainties": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false
+      }
+    },
+    {
+      "name": "manual-05-delay-unknown",
+      "category": "manual-external",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": {
+          "freeText": "Mes projets sont en retard mais je ne sais pas pourquoi.",
+          "answers": {}
+        },
+        "primaryDomain": "projects",
+        "capabilities": [
+          "projectControls",
+          "data"
+        ],
+        "immediate": [],
+        "uncertainties": [
+          "project-delay-cause"
+        ],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false
+      }
+    },
+    {
+      "name": "manual-06-delay-subcontractors",
+      "category": "manual-external",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": {
+          "freeText": "Nos projets sont en retard à cause des sous-traitants.",
+          "answers": {}
+        },
+        "primaryDomain": "projects",
+        "capabilities": [
+          "projectControls",
+          "data"
+        ],
+        "immediate": [],
+        "uncertainties": [
+          "project-delay-cause",
+          "subcontractor-delay-nature"
+        ],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false
+      }
+    },
+    {
+      "name": "manual-07-quality-document-control",
+      "category": "manual-external",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": {
+          "freeText": "Je veux digitaliser le contrôle documentaire qualité.",
+          "answers": {}
+        },
+        "primaryDomain": "digitalisation",
+        "capabilities": [
+          "quality",
+          "data"
+        ],
+        "immediate": [
+          "document-control"
+        ],
+        "uncertainties": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false
+      }
+    },
+    {
+      "name": "manual-08-ifc-technical-documents",
+      "category": "manual-external",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": {
+          "freeText": "Nous avons des problèmes avec les plans IFC et documents techniques.",
+          "answers": {}
+        },
+        "primaryDomain": "projects",
+        "capabilities": [
+          "engineering"
+        ],
+        "immediate": [
+          "engineering-documents"
+        ],
+        "uncertainties": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false
+      }
+    },
+    {
+      "name": "manual-09-epc-context-only",
+      "category": "manual-external",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": {
+          "entryIntent": "projects",
+          "answers": {
+            "activity": "epc"
+          }
+        },
+        "primaryDomain": "projects",
+        "capabilities": [],
+        "immediate": [],
+        "uncertainties": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false
+      }
+    },
+    {
+      "name": "manual-10-sensitive-forecast",
+      "category": "manual-external",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "input": {
+          "freeText": "Je veux joindre notre compte de résultat et notre forecast.",
+          "answers": {}
+        },
+        "primaryDomain": null,
+        "capabilities": [],
+        "immediate": [],
+        "uncertainties": [
+          "domain-clarification"
+        ],
+        "peopleGuardrail": false,
+        "sensitiveIntent": true
+      }
+    },
+    {
+      "name": "mutation-evidence-removed",
+      "category": "rule-mutation-sentinel",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "mutation": "evidence removed",
+        "detected": true
+      }
+    },
+    {
+      "name": "mutation-people-bypassed",
+      "category": "rule-mutation-sentinel",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "mutation": "people guardrail bypassed",
+        "detected": true
+      }
+    },
+    {
+      "name": "mutation-immediate-limit",
+      "category": "rule-mutation-sentinel",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "immediate": [
+          "executive-reporting",
+          "cost-control",
+          "engineering-documents"
+        ],
+        "explore": [
+          "procurement",
+          "qa-qc"
+        ]
+      }
+    },
+    {
+      "name": "mutation-single-authority",
+      "category": "rule-mutation-sentinel",
+      "passed": true,
+      "error": null,
+      "snapshot": {
+        "mutation": "scenario recommendation inserted",
+        "detected": true
+      }
+    }
+  ]
+}

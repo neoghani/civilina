@@ -1,0 +1,1899 @@
+{
+  "suite": "Civilina Reasoning Adversarial",
+  "total": 80,
+  "passed": 80,
+  "failed": 0,
+  "categories": {
+    "taxonomy": {
+      "total": 6,
+      "passed": 6,
+      "failed": 0
+    },
+    "authority": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0
+    },
+    "domain": {
+      "total": 6,
+      "passed": 6,
+      "failed": 0
+    },
+    "people": {
+      "total": 7,
+      "passed": 7,
+      "failed": 0
+    },
+    "people-negative": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0
+    },
+    "cross-domain": {
+      "total": 13,
+      "passed": 13,
+      "failed": 0
+    },
+    "ranking": {
+      "total": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "negative-ranking": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0
+    },
+    "next-best-question": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0
+    },
+    "ambiguity": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0
+    },
+    "contradiction": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0
+    },
+    "recalculation": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0
+    },
+    "mbti": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0
+    },
+    "rule-engine": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0
+    }
+  },
+  "tests": [
+    {
+      "testName": "01 exact business domain registry",
+      "category": "taxonomy",
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "02 exact capability registry",
+      "category": "taxonomy",
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "03 domains and capabilities do not overlap",
+      "category": "taxonomy",
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "04 entry registry contains business domains only",
+      "category": "taxonomy",
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "05 quality is capability only",
+      "category": "taxonomy",
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "06 project controls is capability only",
+      "category": "taxonomy",
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "07 scenarios contain questions only",
+      "category": "authority",
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "08 recommendation rules have single registry",
+      "category": "authority",
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "09 projects primary",
+      "category": "domain",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {}
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "10 organisation primary",
+      "category": "domain",
+      "input": {
+        "entryIntent": "organisation",
+        "answers": {}
+      },
+      "entryIntent": "organisation",
+      "primaryDomain": "organisation",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "11 management systems primary",
+      "category": "domain",
+      "input": {
+        "entryIntent": "managementSystems",
+        "answers": {}
+      },
+      "entryIntent": "managementSystems",
+      "primaryDomain": "managementSystems",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "12 digitalisation primary",
+      "category": "domain",
+      "input": {
+        "entryIntent": "digitalisation",
+        "answers": {}
+      },
+      "entryIntent": "digitalisation",
+      "primaryDomain": "digitalisation",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "13 people primary",
+      "category": "domain",
+      "input": {
+        "entryIntent": "people",
+        "answers": {}
+      },
+      "entryIntent": "people",
+      "primaryDomain": "people",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "14 ISO detects management systems",
+      "category": "domain",
+      "input": {
+        "freeText": "Nous preparons ISO 9001.",
+        "answers": {}
+      },
+      "entryIntent": "managementSystems",
+      "primaryDomain": "managementSystems",
+      "relatedDomains": [],
+      "capabilities": [
+        "quality"
+      ],
+      "immediateRecommendations": [
+        "quality-management"
+      ],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "15 candidate profile detects people",
+      "category": "people",
+      "input": {
+        "freeText": "Je souhaite structurer un profil candidat.",
+        "answers": {}
+      },
+      "entryIntent": "people",
+      "primaryDomain": "people",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "16 manage a project is not people",
+      "category": "people-negative",
+      "input": {
+        "freeText": "Je dois manager un projet EPC.",
+        "answers": {}
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "17 risk profile is not people",
+      "category": "people-negative",
+      "input": {
+        "freeText": "Quel est le profil de risque du projet ?",
+        "answers": {}
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "18 professional profile is people",
+      "category": "people",
+      "input": {
+        "freeText": "Je veux valoriser le profil professionnel d un candidat.",
+        "answers": {}
+      },
+      "entryIntent": "people",
+      "primaryDomain": "people",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "19 ISO and organisation cross-domain",
+      "category": "cross-domain",
+      "input": {
+        "entryIntent": "managementSystems",
+        "freeText": "ISO 9001 avec des responsabilites peu claires.",
+        "answers": {}
+      },
+      "entryIntent": "managementSystems",
+      "primaryDomain": "managementSystems",
+      "relatedDomains": [
+        "organisation"
+      ],
+      "capabilities": [
+        "quality"
+      ],
+      "immediateRecommendations": [
+        "roles-responsibilities",
+        "quality-management"
+      ],
+      "exploreRecommendations": [
+        "process-management"
+      ],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "20 ISO and projects cross-domain",
+      "category": "cross-domain",
+      "input": {
+        "entryIntent": "managementSystems",
+        "freeText": "ISO 9001 pour des projets souvent en retard.",
+        "answers": {}
+      },
+      "entryIntent": "managementSystems",
+      "primaryDomain": "managementSystems",
+      "relatedDomains": [
+        "projects"
+      ],
+      "capabilities": [
+        "quality",
+        "projectControls",
+        "data"
+      ],
+      "immediateRecommendations": [
+        "quality-management"
+      ],
+      "exploreRecommendations": [
+        "executive-reporting"
+      ],
+      "uncertainties": [
+        "project-delay-cause"
+      ],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "21 digital approvals and organisation",
+      "category": "cross-domain",
+      "input": {
+        "entryIntent": "digitalisation",
+        "answers": {
+          "process": "approvals",
+          "tools": "multiple-tools",
+          "difficulty": "traceability",
+          "objective": "workflow"
+        }
+      },
+      "entryIntent": "digitalisation",
+      "primaryDomain": "digitalisation",
+      "relatedDomains": [
+        "organisation"
+      ],
+      "capabilities": [
+        "data"
+      ],
+      "immediateRecommendations": [
+        "digital-workflows"
+      ],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "22 fragmented project tools and digitalisation",
+      "category": "cross-domain",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {
+          "activity": "epc",
+          "portfolio": "large",
+          "tracking": "multiple-tools",
+          "difficulty": "cost-schedule"
+        }
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [
+        "projectControls",
+        "data"
+      ],
+      "immediateRecommendations": [
+        "executive-reporting",
+        "cost-control",
+        "planning-wbs"
+      ],
+      "exploreRecommendations": [
+        "data-reporting"
+      ],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "23 management indicators and digitalisation",
+      "category": "cross-domain",
+      "input": {
+        "entryIntent": "managementSystems",
+        "answers": {
+          "difficulty": "indicators"
+        }
+      },
+      "entryIntent": "managementSystems",
+      "primaryDomain": "managementSystems",
+      "relatedDomains": [
+        "digitalisation"
+      ],
+      "capabilities": [
+        "quality",
+        "data"
+      ],
+      "immediateRecommendations": [
+        "management-dashboard"
+      ],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "24 digital documents and management systems",
+      "category": "cross-domain",
+      "input": {
+        "entryIntent": "digitalisation",
+        "answers": {
+          "process": "documents",
+          "objective": "centralize"
+        }
+      },
+      "entryIntent": "digitalisation",
+      "primaryDomain": "digitalisation",
+      "relatedDomains": [
+        "managementSystems"
+      ],
+      "capabilities": [
+        "data",
+        "quality"
+      ],
+      "immediateRecommendations": [
+        "document-control"
+      ],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "25 organisation reporting and digitalisation",
+      "category": "cross-domain",
+      "input": {
+        "entryIntent": "organisation",
+        "answers": {
+          "issue": "reporting",
+          "objective": "management-dashboard"
+        }
+      },
+      "entryIntent": "organisation",
+      "primaryDomain": "organisation",
+      "relatedDomains": [
+        "digitalisation"
+      ],
+      "capabilities": [
+        "data"
+      ],
+      "immediateRecommendations": [
+        "management-dashboard"
+      ],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "26 procurement remains capability",
+      "category": "cross-domain",
+      "input": {
+        "entryIntent": "projects",
+        "freeText": "Les approvisionnements critiques retardent le projet.",
+        "answers": {
+          "delayCause": "procurement"
+        }
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [
+        "procurement",
+        "projectControls",
+        "data"
+      ],
+      "immediateRecommendations": [
+        "procurement"
+      ],
+      "exploreRecommendations": [
+        "executive-reporting"
+      ],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "27 engineering remains capability",
+      "category": "cross-domain",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {
+          "activity": "epc",
+          "difficulty": "risks-documents"
+        }
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [
+        "engineering"
+      ],
+      "immediateRecommendations": [
+        "engineering-documents"
+      ],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "28 quality remains capability",
+      "category": "cross-domain",
+      "input": {
+        "entryIntent": "managementSystems",
+        "answers": {
+          "reference": "integrated",
+          "maturity": "fragmented",
+          "difficulty": "documents",
+          "tools": "multiple-tools"
+        }
+      },
+      "entryIntent": "managementSystems",
+      "primaryDomain": "managementSystems",
+      "relatedDomains": [],
+      "capabilities": [
+        "quality"
+      ],
+      "immediateRecommendations": [
+        "document-control",
+        "process-management",
+        "quality-management"
+      ],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "29 data remains capability",
+      "category": "cross-domain",
+      "input": {
+        "entryIntent": "digitalisation",
+        "answers": {
+          "process": "approvals",
+          "tools": "multiple-tools",
+          "difficulty": "traceability",
+          "objective": "workflow"
+        }
+      },
+      "entryIntent": "digitalisation",
+      "primaryDomain": "digitalisation",
+      "relatedDomains": [
+        "organisation"
+      ],
+      "capabilities": [
+        "data"
+      ],
+      "immediateRecommendations": [
+        "digital-workflows"
+      ],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "30 project controls remains capability",
+      "category": "cross-domain",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {
+          "activity": "epc",
+          "portfolio": "large",
+          "tracking": "multiple-tools",
+          "difficulty": "cost-schedule"
+        }
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [
+        "projectControls",
+        "data"
+      ],
+      "immediateRecommendations": [
+        "executive-reporting",
+        "cost-control",
+        "planning-wbs"
+      ],
+      "exploreRecommendations": [
+        "data-reporting"
+      ],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "31 ranking max three immediate",
+      "category": "ranking",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {
+          "activity": "epc",
+          "portfolio": "large",
+          "tracking": "multiple-tools",
+          "difficulty": "cost-schedule"
+        }
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [
+        "projectControls",
+        "data"
+      ],
+      "immediateRecommendations": [
+        "executive-reporting",
+        "cost-control",
+        "planning-wbs"
+      ],
+      "exploreRecommendations": [
+        "data-reporting"
+      ],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "32 ranking max two explore",
+      "category": "ranking",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {
+          "activity": "epc",
+          "portfolio": "large",
+          "tracking": "multiple-tools",
+          "difficulty": "cost-schedule"
+        }
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [
+        "projectControls",
+        "data"
+      ],
+      "immediateRecommendations": [
+        "executive-reporting",
+        "cost-control",
+        "planning-wbs"
+      ],
+      "exploreRecommendations": [
+        "data-reporting"
+      ],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "33 every project recommendation has evidence",
+      "category": "ranking",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {
+          "activity": "epc",
+          "portfolio": "large",
+          "tracking": "multiple-tools",
+          "difficulty": "cost-schedule"
+        }
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [
+        "projectControls",
+        "data"
+      ],
+      "immediateRecommendations": [
+        "executive-reporting",
+        "cost-control",
+        "planning-wbs"
+      ],
+      "exploreRecommendations": [
+        "data-reporting"
+      ],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "34 every reason is explicit",
+      "category": "ranking",
+      "input": {
+        "entryIntent": "managementSystems",
+        "answers": {
+          "reference": "integrated",
+          "maturity": "fragmented",
+          "difficulty": "documents",
+          "tools": "multiple-tools"
+        }
+      },
+      "entryIntent": "managementSystems",
+      "primaryDomain": "managementSystems",
+      "relatedDomains": [],
+      "capabilities": [
+        "quality"
+      ],
+      "immediateRecommendations": [
+        "document-control",
+        "process-management",
+        "quality-management"
+      ],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "35 EPC alone does not recommend engineering documents",
+      "category": "negative-ranking",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {
+          "activity": "epc"
+        }
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "36 EPC alone does not recommend procurement",
+      "category": "negative-ranking",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {
+          "activity": "epc"
+        }
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "37 EPC alone does not recommend QA QC",
+      "category": "negative-ranking",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {
+          "activity": "epc"
+        }
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "38 cost issue does not recommend QA QC",
+      "category": "negative-ranking",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {
+          "difficulty": "cost-schedule"
+        }
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [
+        "projectControls",
+        "data"
+      ],
+      "immediateRecommendations": [
+        "cost-control",
+        "planning-wbs"
+      ],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "39 planning delay does not recommend procurement",
+      "category": "negative-ranking",
+      "input": {
+        "entryIntent": "projects",
+        "freeText": "Le planning du projet est en retard.",
+        "answers": {
+          "delayCause": "planning"
+        }
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [
+        "projectControls",
+        "data"
+      ],
+      "immediateRecommendations": [
+        "planning-wbs"
+      ],
+      "exploreRecommendations": [
+        "executive-reporting"
+      ],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "40 ISO alone does not recommend project controls",
+      "category": "negative-ranking",
+      "input": {
+        "entryIntent": "managementSystems",
+        "freeText": "ISO 9001.",
+        "answers": {}
+      },
+      "entryIntent": "managementSystems",
+      "primaryDomain": "managementSystems",
+      "relatedDomains": [],
+      "capabilities": [
+        "quality"
+      ],
+      "immediateRecommendations": [
+        "quality-management"
+      ],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "41 digitalisation alone does not recommend engineering",
+      "category": "negative-ranking",
+      "input": {
+        "entryIntent": "digitalisation",
+        "freeText": "Digitaliser un processus.",
+        "answers": {}
+      },
+      "entryIntent": "digitalisation",
+      "primaryDomain": "digitalisation",
+      "relatedDomains": [
+        "organisation"
+      ],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "42 people guardrail blocks recommendations",
+      "category": "negative-ranking",
+      "input": {
+        "freeText": "Quel candidat MBTI dois-je choisir ?",
+        "answers": {}
+      },
+      "entryIntent": "people",
+      "primaryDomain": "people",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": true,
+      "expertSuggested": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "43 cost control has direct evidence",
+      "category": "ranking",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {
+          "activity": "epc",
+          "portfolio": "large",
+          "tracking": "multiple-tools",
+          "difficulty": "cost-schedule"
+        }
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [
+        "projectControls",
+        "data"
+      ],
+      "immediateRecommendations": [
+        "executive-reporting",
+        "cost-control",
+        "planning-wbs"
+      ],
+      "exploreRecommendations": [
+        "data-reporting"
+      ],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "44 document control has direct evidence",
+      "category": "ranking",
+      "input": {
+        "entryIntent": "managementSystems",
+        "answers": {
+          "reference": "integrated",
+          "maturity": "fragmented",
+          "difficulty": "documents",
+          "tools": "multiple-tools"
+        }
+      },
+      "entryIntent": "managementSystems",
+      "primaryDomain": "managementSystems",
+      "relatedDomains": [],
+      "capabilities": [
+        "quality"
+      ],
+      "immediateRecommendations": [
+        "document-control",
+        "process-management",
+        "quality-management"
+      ],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "45 digital workflow has direct evidence",
+      "category": "ranking",
+      "input": {
+        "entryIntent": "digitalisation",
+        "answers": {
+          "process": "approvals",
+          "tools": "multiple-tools",
+          "difficulty": "traceability",
+          "objective": "workflow"
+        }
+      },
+      "entryIntent": "digitalisation",
+      "primaryDomain": "digitalisation",
+      "relatedDomains": [
+        "organisation"
+      ],
+      "capabilities": [
+        "data"
+      ],
+      "immediateRecommendations": [
+        "digital-workflows"
+      ],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "46 roles recommendation has direct evidence",
+      "category": "ranking",
+      "input": {
+        "entryIntent": "organisation",
+        "answers": {
+          "issue": "roles",
+          "objective": "clarify-roles"
+        }
+      },
+      "entryIntent": "organisation",
+      "primaryDomain": "organisation",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [
+        "roles-responsibilities"
+      ],
+      "exploreRecommendations": [
+        "process-management"
+      ],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "47 recommendation family is unique in immediate",
+      "category": "ranking",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {
+          "activity": "epc",
+          "portfolio": "large",
+          "tracking": "multiple-tools",
+          "difficulty": "cost-schedule"
+        }
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [
+        "projectControls",
+        "data"
+      ],
+      "immediateRecommendations": [
+        "executive-reporting",
+        "cost-control",
+        "planning-wbs"
+      ],
+      "exploreRecommendations": [
+        "data-reporting"
+      ],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "48 recommendation metadata references valid registries",
+      "category": "ranking",
+      "input": {
+        "entryIntent": "digitalisation",
+        "answers": {
+          "process": "approvals",
+          "tools": "multiple-tools",
+          "difficulty": "traceability",
+          "objective": "workflow"
+        }
+      },
+      "entryIntent": "digitalisation",
+      "primaryDomain": "digitalisation",
+      "relatedDomains": [
+        "organisation"
+      ],
+      "capabilities": [
+        "data"
+      ],
+      "immediateRecommendations": [
+        "digital-workflows"
+      ],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "49 ambiguous input asks domain clarification",
+      "category": "next-best-question",
+      "input": {
+        "freeText": "Nous avons du mal a piloter.",
+        "answers": {}
+      },
+      "entryIntent": null,
+      "primaryDomain": null,
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [
+        "domain-clarification"
+      ],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "50 project asks highest impact difficulty first",
+      "category": "next-best-question",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {}
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "51 project asks tracking after difficulty",
+      "category": "next-best-question",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {
+          "difficulty": "cost-schedule"
+        }
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [
+        "projectControls",
+        "data"
+      ],
+      "immediateRecommendations": [
+        "cost-control",
+        "planning-wbs"
+      ],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "52 organisation asks issue first",
+      "category": "next-best-question",
+      "input": {
+        "entryIntent": "organisation",
+        "answers": {}
+      },
+      "entryIntent": "organisation",
+      "primaryDomain": "organisation",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "53 management systems asks difficulty first",
+      "category": "next-best-question",
+      "input": {
+        "entryIntent": "managementSystems",
+        "answers": {}
+      },
+      "entryIntent": "managementSystems",
+      "primaryDomain": "managementSystems",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "54 digitalisation asks process first",
+      "category": "next-best-question",
+      "input": {
+        "entryIntent": "digitalisation",
+        "answers": {}
+      },
+      "entryIntent": "digitalisation",
+      "primaryDomain": "digitalisation",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "55 people asks objective first",
+      "category": "next-best-question",
+      "input": {
+        "entryIntent": "people",
+        "answers": {}
+      },
+      "entryIntent": "people",
+      "primaryDomain": "people",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "56 delay cause outranks scenario order",
+      "category": "next-best-question",
+      "input": {
+        "entryIntent": "managementSystems",
+        "freeText": "ISO 9001 et projet en retard a cause des achats.",
+        "answers": {}
+      },
+      "entryIntent": "managementSystems",
+      "primaryDomain": "managementSystems",
+      "relatedDomains": [
+        "projects"
+      ],
+      "capabilities": [
+        "quality",
+        "projectControls",
+        "data"
+      ],
+      "immediateRecommendations": [
+        "quality-management"
+      ],
+      "exploreRecommendations": [
+        "executive-reporting"
+      ],
+      "uncertainties": [
+        "project-delay-cause"
+      ],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "57 empty input remains ambiguous",
+      "category": "ambiguity",
+      "input": {
+        "answers": {}
+      },
+      "entryIntent": null,
+      "primaryDomain": null,
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [
+        "domain-clarification"
+      ],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "58 structured process and unclear roles contradict",
+      "category": "contradiction",
+      "input": {
+        "entryIntent": "organisation",
+        "answers": {
+          "processMaturity": "structured",
+          "responsibilityClarity": "low"
+        }
+      },
+      "entryIntent": "organisation",
+      "primaryDomain": "organisation",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [
+        "roles-responsibilities"
+      ],
+      "exploreRecommendations": [
+        "process-management"
+      ],
+      "uncertainties": [],
+      "contradictions": [
+        "structured-process-unclear-responsibilities"
+      ],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "59 improving and fragmented contradict",
+      "category": "contradiction",
+      "input": {
+        "entryIntent": "managementSystems",
+        "seedFacts": [
+          "management:fragmented"
+        ],
+        "answers": {
+          "maturity": "improving"
+        }
+      },
+      "entryIntent": "managementSystems",
+      "primaryDomain": "managementSystems",
+      "relatedDomains": [],
+      "capabilities": [
+        "quality"
+      ],
+      "immediateRecommendations": [
+        "process-management"
+      ],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [
+        "improving-yet-fragmented"
+      ],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "60 simple project delay does not force expert",
+      "category": "ambiguity",
+      "input": {
+        "entryIntent": "projects",
+        "freeText": "Le planning du projet est en retard.",
+        "answers": {
+          "delayCause": "planning"
+        }
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [
+        "projectControls",
+        "data"
+      ],
+      "immediateRecommendations": [
+        "planning-wbs"
+      ],
+      "exploreRecommendations": [
+        "executive-reporting"
+      ],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "61 strong cross-domain can suggest expert",
+      "category": "cross-domain",
+      "input": {
+        "entryIntent": "managementSystems",
+        "freeText": "ISO 9001, responsabilites floues et digitalisation des validations.",
+        "answers": {}
+      },
+      "entryIntent": "managementSystems",
+      "primaryDomain": "managementSystems",
+      "relatedDomains": [
+        "organisation",
+        "digitalisation"
+      ],
+      "capabilities": [
+        "quality"
+      ],
+      "immediateRecommendations": [
+        "roles-responsibilities",
+        "quality-management"
+      ],
+      "exploreRecommendations": [
+        "process-management"
+      ],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "62 answer correction removes stale cost recommendation",
+      "category": "recalculation",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {
+          "activity": "epc",
+          "portfolio": "large",
+          "tracking": "multiple-tools",
+          "difficulty": "cost-schedule"
+        }
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [
+        "projectControls",
+        "data"
+      ],
+      "immediateRecommendations": [
+        "executive-reporting",
+        "cost-control",
+        "planning-wbs"
+      ],
+      "exploreRecommendations": [
+        "data-reporting"
+      ],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "63 MBTI assignment activates guardrail",
+      "category": "mbti",
+      "input": {
+        "freeText": "J ai les MBTI de mes salaries. Qui dois-je mettre chef de chantier ?",
+        "answers": {}
+      },
+      "entryIntent": "people",
+      "primaryDomain": "people",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": true,
+      "expertSuggested": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "64 chantier does not override people decision",
+      "category": "mbti",
+      "input": {
+        "freeText": "J ai les MBTI de mes salaries. Qui dois-je mettre chef de chantier ?",
+        "answers": {}
+      },
+      "entryIntent": "people",
+      "primaryDomain": "people",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": true,
+      "expertSuggested": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "65 manage project stays outside people guardrail",
+      "category": "people-negative",
+      "input": {
+        "freeText": "Comment manager un projet EPC complexe ?",
+        "answers": {}
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "66 project risk profile stays outside people guardrail",
+      "category": "people-negative",
+      "input": {
+        "freeText": "Construire le profil de risque du projet.",
+        "answers": {}
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "projects",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "67 MBTI discussion without decision stays advisory",
+      "category": "mbti",
+      "input": {
+        "freeText": "Utiliser le MBTI comme support de discussion dans une equipe.",
+        "answers": {}
+      },
+      "entryIntent": "people",
+      "primaryDomain": "people",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "68 candidate choice activates guardrail",
+      "category": "people",
+      "input": {
+        "freeText": "Quel candidat choisir pour ce poste ?",
+        "answers": {}
+      },
+      "entryIntent": "people",
+      "primaryDomain": "people",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": true,
+      "expertSuggested": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "69 incomplete people evidence creates uncertainty",
+      "category": "people",
+      "input": {
+        "entryIntent": "people",
+        "answers": {
+          "peopleObjective": "development",
+          "peopleCriteria": "incomplete"
+        }
+      },
+      "entryIntent": "people",
+      "primaryDomain": "people",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [
+        "people-evidence-incomplete"
+      ],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "70 staffing objective activates guardrail",
+      "category": "people",
+      "input": {
+        "entryIntent": "people",
+        "answers": {
+          "peopleObjective": "staffing-decision"
+        }
+      },
+      "entryIntent": "people",
+      "primaryDomain": "people",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": true,
+      "expertSuggested": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "71 people guardrail keeps all rankings empty",
+      "category": "people",
+      "input": {
+        "entryIntent": "people",
+        "freeText": "Choisir quel candidat recruter.",
+        "answers": {
+          "peopleObjective": "staffing-decision"
+        }
+      },
+      "entryIntent": "people",
+      "primaryDomain": "people",
+      "relatedDomains": [],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": true,
+      "expertSuggested": true,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "72 entry intent and primary domain remain distinct",
+      "category": "people",
+      "input": {
+        "entryIntent": "projects",
+        "freeText": "Les MBTI des candidats doivent ils decider qui sera manager ?",
+        "answers": {}
+      },
+      "entryIntent": "projects",
+      "primaryDomain": "people",
+      "relatedDomains": [
+        "projects"
+      ],
+      "capabilities": [],
+      "immediateRecommendations": [],
+      "exploreRecommendations": [],
+      "uncertainties": [],
+      "contradictions": [],
+      "sensitiveIntent": false,
+      "peopleGuardrail": false,
+      "expertSuggested": false,
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "73 rule ALL passes",
+      "category": "rule-engine",
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "74 rule ALL fails",
+      "category": "rule-engine",
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "75 rule ANY passes",
+      "category": "rule-engine",
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "76 rule ANY fails",
+      "category": "rule-engine",
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "77 rule NONE passes",
+      "category": "rule-engine",
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "78 rule NONE blocks",
+      "category": "rule-engine",
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "79 nested rule field works",
+      "category": "rule-engine",
+      "passed": true,
+      "error": null
+    },
+    {
+      "testName": "80 missing evidence cannot create recommendation",
+      "category": "rule-engine",
+      "passed": true,
+      "error": null
+    }
+  ]
+}

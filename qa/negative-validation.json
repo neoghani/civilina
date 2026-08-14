@@ -1,0 +1,9 @@
+{
+  "suite": "CIVILINA V2 negative and guardrail validation",
+  "generatedAt": "2026-08-14T14:46:52.443Z",
+  "total": 80,
+  "passed": 80,
+  "failed": 0,
+  "failures": [],
+  "passedGate": true
+}

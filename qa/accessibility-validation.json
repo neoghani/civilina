@@ -1,0 +1,16 @@
+{
+  "h1": 1,
+  "progressbar": 1,
+  "liveRegions": 2,
+  "inputLabel": "Votre réponse à Civilina AI",
+  "reducedMotion": true,
+  "startButtons": 4,
+  "menuEscape": true,
+  "clarificationAriaLive": true,
+  "modifyKeyboardFocus": true,
+  "contradictionAnnounced": true,
+  "delayUncertaintyAnnounced": true,
+  "privacyAlertAnnounced": true,
+  "peopleGuardrailAnnounced": true,
+  "passed": true
+}

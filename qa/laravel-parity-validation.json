@@ -1,0 +1,11 @@
+{
+    "suite": "CIVILINA Laravel PHP / JavaScript Golden V2 parity",
+    "generatedAt": "2026-08-14T21:51:34+00:00",
+    "contractVersion": "2.0.0",
+    "total": 180,
+    "passed": 180,
+    "failed": 0,
+    "parityPercent": 100,
+    "failures": [],
+    "passedGate": true
+}

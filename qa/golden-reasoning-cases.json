@@ -1,0 +1,1433 @@
+{
+  "contract": "Civilina Reasoning Core V1 parity contract",
+  "reasoningCoreVersion": "1.0.0",
+  "generatedAt": "2026-08-14T13:09:24.657Z",
+  "caseCount": 55,
+  "cases": [
+    {
+      "id": "project-empty",
+      "description": "Entrée projet sans précision",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "projects",
+        "primaryDomain": "projects",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "project-cost-schedule",
+      "description": "Projet EPC avec enjeu coûts-délais",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {
+          "activity": "epc",
+          "portfolio": "large",
+          "tracking": "multiple-tools",
+          "difficulty": "cost-schedule"
+        }
+      },
+      "expected": {
+        "entryIntent": "projects",
+        "primaryDomain": "projects",
+        "relatedDomains": [],
+        "capabilities": [
+          "projectControls",
+          "data"
+        ],
+        "immediate": [
+          "executive-reporting",
+          "cost-control",
+          "planning-wbs"
+        ],
+        "explore": [
+          "data-reporting"
+        ],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "project-delay-unknown",
+      "description": "Retard projet de cause inconnue",
+      "input": {
+        "freeText": "Le projet Atlas est en retard.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "projects",
+        "primaryDomain": "projects",
+        "relatedDomains": [],
+        "capabilities": [
+          "projectControls",
+          "data"
+        ],
+        "immediate": [],
+        "explore": [
+          "executive-reporting"
+        ],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [
+          "project-delay-cause"
+        ],
+        "blockingUncertainty": true
+      }
+    },
+    {
+      "id": "project-delay-planning",
+      "description": "Retard causé par la planification",
+      "input": {
+        "entryIntent": "projects",
+        "freeText": "Le projet est en retard.",
+        "answers": {
+          "delayCause": "planning"
+        }
+      },
+      "expected": {
+        "entryIntent": "projects",
+        "primaryDomain": "projects",
+        "relatedDomains": [],
+        "capabilities": [
+          "projectControls",
+          "data"
+        ],
+        "immediate": [
+          "planning-wbs"
+        ],
+        "explore": [
+          "executive-reporting"
+        ],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "project-delay-procurement",
+      "description": "Retard causé par les approvisionnements",
+      "input": {
+        "freeText": "Le projet est en retard à cause des approvisionnements.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "projects",
+        "primaryDomain": "projects",
+        "relatedDomains": [],
+        "capabilities": [
+          "procurement",
+          "projectControls",
+          "data"
+        ],
+        "immediate": [
+          "procurement"
+        ],
+        "explore": [
+          "executive-reporting"
+        ],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "project-delay-resources",
+      "description": "Retard causé par les ressources",
+      "input": {
+        "entryIntent": "projects",
+        "freeText": "Le projet est en retard.",
+        "answers": {
+          "delayCause": "resources"
+        }
+      },
+      "expected": {
+        "entryIntent": "projects",
+        "primaryDomain": "projects",
+        "relatedDomains": [],
+        "capabilities": [
+          "projectControls",
+          "data"
+        ],
+        "immediate": [
+          "planning-wbs"
+        ],
+        "explore": [
+          "executive-reporting"
+        ],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "project-delay-engineering",
+      "description": "Retard causé par les validations techniques",
+      "input": {
+        "entryIntent": "projects",
+        "freeText": "Le projet est en retard.",
+        "answers": {
+          "delayCause": "engineering"
+        }
+      },
+      "expected": {
+        "entryIntent": "projects",
+        "primaryDomain": "projects",
+        "relatedDomains": [],
+        "capabilities": [
+          "engineering",
+          "projectControls",
+          "data"
+        ],
+        "immediate": [
+          "engineering-documents"
+        ],
+        "explore": [
+          "executive-reporting"
+        ],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "project-delay-approvals",
+      "description": "Retard causé par les approbations",
+      "input": {
+        "entryIntent": "projects",
+        "freeText": "Le projet est en retard.",
+        "answers": {
+          "delayCause": "approvals"
+        }
+      },
+      "expected": {
+        "entryIntent": "projects",
+        "primaryDomain": "projects",
+        "relatedDomains": [],
+        "capabilities": [
+          "projectControls",
+          "data"
+        ],
+        "immediate": [
+          "decision-workflows"
+        ],
+        "explore": [
+          "executive-reporting"
+        ],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "project-delay-multiple",
+      "description": "Retard à causes multiples",
+      "input": {
+        "entryIntent": "projects",
+        "freeText": "Le projet est en retard.",
+        "answers": {
+          "delayCause": "multiple"
+        }
+      },
+      "expected": {
+        "entryIntent": "projects",
+        "primaryDomain": "projects",
+        "relatedDomains": [],
+        "capabilities": [
+          "projectControls",
+          "data"
+        ],
+        "immediate": [
+          "executive-reporting"
+        ],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [
+          "project-delay-cause",
+          "project-delay-multiple"
+        ],
+        "blockingUncertainty": true
+      }
+    },
+    {
+      "id": "project-subcontractor",
+      "description": "Sous-traitant cité sans cause racine",
+      "input": {
+        "freeText": "Le projet est en retard à cause du sous-traitant.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "projects",
+        "primaryDomain": "projects",
+        "relatedDomains": [],
+        "capabilities": [
+          "projectControls",
+          "data"
+        ],
+        "immediate": [],
+        "explore": [
+          "executive-reporting"
+        ],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [
+          "project-delay-cause",
+          "subcontractor-delay-nature"
+        ],
+        "blockingUncertainty": true
+      }
+    },
+    {
+      "id": "project-ifc",
+      "description": "Documents techniques IFC",
+      "input": {
+        "freeText": "Plans IFC et drawings à maîtriser.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "projects",
+        "primaryDomain": "projects",
+        "relatedDomains": [],
+        "capabilities": [
+          "engineering"
+        ],
+        "immediate": [
+          "engineering-documents"
+        ],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "project-epc-context",
+      "description": "Contexte EPC seul",
+      "input": {
+        "entryIntent": "projects",
+        "answers": {
+          "activity": "epc"
+        }
+      },
+      "expected": {
+        "entryIntent": "projects",
+        "primaryDomain": "projects",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "organisation-empty",
+      "description": "Entrée organisation sans précision",
+      "input": {
+        "entryIntent": "organisation",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "organisation",
+        "primaryDomain": "organisation",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "organisation-roles",
+      "description": "Responsabilités peu claires",
+      "input": {
+        "entryIntent": "organisation",
+        "answers": {
+          "issue": "roles",
+          "objective": "clarify-roles"
+        }
+      },
+      "expected": {
+        "entryIntent": "organisation",
+        "primaryDomain": "organisation",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [
+          "roles-responsibilities"
+        ],
+        "explore": [
+          "process-management"
+        ],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "organisation-approvals",
+      "description": "Validations lentes",
+      "input": {
+        "entryIntent": "organisation",
+        "answers": {
+          "issue": "approvals",
+          "decisions": "email"
+        }
+      },
+      "expected": {
+        "entryIntent": "organisation",
+        "primaryDomain": "organisation",
+        "relatedDomains": [],
+        "capabilities": [
+          "data"
+        ],
+        "immediate": [
+          "decision-workflows"
+        ],
+        "explore": [
+          "digital-workflows"
+        ],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "organisation-process",
+      "description": "Processus variables",
+      "input": {
+        "entryIntent": "organisation",
+        "answers": {
+          "issue": "processes",
+          "objective": "standardize"
+        }
+      },
+      "expected": {
+        "entryIntent": "organisation",
+        "primaryDomain": "organisation",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [
+          "process-management"
+        ],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "organisation-reporting",
+      "description": "Reporting de direction",
+      "input": {
+        "entryIntent": "organisation",
+        "answers": {
+          "issue": "reporting",
+          "objective": "management-dashboard"
+        }
+      },
+      "expected": {
+        "entryIntent": "organisation",
+        "primaryDomain": "organisation",
+        "relatedDomains": [
+          "digitalisation"
+        ],
+        "capabilities": [
+          "data"
+        ],
+        "immediate": [
+          "management-dashboard"
+        ],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "organisation-contradiction",
+      "description": "Processus structuré et rôles flous",
+      "input": {
+        "entryIntent": "organisation",
+        "answers": {
+          "processMaturity": "structured",
+          "responsibilityClarity": "low"
+        }
+      },
+      "expected": {
+        "entryIntent": "organisation",
+        "primaryDomain": "organisation",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [
+          "roles-responsibilities"
+        ],
+        "explore": [
+          "process-management"
+        ],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": true,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "organisation-text",
+      "description": "Demande libre de structuration",
+      "input": {
+        "freeText": "Structurer notre organisation et clarifier qui valide.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "organisation",
+        "primaryDomain": "organisation",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [
+          "roles-responsibilities"
+        ],
+        "explore": [
+          "process-management"
+        ],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "organisation-digital-approval",
+      "description": "Organisation et digitalisation des validations",
+      "input": {
+        "freeText": "Digitaliser les validations et clarifier les responsabilités.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "digitalisation",
+        "primaryDomain": "digitalisation",
+        "relatedDomains": [
+          "organisation"
+        ],
+        "capabilities": [],
+        "immediate": [
+          "roles-responsibilities"
+        ],
+        "explore": [
+          "process-management"
+        ],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "management-empty",
+      "description": "Entrée système de management",
+      "input": {
+        "entryIntent": "managementSystems",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "managementSystems",
+        "primaryDomain": "managementSystems",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "management-iso9001",
+      "description": "Structuration ISO 9001",
+      "input": {
+        "freeText": "Structurer notre système ISO 9001.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "managementSystems",
+        "primaryDomain": "managementSystems",
+        "relatedDomains": [],
+        "capabilities": [
+          "quality"
+        ],
+        "immediate": [
+          "quality-management"
+        ],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "management-documents",
+      "description": "Maîtrise documentaire qualité",
+      "input": {
+        "entryIntent": "managementSystems",
+        "answers": {
+          "reference": "iso-9001",
+          "maturity": "fragmented",
+          "difficulty": "documents"
+        }
+      },
+      "expected": {
+        "entryIntent": "managementSystems",
+        "primaryDomain": "managementSystems",
+        "relatedDomains": [],
+        "capabilities": [
+          "quality"
+        ],
+        "immediate": [
+          "document-control",
+          "process-management",
+          "quality-management"
+        ],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "management-audits",
+      "description": "Audits et actions",
+      "input": {
+        "entryIntent": "managementSystems",
+        "answers": {
+          "difficulty": "audits-actions"
+        }
+      },
+      "expected": {
+        "entryIntent": "managementSystems",
+        "primaryDomain": "managementSystems",
+        "relatedDomains": [],
+        "capabilities": [
+          "quality"
+        ],
+        "immediate": [
+          "audit-actions"
+        ],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "management-indicators",
+      "description": "Indicateurs du système",
+      "input": {
+        "entryIntent": "managementSystems",
+        "answers": {
+          "difficulty": "indicators"
+        }
+      },
+      "expected": {
+        "entryIntent": "managementSystems",
+        "primaryDomain": "managementSystems",
+        "relatedDomains": [
+          "digitalisation"
+        ],
+        "capabilities": [
+          "quality",
+          "data"
+        ],
+        "immediate": [
+          "management-dashboard"
+        ],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "management-quality-docs",
+      "description": "Documents qualité en GED",
+      "input": {
+        "freeText": "Centraliser les documents qualité dans une GED.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": null,
+        "primaryDomain": "managementSystems",
+        "relatedDomains": [
+          "digitalisation"
+        ],
+        "capabilities": [
+          "quality",
+          "data"
+        ],
+        "immediate": [
+          "document-control"
+        ],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [
+          "domain-clarification"
+        ],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "management-cross-project",
+      "description": "ISO et retard projet",
+      "input": {
+        "entryIntent": "managementSystems",
+        "freeText": "ISO 9001 et projet en retard.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "managementSystems",
+        "primaryDomain": "managementSystems",
+        "relatedDomains": [
+          "projects"
+        ],
+        "capabilities": [
+          "quality",
+          "projectControls",
+          "data"
+        ],
+        "immediate": [
+          "quality-management"
+        ],
+        "explore": [
+          "executive-reporting"
+        ],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [
+          "project-delay-cause"
+        ],
+        "blockingUncertainty": true
+      }
+    },
+    {
+      "id": "management-contradiction",
+      "description": "Système en amélioration mais fragmenté",
+      "input": {
+        "entryIntent": "managementSystems",
+        "seedFacts": [
+          "management:fragmented"
+        ],
+        "answers": {
+          "maturity": "improving"
+        }
+      },
+      "expected": {
+        "entryIntent": "managementSystems",
+        "primaryDomain": "managementSystems",
+        "relatedDomains": [],
+        "capabilities": [
+          "quality"
+        ],
+        "immediate": [
+          "process-management"
+        ],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": true,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "digital-empty",
+      "description": "Entrée digitalisation sans précision",
+      "input": {
+        "entryIntent": "digitalisation",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "digitalisation",
+        "primaryDomain": "digitalisation",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "digital-approval",
+      "description": "Workflow de validation",
+      "input": {
+        "entryIntent": "digitalisation",
+        "answers": {
+          "process": "approvals",
+          "difficulty": "traceability",
+          "objective": "workflow"
+        }
+      },
+      "expected": {
+        "entryIntent": "digitalisation",
+        "primaryDomain": "digitalisation",
+        "relatedDomains": [
+          "organisation"
+        ],
+        "capabilities": [
+          "data"
+        ],
+        "immediate": [
+          "digital-workflows"
+        ],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "digital-documents",
+      "description": "Digitalisation des documents qualité",
+      "input": {
+        "freeText": "Digitaliser la maîtrise documentaire qualité.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "digitalisation",
+        "primaryDomain": "digitalisation",
+        "relatedDomains": [
+          "managementSystems"
+        ],
+        "capabilities": [
+          "quality",
+          "data"
+        ],
+        "immediate": [
+          "document-control"
+        ],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "digital-reporting",
+      "description": "Consolidation du reporting",
+      "input": {
+        "entryIntent": "digitalisation",
+        "answers": {
+          "process": "reporting",
+          "objective": "dashboard"
+        }
+      },
+      "expected": {
+        "entryIntent": "digitalisation",
+        "primaryDomain": "digitalisation",
+        "relatedDomains": [],
+        "capabilities": [
+          "data"
+        ],
+        "immediate": [
+          "data-reporting"
+        ],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "digital-automation",
+      "description": "Réduction de la double saisie",
+      "input": {
+        "entryIntent": "digitalisation",
+        "answers": {
+          "difficulty": "reentry",
+          "objective": "automation"
+        }
+      },
+      "expected": {
+        "entryIntent": "digitalisation",
+        "primaryDomain": "digitalisation",
+        "relatedDomains": [],
+        "capabilities": [
+          "data"
+        ],
+        "immediate": [
+          "automation"
+        ],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "digital-procurement",
+      "description": "Digitalisation du processus achats",
+      "input": {
+        "entryIntent": "digitalisation",
+        "answers": {
+          "process": "procurement"
+        }
+      },
+      "expected": {
+        "entryIntent": "digitalisation",
+        "primaryDomain": "digitalisation",
+        "relatedDomains": [],
+        "capabilities": [
+          "procurement",
+          "data"
+        ],
+        "immediate": [
+          "procurement"
+        ],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "digital-traceability",
+      "description": "Traçabilité digitale",
+      "input": {
+        "entryIntent": "digitalisation",
+        "answers": {
+          "difficulty": "traceability"
+        }
+      },
+      "expected": {
+        "entryIntent": "digitalisation",
+        "primaryDomain": "digitalisation",
+        "relatedDomains": [],
+        "capabilities": [
+          "data"
+        ],
+        "immediate": [
+          "digital-workflows"
+        ],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "digital-weak-signal",
+      "description": "Signal digital faible",
+      "input": {
+        "freeText": "Je veux digitaliser.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "digitalisation",
+        "primaryDomain": "digitalisation",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "people-manager-atlas",
+      "description": "Nomination manager projet Atlas",
+      "input": {
+        "freeText": "Quel manager mettre sur le projet Atlas ?",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "people",
+        "primaryDomain": "people",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": true,
+        "sensitiveIntent": false,
+        "expertSuggested": true,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "people-promote-chief",
+      "description": "Promotion chef de projet",
+      "input": {
+        "freeText": "Promouvoir notre meilleur chef de projet.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "people",
+        "primaryDomain": "people",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": true,
+        "sensitiveIntent": false,
+        "expertSuggested": true,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "people-site-responsible",
+      "description": "Nomination responsable chantier",
+      "input": {
+        "freeText": "Qui nommer responsable chantier ?",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "people",
+        "primaryDomain": "people",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": true,
+        "sensitiveIntent": false,
+        "expertSuggested": true,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "people-project-direction",
+      "description": "Prise de direction projet",
+      "input": {
+        "freeText": "Qui peut prendre la direction de ce projet ?",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "people",
+        "primaryDomain": "people",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": true,
+        "sensitiveIntent": false,
+        "expertSuggested": true,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "people-mbti-discussion",
+      "description": "MBTI comme support de discussion",
+      "input": {
+        "freeText": "Utiliser le MBTI comme support de discussion dans une équipe.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "people",
+        "primaryDomain": "people",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "people-development",
+      "description": "Développement professionnel",
+      "input": {
+        "entryIntent": "people",
+        "answers": {
+          "peopleObjective": "development",
+          "peopleScope": "individual",
+          "peopleCriteria": "skills-experience"
+        }
+      },
+      "expected": {
+        "entryIntent": "people",
+        "primaryDomain": "people",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "people-incomplete",
+      "description": "Critères humains incomplets",
+      "input": {
+        "entryIntent": "people",
+        "answers": {
+          "peopleObjective": "development",
+          "peopleCriteria": "incomplete"
+        }
+      },
+      "expected": {
+        "entryIntent": "people",
+        "primaryDomain": "people",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [
+          "people-evidence-incomplete"
+        ],
+        "blockingUncertainty": true
+      }
+    },
+    {
+      "id": "people-team-collaboration",
+      "description": "Collaboration équipe projet",
+      "input": {
+        "freeText": "Notre équipe projet doit mieux collaborer.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "people",
+        "primaryDomain": "people",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "privacy-business-plan",
+      "description": "Partage de business plan",
+      "input": {
+        "freeText": "Je vais partager notre business plan.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": null,
+        "primaryDomain": null,
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": true,
+        "expertSuggested": false,
+        "uncertainties": [
+          "domain-clarification"
+        ],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "privacy-financial-forecast",
+      "description": "Transmission de prévisions financières",
+      "input": {
+        "freeText": "Je souhaite transmettre nos prévisions financières.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": null,
+        "primaryDomain": null,
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": true,
+        "expertSuggested": false,
+        "uncertainties": [
+          "domain-clarification"
+        ],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "privacy-pl",
+      "description": "Envoi de P&L",
+      "input": {
+        "freeText": "Je vais envoyer le P&L.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": null,
+        "primaryDomain": null,
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": true,
+        "expertSuggested": false,
+        "uncertainties": [
+          "domain-clarification"
+        ],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "privacy-bpu-dqe",
+      "description": "Upload BPU et DQE",
+      "input": {
+        "freeText": "Je vais uploader le BPU et le DQE.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": null,
+        "primaryDomain": null,
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": true,
+        "expertSuggested": false,
+        "uncertainties": [
+          "domain-clarification"
+        ],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "privacy-no-share",
+      "description": "Business plan sans partage",
+      "input": {
+        "freeText": "Nous devons préparer un business plan.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": null,
+        "primaryDomain": null,
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [
+          "domain-clarification"
+        ],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "privacy-negated",
+      "description": "Prévisions non transmises",
+      "input": {
+        "freeText": "Analyser les prévisions financières sans les transmettre.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": null,
+        "primaryDomain": null,
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [
+          "domain-clarification"
+        ],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "ambiguous-empty",
+      "description": "Entrée vide",
+      "input": {
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": null,
+        "primaryDomain": null,
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [
+          "domain-clarification"
+        ],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "ambiguous-pilot",
+      "description": "Demande de pilotage ambiguë",
+      "input": {
+        "freeText": "Nous avons du mal à piloter.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": null,
+        "primaryDomain": null,
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [
+          "domain-clarification"
+        ],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "negative-manager-project",
+      "description": "Manager un projet sans décision RH",
+      "input": {
+        "freeText": "Comment manager un projet EPC complexe ?",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "projects",
+        "primaryDomain": "projects",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "negative-risk-profile",
+      "description": "Profil de risque projet",
+      "input": {
+        "freeText": "Construire le profil de risque du projet.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "projects",
+        "primaryDomain": "projects",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    },
+    {
+      "id": "negative-site-management",
+      "description": "Management de chantier",
+      "input": {
+        "freeText": "Améliorer le management du chantier.",
+        "answers": {}
+      },
+      "expected": {
+        "entryIntent": "projects",
+        "primaryDomain": "projects",
+        "relatedDomains": [],
+        "capabilities": [],
+        "immediate": [],
+        "explore": [],
+        "peopleGuardrail": false,
+        "sensitiveIntent": false,
+        "expertSuggested": false,
+        "uncertainties": [],
+        "blockingUncertainty": false
+      }
+    }
+  ]
+}
