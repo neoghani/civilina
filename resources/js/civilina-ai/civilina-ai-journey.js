@@ -5,8 +5,224 @@
     const domains = window.CivilinaAIDomains;
     const core = window.CivilinaAIReasoningRuntime || window.CivilinaAIReasoning;
     const privacy = window.CivilinaAIPrivacy;
-    const storageKey = 'civilinaAiJourneyV3';
-    const validPhases = ['start', 'conversation', 'confirmation', 'edit', 'reading', 'recommendation', 'account', 'followup'];
+    const storageKey = 'civilinaAiJourneyV4';
+    const validPhases = [
+        'start',
+        'conversation',
+        'confirmation',
+        'edit',
+        'reading',
+        'artifactReady',
+        'recommendation',
+        'account',
+        'followup'
+    ];
+
+    const artifactQuestionFallbacks = {
+        itpActivityScope: {
+            artifactId: 'itp',
+            requirementId: 'ITP_ACTIVITY_SCOPE_REQUIRED',
+            label: 'Périmètre de l’activité',
+            prompt: 'Quelle activité, quel ouvrage ou quelle zone doit être couvert par l’ITP ?',
+            importance: 'blocking'
+        },
+        itpReferences: {
+            artifactId: 'itp',
+            requirementId: 'ITP_REFERENCE_DOCUMENTS_REQUIRED',
+            label: 'Références applicables',
+            prompt: 'Quels plans, spécifications, procédures ou exigences contractuelles doivent servir de référence ?',
+            importance: 'blocking'
+        },
+        itpInspectionsTests: {
+            artifactId: 'itp',
+            requirementId: 'ITP_INSPECTION_TESTS_REQUIRED',
+            label: 'Inspections et essais',
+            prompt: 'Quelles inspections et quels essais doivent être prévus pour cette activité ?',
+            importance: 'blocking'
+        },
+        itpAcceptanceCriteria: {
+            artifactId: 'itp',
+            requirementId: 'ITP_ACCEPTANCE_CRITERIA_REQUIRED',
+            label: 'Critères d’acceptation',
+            prompt: 'Quels sont les critères d’acceptation applicables à chaque contrôle ou essai ?',
+            importance: 'blocking'
+        },
+        itpHoldWitness: {
+            artifactId: 'itp',
+            requirementId: 'ITP_HOLD_WITNESS_REQUIRED',
+            label: 'Hold / Witness Points',
+            prompt: 'Quels Hold Points, Witness Points ou points de surveillance doivent être définis ?',
+            importance: 'important'
+        },
+        itpResponsibilities: {
+            artifactId: 'itp',
+            requirementId: 'ITP_RESPONSIBILITIES_REQUIRED',
+            label: 'Responsabilités',
+            prompt: 'Qui exécute, inspecte, approuve et accepte les contrôles prévus dans l’ITP ?',
+            importance: 'important'
+        },
+        wbsScopeBasis: {
+            artifactId: 'wbs',
+            requirementId: 'WBS_SCOPE_BASIS_REQUIRED',
+            label: 'Périmètre WBS',
+            prompt: 'Quel périmètre, contrat, projet ou lot doit servir de base à la WBS ?',
+            importance: 'blocking'
+        },
+        wbsDecomposition: {
+            artifactId: 'wbs',
+            requirementId: 'WBS_DECOMPOSITION_REQUIRED',
+            label: 'Logique de décomposition',
+            prompt: 'Selon quelle logique le périmètre doit-il être décomposé : livrables, disciplines, phases, lots ou autre ?',
+            importance: 'blocking'
+        },
+        wbsZoneOuvrage: {
+            artifactId: 'wbs',
+            requirementId: 'WBS_ZONE_OUVRAGE_REQUIRED',
+            label: 'Zones / ouvrages',
+            prompt: 'Quelles zones ou quels ouvrages doivent être distingués sans les confondre avec la WBS ?',
+            importance: 'important'
+        },
+        wbsCodification: {
+            artifactId: 'wbs',
+            requirementId: 'WBS_CODIFICATION_REQUIRED',
+            label: 'Codification',
+            prompt: 'Quelle règle de codification ou de numérotation doit être utilisée ?',
+            importance: 'important'
+        },
+        wbsIntegration: {
+            artifactId: 'wbs',
+            requirementId: 'WBS_INTEGRATION_REQUIRED',
+            label: 'Intégration Project Controls',
+            prompt: 'Comment la WBS doit-elle s’intégrer au planning, aux coûts, au progrès et aux documents ?',
+            importance: 'important'
+        },
+        riskScope: {
+            artifactId: 'riskRegister',
+            requirementId: 'RISK_SCOPE_REQUIRED',
+            label: 'Périmètre des risques',
+            prompt: 'Quel projet, processus ou périmètre doit être couvert par le registre des risques ?',
+            importance: 'blocking'
+        },
+        riskCategories: {
+            artifactId: 'riskRegister',
+            requirementId: 'RISK_CATEGORIES_REQUIRED',
+            label: 'Catégories de risques',
+            prompt: 'Quelles catégories de risques doivent être couvertes ?',
+            importance: 'important'
+        },
+        riskScoring: {
+            artifactId: 'riskRegister',
+            requirementId: 'RISK_SCORING_REQUIRED',
+            label: 'Méthode de cotation',
+            prompt: 'Quelle méthode de probabilité, impact et criticité doit être utilisée ?',
+            importance: 'blocking'
+        },
+        riskOwners: {
+            artifactId: 'riskRegister',
+            requirementId: 'RISK_OWNERS_REQUIRED',
+            label: 'Responsables des risques',
+            prompt: 'Qui doit être responsable du suivi et des actions de réponse aux risques ?',
+            importance: 'important'
+        },
+        raciProcessScope: {
+            artifactId: 'raci',
+            requirementId: 'RACI_PROCESS_SCOPE_REQUIRED',
+            label: 'Périmètre RACI',
+            prompt: 'Quel processus, projet ou périmètre doit être couvert par la matrice RACI ?',
+            importance: 'blocking'
+        },
+        raciActivities: {
+            artifactId: 'raci',
+            requirementId: 'RACI_ACTIVITIES_REQUIRED',
+            label: 'Activités / décisions',
+            prompt: 'Quelles activités ou décisions doivent apparaître dans la matrice ?',
+            importance: 'blocking'
+        },
+        raciRoles: {
+            artifactId: 'raci',
+            requirementId: 'RACI_ROLES_REQUIRED',
+            label: 'Rôles',
+            prompt: 'Quels rôles ou fonctions doivent être représentés dans la matrice ?',
+            importance: 'blocking'
+        },
+        raciAuthority: {
+            artifactId: 'raci',
+            requirementId: 'RACI_AUTHORITY_REQUIRED',
+            label: 'Autorité / validation',
+            prompt: 'Quelles règles d’autorité, d’approbation ou d’escalade doivent être respectées ?',
+            importance: 'important'
+        },
+        dashboardDecision: {
+            artifactId: 'dashboard',
+            requirementId: 'DASHBOARD_DECISION_REQUIRED',
+            label: 'Décision à soutenir',
+            prompt: 'Quelle décision ou quel besoin de pilotage le dashboard doit-il soutenir ?',
+            importance: 'blocking'
+        },
+        dashboardAudience: {
+            artifactId: 'dashboard',
+            requirementId: 'DASHBOARD_AUDIENCE_REQUIRED',
+            label: 'Audience',
+            prompt: 'Qui utilisera ce dashboard et à quel niveau de responsabilité ?',
+            importance: 'important'
+        },
+        dashboardKpis: {
+            artifactId: 'dashboard',
+            requirementId: 'DASHBOARD_KPI_REQUIRED',
+            label: 'KPI',
+            prompt: 'Quels KPI doivent permettre de prendre ou préparer cette décision ?',
+            importance: 'blocking'
+        },
+        dashboardDataSources: {
+            artifactId: 'dashboard',
+            requirementId: 'DASHBOARD_DATA_SOURCE_REQUIRED',
+            label: 'Sources de données',
+            prompt: 'Quelles sources de données alimenteront les KPI du dashboard ?',
+            importance: 'blocking'
+        },
+        dashboardFrequency: {
+            artifactId: 'dashboard',
+            requirementId: 'DASHBOARD_FREQUENCY_REQUIRED',
+            label: 'Fréquence',
+            prompt: 'À quelle fréquence les données et le dashboard doivent-ils être mis à jour ?',
+            importance: 'important'
+        },
+        workflowScope: {
+            artifactId: 'workflow',
+            requirementId: 'WORKFLOW_SCOPE_REQUIRED',
+            label: 'Périmètre du workflow',
+            prompt: 'Quel processus ou périmètre doit être couvert par le workflow ?',
+            importance: 'blocking'
+        },
+        workflowSteps: {
+            artifactId: 'workflow',
+            requirementId: 'WORKFLOW_STEPS_REQUIRED',
+            label: 'Étapes',
+            prompt: 'Quelles sont les principales étapes, entrées et sorties du workflow ?',
+            importance: 'blocking'
+        },
+        workflowActors: {
+            artifactId: 'workflow',
+            requirementId: 'WORKFLOW_ACTORS_REQUIRED',
+            label: 'Acteurs',
+            prompt: 'Quels rôles ou acteurs interviennent à chaque étape ?',
+            importance: 'blocking'
+        },
+        workflowRules: {
+            artifactId: 'workflow',
+            requirementId: 'WORKFLOW_RULES_REQUIRED',
+            label: 'Règles / validations',
+            prompt: 'Quelles règles, validations, délais ou escalades doivent être appliqués ?',
+            importance: 'important'
+        },
+        workflowTraceability: {
+            artifactId: 'workflow',
+            requirementId: 'WORKFLOW_TRACEABILITY_REQUIRED',
+            label: 'Traçabilité',
+            prompt: 'Quelles preuves, données ou traces doivent être conservées pour chaque étape ?',
+            importance: 'important'
+        }
+    };
 
     document.documentElement.dataset.reasoningCoreVersion = core.REASONING_CORE_VERSION || 'unknown';
 
@@ -30,7 +246,7 @@
 
     function createInitialState() {
         return {
-            version: 3,
+            version: 4,
             scenario: null,
             entryIntent: null,
             primaryDomain: null,
@@ -47,6 +263,7 @@
             activeQuestion: null,
             editingField: null,
             reasoning: emptyReasoning(),
+            artifactWorkflow: null,
             sensitiveIntent: false,
             peopleGuardrail: false,
             expertSuggested: false
@@ -99,13 +316,273 @@
         state.messages.push({ role: role, text: text });
     }
 
+    function getV2Reasoning(reasoning) {
+        const source = reasoning || state.reasoning;
+        return source && source.v2 ? source.v2 : null;
+    }
+
+    function getRequestedArtifact(reasoning) {
+        const v2 = getV2Reasoning(reasoning);
+        return v2 && v2.requestedArtifact ? v2.requestedArtifact : null;
+    }
+
+    function getArtifactReadiness(reasoning) {
+        const v2 = getV2Reasoning(reasoning);
+        return v2 && v2.artifactReadiness ? v2.artifactReadiness : null;
+    }
+
+    function isArtifactWorkflowActive(reasoning) {
+        const artifact = getRequestedArtifact(reasoning);
+        const readiness = getArtifactReadiness(reasoning);
+        return Boolean(artifact && readiness && readiness.applicable);
+    }
+
+    function isArtifactReady(reasoning) {
+        const readiness = getArtifactReadiness(reasoning);
+        return Boolean(isArtifactWorkflowActive(reasoning) && readiness.ready);
+    }
+
+    function cloneRequirement(requirement) {
+        if (!requirement) return null;
+        return {
+            id: requirement.id || null,
+            answerKey: requirement.answerKey || null,
+            question: requirement.question || '',
+            importance: requirement.importance || 'important',
+            satisfied: Boolean(requirement.satisfied)
+        };
+    }
+
+    function artifactWorkflowFromReasoning(reasoning) {
+        const v2 = getV2Reasoning(reasoning);
+        if (!v2 || !v2.requestedArtifact || !v2.artifactReadiness || !v2.artifactReadiness.applicable) {
+            return null;
+        }
+
+        const readiness = v2.artifactReadiness;
+
+        return {
+            interactionMode: v2.interactionMode || null,
+            requestedArtifact: {
+                id: v2.requestedArtifact.id || null,
+                label: v2.requestedArtifact.label || 'Livrable',
+                family: v2.requestedArtifact.family || null,
+                confidence: v2.requestedArtifact.confidence || null
+            },
+            artifactReadiness: {
+                applicable: true,
+                artifactId: readiness.artifactId || v2.requestedArtifact.id || null,
+                ready: Boolean(readiness.ready),
+                completion: Number.isFinite(Number(readiness.completion)) ? Number(readiness.completion) : 0,
+                satisfiedRequirements: Array.isArray(readiness.satisfiedRequirements)
+                    ? readiness.satisfiedRequirements.slice()
+                    : [],
+                missingRequirements: Array.isArray(readiness.missingRequirements)
+                    ? readiness.missingRequirements.map(cloneRequirement)
+                    : [],
+                nextRequirement: cloneRequirement(readiness.nextRequirement)
+            }
+        };
+    }
+
+    function workflowCompletion(snapshot) {
+        if (!snapshot || !snapshot.artifactReadiness) return 0;
+        return Number(snapshot.artifactReadiness.completion) || 0;
+    }
+
+    function chooseArtifactWorkflow(previousSnapshot, runtimeSnapshot) {
+        if (!previousSnapshot) return runtimeSnapshot;
+        if (!runtimeSnapshot) return previousSnapshot;
+
+        const previousId = previousSnapshot.requestedArtifact && previousSnapshot.requestedArtifact.id;
+        const runtimeId = runtimeSnapshot.requestedArtifact && runtimeSnapshot.requestedArtifact.id;
+
+        if (previousId && runtimeId && previousId !== runtimeId) {
+            return runtimeSnapshot;
+        }
+
+        /*
+         * After a privacy-safe restore, initialText is intentionally empty.
+         * Prefer the persisted structural workflow if the runtime can only
+         * reconstruct a less complete version of the same artifact.
+         */
+        if (!state.initialText && workflowCompletion(previousSnapshot) > workflowCompletion(runtimeSnapshot)) {
+            return previousSnapshot;
+        }
+
+        return runtimeSnapshot;
+    }
+
+    function ensureV2Container() {
+        if (!state.reasoning || typeof state.reasoning !== 'object') {
+            state.reasoning = emptyReasoning();
+        }
+        if (!state.reasoning.v2 || typeof state.reasoning.v2 !== 'object') {
+            state.reasoning.v2 = {};
+        }
+        return state.reasoning.v2;
+    }
+
+    function applyArtifactWorkflowSnapshot(snapshot) {
+        if (!snapshot || !snapshot.requestedArtifact || !snapshot.artifactReadiness) return;
+        const v2 = ensureV2Container();
+        v2.interactionMode = snapshot.interactionMode || v2.interactionMode || null;
+        v2.requestedArtifact = Object.assign({}, snapshot.requestedArtifact);
+        v2.artifactReadiness = {
+            applicable: true,
+            artifactId: snapshot.artifactReadiness.artifactId || snapshot.requestedArtifact.id,
+            ready: Boolean(snapshot.artifactReadiness.ready),
+            completion: Number(snapshot.artifactReadiness.completion) || 0,
+            satisfiedRequirements: (snapshot.artifactReadiness.satisfiedRequirements || []).slice(),
+            missingRequirements: (snapshot.artifactReadiness.missingRequirements || []).map(cloneRequirement),
+            nextRequirement: cloneRequirement(snapshot.artifactReadiness.nextRequirement)
+        };
+    }
+
+    function externalArtifactQuestion(field) {
+        const engine = window.CivilinaAIArtifactRequirements;
+        const registry = engine && engine.REQUIREMENT_REGISTRY ? engine.REQUIREMENT_REGISTRY : null;
+        if (!registry) return null;
+
+        const artifactIds = Array.isArray(registry) ? [] : Object.keys(registry);
+
+        for (let i = 0; i < artifactIds.length; i += 1) {
+            const artifactId = artifactIds[i];
+            const collection = registry[artifactId];
+            const requirements = Array.isArray(collection)
+                ? collection
+                : (collection && Array.isArray(collection.requirements) ? collection.requirements : []);
+            const requirement = requirements.find(function (item) { return item && item.answerKey === field; });
+
+            if (requirement) {
+                return {
+                    id: field,
+                    requirementId: requirement.id || null,
+                    artifactId: artifactId,
+                    prompt: requirement.question || field,
+                    suggestions: [],
+                    source: 'artifactRequirement',
+                    importance: requirement.importance || 'important'
+                };
+            }
+        }
+
+        return null;
+    }
+
+    function fallbackArtifactQuestion(field) {
+        const fallback = artifactQuestionFallbacks[field];
+        if (!fallback) return null;
+        return {
+            id: field,
+            requirementId: fallback.requirementId,
+            artifactId: fallback.artifactId,
+            prompt: fallback.prompt,
+            suggestions: [],
+            source: 'artifactRequirement',
+            importance: fallback.importance || 'important'
+        };
+    }
+
+    function artifactQuestionDefinition(field) {
+        return externalArtifactQuestion(field) || fallbackArtifactQuestion(field);
+    }
+
+    function artifactFieldLabel(field) {
+        const fallback = artifactQuestionFallbacks[field];
+        if (fallback && fallback.label) return fallback.label;
+        const question = artifactQuestionDefinition(field);
+        return question ? shortQuestionLabel(question.prompt) : null;
+    }
+
+    function advanceArtifactWorkflow(question) {
+        if (!question || question.source !== 'artifactRequirement' || !question.requirementId) return;
+
+        const snapshot = state.artifactWorkflow || artifactWorkflowFromReasoning(state.reasoning);
+        if (!snapshot || !snapshot.artifactReadiness) return;
+
+        const readiness = snapshot.artifactReadiness;
+        const satisfied = new Set(readiness.satisfiedRequirements || []);
+        satisfied.add(question.requirementId);
+
+        const missing = (readiness.missingRequirements || []).filter(function (item) {
+            return item && item.id !== question.requirementId;
+        });
+
+        const total = satisfied.size + missing.length;
+        const nextRequirement = missing.find(function (item) { return item.importance === 'blocking'; }) || missing[0] || null;
+
+        readiness.satisfiedRequirements = Array.from(satisfied);
+        readiness.missingRequirements = missing;
+        readiness.nextRequirement = cloneRequirement(nextRequirement);
+        readiness.ready = missing.length === 0;
+        readiness.completion = total > 0 ? Math.round((satisfied.size / total) * 100) : 100;
+
+        state.artifactWorkflow = snapshot;
+        applyArtifactWorkflowSnapshot(snapshot);
+    }
+
+    function reopenArtifactRequirement(question) {
+        if (!question || question.source !== 'artifactRequirement' || !question.requirementId) return;
+
+        const snapshot = state.artifactWorkflow || artifactWorkflowFromReasoning(state.reasoning);
+        if (!snapshot || !snapshot.artifactReadiness) return;
+
+        const readiness = snapshot.artifactReadiness;
+        const satisfied = (readiness.satisfiedRequirements || []).filter(function (id) {
+            return id !== question.requirementId;
+        });
+        const missing = (readiness.missingRequirements || []).map(cloneRequirement);
+
+        if (!missing.some(function (item) { return item && item.id === question.requirementId; })) {
+            missing.unshift({
+                id: question.requirementId,
+                answerKey: question.id,
+                question: question.prompt,
+                importance: question.importance || 'important',
+                satisfied: false
+            });
+        }
+
+        const total = satisfied.length + missing.length;
+        readiness.satisfiedRequirements = satisfied;
+        readiness.missingRequirements = missing;
+        readiness.nextRequirement = cloneRequirement(missing[0]);
+        readiness.ready = false;
+        readiness.completion = total > 0 ? Math.round((satisfied.length / total) * 100) : 0;
+
+        state.artifactWorkflow = snapshot;
+        applyArtifactWorkflowSnapshot(snapshot);
+    }
+
+    function sanitizeStoredAnswerLabels(safeState) {
+        const labels = {};
+        Object.keys(state.answerLabels || {}).forEach(function (key) {
+            const value = state.answers ? state.answers[key] : null;
+            const isStructured = typeof value === 'string' && /^[a-z0-9-]{1,48}$/i.test(value);
+            labels[key] = isStructured ? state.answerLabels[key] : 'Réponse libre non conservée après actualisation';
+        });
+        safeState.answerLabels = labels;
+        return safeState;
+    }
+
     function recalculate() {
+        const previousWorkflow = state.artifactWorkflow;
+
         state.reasoning = core.evaluate({
             entryIntent: state.entryIntent,
             answers: state.answers,
             freeText: state.initialText,
             seedFacts: state.derivedTextFacts
         });
+
+        const runtimeWorkflow = artifactWorkflowFromReasoning(state.reasoning);
+        state.artifactWorkflow = chooseArtifactWorkflow(previousWorkflow, runtimeWorkflow);
+
+        if (state.artifactWorkflow) {
+            applyArtifactWorkflowSnapshot(state.artifactWorkflow);
+        }
+
         state.entryIntent = state.reasoning.entryIntent;
         state.scenario = state.entryIntent;
         state.primaryDomain = state.reasoning.primaryDomain;
@@ -117,23 +594,48 @@
     }
 
     function persist() {
-        sessionStorage.setItem(storageKey, JSON.stringify(privacy.buildSafeStorageState(state)));
+        try {
+            const safeState = sanitizeStoredAnswerLabels(privacy.buildSafeStorageState(state));
+            const workflow = state.artifactWorkflow || artifactWorkflowFromReasoning(state.reasoning);
+            if (workflow) safeState.artifactWorkflow = workflow;
+            sessionStorage.setItem(storageKey, JSON.stringify(safeState));
+        } catch (error) {
+            /* Storage must never block the current journey. */
+        }
     }
 
     function restore() {
         try {
             const raw = sessionStorage.getItem(storageKey);
             if (!raw) return;
+
             const parsed = JSON.parse(raw);
-            if (!parsed || parsed.version !== 3 || !validPhases.includes(parsed.phase)) return;
+            if (!parsed || parsed.version !== 4 || !validPhases.includes(parsed.phase)) return;
+
             state = Object.assign(createInitialState(), parsed, {
                 initialText: '',
                 activeQuestion: null,
                 editingField: null,
-                messages: Array.isArray(parsed.messages) ? parsed.messages : []
+                messages: Array.isArray(parsed.messages) ? parsed.messages : [],
+                artifactWorkflow: parsed.artifactWorkflow || null
             });
+
             recalculate();
-            if (state.phase === 'conversation') prepareNextQuestion(false);
+
+            if (state.phase === 'conversation') {
+                if (isArtifactWorkflowActive()) {
+                    state.activeQuestion = artifactRequirementQuestion();
+                    if (!state.activeQuestion) {
+                        state.phase = isArtifactReady() ? 'confirmation' : 'confirmation';
+                    }
+                } else {
+                    prepareNextQuestion(false);
+                }
+            }
+
+            if (state.phase === 'artifactReady' && !isArtifactReady()) {
+                state.phase = isArtifactWorkflowActive() ? 'confirmation' : 'start';
+            }
         } catch (error) {
             sessionStorage.removeItem(storageKey);
             state = createInitialState();
@@ -142,7 +644,9 @@
 
     function renderMessages() {
         elements.conversation.innerHTML = '';
-        const visibleMessages = ['reading', 'confirmation'].includes(state.phase) ? state.messages.slice(-4) : state.messages.slice(-8);
+        const compactPhases = ['reading', 'confirmation', 'artifactReady'];
+        const visibleMessages = compactPhases.includes(state.phase) ? state.messages.slice(-4) : state.messages.slice(-8);
+
         visibleMessages.forEach(function (message, index) {
             const article = createElement('article', 'ai-message ai-message-' + message.role);
             if (index === visibleMessages.length - 1) article.classList.add('is-new');
@@ -152,21 +656,25 @@
             );
             elements.conversation.appendChild(article);
         });
+
         elements.conversation.scrollTop = elements.conversation.scrollHeight;
     }
 
     function renderSuggestions() {
         elements.suggestions.innerHTML = '';
         let options = [];
+
         if (state.phase === 'start') {
             options = config.initialOptions.map(function (option) {
                 return { label: option.label, value: option.value, scenario: option.scenario };
             });
         } else if (state.phase === 'conversation' && state.activeQuestion) {
-            options = state.activeQuestion.suggestions.map(function (item) {
+            const suggestions = Array.isArray(state.activeQuestion.suggestions) ? state.activeQuestion.suggestions : [];
+            options = suggestions.map(function (item) {
                 return { label: item[0], value: item[0], answer: item[1] };
             });
         }
+
         options.forEach(function (option) {
             const button = createElement('button', 'suggestion', option.label);
             button.type = 'button';
@@ -175,6 +683,7 @@
             if (option.answer) button.dataset.answer = option.answer;
             elements.suggestions.appendChild(button);
         });
+
         elements.suggestions.hidden = options.length === 0;
     }
 
@@ -183,17 +692,26 @@
         if (state.phase === 'conversation') return Math.min(62, 20 + state.questionCount * 10);
         if (['confirmation', 'edit'].includes(state.phase)) return 64;
         if (state.phase === 'reading') return 72;
+        if (state.phase === 'artifactReady') return 86;
         if (state.phase === 'recommendation') return 86;
         return 100;
     }
 
     function renderProgress() {
         const labels = {
-            start: 'Comprendre', conversation: 'Comprendre', confirmation: 'Analyser', edit: 'Analyser',
-            reading: 'Analyser', recommendation: 'Recommander', account: 'Recommander', followup: 'Recommander'
+            start: 'Comprendre',
+            conversation: 'Comprendre',
+            confirmation: 'Analyser',
+            edit: 'Analyser',
+            reading: 'Analyser',
+            artifactReady: 'Construire',
+            recommendation: 'Recommander',
+            account: 'Recommander',
+            followup: 'Recommander'
         };
+
         const value = progressValue();
-        elements.phase.textContent = labels[state.phase];
+        elements.phase.textContent = labels[state.phase] || 'Comprendre';
         elements.progress.style.setProperty('--ai-progress', value + '%');
         elements.progress.setAttribute('aria-valuenow', String(value));
         elements.progress.querySelectorAll('span').forEach(function (item) {
@@ -206,9 +724,14 @@
         elements.form.hidden = !interactive;
         elements.input.placeholder = state.phase === 'conversation' ? 'Votre réponse…' : 'Décrivez votre besoin…';
         elements.submit.textContent = state.phase === 'conversation' ? 'Répondre' : 'Commencer';
-        elements.note.textContent = interactive
-            ? 'Vos réponses restent dans ce navigateur et ne sont envoyées à aucun serveur Civilina.'
-            : 'Diagnostic conservé dans cette session uniquement.';
+
+        if (interactive) {
+            elements.note.textContent = 'Vos réponses restent dans cette session du navigateur et ne sont envoyées à aucun serveur Civilina.';
+        } else if (isArtifactWorkflowActive()) {
+            elements.note.textContent = 'Préparation du livrable conservée localement dans cette session uniquement.';
+        } else {
+            elements.note.textContent = 'Diagnostic conservé dans cette session uniquement.';
+        }
     }
 
     function appendDomainSummary(section) {
@@ -280,16 +803,52 @@
     function renderConfirmation() {
         const section = createElement('section', 'journey-panel');
         section.dataset.view = 'confirmation';
-        section.append(createElement('span', 'journey-kicker', 'Confirmation du contexte'), createElement('h3', null, 'Civilina a compris :'));
+
+        const artifact = getRequestedArtifact();
+        const readiness = getArtifactReadiness();
+        const artifactFlow = isArtifactWorkflowActive();
+
+        section.append(
+            createElement('span', 'journey-kicker', artifactFlow ? 'Confirmation du livrable' : 'Confirmation du contexte'),
+            createElement('h3', null, artifactFlow && artifact ? artifact.label + ' — contexte recueilli' : 'Civilina a compris :')
+        );
+
         const context = createElement('dl', 'context-list');
-        Object.keys(state.answerLabels).slice(0, 5).forEach(function (field) {
+
+        if (artifactFlow && state.initialText) {
+            const requestRow = createElement('div', 'context-row');
+            requestRow.append(
+                createElement('dt', null, 'Demande initiale'),
+                createElement('dd', null, state.initialText)
+            );
+            context.appendChild(requestRow);
+        }
+
+        if (artifactFlow && readiness) {
+            const completionRow = createElement('div', 'context-row');
+            completionRow.append(
+                createElement('dt', null, 'Complétude'),
+                createElement('dd', null, (Number(readiness.completion) || 0) + ' %')
+            );
+            context.appendChild(completionRow);
+        }
+
+        const fields = Object.keys(state.answerLabels);
+        const visibleFields = artifactFlow ? fields : fields.slice(0, 5);
+
+        visibleFields.forEach(function (field) {
             const row = createElement('div', 'context-row');
             const question = findQuestion(field);
-            row.append(createElement('dt', null, questionLabel(field, question)), createElement('dd', null, state.answerLabels[field]));
+            row.append(
+                createElement('dt', null, questionLabel(field, question)),
+                createElement('dd', null, state.answerLabels[field])
+            );
             context.appendChild(row);
         });
+
         section.appendChild(context);
         appendReasoningAlerts(section);
+
         const actions = createElement('div', 'journey-actions');
         const confirm = createElement('button', 'btn btn-navy journey-primary', 'C’est correct');
         confirm.type = 'button';
@@ -299,6 +858,7 @@
         edit.dataset.action = 'show-edit';
         actions.append(confirm, edit);
         section.appendChild(actions);
+
         return section;
     }
 
@@ -440,13 +1000,85 @@
         section.appendChild(back);
         return section;
     }
+    function renderArtifactReady() {
+        const section = createElement('section', 'journey-panel');
+        section.dataset.view = 'artifact-ready';
+
+        const artifact = getRequestedArtifact();
+        const readiness = getArtifactReadiness();
+        const artifactLabel = artifact && artifact.label ? artifact.label : 'Livrable';
+        const completion = readiness && Number.isFinite(Number(readiness.completion))
+            ? Number(readiness.completion)
+            : 100;
+
+        section.append(
+            createElement('span', 'journey-kicker', 'Livrable prêt à construire'),
+            createElement('h3', null, artifactLabel + ' prêt à être préparé'),
+            createElement('p', 'journey-context', 'Les informations nécessaires ont été recueillies et confirmées.')
+        );
+
+        const context = createElement('dl', 'context-list');
+        const artifactRow = createElement('div', 'context-row');
+        artifactRow.append(
+            createElement('dt', null, 'Livrable'),
+            createElement('dd', null, artifactLabel)
+        );
+
+        const completionRow = createElement('div', 'context-row');
+        completionRow.append(
+            createElement('dt', null, 'Complétude'),
+            createElement('dd', null, completion + ' %')
+        );
+
+        const statusRow = createElement('div', 'context-row');
+        statusRow.append(
+            createElement('dt', null, 'État'),
+            createElement(
+                'dd',
+                null,
+                readiness && readiness.ready
+                    ? 'Informations suffisantes pour préparer le brouillon'
+                    : 'Informations à compléter'
+            )
+        );
+
+        context.append(artifactRow, completionRow, statusRow);
+        section.appendChild(context);
+
+        if (Object.keys(state.answerLabels).length) {
+            section.appendChild(createElement('h3', 'journey-subtitle', 'Contexte confirmé'));
+            const list = createElement('div', 'evidence-list');
+            Object.keys(state.answerLabels).forEach(function (field) {
+                const item = createElement('article', 'evidence-item');
+                const question = findQuestion(field);
+                item.append(
+                    createElement('strong', null, questionLabel(field, question)),
+                    createElement('p', null, state.answerLabels[field])
+                );
+                list.appendChild(item);
+            });
+            section.appendChild(list);
+        }
+
+        section.appendChild(
+            createElement(
+                'p',
+                'uncertainty-note',
+                'Prochaine étape : construire un brouillon structuré à partir des informations validées.'
+            )
+        );
+
+        return section;
+    }
 
     function renderOutcome() {
         elements.outcome.innerHTML = '';
         elements.outcome.hidden = ['start', 'conversation'].includes(state.phase);
+
         if (state.phase === 'confirmation') elements.outcome.appendChild(renderConfirmation());
         if (state.phase === 'edit') elements.outcome.appendChild(renderEdit());
         if (state.phase === 'reading') elements.outcome.appendChild(renderReading());
+        if (state.phase === 'artifactReady') elements.outcome.appendChild(renderArtifactReady());
         if (state.phase === 'recommendation') elements.outcome.appendChild(renderRecommendation());
         if (state.phase === 'account') elements.outcome.appendChild(renderAccount());
         if (state.phase === 'followup') elements.outcome.appendChild(renderFollowup());
@@ -464,30 +1096,60 @@
     }
 
     function findQuestion(field) {
-        const scenarioQuestion = currentScenario() && currentScenario().questions.find(function (question) { return question.id === field; });
+        const scenarioQuestion = currentScenario() && currentScenario().questions.find(function (question) {
+            return question.id === field;
+        });
         if (scenarioQuestion) return scenarioQuestion;
+
+        const artifactQuestion = artifactQuestionDefinition(field);
+        if (artifactQuestion) return artifactQuestion;
+
         const dynamic = {
             domainClarification: {
-                id: 'domainClarification', prompt: 'Sujet principal', suggestions: [
-                    ['Mes projets', 'projects'], ['Mon organisation', 'organisation'], ['Mon système ISO / qualité', 'managementSystems'], ['Mes processus digitaux', 'digitalisation'], ['Mes équipes', 'people']
+                id: 'domainClarification',
+                prompt: 'Sujet principal',
+                suggestions: [
+                    ['Mes projets', 'projects'],
+                    ['Mon organisation', 'organisation'],
+                    ['Mon système ISO / qualité', 'managementSystems'],
+                    ['Mes processus digitaux', 'digitalisation'],
+                    ['Mes équipes', 'people']
                 ]
             },
             delayCause: {
-                id: 'delayCause', prompt: 'Cause principale des retards', suggestions: [
-                    ['Planning / séquencement', 'planning'], ['Approvisionnement', 'procurement'], ['Ressources', 'resources'], ['Causes multiples', 'multiple'], ['Je ne sais pas encore', 'unknown']
+                id: 'delayCause',
+                prompt: 'Cause principale des retards',
+                suggestions: [
+                    ['Planning / séquencement', 'planning'],
+                    ['Approvisionnement', 'procurement'],
+                    ['Ressources', 'resources'],
+                    ['Causes multiples', 'multiple'],
+                    ['Je ne sais pas encore', 'unknown']
                 ]
             },
             subcontractorBlockage: {
-                id: 'subcontractorBlockage', prompt: 'Nature du blocage sous-traitant', suggestions: [
-                    ['Capacité / ressources', 'capacity'], ['Interface achats', 'procurement-interface'], ['Validation technique', 'technical-approval'], ['Qualité d’exécution', 'quality'], ['Je ne sais pas encore', 'unknown']
+                id: 'subcontractorBlockage',
+                prompt: 'Nature du blocage sous-traitant',
+                suggestions: [
+                    ['Capacité / ressources', 'capacity'],
+                    ['Interface achats', 'procurement-interface'],
+                    ['Validation technique', 'technical-approval'],
+                    ['Qualité d’exécution', 'quality'],
+                    ['Je ne sais pas encore', 'unknown']
                 ]
             },
             peopleCriteria: {
-                id: 'peopleCriteria', prompt: 'Quels éléments objectifs sont déjà disponibles ?', suggestions: [
-                    ['Compétences et expérience', 'skills-experience'], ['Performance et responsabilités', 'performance-responsibilities'], ['Exigences du poste', 'role-requirements'], ['Éléments encore incomplets', 'incomplete']
+                id: 'peopleCriteria',
+                prompt: 'Quels éléments objectifs sont déjà disponibles ?',
+                suggestions: [
+                    ['Compétences et expérience', 'skills-experience'],
+                    ['Performance et responsabilités', 'performance-responsibilities'],
+                    ['Exigences du poste', 'role-requirements'],
+                    ['Éléments encore incomplets', 'incomplete']
                 ]
             }
         };
+
         return dynamic[field] || null;
     }
 
@@ -497,18 +1159,101 @@
     }
 
     function questionLabel(field, question) {
+        const artifactLabel = artifactFieldLabel(field);
+        if (artifactLabel) return artifactLabel;
+
         const labels = {
-            activity: 'Activité', portfolio: 'Portefeuille', tracking: 'Outils de suivi', difficulty: 'Priorité',
-            size: 'Taille', issue: 'Difficulté', decisions: 'Validations', objective: 'Objectif',
-            reference: 'Référentiel', maturity: 'Maturité', tools: 'Outils', process: 'Processus',
-            peopleObjective: 'Objectif humain', peopleScope: 'Périmètre humain', peopleCriteria: 'Critères de décision',
-            domainClarification: 'Sujet principal', delayCause: 'Cause des retards', subcontractorBlockage: 'Blocage sous-traitant'
+            activity: 'Activité',
+            portfolio: 'Portefeuille',
+            tracking: 'Outils de suivi',
+            difficulty: 'Priorité',
+            size: 'Taille',
+            issue: 'Difficulté',
+            decisions: 'Validations',
+            objective: 'Objectif',
+            reference: 'Référentiel',
+            maturity: 'Maturité',
+            tools: 'Outils',
+            process: 'Processus',
+            peopleObjective: 'Objectif humain',
+            peopleScope: 'Périmètre humain',
+            peopleCriteria: 'Critères de décision',
+            domainClarification: 'Sujet principal',
+            delayCause: 'Cause des retards',
+            subcontractorBlockage: 'Blocage sous-traitant'
         };
+
         return labels[field] || (question ? shortQuestionLabel(question.prompt) : field);
+    }
+
+    function artifactRequirementQuestion() {
+        const readiness = getArtifactReadiness();
+        const requirement = readiness ? readiness.nextRequirement : null;
+        if (!requirement) return null;
+
+        const registered = requirement.answerKey ? artifactQuestionDefinition(requirement.answerKey) : null;
+        if (registered) {
+            registered.requirementId = requirement.id || registered.requirementId;
+            registered.prompt = requirement.question || registered.prompt;
+            registered.importance = requirement.importance || registered.importance;
+            return registered;
+        }
+
+        return {
+            id: requirement.answerKey,
+            requirementId: requirement.id,
+            prompt: requirement.question,
+            suggestions: [],
+            source: 'artifactRequirement',
+            importance: requirement.importance || 'important'
+        };
     }
 
     function prepareNextQuestion(announce) {
         recalculate();
+
+        const artifactReadiness = getArtifactReadiness();
+
+        if (artifactReadiness && artifactReadiness.applicable && artifactReadiness.ready) {
+            state.activeQuestion = null;
+            state.phase = 'confirmation';
+
+            if (announce) {
+                const artifact = getRequestedArtifact();
+                const artifactLabel = artifact && artifact.label ? artifact.label : 'livrable';
+                addMessage(
+                    'assistant',
+                    'Merci. Les informations nécessaires pour structurer ' + artifactLabel + ' sont réunies. Vérifions rapidement le contexte avant de poursuivre.'
+                );
+            }
+
+            return false;
+        }
+
+        const artifactQuestion = artifactRequirementQuestion();
+
+        /* Artifact workflows follow their own requirement count; no legacy six-question cap. */
+        if (artifactQuestion) {
+            state.activeQuestion = artifactQuestion;
+            state.phase = 'conversation';
+            if (announce) addMessage('assistant', state.activeQuestion.prompt);
+            return true;
+        }
+
+        if (artifactReadiness && artifactReadiness.applicable) {
+            state.activeQuestion = null;
+            state.phase = 'confirmation';
+
+            if (announce) {
+                addMessage(
+                    'assistant',
+                    'Merci. Vérifions rapidement les éléments recueillis avant de poursuivre la construction du livrable.'
+                );
+            }
+
+            return false;
+        }
+
         const scenario = currentScenario();
         state.activeQuestion = core.nextBestQuestion({
             entryIntent: state.entryIntent,
@@ -516,11 +1261,13 @@
             reasoning: state.reasoning,
             questions: scenario ? scenario.questions : []
         });
+
         if (state.activeQuestion && state.questionCount < 6) {
             state.phase = 'conversation';
             if (announce) addMessage('assistant', state.activeQuestion.prompt);
             return true;
         }
+
         state.activeQuestion = null;
         state.phase = 'confirmation';
         if (announce) addMessage('assistant', 'Merci. Vérifions rapidement le contexte avant la première lecture.');
@@ -537,41 +1284,64 @@
         addMessage('user', userText);
         recalculate();
         prepareNextQuestion(false);
+
         if (state.activeQuestion) {
-            const intro = currentScenario() ? currentScenario().intro + ' ' : '';
+            const intro = isArtifactWorkflowActive()
+                ? ''
+                : (currentScenario() ? currentScenario().intro + ' ' : '');
             addMessage('assistant', intro + state.activeQuestion.prompt);
         }
+
         render();
     }
 
     function mapFreeAnswer(question, value) {
         const normalized = normalize(value).toLocaleLowerCase('fr');
-        const exact = question.suggestions.find(function (item) { return item[0].toLocaleLowerCase('fr') === normalized; });
-        if (exact) return exact[1];
-        const keyword = question.suggestions.find(function (item) {
-            return item[0].toLocaleLowerCase('fr').split(/\s+/).some(function (word) { return word.length > 4 && normalized.includes(word); });
+        const suggestions = Array.isArray(question && question.suggestions) ? question.suggestions : [];
+        const exact = suggestions.find(function (item) {
+            return item[0].toLocaleLowerCase('fr') === normalized;
         });
+        if (exact) return exact[1];
+
+        const keyword = suggestions.find(function (item) {
+            return item[0].toLocaleLowerCase('fr').split(/\s+/).some(function (word) {
+                return word.length > 4 && normalized.includes(word);
+            });
+        });
+
         return keyword ? keyword[1] : 'other';
     }
 
     function answerCurrentQuestion(text, mappedValue) {
         const question = state.activeQuestion;
         if (!question) return;
-        state.answers[question.id] = mappedValue || mapFreeAnswer(question, text);
-        state.answerLabels[question.id] = mappedValue ? text : 'Réponse libre qualifiée';
+
+        if (question.source === 'artifactRequirement') {
+            const answerText = String(text || '').trim();
+            state.answers[question.id] = answerText;
+            state.answerLabels[question.id] = answerText;
+            advanceArtifactWorkflow(question);
+        } else {
+            state.answers[question.id] = mappedValue || mapFreeAnswer(question, text);
+            state.answerLabels[question.id] = mappedValue ? text : 'Réponse libre qualifiée';
+        }
+
         state.sensitiveIntent = state.sensitiveIntent || privacy.detectSensitiveIntent(text);
         addMessage('user', text);
         state.questionCount += 1;
+
         const wasEditing = state.editingField;
         state.editingField = null;
         state.activeQuestion = null;
         recalculate();
+
         if (wasEditing) {
             state.phase = 'confirmation';
-            addMessage('assistant', 'La lecture a été recalculée à partir de votre correction.');
+            addMessage('assistant', 'Le contexte a été recalculé à partir de votre correction.');
         } else {
             prepareNextQuestion(true);
         }
+
         render();
         if (state.phase !== 'conversation') elements.outcome.focus({ preventScroll: true });
     }
@@ -604,6 +1374,11 @@
     function beginEdit(field) {
         const question = findQuestion(field);
         if (!question) return;
+
+        if (question.source === 'artifactRequirement') {
+            reopenArtifactRequirement(question);
+        }
+
         delete state.answers[field];
         delete state.answerLabels[field];
         state.editingField = field;
@@ -632,8 +1407,20 @@
     elements.outcome.addEventListener('click', function (event) {
         const target = event.target.closest('[data-action]');
         if (!target) return;
+
         const action = target.dataset.action;
-        if (action === 'confirm-context') state.phase = 'reading';
+
+        if (action === 'confirm-context') {
+            if (isArtifactReady()) {
+                state.phase = 'artifactReady';
+            } else if (isArtifactWorkflowActive()) {
+                const continued = prepareNextQuestion(true);
+                if (!continued && state.phase !== 'confirmation') state.phase = 'confirmation';
+            } else {
+                state.phase = 'reading';
+            }
+        }
+
         if (action === 'show-edit') state.phase = 'edit';
         if (action === 'show-confirmation') state.phase = 'confirmation';
         if (action === 'edit-answer') return beginEdit(target.dataset.field);
@@ -641,6 +1428,7 @@
         if (action === 'show-recommendation') state.phase = 'recommendation';
         if (action === 'show-account') state.phase = 'account';
         if (action === 'show-followup') state.phase = 'followup';
+
         render();
         elements.outcome.focus({ preventScroll: true });
     });
@@ -652,7 +1440,8 @@
     restore();
     if (state.messages.length === 0) addMessage('assistant', 'Bonjour. Que souhaitez-vous améliorer ou mieux maîtriser dans votre organisation ?');
     render();
-    document.getElementById('current-year').textContent = new Date().getFullYear();
+    const currentYear = document.getElementById('current-year');
+    if (currentYear) currentYear.textContent = new Date().getFullYear();
 
     window.CivilinaAIJourney = {
         getState: function () { return JSON.parse(JSON.stringify(state)); },
