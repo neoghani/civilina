@@ -27,6 +27,10 @@
             : root.CivilinaAIArtifactRequirements,
 
         isCommonJs
+            ? require('./civilina-ai-artifact-context.js')
+            : root.CivilinaAIArtifactContext,
+
+        isCommonJs
             ? require('./civilina-ai-facts-v2.js')
             : root.CivilinaAIFactsV2,
 
@@ -56,6 +60,7 @@
         actionRecognizer,
         artifactRecognizer,
         artifactRequirements,
+        artifactContext,
         factEngine,
         questionEngine,
         legacyReasoning
@@ -753,10 +758,22 @@
              * STEP 4
              * Build business reasoning dimensions.
              */
-            const dimensions =
+            let dimensions =
                 factEngine.buildDimensions(
                     recognition,
                     safeInput
+                );
+
+            /*
+             * STEP 4B
+             * Refine generic dimensions using the requested artifact
+             * as stronger contextual evidence.
+             */
+            dimensions =
+                artifactContext.refine(
+                    artifactRecognition.primary,
+                    dimensions,
+                    recognition
                 );
 
             /*

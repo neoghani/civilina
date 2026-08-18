@@ -55,6 +55,7 @@
         'civilina-ai-action-recognizer.js',
         'civilina-ai-artifact-recognizer.js',
         'civilina-ai-artifact-requirements.js',
+        'civilina-ai-artifact-context.js',
         'civilina-ai-facts-v2.js',
         'civilina-ai-questions-v2.js',
         'civilina-ai-reasoning-v2.js',
