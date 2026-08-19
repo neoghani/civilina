@@ -1878,6 +1878,387 @@ if (unassociatedCriteria.length) {
     }
 
     /*
+     * Sprint 2.7
+     * Build a deterministic WBS draft when requested.
+     */
+    if (
+        artifact &&
+        artifact.id === 'wbs' &&
+        window.CivilinaAIWBSBuilder
+    ) {
+        const buildResult =
+            window.CivilinaAIWBSBuilder.build({
+                initialText:
+                    state.initialText,
+
+                answers:
+                    state.answers
+            });
+
+        if (
+            buildResult &&
+            buildResult.ready &&
+            buildResult.artifact
+        ) {
+            const draft =
+                buildResult.artifact;
+
+            section.appendChild(
+                createElement(
+                    'h3',
+                    'journey-subtitle',
+                    'Brouillon WBS structuré'
+                )
+            );
+
+            const summary =
+                createElement(
+                    'dl',
+                    'context-list'
+                );
+
+            const scopeRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            scopeRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Périmètre'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.scope &&
+                    draft.scope.statement
+                        ? draft.scope.statement
+                        : 'À définir'
+                )
+            );
+
+            const revisionRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            revisionRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Révision'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.revision ||
+                        'DRAFT-01'
+                )
+            );
+
+            const decompositionRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            decompositionRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Logique de décomposition'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.decomposition &&
+                    draft.decomposition.statement
+                        ? draft.decomposition.statement
+                        : 'À définir'
+                )
+            );
+
+            const codificationRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            codificationRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Codification'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.codification &&
+                    draft.codification.rule
+                        ? draft.codification.rule
+                        : 'À définir'
+                )
+            );
+
+            summary.append(
+                scopeRow,
+                revisionRow,
+                decompositionRow,
+                codificationRow
+            );
+
+            section.appendChild(
+                summary
+            );
+
+            const zonesOuvrages =
+                draft.context &&
+                Array.isArray(
+                    draft.context.zonesOuvrages
+                )
+                    ? draft.context.zonesOuvrages
+                    : [];
+
+            if (zonesOuvrages.length) {
+                section.appendChild(
+                    createElement(
+                        'h3',
+                        'journey-subtitle',
+                        'Zones / ouvrages'
+                    )
+                );
+
+                section.appendChild(
+                    createElement(
+                        'p',
+                        'journey-context',
+                        'Dimension contextuelle conservée séparément de la hiérarchie WBS.'
+                    )
+                );
+
+                const zoneList =
+                    createElement(
+                        'div',
+                        'evidence-list'
+                    );
+
+                zonesOuvrages.forEach(
+                    function (value, index) {
+                        const item =
+                            createElement(
+                                'article',
+                                'evidence-item'
+                            );
+
+                        item.append(
+                            createElement(
+                                'strong',
+                                null,
+                                'Zone / ouvrage ' +
+                                    (index + 1)
+                            ),
+                            createElement(
+                                'p',
+                                null,
+                                value
+                            )
+                        );
+
+                        zoneList.appendChild(
+                            item
+                        );
+                    }
+                );
+
+                section.appendChild(
+                    zoneList
+                );
+            }
+
+            section.appendChild(
+                createElement(
+                    'h3',
+                    'journey-subtitle',
+                    'Intégration Project Controls'
+                )
+            );
+
+            const integration =
+                draft.integration || {};
+
+            const integrationList =
+                createElement(
+                    'dl',
+                    'context-list'
+                );
+
+            [
+                ['Planning', 'planning'],
+                ['Coûts', 'cost'],
+                ['Progrès', 'progress'],
+                ['Documents', 'documents']
+            ].forEach(
+                function (definition) {
+                    const row =
+                        createElement(
+                            'div',
+                            'context-row'
+                        );
+
+                    row.append(
+                        createElement(
+                            'dt',
+                            null,
+                            definition[0]
+                        ),
+                        createElement(
+                            'dd',
+                            null,
+                            integration[
+                                definition[1]
+                            ]
+                                ? 'Prévu'
+                                : 'Non confirmé'
+                        )
+                    );
+
+                    integrationList.appendChild(
+                        row
+                    );
+                }
+            );
+
+            section.appendChild(
+                integrationList
+            );
+
+            section.appendChild(
+                createElement(
+                    'h3',
+                    'journey-subtitle',
+                    'Hiérarchie WBS'
+                )
+            );
+
+            const hierarchy =
+                draft.hierarchy || {};
+
+            const dimensions =
+                Array.isArray(
+                    hierarchy.declaredDimensions
+                )
+                    ? hierarchy.declaredDimensions
+                    : [];
+
+            const dimensionLabels = {
+                deliverable:
+                    'Livrables',
+                ouvrage:
+                    'Ouvrages',
+                zone:
+                    'Zones',
+                discipline:
+                    'Disciplines',
+                phase:
+                    'Phases',
+                lot:
+                    'Lots',
+                'work-package':
+                    'Work Packages',
+                system:
+                    'Systèmes'
+            };
+
+            section.appendChild(
+                createElement(
+                    'p',
+                    'journey-context',
+                    dimensions.length
+                        ? 'Dimensions déclarées : ' +
+                            dimensions
+                                .map(function (id) {
+                                    return dimensionLabels[id] || id;
+                                })
+                                .join(' → ') +
+                            '. Les nœuds réels restent à structurer.'
+                        : 'Les niveaux et nœuds réels restent à structurer à partir du périmètre confirmé.'
+                )
+            );
+
+            section.appendChild(
+                createElement(
+                    'p',
+                    'uncertainty-note',
+                    'Aucun Work Package ni nœud WBS spécifique n’a été inventé.'
+                )
+            );
+
+            const enrichment =
+                draft.enrichment &&
+                Array.isArray(
+                    draft.enrichment.required
+                )
+                    ? draft.enrichment.required
+                    : [];
+
+            if (enrichment.length) {
+                section.appendChild(
+                    createElement(
+                        'h3',
+                        'journey-subtitle',
+                        'À structurer ensuite'
+                    )
+                );
+
+                const enrichmentList =
+                    createElement(
+                        'div',
+                        'evidence-list'
+                    );
+
+                enrichment.forEach(
+                    function (requirement) {
+                        const item =
+                            createElement(
+                                'article',
+                                'evidence-item'
+                            );
+
+                        item.appendChild(
+                            createElement(
+                                'strong',
+                                null,
+                                requirement.label
+                            )
+                        );
+
+                        enrichmentList.appendChild(
+                            item
+                        );
+                    }
+                );
+
+                section.appendChild(
+                    enrichmentList
+                );
+            }
+
+            section.appendChild(
+                createElement(
+                    'p',
+                    'uncertainty-note',
+                    'Brouillon déterministe construit uniquement à partir du contexte validé. Zone / Ouvrage reste une dimension distincte de la WBS.'
+                )
+            );
+
+            return section;
+        }
+    }
+
+    /*
      * Generic artifact fallback.
      */
     if (
