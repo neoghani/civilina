@@ -1001,75 +1001,712 @@
         return section;
     }
     function renderArtifactReady() {
-        const section = createElement('section', 'journey-panel');
-        section.dataset.view = 'artifact-ready';
+    const section = createElement(
+        'section',
+        'journey-panel'
+    );
 
-        const artifact = getRequestedArtifact();
-        const readiness = getArtifactReadiness();
-        const artifactLabel = artifact && artifact.label ? artifact.label : 'Livrable';
-        const completion = readiness && Number.isFinite(Number(readiness.completion))
-            ? Number(readiness.completion)
+    section.dataset.view =
+        'artifact-ready';
+
+    const artifact =
+        getRequestedArtifact();
+
+    const readiness =
+        getArtifactReadiness();
+
+    const artifactLabel =
+        artifact &&
+        artifact.label
+            ? artifact.label
+            : 'Livrable';
+
+    const completion =
+        readiness &&
+        Number.isFinite(
+            Number(
+                readiness.completion
+            )
+        )
+            ? Number(
+                readiness.completion
+            )
             : 100;
 
-        section.append(
-            createElement('span', 'journey-kicker', 'Livrable prêt à construire'),
-            createElement('h3', null, artifactLabel + ' prêt à être préparé'),
-            createElement('p', 'journey-context', 'Les informations nécessaires ont été recueillies et confirmées.')
+    section.append(
+        createElement(
+            'span',
+            'journey-kicker',
+            'Livrable prêt à construire'
+        ),
+        createElement(
+            'h3',
+            null,
+            artifactLabel +
+                ' prêt à être préparé'
+        ),
+        createElement(
+            'p',
+            'journey-context',
+            'Les informations nécessaires ont été recueillies et confirmées.'
+        )
+    );
+
+    const context =
+        createElement(
+            'dl',
+            'context-list'
         );
 
-        const context = createElement('dl', 'context-list');
-        const artifactRow = createElement('div', 'context-row');
-        artifactRow.append(
-            createElement('dt', null, 'Livrable'),
-            createElement('dd', null, artifactLabel)
+    const artifactRow =
+        createElement(
+            'div',
+            'context-row'
         );
 
-        const completionRow = createElement('div', 'context-row');
-        completionRow.append(
-            createElement('dt', null, 'Complétude'),
-            createElement('dd', null, completion + ' %')
+    artifactRow.append(
+        createElement(
+            'dt',
+            null,
+            'Livrable'
+        ),
+        createElement(
+            'dd',
+            null,
+            artifactLabel
+        )
+    );
+
+    const completionRow =
+        createElement(
+            'div',
+            'context-row'
         );
 
-        const statusRow = createElement('div', 'context-row');
-        statusRow.append(
-            createElement('dt', null, 'État'),
-            createElement(
-                'dd',
-                null,
-                readiness && readiness.ready
-                    ? 'Informations suffisantes pour préparer le brouillon'
-                    : 'Informations à compléter'
-            )
+    completionRow.append(
+        createElement(
+            'dt',
+            null,
+            'Complétude'
+        ),
+        createElement(
+            'dd',
+            null,
+            completion + ' %'
+        )
+    );
+
+    const statusRow =
+        createElement(
+            'div',
+            'context-row'
         );
 
-        context.append(artifactRow, completionRow, statusRow);
-        section.appendChild(context);
+    statusRow.append(
+        createElement(
+            'dt',
+            null,
+            'État'
+        ),
+        createElement(
+            'dd',
+            null,
+            readiness &&
+            readiness.ready
+                ? 'Informations suffisantes pour préparer le brouillon'
+                : 'Informations à compléter'
+        )
+    );
 
-        if (Object.keys(state.answerLabels).length) {
-            section.appendChild(createElement('h3', 'journey-subtitle', 'Contexte confirmé'));
-            const list = createElement('div', 'evidence-list');
-            Object.keys(state.answerLabels).forEach(function (field) {
-                const item = createElement('article', 'evidence-item');
-                const question = findQuestion(field);
-                item.append(
-                    createElement('strong', null, questionLabel(field, question)),
-                    createElement('p', null, state.answerLabels[field])
-                );
-                list.appendChild(item);
+    context.append(
+        artifactRow,
+        completionRow,
+        statusRow
+    );
+
+    section.appendChild(
+        context
+    );
+
+    /*
+     * Sprint 2.5
+     * Build a real deterministic ITP draft
+     * when the requested artifact is an ITP.
+     */
+    if (
+        artifact &&
+        artifact.id === 'itp' &&
+        window.CivilinaAIITPBuilder
+    ) {
+        const buildResult =
+            window.CivilinaAIITPBuilder.build({
+                initialText:
+                    state.initialText,
+
+                answers:
+                    state.answers
             });
-            section.appendChild(list);
-        }
 
+        if (
+            buildResult &&
+            buildResult.ready &&
+            buildResult.artifact
+        ) {
+            const draft =
+                buildResult.artifact;
+
+            section.appendChild(
+                createElement(
+                    'h3',
+                    'journey-subtitle',
+                    'Brouillon ITP structuré'
+                )
+            );
+
+            const draftSummary =
+                createElement(
+                    'dl',
+                    'context-list'
+                );
+
+            const activityRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            activityRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Activité'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.context.activity
+                )
+            );
+
+            const revisionRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            revisionRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Révision'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.revision
+                )
+            );
+
+            draftSummary.append(
+                activityRow,
+                revisionRow
+            );
+
+            section.appendChild(
+                draftSummary
+            );
+
+            /*
+             * References
+             */
+            if (
+                Array.isArray(
+                    draft.references
+                ) &&
+                draft.references.length
+            ) {
+                section.appendChild(
+                    createElement(
+                        'h3',
+                        'journey-subtitle',
+                        'Références applicables'
+                    )
+                );
+
+                const references =
+                    createElement(
+                        'div',
+                        'evidence-list'
+                    );
+
+                draft.references.forEach(
+                    function (
+                        reference,
+                        index
+                    ) {
+                        const item =
+                            createElement(
+                                'article',
+                                'evidence-item'
+                            );
+
+                        item.append(
+                            createElement(
+                                'strong',
+                                null,
+                                'Référence ' +
+                                    (
+                                        index +
+                                        1
+                                    )
+                            ),
+                            createElement(
+                                'p',
+                                null,
+                                reference
+                            )
+                        );
+
+                        references.appendChild(
+                            item
+                        );
+                    }
+                );
+
+                section.appendChild(
+                    references
+                );
+            }
+
+            /*
+             * Inspections and tests
+             */
+            const inspections =
+                draft.inspectionPlan &&
+                Array.isArray(
+                    draft
+                        .inspectionPlan
+                        .inspectionsAndTests
+                )
+                    ? draft
+                        .inspectionPlan
+                        .inspectionsAndTests
+                    : [];
+
+            if (
+                inspections.length
+            ) {
+                section.appendChild(
+                    createElement(
+                        'h3',
+                        'journey-subtitle',
+                        'Inspections et essais'
+                    )
+                );
+
+                const inspectionList =
+                    createElement(
+                        'div',
+                        'evidence-list'
+                    );
+
+                inspections.forEach(
+                    function (
+                        inspection,
+                        index
+                    ) {
+                        const item =
+                            createElement(
+                                'article',
+                                'evidence-item'
+                            );
+
+                        item.append(
+                            createElement(
+                                'strong',
+                                null,
+                                'Contrôle ' +
+                                    (
+                                        index +
+                                        1
+                                    )
+                            ),
+                            createElement(
+                                'p',
+                                null,
+                                inspection
+                            )
+                        );
+
+                        inspectionList
+                            .appendChild(
+                                item
+                            );
+                    }
+                );
+
+                section.appendChild(
+                    inspectionList
+                );
+            }
+
+            /*
+             * Acceptance criteria
+             */
+            const criteria =
+                draft.inspectionPlan &&
+                Array.isArray(
+                    draft
+                        .inspectionPlan
+                        .acceptanceCriteria
+                )
+                    ? draft
+                        .inspectionPlan
+                        .acceptanceCriteria
+                    : [];
+
+            if (
+                criteria.length
+            ) {
+                section.appendChild(
+                    createElement(
+                        'h3',
+                        'journey-subtitle',
+                        'Critères d’acceptation'
+                    )
+                );
+
+                const criteriaList =
+                    createElement(
+                        'div',
+                        'evidence-list'
+                    );
+
+                criteria.forEach(
+                    function (
+                        criterion,
+                        index
+                    ) {
+                        const item =
+                            createElement(
+                                'article',
+                                'evidence-item'
+                            );
+
+                        item.append(
+                            createElement(
+                                'strong',
+                                null,
+                                'Critère ' +
+                                    (
+                                        index +
+                                        1
+                                    )
+                            ),
+                            createElement(
+                                'p',
+                                null,
+                                criterion
+                            )
+                        );
+
+                        criteriaList
+                            .appendChild(
+                                item
+                            );
+                    }
+                );
+
+                section.appendChild(
+                    criteriaList
+                );
+            }
+
+            /*
+             * Hold / Witness Points
+             */
+            const checkpoints =
+                draft.controlPoints &&
+                Array.isArray(
+                    draft
+                        .controlPoints
+                        .holdWitness
+                )
+                    ? draft
+                        .controlPoints
+                        .holdWitness
+                    : [];
+
+            if (
+                checkpoints.length
+            ) {
+                section.appendChild(
+                    createElement(
+                        'h3',
+                        'journey-subtitle',
+                        'Hold / Witness Points'
+                    )
+                );
+
+                const checkpointList =
+                    createElement(
+                        'div',
+                        'evidence-list'
+                    );
+
+                checkpoints.forEach(
+                    function (
+                        checkpoint,
+                        index
+                    ) {
+                        const item =
+                            createElement(
+                                'article',
+                                'evidence-item'
+                            );
+
+                        item.append(
+                            createElement(
+                                'strong',
+                                null,
+                                'Point de contrôle ' +
+                                    (
+                                        index +
+                                        1
+                                    )
+                            ),
+                            createElement(
+                                'p',
+                                null,
+                                checkpoint
+                            )
+                        );
+
+                        checkpointList
+                            .appendChild(
+                                item
+                            );
+                    }
+                );
+
+                section.appendChild(
+                    checkpointList
+                );
+            }
+
+            /*
+             * Responsibilities
+             */
+            const responsibilities =
+                draft.responsibilities &&
+                Array.isArray(
+                    draft
+                        .responsibilities
+                        .statements
+                )
+                    ? draft
+                        .responsibilities
+                        .statements
+                    : [];
+
+            if (
+                responsibilities.length
+            ) {
+                section.appendChild(
+                    createElement(
+                        'h3',
+                        'journey-subtitle',
+                        'Responsabilités'
+                    )
+                );
+
+                const responsibilityList =
+                    createElement(
+                        'div',
+                        'evidence-list'
+                    );
+
+                responsibilities.forEach(
+                    function (
+                        responsibility
+                    ) {
+                        const item =
+                            createElement(
+                                'article',
+                                'evidence-item'
+                            );
+
+                        item.appendChild(
+                            createElement(
+                                'p',
+                                null,
+                                responsibility
+                            )
+                        );
+
+                        responsibilityList
+                            .appendChild(
+                                item
+                            );
+                    }
+                );
+
+                section.appendChild(
+                    responsibilityList
+                );
+            }
+
+            /*
+             * Required enrichment
+             */
+            const enrichment =
+                draft.enrichment &&
+                Array.isArray(
+                    draft
+                        .enrichment
+                        .required
+                )
+                    ? draft
+                        .enrichment
+                        .required
+                    : [];
+
+            if (
+                enrichment.length
+            ) {
+                section.appendChild(
+                    createElement(
+                        'h3',
+                        'journey-subtitle',
+                        'À structurer ensuite'
+                    )
+                );
+
+                const enrichmentList =
+                    createElement(
+                        'div',
+                        'evidence-list'
+                    );
+
+                enrichment.forEach(
+                    function (
+                        requirement
+                    ) {
+                        const item =
+                            createElement(
+                                'article',
+                                'evidence-item'
+                            );
+
+                        item.append(
+                            createElement(
+                                'strong',
+                                null,
+                                requirement.label
+                            )
+                        );
+
+                        enrichmentList
+                            .appendChild(
+                                item
+                            );
+                    }
+                );
+
+                section.appendChild(
+                    enrichmentList
+                );
+            }
+
+            section.appendChild(
+                createElement(
+                    'p',
+                    'uncertainty-note',
+                    'Brouillon déterministe construit uniquement à partir des informations validées. Aucune exigence technique n’a été inventée.'
+                )
+            );
+
+            return section;
+        }
+    }
+
+    /*
+     * Generic artifact fallback.
+     */
+    if (
+        Object.keys(
+            state.answerLabels
+        ).length
+    ) {
         section.appendChild(
             createElement(
-                'p',
-                'uncertainty-note',
-                'Prochaine étape : construire un brouillon structuré à partir des informations validées.'
+                'h3',
+                'journey-subtitle',
+                'Contexte confirmé'
             )
         );
 
-        return section;
+        const list =
+            createElement(
+                'div',
+                'evidence-list'
+            );
+
+        Object.keys(
+            state.answerLabels
+        ).forEach(
+            function (field) {
+                const item =
+                    createElement(
+                        'article',
+                        'evidence-item'
+                    );
+
+                const question =
+                    findQuestion(
+                        field
+                    );
+
+                item.append(
+                    createElement(
+                        'strong',
+                        null,
+                        questionLabel(
+                            field,
+                            question
+                        )
+                    ),
+                    createElement(
+                        'p',
+                        null,
+                        state
+                            .answerLabels[
+                                field
+                            ]
+                    )
+                );
+
+                list.appendChild(
+                    item
+                );
+            }
+        );
+
+        section.appendChild(
+            list
+        );
     }
+
+    section.appendChild(
+        createElement(
+            'p',
+            'uncertainty-note',
+            'Prochaine étape : construire un brouillon structuré à partir des informations validées.'
+        )
+    );
+
+    return section;
+}
 
     function renderOutcome() {
         elements.outcome.innerHTML = '';
