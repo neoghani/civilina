@@ -103,7 +103,17 @@
                     family: artifact.family,
                     matchedAlias: aliases[0],
                     confidence: 'direct',
-                    reason: 'Artefact explicitement demande ou mentionne.'
+
+                    /*
+                     * ArtifactRecognizer only establishes that an artifact
+                     * is mentioned in the user text.
+                     *
+                     * Whether this mention is a PRODUCE request is decided
+                     * later by Reasoning V2 from the interaction mode.
+                     */
+                    evidenceType: 'artifact-mention',
+                    requested: false,
+                    reason: 'Artefact explicitement mentionne.'
                 };
             })
             .filter(Boolean);
@@ -111,7 +121,14 @@
         return {
             normalized,
             primary: matches[0] || null,
-            matches
+            matches,
+
+            /*
+             * Additive Sprint 2.8 metadata.
+             * Existing consumers may continue using primary/matches.
+             */
+            mentions: matches.slice(),
+            ambiguous: matches.length > 1
         };
     }
 
