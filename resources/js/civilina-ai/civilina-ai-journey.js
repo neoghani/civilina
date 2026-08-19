@@ -1281,281 +1281,528 @@
             /*
              * Inspections and tests
              */
-            const inspections =
-                draft.inspectionPlan &&
-                Array.isArray(
-                    draft
-                        .inspectionPlan
-                        .inspectionsAndTests
+            /*
+ * Sprint 2.6
+ * Structured ITP rows
+ */
+const rows =
+    Array.isArray(
+        draft.rows
+    )
+        ? draft.rows
+        : [];
+
+if (rows.length) {
+    section.appendChild(
+        createElement(
+            'h3',
+            'journey-subtitle',
+            'Plan d’inspection structuré'
+        )
+    );
+
+    const rowsList =
+        createElement(
+            'div',
+            'evidence-list'
+        );
+
+    rows.forEach(
+        function (row) {
+            const item =
+                createElement(
+                    'article',
+                    'evidence-item'
+                );
+
+            item.classList.add(
+                'itp-structured-row'
+            );
+
+            /*
+             * Row header
+             */
+            item.append(
+                createElement(
+                    'strong',
+                    null,
+                    row.code +
+                        ' — ' +
+                        row.inspectionTest
                 )
-                    ? draft
-                        .inspectionPlan
-                        .inspectionsAndTests
-                    : [];
+            );
 
-            if (
-                inspections.length
-            ) {
-                section.appendChild(
-                    createElement(
-                        'h3',
-                        'journey-subtitle',
-                        'Inspections et essais'
-                    )
+            const details =
+                createElement(
+                    'dl',
+                    'context-list'
                 );
 
-                const inspectionList =
-                    createElement(
-                        'div',
-                        'evidence-list'
-                    );
-
-                inspections.forEach(
-                    function (
-                        inspection,
-                        index
-                    ) {
-                        const item =
-                            createElement(
-                                'article',
-                                'evidence-item'
-                            );
-
-                        item.append(
-                            createElement(
-                                'strong',
-                                null,
-                                'Contrôle ' +
-                                    (
-                                        index +
-                                        1
-                                    )
-                            ),
-                            createElement(
-                                'p',
-                                null,
-                                inspection
-                            )
-                        );
-
-                        inspectionList
-                            .appendChild(
-                                item
-                            );
-                    }
+            /*
+             * Inspection / Test
+             */
+            const inspectionRow =
+                createElement(
+                    'div',
+                    'context-row'
                 );
 
-                section.appendChild(
-                    inspectionList
+            inspectionRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Inspection / Essai'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    row.inspectionTest
+                )
+            );
+
+            /*
+             * Method
+             */
+            const methodRow =
+                createElement(
+                    'div',
+                    'context-row'
                 );
-            }
+
+            methodRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Méthode'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    row.method ||
+                        'À définir'
+                )
+            );
+
+            /*
+             * Frequency
+             */
+            const frequencyRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            frequencyRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Fréquence'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    row.frequency ||
+                        'À définir'
+                )
+            );
 
             /*
              * Acceptance criteria
              */
-            const criteria =
-                draft.inspectionPlan &&
-                Array.isArray(
-                    draft
-                        .inspectionPlan
-                        .acceptanceCriteria
+            const criteriaRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            criteriaRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Critère d’acceptation'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    row.acceptanceCriteria ||
+                        'À définir'
                 )
-                    ? draft
-                        .inspectionPlan
-                        .acceptanceCriteria
-                    : [];
-
-            if (
-                criteria.length
-            ) {
-                section.appendChild(
-                    createElement(
-                        'h3',
-                        'journey-subtitle',
-                        'Critères d’acceptation'
-                    )
-                );
-
-                const criteriaList =
-                    createElement(
-                        'div',
-                        'evidence-list'
-                    );
-
-                criteria.forEach(
-                    function (
-                        criterion,
-                        index
-                    ) {
-                        const item =
-                            createElement(
-                                'article',
-                                'evidence-item'
-                            );
-
-                        item.append(
-                            createElement(
-                                'strong',
-                                null,
-                                'Critère ' +
-                                    (
-                                        index +
-                                        1
-                                    )
-                            ),
-                            createElement(
-                                'p',
-                                null,
-                                criterion
-                            )
-                        );
-
-                        criteriaList
-                            .appendChild(
-                                item
-                            );
-                    }
-                );
-
-                section.appendChild(
-                    criteriaList
-                );
-            }
+            );
 
             /*
-             * Hold / Witness Points
+             * Control point
              */
-            const checkpoints =
-                draft.controlPoints &&
-                Array.isArray(
-                    draft
-                        .controlPoints
-                        .holdWitness
-                )
-                    ? draft
-                        .controlPoints
-                        .holdWitness
-                    : [];
+            const controlPointRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            let controlPointLabel =
+                'À définir';
 
             if (
-                checkpoints.length
+                row.controlPoint ===
+                'HOLD'
             ) {
-                section.appendChild(
+                controlPointLabel =
+                    'Hold Point (HP)';
+            }
+
+            if (
+                row.controlPoint ===
+                'WITNESS'
+            ) {
+                controlPointLabel =
+                    'Witness Point (WP)';
+            }
+
+            if (
+                row.controlPoint ===
+                'SURVEILLANCE'
+            ) {
+                controlPointLabel =
+                    'Point de surveillance';
+            }
+
+            controlPointRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Point de contrôle'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    controlPointLabel
+                )
+            );
+
+            /*
+             * Control point statement
+             */
+            if (
+                row.controlPointStatement
+            ) {
+                const statementRow =
                     createElement(
-                        'h3',
-                        'journey-subtitle',
-                        'Hold / Witness Points'
+                        'div',
+                        'context-row'
+                    );
+
+                statementRow.append(
+                    createElement(
+                        'dt',
+                        null,
+                        'Exigence associée'
+                    ),
+                    createElement(
+                        'dd',
+                        null,
+                        row.controlPointStatement
                     )
                 );
 
-                const checkpointList =
-                    createElement(
-                        'div',
-                        'evidence-list'
-                    );
-
-                checkpoints.forEach(
-                    function (
-                        checkpoint,
-                        index
-                    ) {
-                        const item =
-                            createElement(
-                                'article',
-                                'evidence-item'
-                            );
-
-                        item.append(
-                            createElement(
-                                'strong',
-                                null,
-                                'Point de contrôle ' +
-                                    (
-                                        index +
-                                        1
-                                    )
-                            ),
-                            createElement(
-                                'p',
-                                null,
-                                checkpoint
-                            )
-                        );
-
-                        checkpointList
-                            .appendChild(
-                                item
-                            );
-                    }
-                );
-
-                section.appendChild(
-                    checkpointList
+                details.appendChild(
+                    statementRow
                 );
             }
 
             /*
              * Responsibilities
              */
-            const responsibilities =
-                draft.responsibilities &&
-                Array.isArray(
-                    draft
-                        .responsibilities
-                        .statements
+            const executeRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            executeRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Exécute'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    row.execute ||
+                        'À définir'
                 )
-                    ? draft
-                        .responsibilities
-                        .statements
-                    : [];
+            );
 
+            const inspectRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            inspectRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Inspecte'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    row.inspect ||
+                        'À définir'
+                )
+            );
+
+            const approveRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            approveRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Approuve'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    row.approve ||
+                        'À définir'
+                )
+            );
+
+            const acceptRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            acceptRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Accepte'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    row.accept ||
+                        'À définir'
+                )
+            );
+
+            /*
+             * Quality record
+             */
+            const recordRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            recordRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Enregistrement / preuve'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    row.record ||
+                        'À définir'
+                )
+            );
+
+            /*
+             * Status
+             */
+            const statusRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            statusRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'État'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    row.status ===
+                        'STRUCTURED'
+                        ? 'Structuré'
+                        : 'À enrichir'
+                )
+            );
+
+            details.append(
+                inspectionRow,
+                methodRow,
+                frequencyRow,
+                criteriaRow,
+                controlPointRow,
+                executeRow,
+                inspectRow,
+                approveRow,
+                acceptRow,
+                recordRow,
+                statusRow
+            );
+
+            item.appendChild(
+                details
+            );
+
+            /*
+             * Missing fields
+             */
             if (
-                responsibilities.length
+                Array.isArray(
+                    row.missingFields
+                ) &&
+                row.missingFields.length
             ) {
-                section.appendChild(
+                const missingLabels = {
+                    method:
+                        'méthode',
+
+                    frequency:
+                        'fréquence',
+
+                    acceptanceCriteria:
+                        'critère d’acceptation',
+
+                    controlPoint:
+                        'point de contrôle',
+
+                    execute:
+                        'exécutant',
+
+                    inspect:
+                        'inspection',
+
+                    approve:
+                        'approbation',
+
+                    accept:
+                        'acceptation',
+
+                    record:
+                        'enregistrement qualité'
+                };
+
+                const missingText =
+                    row.missingFields
+                        .map(
+                            function (
+                                field
+                            ) {
+                                return (
+                                    missingLabels[
+                                        field
+                                    ] ||
+                                    field
+                                );
+                            }
+                        )
+                        .join(', ');
+
+                item.appendChild(
                     createElement(
-                        'h3',
-                        'journey-subtitle',
-                        'Responsabilités'
+                        'p',
+                        'uncertainty-note',
+                        'À compléter : ' +
+                            missingText +
+                            '.'
                     )
-                );
-
-                const responsibilityList =
-                    createElement(
-                        'div',
-                        'evidence-list'
-                    );
-
-                responsibilities.forEach(
-                    function (
-                        responsibility
-                    ) {
-                        const item =
-                            createElement(
-                                'article',
-                                'evidence-item'
-                            );
-
-                        item.appendChild(
-                            createElement(
-                                'p',
-                                null,
-                                responsibility
-                            )
-                        );
-
-                        responsibilityList
-                            .appendChild(
-                                item
-                            );
-                    }
-                );
-
-                section.appendChild(
-                    responsibilityList
                 );
             }
 
+            rowsList.appendChild(
+                item
+            );
+        }
+    );
+
+    section.appendChild(
+        rowsList
+    );
+}
+
+/*
+ * Sprint 2.6
+ * Acceptance criteria preserved but not safely associated
+ * with a specific inspection/test row.
+ */
+const unassociatedCriteria =
+    draft.inspectionPlan &&
+    Array.isArray(
+        draft.inspectionPlan
+            .unassociatedAcceptanceCriteria
+    )
+        ? draft.inspectionPlan
+            .unassociatedAcceptanceCriteria
+        : [];
+
+if (unassociatedCriteria.length) {
+    section.appendChild(
+        createElement(
+            'h3',
+            'journey-subtitle',
+            'Critères d’acceptation à associer'
+        )
+    );
+
+    section.appendChild(
+        createElement(
+            'p',
+            'journey-context',
+            'Ces critères ont été fournis et conservés, mais Civilina ne les associe pas automatiquement à une ligne lorsque le lien n’est pas suffisamment certain.'
+        )
+    );
+
+    const criteriaList =
+        createElement(
+            'div',
+            'evidence-list'
+        );
+
+    unassociatedCriteria.forEach(
+        function (criterion, index) {
+            const item =
+                createElement(
+                    'div',
+                    'evidence-item'
+                );
+
+            item.append(
+                createElement(
+                    'strong',
+                    null,
+                    'Critère non associé ' +
+                        (index + 1)
+                ),
+                createElement(
+                    'p',
+                    null,
+                    criterion
+                )
+            );
+
+            criteriaList.appendChild(
+                item
+            );
+        }
+    );
+
+    section.appendChild(
+        criteriaList
+    );
+}
             /*
              * Required enrichment
              */
