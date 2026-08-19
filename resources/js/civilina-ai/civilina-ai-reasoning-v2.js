@@ -599,6 +599,98 @@
             );
         }
 
+        function artifactQuestionFromReadiness(
+            artifactReadiness
+        ) {
+            const requirement =
+                artifactReadiness &&
+                artifactReadiness.nextRequirement
+                    ? artifactReadiness.nextRequirement
+                    : null;
+
+            if (!requirement) {
+                return null;
+            }
+
+            return {
+                id:
+                    requirement.answerKey ||
+                    requirement.id ||
+                    'artifactRequirement',
+
+                requirementId:
+                    requirement.id ||
+                    null,
+
+                text:
+                    requirement.question ||
+                    '',
+
+                prompt:
+                    requirement.question ||
+                    '',
+
+                source:
+                    'artifactRequirement',
+
+                importance:
+                    requirement.importance ||
+                    'important'
+            };
+        }
+
+        function artifactAmbiguityQuestion(
+            artifactRecognition
+        ) {
+            const matches =
+                artifactRecognition &&
+                Array.isArray(
+                    artifactRecognition.matches
+                )
+                    ? artifactRecognition.matches
+                    : [];
+
+            if (matches.length < 2) {
+                return null;
+            }
+
+            const labels =
+                matches
+                    .map(
+                        function (item) {
+                            return item.label;
+                        }
+                    )
+                    .filter(Boolean);
+
+            return {
+                id:
+                    'artifactSelection',
+
+                requirementId:
+                    null,
+
+                text:
+                    'Quel livrable souhaitez-vous construire en premier' +
+                    (
+                        labels.length
+                            ? ' : ' +
+                                labels.join(' ou ') +
+                                ' ?'
+                            : ' ?'
+                    ),
+
+                prompt:
+                    'Quel livrable souhaitez-vous construire en premier ?',
+
+                source:
+                    'artifactAmbiguity',
+
+                importance:
+                    'blocking'
+            };
+        }
+
         function responseBlueprint(
             dimensions,
             status,
@@ -724,7 +816,11 @@
 
             /*
              * STEP 2
-             * Understand requested deliverable.
+             * Detect artifact mentions.
+             *
+             * A mention is not automatically a requested deliverable.
+             * "Explique-moi un ITP" and "je travaille avec un ITP"
+             * must remain contextual mentions.
              */
             const artifactRecognition =
                 artifactRecognizer.detect(
@@ -740,6 +836,28 @@
                     safeInput.freeText
                 );
 
+            const lexicalInteractionMode =
+                recognition &&
+                recognition.byCategory &&
+                Array.isArray(
+                    recognition
+                        .byCategory
+                        .interactionMode
+                ) &&
+                recognition
+                    .byCategory
+                    .interactionMode
+                    .length
+                    ? recognition
+                        .byCategory
+                        .interactionMode[0]
+                    : null;
+
+            const effectiveInteractionMode =
+                actionRecognition.primaryMode ||
+                lexicalInteractionMode ||
+                null;
+
             /*
              * An explicit action command
              * overrides generic lexical mode.
@@ -753,6 +871,204 @@
                         actionRecognition.primaryMode
                     ];
             }
+
+            const artifactCreationRequested =
+                CREATION_MODES.includes(
+                    effectiveInteractionMode
+                );
+
+            const artifactMatches =
+                artifactRecognition &&
+                Array.isArray(
+                    artifactRecognition.matches
+                )
+                    ? artifactRecognition.matches
+                    : [];
+
+            /*
+             * Sprint 2.8 — ambiguity resolution.
+             *
+             * Once the Journey has asked which deliverable should be built
+             * first, the answer is carried in answers.artifactSelection.
+             * V2 validates that selection against artifacts actually mentioned
+             * in the original request before resolving the ambiguity.
+             */
+            const artifactSelection =
+                safeInput.answers &&
+                typeof safeInput.answers.artifactSelection === 'string'
+                    ? recognizer.normalizeText(
+                        safeInput.answers.artifactSelection
+                    )
+                    : '';
+
+            function artifactForSelection(selection) {
+                if (!selection) {
+                    return null;
+                }
+
+                return artifactMatches.find(
+                    function (artifact) {
+                        const candidates = [
+                            artifact.id,
+                            artifact.label,
+                            artifact.matchedAlias
+                        ]
+                            .filter(Boolean)
+                            .map(function (value) {
+                                return recognizer.normalizeText(value);
+                            });
+
+                        return candidates.some(
+                            function (candidate) {
+                                return selection === candidate ||
+                                    selection.includes(candidate) ||
+                                    candidate.includes(selection);
+                            }
+                        );
+                    }
+                ) || null;
+            }
+
+            const answerSelectedArtifact =
+                artifactForSelection(
+                    artifactSelection
+                );
+
+            const normalizedRequest =
+                recognizer.normalizeText(
+                    safeInput.freeText
+                );
+
+            function explicitlyOrderedArtifact() {
+                const orderSignals = [
+                    {
+                        id: 'itp',
+                        signals: [
+                            'commence par itp',
+                            'commencer par itp',
+                            'commencons par itp',
+                            'itp en premier',
+                            'itp d abord',
+                            'priorite itp'
+                        ]
+                    },
+                    {
+                        id: 'wbs',
+                        signals: [
+                            'commence par wbs',
+                            'commencer par wbs',
+                            'commencons par wbs',
+                            'wbs en premier',
+                            'wbs d abord',
+                            'priorite wbs'
+                        ]
+                    }
+                ];
+
+                const ordered = orderSignals.find(
+                    function (definition) {
+                        return definition.signals.some(
+                            function (signal) {
+                                return normalizedRequest.includes(signal);
+                            }
+                        );
+                    }
+                );
+
+                if (!ordered) {
+                    return null;
+                }
+
+                return artifactMatches.find(
+                    function (artifact) {
+                        return artifact.id === ordered.id;
+                    }
+                ) || null;
+            }
+
+            const explicitOrderedArtifact =
+                !artifactSelection
+                    ? explicitlyOrderedArtifact()
+                    : null;
+
+            /*
+             * Civilina dependency rule:
+             * when the request is exactly WBS + ITP and no explicit order
+             * was supplied, WBS is the structural predecessor of the ITP.
+             * Other multi-artifact combinations remain ambiguous.
+             */
+            const dependencyOrderedArtifact =
+                !artifactSelection &&
+                !explicitOrderedArtifact &&
+                artifactCreationRequested &&
+                artifactMatches.length === 2 &&
+                artifactMatches.some(function (artifact) {
+                    return artifact.id === 'wbs';
+                }) &&
+                artifactMatches.some(function (artifact) {
+                    return artifact.id === 'itp';
+                })
+                    ? artifactMatches.find(function (artifact) {
+                        return artifact.id === 'wbs';
+                    }) || null
+                    : null;
+
+            const selectedArtifact =
+                answerSelectedArtifact ||
+                explicitOrderedArtifact ||
+                dependencyOrderedArtifact;
+
+            const artifactDependencyDecision =
+                dependencyOrderedArtifact
+                    ? {
+                        rule: 'WBS_BEFORE_ITP',
+                        predecessorArtifactId: 'wbs',
+                        dependentArtifactId: 'itp',
+                        reason: 'La WBS structure le périmètre du projet avant le rattachement des ITP aux activités ou Work Packages concernés.'
+                    }
+                    : null;
+
+            const artifactAmbiguity =
+                Boolean(
+                    artifactCreationRequested &&
+                    artifactMatches.length > 1 &&
+                    !selectedArtifact
+                );
+
+            /*
+             * requestedArtifact means "what Civilina is asked to produce",
+             * not merely "what artifact name appeared in the sentence".
+             * A valid explicit selection resolves a multi-artifact request.
+             */
+            const requestedArtifactCandidate =
+                selectedArtifact ||
+                (artifactMatches.length === 1
+                    ? artifactMatches[0]
+                    : artifactRecognition.primary);
+
+            const requestedArtifact =
+                artifactCreationRequested &&
+                !artifactAmbiguity &&
+                requestedArtifactCandidate
+                    ? Object.assign(
+                        {},
+                        requestedArtifactCandidate,
+                        {
+                            requested:
+                                true,
+
+                            evidenceType:
+                                'artifact-request',
+
+                            reason:
+                                dependencyOrderedArtifact
+                                    ? 'Artefact priorise selon la dependance metier WBS avant ITP.'
+                                    : selectedArtifact
+                                        ? 'Artefact selectionne explicitement apres clarification.'
+                                        : 'Artefact explicitement demande comme livrable.'
+                        }
+                    )
+                    : null;
 
             /*
              * STEP 4
@@ -771,7 +1087,7 @@
              */
             dimensions =
                 artifactContext.refine(
-                    artifactRecognition.primary,
+                    requestedArtifact,
                     dimensions,
                     recognition
                 );
@@ -782,7 +1098,7 @@
              */
             const artifactReadiness =
                 artifactRequirements.evaluate(
-                    artifactRecognition.primary,
+                    requestedArtifact,
                     safeInput
                 );
 
@@ -797,11 +1113,41 @@
                     evidencePack
                 );
 
-            const nextQuestion =
+            const genericNextQuestion =
                 questionEngine.select(
                     dimensions,
                     safeInput.answers ||
                         {}
+                );
+
+            /*
+             * V2-first orchestration:
+             * - artifact ambiguity beats all generic questions;
+             * - artifact readiness nextRequirement beats generic V2;
+             * - when an artifact is ready, no generic question re-opens it.
+             */
+            const artifactNextQuestion =
+                artifactQuestionFromReadiness(
+                    artifactReadiness
+                );
+
+            const ambiguityNextQuestion =
+                artifactAmbiguity
+                    ? artifactAmbiguityQuestion(
+                        artifactRecognition
+                    )
+                    : null;
+
+            const nextQuestion =
+                ambiguityNextQuestion ||
+                artifactNextQuestion ||
+                (
+                    requestedArtifact &&
+                    artifactReadiness &&
+                    artifactReadiness.applicable &&
+                    artifactReadiness.ready
+                        ? null
+                        : genericNextQuestion
                 );
 
             const recommendations =
@@ -832,8 +1178,33 @@
                 interactionMode:
                     dimensions.interactionMode,
 
-                requestedArtifact:
-                    artifactRecognition.primary,
+                /*
+                 * Sprint 2.8:
+                 * preserve the explicit action separately from the
+                 * deliverable request.
+                 */
+                actionIntent:
+                    actionRecognition.primaryMode ||
+                    null,
+
+                requestedAction:
+                    actionRecognition.matches &&
+                    actionRecognition.matches.length
+                        ? actionRecognition.matches[0]
+                        : null,
+
+                requestedArtifact,
+
+                artifactAmbiguity,
+
+                requiresClarification:
+                    artifactAmbiguity,
+
+                artifactDependencyDecision,
+
+                artifactMentions:
+                    artifactRecognition.matches ||
+                    [],
 
                 /*
                  * NEW SPRINT 2.3 CONTRACT

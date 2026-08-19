@@ -342,6 +342,151 @@
         return Boolean(isArtifactWorkflowActive(reasoning) && readiness.ready);
     }
 
+    /*
+     * Sprint 2.8 — direct explanatory intent.
+     *
+     * Mentioning an artifact while asking for an explanation must never
+     * enter its creation workflow. When V2 classifies the request as
+     * EXPLAIN and exposes an artifact mention, the Journey can answer
+     * immediately without falling back to the generic questionnaire.
+     */
+    function directExplanationFromReasoning(reasoning) {
+        const v2 = getV2Reasoning(reasoning);
+
+        if (!v2 || v2.interactionMode !== 'explain' || isArtifactWorkflowActive(reasoning)) {
+            return null;
+        }
+
+        const mentions = Array.isArray(v2.artifactMentions)
+            ? v2.artifactMentions
+            : [];
+
+        const firstMention = mentions.length ? mentions[0] : null;
+        const artifactId = typeof firstMention === 'string'
+            ? firstMention
+            : (firstMention && firstMention.id ? firstMention.id : null);
+
+        if (!artifactId) return null;
+
+        const explanations = {
+            itp: {
+                title: 'Qu’est-ce qu’un ITP ?',
+                body: 'Un ITP (Inspection & Test Plan) est un plan de contrôle qualité qui structure, pour une activité donnée, les inspections et essais à réaliser, les références applicables, les critères d’acceptation, les points Hold / Witness, les responsabilités et les preuves à conserver.',
+                purpose: 'Il sert à définir avant l’exécution qui contrôle quoi, quand, selon quelle exigence et comment la conformité sera tracée.',
+                next: 'Si vous souhaitez ensuite en construire un, formulez par exemple : « Crée un ITP pour le bétonnage de la zone X. »'
+            },
+            wbs: {
+                title: 'Qu’est-ce qu’une WBS ?',
+                body: 'Une WBS (Work Breakdown Structure) est une décomposition structurée du périmètre d’un projet en éléments maîtrisables. Elle organise le travail selon une logique explicite, par exemple par livrables, disciplines, phases ou lots.',
+                purpose: 'Elle sert de référence commune pour structurer le planning, les coûts, le progrès, les responsabilités et les documents sans confondre la hiérarchie WBS avec les dimensions de contexte comme les zones ou les ouvrages.',
+                next: 'Si vous souhaitez en construire une, formulez par exemple : « Crée une WBS pour le projet SP-01. »'
+            },
+            riskRegister: {
+                title: 'Qu’est-ce qu’un registre des risques ?',
+                body: 'Un registre des risques centralise les risques identifiés, leur évaluation, leurs responsables, les réponses prévues et leur état de suivi.',
+                purpose: 'Il sert à rendre les risques visibles, priorisables et pilotables dans le temps.',
+                next: 'Pour en créer un, vous pouvez demander : « Crée un registre des risques pour mon projet. »'
+            },
+            raci: {
+                title: 'Qu’est-ce qu’une matrice RACI ?',
+                body: 'Une matrice RACI clarifie, pour chaque activité ou décision, qui est Responsable, qui est Approbateur, qui doit être Consulté et qui doit être Informé.',
+                purpose: 'Elle sert à réduire les ambiguïtés de responsabilité et à rendre les circuits de décision explicites.',
+                next: 'Pour en construire une, vous pouvez demander : « Crée une matrice RACI pour ce processus. »'
+            },
+            dashboard: {
+                title: 'Qu’est-ce qu’un dashboard de pilotage ?',
+                body: 'Un dashboard de pilotage rassemble des indicateurs ciblés pour soutenir une décision ou un besoin de management précis.',
+                purpose: 'Il relie les KPI, leurs sources de données, leur fréquence de mise à jour et leur audience à une finalité de pilotage claire.',
+                next: 'Pour en concevoir un, vous pouvez demander : « Crée un dashboard pour piloter mon projet. »'
+            },
+            workflow: {
+                title: 'Qu’est-ce qu’un workflow ?',
+                body: 'Un workflow décrit un enchaînement structuré d’étapes, d’acteurs, de règles, de validations et de traces pour exécuter un processus.',
+                purpose: 'Il sert à rendre le processus explicite, répétable, contrôlable et traçable.',
+                next: 'Pour en construire un, vous pouvez demander : « Crée un workflow pour notre processus de validation. »'
+            }
+        };
+
+        return explanations[artifactId] || null;
+    }
+
+    /*
+     * Sprint 2.8 — multi-artifact clarification.
+     *
+     * V2 owns the ambiguity decision. The Journey only renders the
+     * authoritative selection question and feeds the chosen artifact id
+     * back through answers.artifactSelection.
+     */
+    /*
+     * Sprint 2.8 — dependency-aware artifact orchestration.
+     *
+     * When V2 resolves WBS + ITP through the WBS_BEFORE_ITP rule,
+     * the Journey explains the sequencing once, then starts the WBS
+     * requirement flow directly.
+     */
+    function artifactDependencyIntroFromReasoning(reasoning) {
+        const v2 = getV2Reasoning(reasoning);
+        const decision = v2 && v2.artifactDependencyDecision
+            ? v2.artifactDependencyDecision
+            : null;
+
+        if (!decision || decision.rule !== 'WBS_BEFORE_ITP') {
+            return '';
+        }
+
+        return 'La WBS constitue la structure de référence du projet. ' +
+            'Je la construis donc en premier, puis l’ITP pourra être rattaché aux activités ou Work Packages concernés. ';
+    }
+
+    function artifactAmbiguityQuestionFromReasoning(reasoning) {
+        const v2 = getV2Reasoning(reasoning);
+
+        if (!v2 || !v2.artifactAmbiguity) {
+            return null;
+        }
+
+        const mentions = Array.isArray(v2.artifactMentions)
+            ? v2.artifactMentions.filter(function (item) {
+                return item && item.id;
+            })
+            : [];
+
+        if (mentions.length < 2) {
+            return null;
+        }
+
+        const shortLabels = {
+            itp: 'ITP',
+            wbs: 'WBS',
+            riskRegister: 'Registre des risques',
+            raci: 'RACI',
+            dashboard: 'Dashboard',
+            workflow: 'Workflow'
+        };
+
+        const authoritative =
+            v2.nextBestQuestion &&
+            v2.nextBestQuestion.source === 'artifactAmbiguity'
+                ? v2.nextBestQuestion
+                : null;
+
+        return {
+            id: 'artifactSelection',
+            requirementId: null,
+            prompt: authoritative && (authoritative.text || authoritative.prompt)
+                ? (authoritative.text || authoritative.prompt)
+                : 'Quel livrable souhaitez-vous construire en premier ?',
+            suggestions: mentions.map(function (artifact) {
+                return [
+                    shortLabels[artifact.id] || artifact.label || artifact.id,
+                    artifact.id
+                ];
+            }),
+            source: 'artifactAmbiguity',
+            importance: 'blocking'
+        };
+    }
+
     function cloneRequirement(requirement) {
         if (!requirement) return null;
         return {
@@ -691,6 +836,7 @@
         if (state.phase === 'start') return 10;
         if (state.phase === 'conversation') return Math.min(62, 20 + state.questionCount * 10);
         if (['confirmation', 'edit'].includes(state.phase)) return 64;
+        if (state.phase === 'reading' && directExplanationFromReasoning()) return 34;
         if (state.phase === 'reading') return 72;
         if (state.phase === 'artifactReady') return 86;
         if (state.phase === 'recommendation') return 86;
@@ -711,7 +857,8 @@
         };
 
         const value = progressValue();
-        elements.phase.textContent = labels[state.phase] || 'Comprendre';
+        const directExplanation = state.phase === 'reading' && directExplanationFromReasoning();
+        elements.phase.textContent = directExplanation ? 'Comprendre' : (labels[state.phase] || 'Comprendre');
         elements.progress.style.setProperty('--ai-progress', value + '%');
         elements.progress.setAttribute('aria-valuenow', String(value));
         elements.progress.querySelectorAll('span').forEach(function (item) {
@@ -886,6 +1033,21 @@
     function renderReading() {
         const section = createElement('section', 'journey-panel');
         section.dataset.view = 'reading';
+
+        const directExplanation = directExplanationFromReasoning();
+
+        if (directExplanation) {
+            section.dataset.view = 'explanation';
+            section.append(
+                createElement('span', 'journey-kicker', 'Explication Civilina'),
+                createElement('h3', null, directExplanation.title),
+                createElement('p', 'journey-context', directExplanation.body),
+                createElement('p', 'journey-context', directExplanation.purpose),
+                createElement('p', 'uncertainty-note', directExplanation.next)
+            );
+            return section;
+        }
+
         section.append(createElement('span', 'journey-kicker', 'Première lecture Civilina'), createElement('h3', null, 'Votre situation en quelques points'));
         appendDomainSummary(section);
         appendReasoningAlerts(section);
@@ -2445,7 +2607,8 @@ if (unassociatedCriteria.length) {
             peopleCriteria: 'Critères de décision',
             domainClarification: 'Sujet principal',
             delayCause: 'Cause des retards',
-            subcontractorBlockage: 'Blocage sous-traitant'
+            subcontractorBlockage: 'Blocage sous-traitant',
+            artifactSelection: 'Livrable prioritaire'
         };
 
         return labels[field] || (question ? shortQuestionLabel(question.prompt) : field);
@@ -2476,6 +2639,26 @@ if (unassociatedCriteria.length) {
 
     function prepareNextQuestion(announce) {
         recalculate();
+
+        /*
+         * Sprint 2.8 V2-first orchestration:
+         * an explanatory request is answerable immediately and must not
+         * fall through to artifact requirements or the generic questionnaire.
+         */
+        if (directExplanationFromReasoning()) {
+            state.activeQuestion = null;
+            state.phase = 'reading';
+            return false;
+        }
+
+        const ambiguityQuestion = artifactAmbiguityQuestionFromReasoning();
+
+        if (ambiguityQuestion) {
+            state.activeQuestion = ambiguityQuestion;
+            state.phase = 'conversation';
+            if (announce) addMessage('assistant', state.activeQuestion.prompt);
+            return true;
+        }
 
         const artifactReadiness = getArtifactReadiness();
 
@@ -2551,9 +2734,12 @@ if (unassociatedCriteria.length) {
         prepareNextQuestion(false);
 
         if (state.activeQuestion) {
-            const intro = isArtifactWorkflowActive()
-                ? ''
-                : (currentScenario() ? currentScenario().intro + ' ' : '');
+            const dependencyIntro = artifactDependencyIntroFromReasoning();
+            const intro = dependencyIntro || (
+                isArtifactWorkflowActive()
+                    ? ''
+                    : (currentScenario() ? currentScenario().intro + ' ' : '')
+            );
             addMessage('assistant', intro + state.activeQuestion.prompt);
         }
 
@@ -2586,6 +2772,9 @@ if (unassociatedCriteria.length) {
             state.answers[question.id] = answerText;
             state.answerLabels[question.id] = answerText;
             advanceArtifactWorkflow(question);
+        } else if (question.source === 'artifactAmbiguity') {
+            state.answers[question.id] = mappedValue || mapFreeAnswer(question, text);
+            state.answerLabels[question.id] = String(text || '').trim();
         } else {
             state.answers[question.id] = mappedValue || mapFreeAnswer(question, text);
             state.answerLabels[question.id] = mappedValue ? text : 'Réponse libre qualifiée';
