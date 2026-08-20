@@ -436,85 +436,47 @@
         ]),
 
         workflow: Object.freeze([
-            {
-                id: 'WORKFLOW_SCOPE_REQUIRED',
-                question:
-                    'Quel processus ou objet métier doit être digitalisé par ce workflow ?',
-                answerKey: 'workflowScope',
-                signals: [
-                    'processus',
-                    'process',
-                    'document',
-                    'validation documentaire',
-                    'achat',
-                    'achats',
-                    'ncr',
-                    'inspection'
-                ],
-                importance: 'blocking'
-            },
-            {
-                id: 'WORKFLOW_STEPS_REQUIRED',
-                question:
-                    'Quelles sont les étapes actuelles du processus, depuis la création jusqu’à la clôture ?',
-                answerKey: 'workflowSteps',
-                signals: [
-                    'etape',
-                    'etapes',
-                    'creation',
-                    'validation',
-                    'approbation',
-                    'cloture'
-                ],
-                importance: 'blocking'
-            },
-            {
-                id: 'WORKFLOW_ACTORS_REQUIRED',
-                question:
-                    'Quels rôles interviennent à chaque étape et qui peut approuver, rejeter ou retourner le dossier ?',
-                answerKey: 'workflowActors',
-                signals: [
-                    'role',
-                    'roles',
-                    'approbateur',
-                    'approbation',
-                    'rejeter',
-                    'retourner'
-                ],
-                importance: 'blocking'
-            },
-            {
-                id: 'WORKFLOW_RULES_REQUIRED',
-                question:
-                    'Quelles règles, conditions, délais ou seuils doivent piloter automatiquement le workflow ?',
-                answerKey: 'workflowRules',
-                signals: [
-                    'regle',
-                    'regles',
-                    'condition',
-                    'conditions',
-                    'delai',
-                    'seuil'
-                ],
-                importance: 'important'
-            },
-            {
-                id: 'WORKFLOW_TRACEABILITY_REQUIRED',
-                question:
-                    'Quelles preuves, notifications et traces d’audit doivent être conservées ?',
-                answerKey: 'workflowTraceability',
-                signals: [
-                    'audit trail',
-                    'trace',
-                    'traces',
-                    'notification',
-                    'notifications',
-                    'preuve',
-                    'preuves'
-                ],
-                importance: 'important'
-            }
-        ])
+    {
+        id: 'WORKFLOW_SCOPE_REQUIRED',
+        question:
+            'Quel processus ou objet métier doit être digitalisé par ce workflow ?',
+        answerKey: 'workflowScope',
+        signals: [],
+        importance: 'blocking'
+    },
+    {
+        id: 'WORKFLOW_STEPS_REQUIRED',
+        question:
+            'Décrivez les étapes explicitement connues, une ligne par étape, au format : STEP-001 | étape: ... | acteur: ... | action: ... | suivant: STEP-002 | sortie: ... . Pour la dernière étape, utilisez suivant: FIN. Si une information est inconnue, indiquez « inconnue » : Civilina ne l’invente pas.',
+        answerKey: 'workflowSteps',
+        signals: [],
+        importance: 'blocking'
+    },
+    {
+        id: 'WORKFLOW_ACTORS_REQUIRED',
+        question:
+            'Quels rôles ou acteurs interviennent dans ce workflow ?',
+        answerKey: 'workflowActors',
+        signals: [],
+        importance: 'blocking'
+    },
+    {
+        id: 'WORKFLOW_RULES_REQUIRED',
+        question:
+            'Quelles règles, conditions, délais, seuils ou règles d’escalade doivent piloter le workflow ? S’il n’y en a pas à ce stade, indiquez-le explicitement.',
+        answerKey: 'workflowRules',
+        signals: [],
+        importance: 'important'
+    },
+    {
+        id: 'WORKFLOW_TRACEABILITY_REQUIRED',
+        question:
+            'Quelles preuves, notifications, historiques ou traces d’audit doivent être conservés ?',
+        answerKey: 'workflowTraceability',
+        signals: [],
+        importance: 'important'
+    }
+]),
     });
 
     function unique(values) {

@@ -3300,6 +3300,265 @@ if (unassociatedCriteria.length) {
             return section;
         }
     }
+        /*
+     * Sprint 2.9
+     * Workflow Journey -> Bridge -> Builder.
+     */
+    if (
+        artifact &&
+        artifact.id === 'workflow' &&
+        window.CivilinaAIWorkflowJourneyBridge &&
+        window.CivilinaAIWorkflowBuilder
+    ) {
+        const prepared =
+            window.CivilinaAIWorkflowJourneyBridge.prepare({
+                initialText: state.initialText,
+                answers: state.answers
+            });
+
+        const buildResult =
+            prepared &&
+            prepared.ready
+                ? window.CivilinaAIWorkflowBuilder.build(
+                    prepared.builderInput
+                )
+                : null;
+
+        if (
+            buildResult &&
+            buildResult.ready &&
+            buildResult.artifact
+        ) {
+            const draft = buildResult.artifact;
+
+            section.appendChild(
+                createElement(
+                    'h3',
+                    'journey-subtitle',
+                    'Workflow structuré'
+                )
+            );
+
+            const summary =
+                createElement(
+                    'dl',
+                    'context-list'
+                );
+
+            const scopeRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            scopeRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Périmètre'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.context &&
+                    draft.context.scope
+                        ? draft.context.scope
+                        : 'À définir'
+                )
+            );
+
+            const rulesRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            rulesRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Règles'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.rules &&
+                    draft.rules.statement
+                        ? draft.rules.statement
+                        : 'À définir'
+                )
+            );
+
+            const revisionRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            revisionRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Révision'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.revision || 'DRAFT-01'
+                )
+            );
+
+            summary.append(
+                scopeRow,
+                rulesRow,
+                revisionRow
+            );
+
+            section.appendChild(summary);
+
+            const rows =
+                Array.isArray(draft.rows)
+                    ? draft.rows
+                    : [];
+
+            if (rows.length) {
+                section.appendChild(
+                    createElement(
+                        'h3',
+                        'journey-subtitle',
+                        'Étapes du workflow'
+                    )
+                );
+
+                const list =
+                    createElement(
+                        'div',
+                        'evidence-list'
+                    );
+
+                rows.forEach(
+                    function (row) {
+                        const item =
+                            createElement(
+                                'article',
+                                'evidence-item'
+                            );
+
+                        item.appendChild(
+                            createElement(
+                                'strong',
+                                null,
+                                (
+                                    row.id
+                                        ? row.id + ' — '
+                                        : ''
+                                ) +
+                                (
+                                    row.name ||
+                                    'Étape à préciser'
+                                )
+                            )
+                        );
+
+                        if (row.actor) {
+                            item.appendChild(
+                                createElement(
+                                    'p',
+                                    null,
+                                    'Acteur : ' +
+                                        row.actor
+                                )
+                            );
+                        }
+
+                        if (row.action) {
+                            item.appendChild(
+                                createElement(
+                                    'p',
+                                    null,
+                                    'Action : ' +
+                                        row.action
+                                )
+                            );
+                        }
+
+                        item.appendChild(
+                            createElement(
+                                'p',
+                                null,
+                                'Transition : ' +
+                                    (
+                                        row.terminal
+                                            ? 'FIN'
+                                            : (
+                                                row.nextStep ||
+                                                'À compléter'
+                                            )
+                                    )
+                            )
+                        );
+
+                        if (row.outcome) {
+                            item.appendChild(
+                                createElement(
+                                    'p',
+                                    null,
+                                    'Sortie : ' +
+                                        row.outcome
+                                )
+                            );
+                        }
+
+                        if (
+                            Array.isArray(
+                                row.missingFields
+                            ) &&
+                            row.missingFields.length
+                        ) {
+                            item.appendChild(
+                                createElement(
+                                    'p',
+                                    'uncertainty-note',
+                                    'À compléter : ' +
+                                        row.missingFields.join(', ')
+                                )
+                            );
+                        }
+
+                        list.appendChild(item);
+                    }
+                );
+
+                section.appendChild(list);
+            }
+
+            if (
+                draft.traceabilityRequirements &&
+                draft.traceabilityRequirements.statement
+            ) {
+                section.appendChild(
+                    createElement(
+                        'p',
+                        'uncertainty-note',
+                        'Traçabilité demandée : ' +
+                            draft
+                                .traceabilityRequirements
+                                .statement
+                    )
+                );
+            }
+
+            section.appendChild(
+                createElement(
+                    'p',
+                    'uncertainty-note',
+                    'Workflow construit uniquement à partir des étapes, acteurs, transitions et règles explicitement fournis. Civilina n’invente aucune transition ni responsabilité.'
+                )
+            );
+
+            return section;
+        }
+    }
     /*
      * Generic artifact fallback.
      */
