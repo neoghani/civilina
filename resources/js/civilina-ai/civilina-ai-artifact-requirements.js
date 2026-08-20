@@ -266,69 +266,87 @@
         ]),
 
         raci: Object.freeze([
-            {
-                id: 'RACI_PROCESS_SCOPE_REQUIRED',
-                question:
-                    'Sur quel processus, projet ou périmètre faut-il construire la matrice RACI ?',
-                answerKey: 'raciProcessScope',
-                signals: [
-                    'processus',
-                    'process',
-                    'projet',
-                    'project',
-                    'achat',
-                    'achats',
-                    'procurement',
-                    'qualite',
-                    'engineering'
-                ],
-                importance: 'blocking'
-            },
-            {
-                id: 'RACI_ACTIVITIES_REQUIRED',
-                question:
-                    'Quelles activités ou décisions principales doivent apparaître dans la matrice ?',
-                answerKey: 'raciActivities',
-                signals: [
-                    'activite',
-                    'activites',
-                    'decision',
-                    'decisions',
-                    'etape',
-                    'etapes'
-                ],
-                importance: 'blocking'
-            },
-            {
-                id: 'RACI_ROLES_REQUIRED',
-                question:
-                    'Quels rôles, fonctions ou acteurs doivent être positionnés dans le RACI ?',
-                answerKey: 'raciRoles',
-                signals: [
-                    'role',
-                    'roles',
-                    'fonction',
-                    'fonctions',
-                    'acteur',
-                    'acteurs',
-                    'responsable'
-                ],
-                importance: 'blocking'
-            },
-            {
-                id: 'RACI_AUTHORITY_REQUIRED',
-                question:
-                    'Existe-t-il des règles de délégation d’autorité ou des seuils d’approbation à respecter ?',
-                answerKey: 'raciAuthority',
-                signals: [
-                    'delegation autorite',
-                    'doa',
-                    'seuil approbation',
-                    'approval threshold'
-                ],
-                importance: 'important'
-            }
-        ]),
+    {
+        id:
+            'RACI_PROCESS_SCOPE_REQUIRED',
+
+        question:
+            'Sur quel processus, projet ou périmètre faut-il construire la matrice RACI ?',
+
+        answerKey:
+            'raciProcessScope',
+
+        signals:
+            [],
+
+        importance:
+            'blocking'
+    },
+    {
+        id:
+            'RACI_ACTIVITIES_REQUIRED',
+
+        question:
+            'Quelles activités ou décisions principales doivent apparaître dans la matrice ? Utilisez si possible un identifiant stable pour chaque activité, par exemple ACT-001.',
+
+        answerKey:
+            'raciActivities',
+
+        signals:
+            [],
+
+        importance:
+            'blocking'
+    },
+    {
+        id:
+            'RACI_ROLES_REQUIRED',
+
+        question:
+            'Quels rôles, fonctions ou acteurs doivent être positionnés dans le RACI ?',
+
+        answerKey:
+            'raciRoles',
+
+        signals:
+            [],
+
+        importance:
+            'blocking'
+    },
+    {
+        id:
+            'RACI_AUTHORITY_REQUIRED',
+
+        question:
+            'Existe-t-il des règles de délégation d’autorité, des seuils d’approbation ou des contraintes de gouvernance à respecter ? S’il n’y en a pas, indiquez-le explicitement.',
+
+        answerKey:
+            'raciAuthority',
+
+        signals:
+            [],
+
+        importance:
+            'important'
+    },
+    {
+        id:
+            'RACI_ASSIGNMENTS_REQUIRED',
+
+        question:
+            'Indiquez explicitement les affectations RACI pour chaque activité, une ligne par activité, au format : ACT-001 | activité: ... | R: ... | A: ... | C: ... | I: ... . Si une affectation est inconnue, indiquez « inconnue » : Civilina ne l’invente pas.',
+
+        answerKey:
+            'raciAssignments',
+
+        signals:
+            [],
+
+        importance:
+            'blocking'
+    }
+]),
 
         dashboard: Object.freeze([
             {

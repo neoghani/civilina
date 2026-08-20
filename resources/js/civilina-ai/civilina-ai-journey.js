@@ -3041,6 +3041,265 @@ if (unassociatedCriteria.length) {
             return section;
         }
     }
+        /*
+     * Sprint 2.9
+     * RACI Journey -> Bridge -> Builder.
+     */
+    if (
+        artifact &&
+        artifact.id === 'raci' &&
+        window.CivilinaAIRACIJourneyBridge &&
+        window.CivilinaAIRACIBuilder
+    ) {
+        const prepared =
+            window.CivilinaAIRACIJourneyBridge.prepare({
+                initialText:
+                    state.initialText,
+
+                answers:
+                    state.answers
+            });
+
+        const buildResult =
+            prepared &&
+            prepared.ready
+                ? window.CivilinaAIRACIBuilder.build(
+                    prepared.builderInput
+                )
+                : null;
+
+        if (
+            buildResult &&
+            buildResult.ready &&
+            buildResult.artifact
+        ) {
+            const draft =
+                buildResult.artifact;
+
+            section.appendChild(
+                createElement(
+                    'h3',
+                    'journey-subtitle',
+                    'Matrice RACI structurée'
+                )
+            );
+
+            const summary =
+                createElement(
+                    'dl',
+                    'context-list'
+                );
+
+            const scopeRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            scopeRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Périmètre'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.context &&
+                    draft.context.processScope
+                        ? draft.context.processScope
+                        : 'À définir'
+                )
+            );
+
+            const authorityRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            authorityRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Autorité / gouvernance'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.authority &&
+                    draft.authority.statement
+                        ? draft.authority.statement
+                        : 'À définir'
+                )
+            );
+
+            const revisionRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            revisionRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Révision'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.revision ||
+                        'DRAFT-01'
+                )
+            );
+
+            summary.append(
+                scopeRow,
+                authorityRow,
+                revisionRow
+            );
+
+            section.appendChild(
+                summary
+            );
+
+            const rows =
+                Array.isArray(
+                    draft.rows
+                )
+                    ? draft.rows
+                    : [];
+
+            if (rows.length) {
+                section.appendChild(
+                    createElement(
+                        'h3',
+                        'journey-subtitle',
+                        'Affectations RACI'
+                    )
+                );
+
+                const list =
+                    createElement(
+                        'div',
+                        'evidence-list'
+                    );
+
+                rows.forEach(
+                    function (row) {
+                        const item =
+                            createElement(
+                                'article',
+                                'evidence-item'
+                            );
+
+                        item.appendChild(
+                            createElement(
+                                'strong',
+                                null,
+                                (
+                                    row.id
+                                        ? row.id + ' — '
+                                        : ''
+                                ) +
+                                (
+                                    row.activity ||
+                                    'Activité à préciser'
+                                )
+                            )
+                        );
+
+                        const roleLine =
+                            function (
+                                code,
+                                label,
+                                values
+                            ) {
+                                if (
+                                    !Array.isArray(
+                                        values
+                                    ) ||
+                                    !values.length
+                                ) {
+                                    return;
+                                }
+
+                                item.appendChild(
+                                    createElement(
+                                        'p',
+                                        null,
+                                        code +
+                                            ' — ' +
+                                            label +
+                                            ' : ' +
+                                            values.join(', ')
+                                    )
+                                );
+                            };
+
+                        roleLine(
+                            'R',
+                            'Responsible',
+                            row.responsible
+                        );
+
+                        roleLine(
+                            'A',
+                            'Accountable',
+                            row.accountable
+                        );
+
+                        roleLine(
+                            'C',
+                            'Consulted',
+                            row.consulted
+                        );
+
+                        roleLine(
+                            'I',
+                            'Informed',
+                            row.informed
+                        );
+
+                        if (
+                            Array.isArray(
+                                row.missingFields
+                            ) &&
+                            row.missingFields.length
+                        ) {
+                            item.appendChild(
+                                createElement(
+                                    'p',
+                                    'uncertainty-note',
+                                    'À compléter : ' +
+                                        row.missingFields.join(', ')
+                                )
+                            );
+                        }
+
+                        list.appendChild(
+                            item
+                        );
+                    }
+                );
+
+                section.appendChild(
+                    list
+                );
+            }
+
+            section.appendChild(
+                createElement(
+                    'p',
+                    'uncertainty-note',
+                    'Matrice construite uniquement à partir des activités, rôles et affectations explicitement fournis. Civilina ne déduit aucune responsabilité manquante.'
+                )
+            );
+
+            return section;
+        }
+    }
     /*
      * Generic artifact fallback.
      */

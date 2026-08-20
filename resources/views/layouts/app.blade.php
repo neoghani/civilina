@@ -60,6 +60,8 @@
         'civilina-ai-wbs-builder.js',
         'civilina-ai-risk-register-builder.js',
         'civilina-ai-risk-register-journey-bridge.js',
+        'civilina-ai-raci-builder.js',
+        'civilina-ai-raci-journey-bridge.js',
         'civilina-ai-facts-v2.js',
         'civilina-ai-questions-v2.js',
         'civilina-ai-reasoning-v2.js',
