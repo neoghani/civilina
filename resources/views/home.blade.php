@@ -59,7 +59,7 @@
                         <div class="suggestion-grid" id="ai-suggestions" aria-label="Réponses suggérées"></div>
                         <form class="ai-form" id="ai-form">
                             <label class="visually-hidden" for="ai-need">Votre réponse à Civilina AI</label>
-                            <input class="ai-input" id="ai-need" name="need" type="text" placeholder="Décrivez votre besoin…" autocomplete="off" maxlength="240">
+                            <textarea class="ai-input" id="ai-need" name="need" placeholder="Décrivez votre besoin…" autocomplete="off" maxlength="4000" rows="4"></textarea>
                             <button class="btn btn-navy" id="ai-submit" type="submit">Commencer</button>
                         </form>
                         <p class="form-note" id="form-note">Sans compte • Démonstration locale • Aucune donnée transmise</p>

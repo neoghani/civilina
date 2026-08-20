@@ -2419,7 +2419,628 @@ if (unassociatedCriteria.length) {
             return section;
         }
     }
+    /*
+     * Sprint 2.9
+     * Build a deterministic Risk Register draft
+     * from Journey answers through the safe bridge.
+     */
+    if (
+        artifact &&
+        artifact.id === 'riskRegister' &&
+        window.CivilinaAIRiskRegisterJourneyBridge &&
+        window.CivilinaAIRiskRegisterBuilder
+    ) {
+        const prepared =
+            window
+                .CivilinaAIRiskRegisterJourneyBridge
+                .prepare({
+                    initialText:
+                        state.initialText,
 
+                    answers:
+                        state.answers
+                });
+
+        const buildResult =
+            prepared &&
+            prepared.ready
+                ? window
+                    .CivilinaAIRiskRegisterBuilder
+                    .build(
+                        prepared.builderInput
+                    )
+                : null;
+
+        if (
+            buildResult &&
+            buildResult.ready &&
+            buildResult.artifact
+        ) {
+            const draft =
+                buildResult.artifact;
+
+            section.appendChild(
+                createElement(
+                    'h3',
+                    'journey-subtitle',
+                    'Registre des risques structuré'
+                )
+            );
+
+            const summary =
+                createElement(
+                    'dl',
+                    'context-list'
+                );
+
+            const scopeRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            scopeRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Périmètre'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.context &&
+                    draft.context.scope
+                        ? draft.context.scope
+                        : 'À définir'
+                )
+            );
+
+            const scoringRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            scoringRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Cotation'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.scoring &&
+                    draft.scoring.method
+                        ? draft.scoring.method
+                        : 'À définir'
+                )
+            );
+
+            const revisionRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            revisionRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Révision'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.revision ||
+                        'DRAFT-01'
+                )
+            );
+
+            summary.append(
+                scopeRow,
+                scoringRow,
+                revisionRow
+            );
+
+            section.appendChild(
+                summary
+            );
+
+            const rows =
+                Array.isArray(
+                    draft.rows
+                )
+                    ? draft.rows
+                    : [];
+
+            if (rows.length) {
+                section.appendChild(
+                    createElement(
+                        'h3',
+                        'journey-subtitle',
+                        'Risques identifiés'
+                    )
+                );
+
+                const list =
+                    createElement(
+                        'div',
+                        'evidence-list'
+                    );
+
+                rows.forEach(
+                    function (row) {
+                        const item =
+                            createElement(
+                                'article',
+                                'evidence-item'
+                            );
+
+                        const title =
+                            (
+                                row.id
+                                    ? row.id + ' — '
+                                    : ''
+                            ) +
+                            (
+                                row.risk ||
+                                'Risque à préciser'
+                            );
+
+                        item.appendChild(
+                            createElement(
+                                'strong',
+                                null,
+                                title
+                            )
+                        );
+
+                        const details = [];
+
+                        if (row.category) {
+                            details.push(
+                                'Catégorie : ' +
+                                    row.category
+                            );
+                        }
+
+                        if (row.cause) {
+                            details.push(
+                                'Cause : ' +
+                                    row.cause
+                            );
+                        }
+
+                        if (row.consequence) {
+                            details.push(
+                                'Conséquence : ' +
+                                    row.consequence
+                            );
+                        }
+
+                        if (
+                            row.probability !==
+                                null &&
+                            row.probability !==
+                                undefined
+                        ) {
+                            details.push(
+                                'Probabilité : ' +
+                                    row.probability
+                            );
+                        }
+
+                        if (
+                            row.impact !==
+                                null &&
+                            row.impact !==
+                                undefined
+                        ) {
+                            details.push(
+                                'Impact : ' +
+                                    row.impact
+                            );
+                        }
+
+                        if (
+                            row.criticality !==
+                                null &&
+                            row.criticality !==
+                                undefined
+                        ) {
+                            details.push(
+                                'Criticité : ' +
+                                    row.criticality
+                            );
+                        }
+
+                        if (row.owner) {
+                            details.push(
+                                'Responsable : ' +
+                                    row.owner
+                            );
+                        }
+
+                        if (row.response) {
+                            details.push(
+                                'Réponse : ' +
+                                    row.response
+                            );
+                        }
+
+                        if (row.dueDate) {
+                            details.push(
+                                'Échéance : ' +
+                                    row.dueDate
+                            );
+                        }
+
+                        if (row.status) {
+                            details.push(
+                                'Statut : ' +
+                                    row.status
+                            );
+                        }
+
+                        details.forEach(
+                            function (detail) {
+                                item.appendChild(
+                                    createElement(
+                                        'p',
+                                        null,
+                                        detail
+                                    )
+                                );
+                            }
+                        );
+
+                        if (
+                            Array.isArray(
+                                row.missingFields
+                            ) &&
+                            row.missingFields.length
+                        ) {
+                            item.appendChild(
+                                createElement(
+                                    'p',
+                                    'uncertainty-note',
+                                    'À compléter : ' +
+                                        row
+                                            .missingFields
+                                            .join(', ')
+                                )
+                            );
+                        }
+
+                        list.appendChild(
+                            item
+                        );
+                    }
+                );
+
+                section.appendChild(
+                    list
+                );
+            }
+
+            section.appendChild(
+                createElement(
+                    'p',
+                    'uncertainty-note',
+                    'Registre construit uniquement à partir des risques et informations explicitement fournis. Aucune probabilité, cause, responsabilité ou action manquante n’est inventée.'
+                )
+            );
+
+            return section;
+        }
+    }
+        /*
+     * Sprint 2.9
+     * Risk Register Journey -> Bridge -> Builder.
+     */
+    if (
+        artifact &&
+        artifact.id === 'riskRegister' &&
+        window.CivilinaAIRiskRegisterJourneyBridge &&
+        window.CivilinaAIRiskRegisterBuilder
+    ) {
+        const prepared =
+            window
+                .CivilinaAIRiskRegisterJourneyBridge
+                .prepare({
+                    initialText:
+                        state.initialText,
+
+                    answers:
+                        state.answers
+                });
+
+        const buildResult =
+            prepared &&
+            prepared.ready
+                ? window
+                    .CivilinaAIRiskRegisterBuilder
+                    .build(
+                        prepared.builderInput
+                    )
+                : null;
+
+        if (
+            buildResult &&
+            buildResult.ready &&
+            buildResult.artifact
+        ) {
+            const draft =
+                buildResult.artifact;
+
+            section.appendChild(
+                createElement(
+                    'h3',
+                    'journey-subtitle',
+                    'Registre des risques structuré'
+                )
+            );
+
+            const summary =
+                createElement(
+                    'dl',
+                    'context-list'
+                );
+
+            const scopeRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            scopeRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Périmètre'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.context &&
+                    draft.context.scope
+                        ? draft.context.scope
+                        : 'À définir'
+                )
+            );
+
+            const scoringRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            scoringRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Cotation'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.scoring &&
+                    draft.scoring.method
+                        ? draft.scoring.method
+                        : 'À définir'
+                )
+            );
+
+            const revisionRow =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            revisionRow.append(
+                createElement(
+                    'dt',
+                    null,
+                    'Révision'
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    draft.revision ||
+                        'DRAFT-01'
+                )
+            );
+
+            summary.append(
+                scopeRow,
+                scoringRow,
+                revisionRow
+            );
+
+            section.appendChild(
+                summary
+            );
+
+            const rows =
+                Array.isArray(
+                    draft.rows
+                )
+                    ? draft.rows
+                    : [];
+
+            if (rows.length) {
+                section.appendChild(
+                    createElement(
+                        'h3',
+                        'journey-subtitle',
+                        'Risques identifiés'
+                    )
+                );
+
+                const list =
+                    createElement(
+                        'div',
+                        'evidence-list'
+                    );
+
+                rows.forEach(
+                    function (row) {
+                        const item =
+                            createElement(
+                                'article',
+                                'evidence-item'
+                            );
+
+                        item.appendChild(
+                            createElement(
+                                'strong',
+                                null,
+                                (
+                                    row.id
+                                        ? row.id +
+                                            ' — '
+                                        : ''
+                                ) +
+                                (
+                                    row.risk ||
+                                    'Risque à préciser'
+                                )
+                            )
+                        );
+
+                        const details = [];
+
+                        if (row.category) {
+                            details.push(
+                                'Catégorie : ' +
+                                    row.category
+                            );
+                        }
+
+                        if (row.cause) {
+                            details.push(
+                                'Cause : ' +
+                                    row.cause
+                            );
+                        }
+
+                        if (row.consequence) {
+                            details.push(
+                                'Conséquence : ' +
+                                    row.consequence
+                            );
+                        }
+
+                        if (
+                            row.probability !== null &&
+                            row.probability !== undefined
+                        ) {
+                            details.push(
+                                'Probabilité : ' +
+                                    row.probability
+                            );
+                        }
+
+                        if (
+                            row.impact !== null &&
+                            row.impact !== undefined
+                        ) {
+                            details.push(
+                                'Impact : ' +
+                                    row.impact
+                            );
+                        }
+
+                        if (
+                            row.criticality !== null &&
+                            row.criticality !== undefined
+                        ) {
+                            details.push(
+                                'Criticité : ' +
+                                    row.criticality
+                            );
+                        }
+
+                        if (row.owner) {
+                            details.push(
+                                'Responsable : ' +
+                                    row.owner
+                            );
+                        }
+
+                        if (row.response) {
+                            details.push(
+                                'Réponse : ' +
+                                    row.response
+                            );
+                        }
+
+                        if (row.dueDate) {
+                            details.push(
+                                'Échéance : ' +
+                                    row.dueDate
+                            );
+                        }
+
+                        if (row.status) {
+                            details.push(
+                                'Statut : ' +
+                                    row.status
+                            );
+                        }
+
+                        details.forEach(
+                            function (detail) {
+                                item.appendChild(
+                                    createElement(
+                                        'p',
+                                        null,
+                                        detail
+                                    )
+                                );
+                            }
+                        );
+
+                        if (
+                            Array.isArray(
+                                row.missingFields
+                            ) &&
+                            row.missingFields.length
+                        ) {
+                            item.appendChild(
+                                createElement(
+                                    'p',
+                                    'uncertainty-note',
+                                    'À compléter : ' +
+                                        row.missingFields
+                                            .join(', ')
+                                )
+                            );
+                        }
+
+                        list.appendChild(
+                            item
+                        );
+                    }
+                );
+
+                section.appendChild(
+                    list
+                );
+            }
+
+            section.appendChild(
+                createElement(
+                    'p',
+                    'uncertainty-note',
+                    'Registre construit uniquement à partir des risques et informations explicitement fournis. Aucune probabilité, cause, responsabilité ou action manquante n’est inventée.'
+                )
+            );
+
+            return section;
+        }
+    }
     /*
      * Generic artifact fallback.
      */

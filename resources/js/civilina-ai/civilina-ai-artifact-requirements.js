@@ -220,16 +220,7 @@
                 question:
                     'Quel est le périmètre du registre : entreprise, portefeuille, projet, lot, activité ou processus ?',
                 answerKey: 'riskScope',
-                signals: [
-                    'entreprise',
-                    'portfolio',
-                    'portefeuille',
-                    'projet',
-                    'project',
-                    'lot',
-                    'activite',
-                    'processus'
-                ],
+                signals: [],
                 importance: 'blocking'
             },
             {
@@ -237,19 +228,7 @@
                 question:
                     'Quelles familles de risques doivent être couvertes : coût, délai, technique, HSE, qualité, achats, contrats ou organisation ?',
                 answerKey: 'riskCategories',
-                signals: [
-                    'cout',
-                    'cost',
-                    'delai',
-                    'planning',
-                    'technique',
-                    'hse',
-                    'qualite',
-                    'quality',
-                    'achat',
-                    'procurement',
-                    'contrat'
-                ],
+                signals: [],
                 importance: 'important'
             },
             {
@@ -257,26 +236,31 @@
                 question:
                     'Quelle méthode d’évaluation souhaitez-vous utiliser pour la probabilité, l’impact et la criticité ?',
                 answerKey: 'riskScoring',
-                signals: [
-                    'probabilite',
-                    'probability',
-                    'impact',
-                    'criticite',
-                    'risk matrix',
-                    'matrice risque'
-                ],
+                signals: [],
                 importance: 'blocking'
             },
             {
                 id: 'RISK_OWNERS_REQUIRED',
                 question:
-                    'Qui sera responsable de chaque risque et des actions de traitement ?',
+                    'Pour chaque risque, indiquez le responsable en utilisant son identifiant, par exemple : R-001 : Responsable achats.',
                 answerKey: 'riskOwners',
-                signals: [
-                    'risk owner',
-                    'proprietaire du risque',
-                    'responsable risque'
-                ],
+                signals: [],
+                importance: 'important'
+            },
+            {
+                id: 'RISK_ITEMS_REQUIRED',
+                question:
+                    'Quels risques sont explicitement connus à ce stade ? Utilisez une ligne par risque au format : R-001 | risque: ... | cause: ... | conséquence: ... | probabilité: ... | impact: ... . Si une information est inconnue, indiquez « inconnue » : Civilina ne l’invente pas.',
+                answerKey: 'riskItems',
+                signals: [],
+                importance: 'blocking'
+            },
+            {
+                id: 'RISK_TREATMENT_REQUIRED',
+                question:
+                    'Pour chaque risque, indiquez la réponse ou action de traitement en utilisant son identifiant au format : R-001 | réponse: ... | échéance: ... | statut: ... .',
+                answerKey: 'riskTreatment',
+                signals: [],
                 importance: 'important'
             }
         ]),
