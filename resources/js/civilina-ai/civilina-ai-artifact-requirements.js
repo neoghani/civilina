@@ -349,91 +349,47 @@
 ]),
 
         dashboard: Object.freeze([
-            {
-                id: 'DASHBOARD_DECISION_REQUIRED',
-                question:
-                    'Quelles décisions ce dashboard doit-il permettre de prendre ou de préparer ?',
-                answerKey: 'dashboardDecision',
-                signals: [
-                    'decision',
-                    'decisions',
-                    'arbitrage',
-                    'arbitrer',
-                    'attention direction'
-                ],
-                importance: 'blocking'
-            },
-            {
-                id: 'DASHBOARD_AUDIENCE_REQUIRED',
-                question:
-                    'À qui le dashboard est-il destiné : DG, direction de projet, PMO, chantier ou autre fonction ?',
-                answerKey: 'dashboardAudience',
-                signals: [
-                    'dg',
-                    'ceo',
-                    'direction',
-                    'project manager',
-                    'chef de projet',
-                    'pmo',
-                    'chantier'
-                ],
-                importance: 'blocking'
-            },
-            {
-                id: 'DASHBOARD_KPI_REQUIRED',
-                question:
-                    'Quels KPI ou dimensions de contrôle doivent apparaître : coût, délai, avancement, risques, qualité, achats, cash ou marge ?',
-                answerKey: 'dashboardKpi',
-                signals: [
-                    'kpi',
-                    'cout',
-                    'cost',
-                    'delai',
-                    'planning',
-                    'avancement',
-                    'progress',
-                    'risque',
-                    'risk',
-                    'qualite',
-                    'procurement',
-                    'cash',
-                    'marge'
-                ],
-                importance: 'blocking'
-            },
-            {
-                id: 'DASHBOARD_DATA_SOURCE_REQUIRED',
-                question:
-                    'Quelles sources de données alimenteront ces indicateurs et qui en est propriétaire ?',
-                answerKey: 'dashboardDataSource',
-                signals: [
-                    'source',
-                    'sources',
-                    'erp',
-                    'excel',
-                    'bi',
-                    'data owner',
-                    'proprietaire donnees'
-                ],
-                importance: 'important'
-            },
-            {
-                id: 'DASHBOARD_FREQUENCY_REQUIRED',
-                question:
-                    'À quelle fréquence le dashboard doit-il être actualisé et à quelle date de statut ?',
-                answerKey: 'dashboardFrequency',
-                signals: [
-                    'quotidien',
-                    'daily',
-                    'hebdomadaire',
-                    'weekly',
-                    'mensuel',
-                    'monthly',
-                    'date de statut'
-                ],
-                importance: 'important'
-            }
-        ]),
+    {
+        id: 'DASHBOARD_DECISION_REQUIRED',
+        question:
+            'Quelles décisions ce dashboard doit-il permettre de prendre, préparer ou arbitrer ?',
+        answerKey: 'dashboardDecision',
+        signals: [],
+        importance: 'blocking'
+    },
+    {
+        id: 'DASHBOARD_AUDIENCE_REQUIRED',
+        question:
+            'À qui le dashboard est-il destiné : DG, direction de projet, PMO, chantier ou autre fonction ?',
+        answerKey: 'dashboardAudience',
+        signals: [],
+        importance: 'blocking'
+    },
+    {
+        id: 'DASHBOARD_KPI_REQUIRED',
+        question:
+            'Quels KPI doivent apparaître ? Utilisez une ligne par KPI au format : KPI-001 | indicateur: ... | valeur: ... | unité: ... | cible: ... | tendance: ... . Si une information est inconnue, indiquez « inconnue » : Civilina ne l’invente pas.',
+        answerKey: 'dashboardKpi',
+        signals: [],
+        importance: 'blocking'
+    },
+    {
+        id: 'DASHBOARD_DATA_SOURCE_REQUIRED',
+        question:
+            'Pour chaque KPI, indiquez sa source de données et son propriétaire en utilisant son identifiant, au format : KPI-001 | source: ... | propriétaire: ... . Si une information est inconnue, indiquez « inconnue » : Civilina ne l’invente pas.',
+        answerKey: 'dashboardDataSource',
+        signals: [],
+        importance: 'blocking'
+    },
+    {
+        id: 'DASHBOARD_FREQUENCY_REQUIRED',
+        question:
+            'À quelle fréquence le dashboard doit-il être actualisé et quelle règle de date de statut doit être appliquée ?',
+        answerKey: 'dashboardFrequency',
+        signals: [],
+        importance: 'important'
+    }
+]),
 
         workflow: Object.freeze([
     {

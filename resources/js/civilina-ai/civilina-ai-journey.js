@@ -2739,308 +2739,10 @@ if (unassociatedCriteria.length) {
      * Sprint 2.9
      * Risk Register Journey -> Bridge -> Builder.
      */
-    if (
-        artifact &&
-        artifact.id === 'riskRegister' &&
-        window.CivilinaAIRiskRegisterJourneyBridge &&
-        window.CivilinaAIRiskRegisterBuilder
-    ) {
-        const prepared =
-            window
-                .CivilinaAIRiskRegisterJourneyBridge
-                .prepare({
-                    initialText:
-                        state.initialText,
 
-                    answers:
-                        state.answers
-                });
 
-        const buildResult =
-            prepared &&
-            prepared.ready
-                ? window
-                    .CivilinaAIRiskRegisterBuilder
-                    .build(
-                        prepared.builderInput
-                    )
-                : null;
 
-        if (
-            buildResult &&
-            buildResult.ready &&
-            buildResult.artifact
-        ) {
-            const draft =
-                buildResult.artifact;
-
-            section.appendChild(
-                createElement(
-                    'h3',
-                    'journey-subtitle',
-                    'Registre des risques structuré'
-                )
-            );
-
-            const summary =
-                createElement(
-                    'dl',
-                    'context-list'
-                );
-
-            const scopeRow =
-                createElement(
-                    'div',
-                    'context-row'
-                );
-
-            scopeRow.append(
-                createElement(
-                    'dt',
-                    null,
-                    'Périmètre'
-                ),
-                createElement(
-                    'dd',
-                    null,
-                    draft.context &&
-                    draft.context.scope
-                        ? draft.context.scope
-                        : 'À définir'
-                )
-            );
-
-            const scoringRow =
-                createElement(
-                    'div',
-                    'context-row'
-                );
-
-            scoringRow.append(
-                createElement(
-                    'dt',
-                    null,
-                    'Cotation'
-                ),
-                createElement(
-                    'dd',
-                    null,
-                    draft.scoring &&
-                    draft.scoring.method
-                        ? draft.scoring.method
-                        : 'À définir'
-                )
-            );
-
-            const revisionRow =
-                createElement(
-                    'div',
-                    'context-row'
-                );
-
-            revisionRow.append(
-                createElement(
-                    'dt',
-                    null,
-                    'Révision'
-                ),
-                createElement(
-                    'dd',
-                    null,
-                    draft.revision ||
-                        'DRAFT-01'
-                )
-            );
-
-            summary.append(
-                scopeRow,
-                scoringRow,
-                revisionRow
-            );
-
-            section.appendChild(
-                summary
-            );
-
-            const rows =
-                Array.isArray(
-                    draft.rows
-                )
-                    ? draft.rows
-                    : [];
-
-            if (rows.length) {
-                section.appendChild(
-                    createElement(
-                        'h3',
-                        'journey-subtitle',
-                        'Risques identifiés'
-                    )
-                );
-
-                const list =
-                    createElement(
-                        'div',
-                        'evidence-list'
-                    );
-
-                rows.forEach(
-                    function (row) {
-                        const item =
-                            createElement(
-                                'article',
-                                'evidence-item'
-                            );
-
-                        item.appendChild(
-                            createElement(
-                                'strong',
-                                null,
-                                (
-                                    row.id
-                                        ? row.id +
-                                            ' — '
-                                        : ''
-                                ) +
-                                (
-                                    row.risk ||
-                                    'Risque à préciser'
-                                )
-                            )
-                        );
-
-                        const details = [];
-
-                        if (row.category) {
-                            details.push(
-                                'Catégorie : ' +
-                                    row.category
-                            );
-                        }
-
-                        if (row.cause) {
-                            details.push(
-                                'Cause : ' +
-                                    row.cause
-                            );
-                        }
-
-                        if (row.consequence) {
-                            details.push(
-                                'Conséquence : ' +
-                                    row.consequence
-                            );
-                        }
-
-                        if (
-                            row.probability !== null &&
-                            row.probability !== undefined
-                        ) {
-                            details.push(
-                                'Probabilité : ' +
-                                    row.probability
-                            );
-                        }
-
-                        if (
-                            row.impact !== null &&
-                            row.impact !== undefined
-                        ) {
-                            details.push(
-                                'Impact : ' +
-                                    row.impact
-                            );
-                        }
-
-                        if (
-                            row.criticality !== null &&
-                            row.criticality !== undefined
-                        ) {
-                            details.push(
-                                'Criticité : ' +
-                                    row.criticality
-                            );
-                        }
-
-                        if (row.owner) {
-                            details.push(
-                                'Responsable : ' +
-                                    row.owner
-                            );
-                        }
-
-                        if (row.response) {
-                            details.push(
-                                'Réponse : ' +
-                                    row.response
-                            );
-                        }
-
-                        if (row.dueDate) {
-                            details.push(
-                                'Échéance : ' +
-                                    row.dueDate
-                            );
-                        }
-
-                        if (row.status) {
-                            details.push(
-                                'Statut : ' +
-                                    row.status
-                            );
-                        }
-
-                        details.forEach(
-                            function (detail) {
-                                item.appendChild(
-                                    createElement(
-                                        'p',
-                                        null,
-                                        detail
-                                    )
-                                );
-                            }
-                        );
-
-                        if (
-                            Array.isArray(
-                                row.missingFields
-                            ) &&
-                            row.missingFields.length
-                        ) {
-                            item.appendChild(
-                                createElement(
-                                    'p',
-                                    'uncertainty-note',
-                                    'À compléter : ' +
-                                        row.missingFields
-                                            .join(', ')
-                                )
-                            );
-                        }
-
-                        list.appendChild(
-                            item
-                        );
-                    }
-                );
-
-                section.appendChild(
-                    list
-                );
-            }
-
-            section.appendChild(
-                createElement(
-                    'p',
-                    'uncertainty-note',
-                    'Registre construit uniquement à partir des risques et informations explicitement fournis. Aucune probabilité, cause, responsabilité ou action manquante n’est inventée.'
-                )
-            );
-
-            return section;
-        }
-    }
+        
         /*
      * Sprint 2.9
      * RACI Journey -> Bridge -> Builder.
@@ -3560,6 +3262,189 @@ if (unassociatedCriteria.length) {
         }
     }
     /*
+ * Sprint 2.9
+ * Dashboard Journey -> Bridge -> Builder.
+ */
+if (
+    artifact &&
+    artifact.id === 'dashboard' &&
+    window.CivilinaAIDashboardJourneyBridge &&
+    window.CivilinaAIDashboardBuilder
+) {
+    const prepared =
+        window.CivilinaAIDashboardJourneyBridge.prepare({
+            initialText: state.initialText,
+            answers: state.answers
+        });
+
+    const buildResult =
+        prepared &&
+        prepared.ready
+            ? window.CivilinaAIDashboardBuilder.build(
+                prepared.builderInput
+            )
+            : null;
+
+    if (
+        buildResult &&
+        buildResult.ready &&
+        buildResult.artifact
+    ) {
+        const draft =
+            buildResult.artifact;
+
+        section.appendChild(
+            createElement(
+                'h3',
+                'journey-subtitle',
+                'Dashboard de pilotage structuré'
+            )
+        );
+
+        const summary =
+            createElement(
+                'dl',
+                'context-list'
+            );
+
+        [
+            [
+                'Décision à soutenir',
+                draft.context.decision
+            ],
+            [
+                'Audience',
+                draft.context.audience
+            ],
+            [
+                'Actualisation',
+                draft.context.frequency
+            ],
+            [
+                'Révision',
+                draft.revision
+            ]
+        ].forEach(function (definition) {
+            const row =
+                createElement(
+                    'div',
+                    'context-row'
+                );
+
+            row.append(
+                createElement(
+                    'dt',
+                    null,
+                    definition[0]
+                ),
+                createElement(
+                    'dd',
+                    null,
+                    definition[1] ||
+                        'À définir'
+                )
+            );
+
+            summary.appendChild(row);
+        });
+
+        section.appendChild(summary);
+
+        section.appendChild(
+            createElement(
+                'h3',
+                'journey-subtitle',
+                'Indicateurs'
+            )
+        );
+
+        const list =
+            createElement(
+                'div',
+                'evidence-list'
+            );
+
+        draft.rows.forEach(
+            function (row) {
+                const item =
+                    createElement(
+                        'article',
+                        'evidence-item'
+                    );
+
+                item.appendChild(
+                    createElement(
+                        'strong',
+                        null,
+                        row.id +
+                            ' — ' +
+                            row.name
+                    )
+                );
+
+                [
+                    ['Valeur', row.value],
+                    ['Unité', row.unit],
+                    ['Cible', row.target],
+                    ['Tendance', row.trend],
+                    ['Source', row.source],
+                    [
+                        'Propriétaire des données',
+                        row.dataOwner
+                    ]
+                ].forEach(
+                    function (definition) {
+                        if (
+                            definition[1] !== null &&
+                            definition[1] !== undefined
+                        ) {
+                            item.appendChild(
+                                createElement(
+                                    'p',
+                                    null,
+                                    definition[0] +
+                                        ' : ' +
+                                        definition[1]
+                                )
+                            );
+                        }
+                    }
+                );
+
+                if (
+                    Array.isArray(
+                        row.missingFields
+                    ) &&
+                    row.missingFields.length
+                ) {
+                    item.appendChild(
+                        createElement(
+                            'p',
+                            'uncertainty-note',
+                            'À compléter : ' +
+                                row.missingFields.join(', ')
+                        )
+                    );
+                }
+
+                list.appendChild(item);
+            }
+        );
+
+        section.appendChild(list);
+
+        section.appendChild(
+            createElement(
+                'p',
+                'uncertainty-note',
+                'Dashboard construit uniquement à partir des KPI, valeurs, cibles et sources explicitement fournis. Civilina n’invente aucun indicateur ni donnée de pilotage.'
+            )
+        );
+
+        return section;
+    }
+}
+    /*
      * Generic artifact fallback.
      */
     if (
@@ -3989,10 +3874,21 @@ if (unassociatedCriteria.length) {
     });
     elements.navigation.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', closeMenu); });
     document.addEventListener('keydown', function (event) { if (event.key === 'Escape') closeMenu(); });
-    elements.form.addEventListener('submit', function (event) {
+    elements.input.addEventListener('keydown', function (event) {
+    if (
+        event.key === 'Enter' &&
+        !event.shiftKey &&
+        !event.isComposing
+    ) {
         event.preventDefault();
-        submitValue(elements.input.value, null);
-    });
+        elements.form.requestSubmit();
+    }
+});
+
+elements.form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    submitValue(elements.input.value, null);
+});
     elements.suggestions.addEventListener('click', function (event) {
         const button = event.target.closest('button');
         if (button) submitValue(button.dataset.value, button.dataset);

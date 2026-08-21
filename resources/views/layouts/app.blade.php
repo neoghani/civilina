@@ -64,6 +64,8 @@
         'civilina-ai-raci-journey-bridge.js',
         'civilina-ai-workflow-builder.js',
         'civilina-ai-workflow-journey-bridge.js',
+        'civilina-ai-dashboard-builder.js',
+        'civilina-ai-dashboard-journey-bridge.js',  
         'civilina-ai-facts-v2.js',
         'civilina-ai-questions-v2.js',
         'civilina-ai-reasoning-v2.js',

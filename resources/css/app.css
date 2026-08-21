@@ -492,3 +492,20 @@
             *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
             .ai-conversation { scroll-behavior: auto; }
         }
+/* Civilina AI — secure textarea sizing */
+#ai-need {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 72px;
+    max-height: 220px;
+    box-sizing: border-box;
+
+    /* Autorise uniquement le redimensionnement vertical */
+    resize: vertical;
+}
+
+#ai-need + button {
+    flex: 0 0 auto;
+}
