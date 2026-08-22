@@ -1233,6 +1233,70 @@
                 'artifact-persistence'
             );
 
+        const organizationContext =
+            createElement(
+                'div',
+                'artifact-organization-context'
+            );
+
+        const organizationLabel =
+            createElement(
+                'label',
+                'journey-context',
+                'Organisation d’enregistrement'
+            );
+
+        organizationLabel.htmlFor =
+            'civilina-artifact-organization';
+
+        const organizationSelect =
+            document.createElement(
+                'select'
+            );
+
+        organizationSelect.id =
+            'civilina-artifact-organization';
+
+        organizationSelect.className =
+            'ai-input';
+
+        organizationSelect.dataset.organizationSelector =
+            'true';
+
+        organizationSelect.disabled =
+            true;
+
+        const loadingOption =
+            document.createElement(
+                'option'
+            );
+
+        loadingOption.value =
+            '';
+
+        loadingOption.textContent =
+            'Chargement des organisations…';
+
+        organizationSelect.appendChild(
+            loadingOption
+        );
+
+        const organizationStatus =
+            createElement(
+                'p',
+                'journey-context',
+                'Vérification de l’organisation active…'
+            );
+
+        organizationStatus.dataset.organizationStatus =
+            'true';
+
+        organizationContext.append(
+            organizationLabel,
+            organizationSelect,
+            organizationStatus
+        );
+
         const button =
             createElement(
                 'button',
@@ -1246,6 +1310,13 @@
         button.dataset.action =
             'persist-artifact';
 
+        /*
+         * The artifact cannot be persisted until the tenant
+         * context is unambiguous.
+         */
+        button.disabled =
+            true;
+
         const status =
             createElement(
                 'p',
@@ -1257,6 +1328,7 @@
             'true';
 
         wrapper.append(
+            organizationContext,
             button,
             status
         );
@@ -1264,6 +1336,262 @@
         section.appendChild(
             wrapper
         );
+
+        const persistence =
+            window.CivilinaArtifactPersistence;
+
+        if (
+            !persistence ||
+            typeof persistence.discoverOrganizations !==
+                'function' ||
+            typeof persistence.setActiveOrganizationPublicId !==
+                'function'
+        ) {
+            organizationStatus.textContent =
+                'Le contexte d’organisation Civilina est indisponible.';
+
+            return;
+        }
+
+        const selectOrganization =
+            function (
+                publicId,
+                organizationName
+            ) {
+                const normalizedPublicId =
+                    String(
+                        publicId || ''
+                    ).trim();
+
+                if (!normalizedPublicId) {
+                    persistence.setActiveOrganizationPublicId(
+                        null
+                    );
+
+                    button.disabled =
+                        true;
+
+                    organizationStatus.textContent =
+                        'Choisissez l’organisation dans laquelle enregistrer ce livrable.';
+
+                    return;
+                }
+
+                persistence.setActiveOrganizationPublicId(
+                    normalizedPublicId
+                );
+
+                button.disabled =
+                    false;
+
+                organizationStatus.textContent =
+                    'Organisation active : ' +
+                    (
+                        organizationName ||
+                        normalizedPublicId
+                    ) +
+                    '.';
+            };
+
+        organizationSelect.addEventListener(
+            'change',
+            function () {
+                const selected =
+                    organizationSelect
+                        .options[
+                            organizationSelect
+                                .selectedIndex
+                        ];
+
+                selectOrganization(
+                    organizationSelect.value,
+                    selected &&
+                    selected.dataset.organizationName
+                        ? selected.dataset.organizationName
+                        : selected
+                            ? selected.textContent
+                            : null
+                );
+            }
+        );
+
+        persistence
+            .discoverOrganizations(
+                window.fetch
+            )
+            .then(
+                function (
+                    organizations
+                ) {
+                    organizationSelect.innerHTML =
+                        '';
+
+                    if (
+                        !Array.isArray(
+                            organizations
+                        ) ||
+                        organizations.length === 0
+                    ) {
+                        const emptyOption =
+                            document.createElement(
+                                'option'
+                            );
+
+                        emptyOption.value =
+                            '';
+
+                        emptyOption.textContent =
+                            'Aucune organisation disponible';
+
+                        organizationSelect.appendChild(
+                            emptyOption
+                        );
+
+                        organizationSelect.disabled =
+                            true;
+
+                        button.disabled =
+                            true;
+
+                        organizationStatus.textContent =
+                            'Aucune organisation active n’est disponible pour cet enregistrement.';
+
+                        return;
+                    }
+
+                    const activePublicId =
+                        typeof persistence.getActiveOrganizationPublicId ===
+                            'function'
+                            ? persistence.getActiveOrganizationPublicId()
+                            : null;
+
+                    if (
+                        organizations.length > 1
+                    ) {
+                        const placeholder =
+                            document.createElement(
+                                'option'
+                            );
+
+                        placeholder.value =
+                            '';
+
+                        placeholder.textContent =
+                            'Choisir une organisation';
+
+                        organizationSelect.appendChild(
+                            placeholder
+                        );
+                    }
+
+                    organizations.forEach(
+                        function (
+                            organization
+                        ) {
+                            const option =
+                                document.createElement(
+                                    'option'
+                                );
+
+                            option.value =
+                                organization.public_id;
+
+                            option.textContent =
+                                organization.name ||
+                                organization.slug ||
+                                organization.public_id;
+
+                            option.dataset.organizationName =
+                                option.textContent;
+
+                            organizationSelect.appendChild(
+                                option
+                            );
+                        }
+                    );
+
+                    organizationSelect.disabled =
+                        false;
+
+                    const selectedOrganization =
+                        organizations.find(
+                            function (
+                                organization
+                            ) {
+                                return (
+                                    activePublicId &&
+                                    organization.public_id ===
+                                        activePublicId
+                                );
+                            }
+                        ) ||
+                        (
+                            organizations.length === 1
+                                ? organizations[0]
+                                : null
+                        );
+
+                    if (
+                        selectedOrganization
+                    ) {
+                        organizationSelect.value =
+                            selectedOrganization.public_id;
+
+                        selectOrganization(
+                            selectedOrganization.public_id,
+                            selectedOrganization.name ||
+                            selectedOrganization.slug ||
+                            selectedOrganization.public_id
+                        );
+
+                        return;
+                    }
+
+                    organizationSelect.value =
+                        '';
+
+                    button.disabled =
+                        true;
+
+                    organizationStatus.textContent =
+                        'Plusieurs organisations sont disponibles : choisissez explicitement l’organisation d’enregistrement.';
+                }
+            )
+            .catch(
+                function (
+                    error
+                ) {
+                    organizationSelect.innerHTML =
+                        '';
+
+                    const errorOption =
+                        document.createElement(
+                            'option'
+                        );
+
+                    errorOption.value =
+                        '';
+
+                    errorOption.textContent =
+                        'Organisation indisponible';
+
+                    organizationSelect.appendChild(
+                        errorOption
+                    );
+
+                    organizationSelect.disabled =
+                        true;
+
+                    button.disabled =
+                        true;
+
+                    organizationStatus.textContent =
+                        error &&
+                        error.message
+                            ? error.message
+                            : 'Impossible de charger les organisations Civilina.';
+                }
+            );
     }
 
     function renderArtifactReady() {
@@ -4079,6 +4407,45 @@ elements.form.addEventListener('submit', function (event) {
                 return;
             }
 
+            const organizationSelect =
+                target.parentElement
+                    ? target.parentElement.querySelector(
+                        '[data-organization-selector]'
+                    )
+                    : null;
+
+            const organizationPublicId =
+                organizationSelect
+                    ? String(
+                        organizationSelect.value || ''
+                    ).trim()
+                    : '';
+
+            if (!organizationPublicId) {
+                target.disabled =
+                    true;
+
+                if (status) {
+                    status.textContent =
+                        'Sélectionnez une organisation avant l’enregistrement.';
+                }
+
+                return;
+            }
+
+            /*
+             * Defense in depth:
+             * pass the tenant explicitly AND force the scoped endpoint.
+             * Even an older persistence module can no longer fall back to
+             * /api/artifacts for an authenticated browser save.
+             */
+            const organizationEndpoint =
+                '/api/organizations/' +
+                encodeURIComponent(
+                    organizationPublicId
+                ) +
+                '/artifacts';
+
             target.disabled =
                 true;
 
@@ -4087,12 +4454,19 @@ elements.form.addEventListener('submit', function (event) {
 
             if (status) {
                 status.textContent =
-                    'Création du livrable et de sa première révision…';
+                    'Création du livrable dans l’organisation sélectionnée…';
             }
 
             persistence
                 .persistArtifact(
-                    pendingArtifactPersistence
+                    pendingArtifactPersistence,
+                    {
+                        organizationPublicId:
+                            organizationPublicId,
+
+                        endpoint:
+                            organizationEndpoint
+                    }
                 )
                 .then(
                     function (

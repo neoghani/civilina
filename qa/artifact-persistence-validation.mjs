@@ -7,6 +7,9 @@ await import(
 const {
     normalizeArtifactForPersistence,
     normalizeArtifactType,
+    organizationArtifactEndpoint,
+    setActiveOrganizationPublicId,
+    getActiveOrganizationPublicId,
     persistArtifact,
 } = globalThis.CivilinaArtifactPersistence;
 
@@ -35,6 +38,47 @@ async function asyncTest(
         console.error(`FAIL ${name}`);
         throw error;
     }
+}
+
+function artifact(
+    overrides = {}
+) {
+    return Object.assign(
+        {
+            type:
+                'dashboard',
+
+            title:
+                'Executive Dashboard — SP-01',
+
+            payload: {
+                rows: [],
+            },
+
+            provenance: {
+                origin:
+                    'civilina_ai',
+            },
+        },
+        overrides
+    );
+}
+
+function response(
+    status,
+    body
+) {
+    return {
+        ok:
+            status >= 200 &&
+            status < 300,
+
+        status,
+
+        async json() {
+            return body;
+        },
+    };
 }
 
 test(
@@ -196,131 +240,368 @@ test(
     }
 );
 
+test(
+    'builds organization scoped endpoint',
+    () => {
+        assert.equal(
+            organizationArtifactEndpoint(
+                'ORG-01'
+            ),
+            '/api/organizations/ORG-01/artifacts'
+        );
+    }
+);
+
 await asyncTest(
-    'posts artifact to Laravel API',
+    'explicit endpoint preserves controlled legacy compatibility',
     async () => {
+        setActiveOrganizationPublicId(
+            null
+        );
+
         let capturedUrl = null;
-        let capturedOptions = null;
+
+        const fakeFetch =
+            async (
+                url
+            ) => {
+                capturedUrl = url;
+
+                return response(
+                    201,
+                    {
+                        data: {
+                            public_id:
+                                '01LEGACY',
+
+                            current_revision: {
+                                revision_label:
+                                    'DRAFT-01',
+                            },
+                        },
+                    }
+                );
+            };
+
+        await persistArtifact(
+            artifact(),
+            {
+                fetchImpl:
+                    fakeFetch,
+
+                endpoint:
+                    '/api/artifacts',
+            }
+        );
+
+        assert.equal(
+            capturedUrl,
+            '/api/artifacts'
+        );
+    }
+);
+
+await asyncTest(
+    'single organization is auto resolved and scoped',
+    async () => {
+        setActiveOrganizationPublicId(
+            null
+        );
+
+        const calls = [];
 
         const fakeFetch =
             async (
                 url,
                 options
             ) => {
-                capturedUrl = url;
-                capturedOptions =
-                    options;
+                calls.push({
+                    url,
+                    method:
+                        options.method,
+                });
 
-                return {
-                    ok: true,
-                    status: 201,
-
-                    async json() {
-                        return {
-                            data: {
-                                public_id:
-                                    '01TEST',
-
-                                type:
-                                    'dashboard',
-
-                                current_revision: {
-                                    revision_label:
-                                        'DRAFT-01',
+                if (
+                    url ===
+                    '/api/organizations'
+                ) {
+                    return response(
+                        200,
+                        {
+                            data: [
+                                {
+                                    public_id:
+                                        'ORG-ONE',
                                 },
+                            ],
+                        }
+                    );
+                }
+
+                return response(
+                    201,
+                    {
+                        data: {
+                            public_id:
+                                '01SCOPED',
+
+                            organization_id:
+                                7,
+
+                            current_revision: {
+                                revision_label:
+                                    'DRAFT-01',
                             },
-                        };
-                    },
-                };
+                        },
+                    }
+                );
             };
 
         const result =
             await persistArtifact(
-                {
-                    type:
-                        'dashboard',
-
-                    title:
-                        'Executive Dashboard — SP-01',
-
-                    payload: {
-                        rows: [],
-                    },
-                },
+                artifact(),
                 {
                     fetchImpl:
                         fakeFetch,
                 }
             );
 
-        assert.equal(
-            capturedUrl,
-            '/api/artifacts'
+        assert.deepEqual(
+            calls,
+            [
+                {
+                    url:
+                        '/api/organizations',
+                    method:
+                        'GET',
+                },
+                {
+                    url:
+                        '/api/organizations/ORG-ONE/artifacts',
+                    method:
+                        'POST',
+                },
+            ]
         );
 
         assert.equal(
-            capturedOptions.method,
-            'POST'
-        );
-
-        const sent =
-            JSON.parse(
-                capturedOptions.body
-            );
-
-        assert.equal(
-            sent.type,
-            'dashboard'
+            getActiveOrganizationPublicId(),
+            'ORG-ONE'
         );
 
         assert.equal(
-            sent.provenance.origin,
-            'civilina_ai'
-        );
-
-        assert.equal(
-            result.public_id,
-            '01TEST'
-        );
-
-        assert.equal(
-            result.current_revision
-                .revision_label,
-            'DRAFT-01'
+            result.organization_id,
+            7
         );
     }
 );
 
 await asyncTest(
-    'propagates Laravel API failure',
+    'explicit active organization skips discovery',
     async () => {
-        const fakeFetch =
-            async () => ({
-                ok: false,
-                status: 422,
+        setActiveOrganizationPublicId(
+            null
+        );
 
-                async json() {
-                    return {
-                        message:
-                            'Artifact rejected.',
-                    };
+        const calls = [];
+
+        const fakeFetch =
+            async (
+                url,
+                options
+            ) => {
+                calls.push({
+                    url,
+                    method:
+                        options.method,
+                });
+
+                return response(
+                    201,
+                    {
+                        data: {
+                            public_id:
+                                '01EXPLICIT',
+
+                            current_revision: {
+                                revision_label:
+                                    'DRAFT-01',
+                            },
+                        },
+                    }
+                );
+            };
+
+        await persistArtifact(
+            artifact(),
+            {
+                fetchImpl:
+                    fakeFetch,
+
+                organizationPublicId:
+                    'ORG-EXPLICIT',
+            }
+        );
+
+        assert.deepEqual(
+            calls,
+            [
+                {
+                    url:
+                        '/api/organizations/ORG-EXPLICIT/artifacts',
+                    method:
+                        'POST',
                 },
-            });
+            ]
+        );
+    }
+);
+
+await asyncTest(
+    'multiple organizations require explicit selection',
+    async () => {
+        setActiveOrganizationPublicId(
+            null
+        );
+
+        let postCount = 0;
+
+        const fakeFetch =
+            async (
+                url,
+                options
+            ) => {
+                if (
+                    options.method ===
+                    'POST'
+                ) {
+                    postCount += 1;
+                }
+
+                return response(
+                    200,
+                    {
+                        data: [
+                            {
+                                public_id:
+                                    'ORG-A',
+                            },
+                            {
+                                public_id:
+                                    'ORG-B',
+                            },
+                        ],
+                    }
+                );
+            };
 
         await assert.rejects(
             () =>
                 persistArtifact(
+                    artifact(),
                     {
+                        fetchImpl:
+                            fakeFetch,
+                    }
+                ),
+            /Plusieurs organisations/
+        );
+
+        assert.equal(
+            postCount,
+            0
+        );
+    }
+);
+
+await asyncTest(
+    'no organization rejects persistence',
+    async () => {
+        setActiveOrganizationPublicId(
+            null
+        );
+
+        const fakeFetch =
+            async () =>
+                response(
+                    200,
+                    {
+                        data: [],
+                    }
+                );
+
+        await assert.rejects(
+            () =>
+                persistArtifact(
+                    artifact(),
+                    {
+                        fetchImpl:
+                            fakeFetch,
+                    }
+                ),
+            /Aucune organisation active/
+        );
+    }
+);
+
+await asyncTest(
+    'authentication failure is explicit',
+    async () => {
+        setActiveOrganizationPublicId(
+            null
+        );
+
+        const fakeFetch =
+            async () =>
+                response(
+                    401,
+                    {
+                        message:
+                            'Unauthenticated.',
+                    }
+                );
+
+        await assert.rejects(
+            () =>
+                persistArtifact(
+                    artifact(),
+                    {
+                        fetchImpl:
+                            fakeFetch,
+                    }
+                ),
+            /Authentification requise/
+        );
+    }
+);
+
+await asyncTest(
+    'propagates scoped Laravel API failure',
+    async () => {
+        setActiveOrganizationPublicId(
+            'ORG-FAIL'
+        );
+
+        const fakeFetch =
+            async () =>
+                response(
+                    422,
+                    {
+                        message:
+                            'Artifact rejected.',
+                    }
+                );
+
+        await assert.rejects(
+            () =>
+                persistArtifact(
+                    artifact({
                         type:
                             'raci',
 
                         title:
                             'RACI — SP-01',
-
-                        payload: {
-                            rows: [],
-                        },
-                    },
+                    }),
                     {
                         fetchImpl:
                             fakeFetch,
@@ -332,5 +613,5 @@ await asyncTest(
 );
 
 console.log(
-    `\n${passed}/8 artifact persistence checks passed.`
+    `\n${passed}/14 artifact organization persistence checks passed.`
 );

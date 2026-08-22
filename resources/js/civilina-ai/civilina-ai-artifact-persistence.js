@@ -19,8 +19,14 @@
     function (root) {
         'use strict';
 
-        const ARTIFACT_API_ENDPOINT =
+        const LEGACY_ARTIFACT_API_ENDPOINT =
             '/api/artifacts';
+
+        const ORGANIZATIONS_API_ENDPOINT =
+            '/api/organizations';
+
+        let activeOrganizationPublicId =
+            null;
 
         const TYPE_ALIASES =
             Object.freeze({
@@ -60,6 +66,60 @@
             }
 
             return normalized;
+        }
+
+        function normalizeOrganizationPublicId(
+            value
+        ) {
+            const normalized =
+                String(
+                    value || ''
+                ).trim();
+
+            if (!normalized) {
+                return null;
+            }
+
+            return normalized;
+        }
+
+        function setActiveOrganizationPublicId(
+            publicId
+        ) {
+            activeOrganizationPublicId =
+                normalizeOrganizationPublicId(
+                    publicId
+                );
+
+            return activeOrganizationPublicId;
+        }
+
+        function getActiveOrganizationPublicId() {
+            return activeOrganizationPublicId;
+        }
+
+        function organizationArtifactEndpoint(
+            publicId
+        ) {
+            const normalized =
+                normalizeOrganizationPublicId(
+                    publicId
+                );
+
+            if (!normalized) {
+                throw new Error(
+                    'Organization public id is required.'
+                );
+            }
+
+            return (
+                ORGANIZATIONS_API_ENDPOINT +
+                '/' +
+                encodeURIComponent(
+                    normalized
+                ) +
+                '/artifacts'
+            );
         }
 
         function normalizeArtifactForPersistence(
@@ -150,6 +210,197 @@
             return normalized;
         }
 
+        async function parseJsonResponse(
+            response
+        ) {
+            try {
+                return await response.json();
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function responseErrorMessage(
+            body,
+            fallback
+        ) {
+            return (
+                body &&
+                body.message
+                    ? body.message
+                    : fallback
+            );
+        }
+
+        function csrfToken() {
+            if (
+                !root.document ||
+                typeof root.document.querySelector !==
+                    'function'
+            ) {
+                return null;
+            }
+
+            const meta =
+                root.document.querySelector(
+                    'meta[name="csrf-token"]'
+                );
+
+            return meta &&
+                meta.getAttribute
+                ? meta.getAttribute(
+                    'content'
+                )
+                : null;
+        }
+
+        function jsonHeaders() {
+            const headers = {
+                Accept:
+                    'application/json',
+
+                'Content-Type':
+                    'application/json'
+            };
+
+            const token =
+                csrfToken();
+
+            if (token) {
+                headers[
+                    'X-CSRF-TOKEN'
+                ] = token;
+            }
+
+            return headers;
+        }
+
+        async function discoverOrganizations(
+            fetchImpl
+        ) {
+            const response =
+                await fetchImpl(
+                    ORGANIZATIONS_API_ENDPOINT,
+                    {
+                        method:
+                            'GET',
+
+                        headers: {
+                            Accept:
+                                'application/json'
+                        },
+
+                        credentials:
+                            'same-origin'
+                    }
+                );
+
+            const body =
+                await parseJsonResponse(
+                    response
+                );
+
+            if (!response.ok) {
+                if (
+                    response.status ===
+                    401
+                ) {
+                    throw new Error(
+                        'Authentification requise avant l’enregistrement dans une organisation Civilina.'
+                    );
+                }
+
+                throw new Error(
+                    responseErrorMessage(
+                        body,
+                        'Impossible de charger les organisations Civilina.'
+                    )
+                );
+            }
+
+            const organizations =
+                body &&
+                Array.isArray(
+                    body.data
+                )
+                    ? body.data
+                    : [];
+
+            return organizations.filter(
+                function (
+                    organization
+                ) {
+                    return (
+                        organization &&
+                        normalizeOrganizationPublicId(
+                            organization.public_id
+                        )
+                    );
+                }
+            );
+        }
+
+        async function resolveOrganizationPublicId(
+            fetchImpl,
+            options
+        ) {
+            const safeOptions =
+                options || {};
+
+            const explicit =
+                normalizeOrganizationPublicId(
+                    safeOptions
+                        .organizationPublicId
+                );
+
+            if (explicit) {
+                setActiveOrganizationPublicId(
+                    explicit
+                );
+
+                return explicit;
+            }
+
+            if (
+                activeOrganizationPublicId
+            ) {
+                return activeOrganizationPublicId;
+            }
+
+            const organizations =
+                await discoverOrganizations(
+                    fetchImpl
+                );
+
+            if (
+                organizations.length === 1
+            ) {
+                const resolved =
+                    normalizeOrganizationPublicId(
+                        organizations[0]
+                            .public_id
+                    );
+
+                setActiveOrganizationPublicId(
+                    resolved
+                );
+
+                return resolved;
+            }
+
+            if (
+                organizations.length === 0
+            ) {
+                throw new Error(
+                    'Aucune organisation active n’est disponible pour enregistrer ce livrable.'
+                );
+            }
+
+            throw new Error(
+                'Plusieurs organisations sont disponibles. Sélectionnez l’organisation active avant l’enregistrement.'
+            );
+        }
+
         async function persistArtifact(
             artifact,
             options
@@ -170,9 +421,27 @@
                 );
             }
 
-            const endpoint =
+            /*
+             * Explicit endpoint remains available for QA / controlled
+             * legacy compatibility. Normal browser persistence is now
+             * organization-scoped.
+             */
+            let endpoint =
                 safeOptions.endpoint ||
-                ARTIFACT_API_ENDPOINT;
+                null;
+
+            if (!endpoint) {
+                const organizationPublicId =
+                    await resolveOrganizationPublicId(
+                        fetchImpl,
+                        safeOptions
+                    );
+
+                endpoint =
+                    organizationArtifactEndpoint(
+                        organizationPublicId
+                    );
+            }
 
             const requestPayload =
                 normalizeArtifactForPersistence(
@@ -186,13 +455,11 @@
                         method:
                             'POST',
 
-                        headers: {
-                            Accept:
-                                'application/json',
+                        headers:
+                            jsonHeaders(),
 
-                            'Content-Type':
-                                'application/json'
-                        },
+                        credentials:
+                            'same-origin',
 
                         body:
                             JSON.stringify(
@@ -201,23 +468,19 @@
                     }
                 );
 
-            let body = null;
-
-            try {
-                body =
-                    await response.json();
-            } catch (error) {
-                body = null;
-            }
+            const body =
+                await parseJsonResponse(
+                    response
+                );
 
             if (!response.ok) {
                 throw new Error(
-                    body &&
-                    body.message
-                        ? body.message
-                        : 'Artifact persistence failed with HTTP ' +
-                          response.status +
-                          '.'
+                    responseErrorMessage(
+                        body,
+                        'Artifact persistence failed with HTTP ' +
+                        response.status +
+                        '.'
+                    )
                 );
             }
 
@@ -238,9 +501,19 @@
         }
 
         return {
-            ARTIFACT_API_ENDPOINT,
+            ARTIFACT_API_ENDPOINT:
+                LEGACY_ARTIFACT_API_ENDPOINT,
+
+            LEGACY_ARTIFACT_API_ENDPOINT,
+            ORGANIZATIONS_API_ENDPOINT,
             normalizeArtifactType,
             normalizeArtifactForPersistence,
+            organizationArtifactEndpoint,
+            setActiveOrganizationPublicId,
+            getActiveOrganizationPublicId,
+            discoverOrganizations,
+            resolveOrganizationPublicId,
+            csrfToken,
             persistArtifact
         };
     }

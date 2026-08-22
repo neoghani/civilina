@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="fr">
 <head>
     <meta charset="utf-8">
@@ -76,6 +76,7 @@
     ] as $module)
         <script src="{{ asset('build/civilina-ai/'.$module) }}" defer></script>
     @endforeach
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body data-reasoning-runtime="{{ config('civilina.reasoning_runtime') }}">
     @yield('content')

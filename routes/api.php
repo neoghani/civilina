@@ -31,3 +31,6 @@ Route::prefix('artifacts')
             [ArtifactController::class, 'transition']
         )->name('transition');
     });
+require __DIR__.'/organization-api.php';
+
+require __DIR__.'/organization-artifact-api.php';
