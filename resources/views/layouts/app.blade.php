@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="fr">
 <head>
     <meta charset="utf-8">
@@ -71,6 +71,7 @@
         'civilina-ai-reasoning-v2.js',
         'civilina-ai-runtime.js',
         'civilina-ai-scenarios.js',
+        'civilina-ai-artifact-persistence.js',
         'civilina-ai-journey.js',
     ] as $module)
         <script src="{{ asset('build/civilina-ai/'.$module) }}" defer></script>
@@ -80,3 +81,4 @@
     @yield('content')
 </body>
 </html>
+

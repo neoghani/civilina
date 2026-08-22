@@ -243,6 +243,7 @@
     };
 
     let state = createInitialState();
+    let pendingArtifactPersistence = null;
 
     function createInitialState() {
         return {
@@ -873,9 +874,9 @@
         elements.submit.textContent = state.phase === 'conversation' ? 'Répondre' : 'Commencer';
 
         if (interactive) {
-            elements.note.textContent = 'Vos réponses restent dans cette session du navigateur et ne sont envoyées à aucun serveur Civilina.';
+            elements.note.textContent = 'Vos réponses restent dans cette session du navigateur. Aucun envoi vers Civilina n’a lieu avant votre choix explicite « Enregistrer dans Civilina ».';
         } else if (isArtifactWorkflowActive()) {
-            elements.note.textContent = 'Préparation du livrable conservée localement dans cette session uniquement.';
+            elements.note.textContent = 'Le livrable reste local tant que vous ne choisissez pas « Enregistrer dans Civilina ».';
         } else {
             elements.note.textContent = 'Diagnostic conservé dans cette session uniquement.';
         }
@@ -1162,6 +1163,109 @@
         section.appendChild(back);
         return section;
     }
+    function appendArtifactPersistence(
+        section,
+        artifact,
+        draft
+    ) {
+        if (
+            !section ||
+            !artifact ||
+            !draft ||
+            typeof draft !== 'object'
+        ) {
+            return;
+        }
+
+        const draftTitle =
+            typeof draft.title === 'string'
+                ? draft.title.trim()
+                : '';
+
+        const title =
+            draftTitle ||
+            (
+                artifact.label ||
+                'Livrable Civilina'
+            ) +
+                ' — Brouillon Civilina';
+
+        pendingArtifactPersistence = {
+            type:
+                draft.type ||
+                draft.artifactType ||
+                artifact.id,
+
+            title: title,
+
+            payload: draft,
+
+            provenance: {
+                origin:
+                    'civilina_ai',
+
+                artifact_id:
+                    artifact.id ||
+                    null,
+
+                generation_mode:
+                    'deterministic_builder',
+
+                journey_phase:
+                    'artifactReady',
+
+                traceability:
+                    draft.traceability ||
+                    null,
+
+                builder_provenance:
+                    draft.provenance ||
+                    null
+            },
+
+            source:
+                'civilina_ai'
+        };
+
+        const wrapper =
+            createElement(
+                'div',
+                'artifact-persistence'
+            );
+
+        const button =
+            createElement(
+                'button',
+                'btn btn-navy journey-primary',
+                'Enregistrer dans Civilina'
+            );
+
+        button.type =
+            'button';
+
+        button.dataset.action =
+            'persist-artifact';
+
+        const status =
+            createElement(
+                'p',
+                'journey-context',
+                'Ce brouillon n’est pas encore enregistré dans Civilina.'
+            );
+
+        status.dataset.persistenceStatus =
+            'true';
+
+        wrapper.append(
+            button,
+            status
+        );
+
+        section.appendChild(
+            wrapper
+        );
+    }
+
     function renderArtifactReady() {
     const section = createElement(
         'section',
@@ -2035,6 +2139,12 @@ if (unassociatedCriteria.length) {
                 )
             );
 
+            appendArtifactPersistence(
+                section,
+                artifact,
+                draft
+            );
+
             return section;
         }
     }
@@ -2416,6 +2526,12 @@ if (unassociatedCriteria.length) {
                 )
             );
 
+            appendArtifactPersistence(
+                section,
+                artifact,
+                draft
+            );
+
             return section;
         }
     }
@@ -2732,6 +2848,12 @@ if (unassociatedCriteria.length) {
                 )
             );
 
+            appendArtifactPersistence(
+                section,
+                artifact,
+                draft
+            );
+
             return section;
         }
     }
@@ -2999,6 +3121,12 @@ if (unassociatedCriteria.length) {
                 )
             );
 
+            appendArtifactPersistence(
+                section,
+                artifact,
+                draft
+            );
+
             return section;
         }
     }
@@ -3258,6 +3386,12 @@ if (unassociatedCriteria.length) {
                 )
             );
 
+            appendArtifactPersistence(
+                section,
+                artifact,
+                draft
+            );
+
             return section;
         }
     }
@@ -3439,6 +3573,12 @@ if (
                 'uncertainty-note',
                 'Dashboard construit uniquement à partir des KPI, valeurs, cibles et sources explicitement fournis. Civilina n’invente aucun indicateur ni donnée de pilotage.'
             )
+        );
+
+        appendArtifactPersistence(
+            section,
+            artifact,
+            draft
         );
 
         return section;
@@ -3748,6 +3888,7 @@ if (
 
     function startJourney(entryIntent, userText) {
         state = createInitialState();
+        pendingArtifactPersistence = null;
         state.entryIntent = entryIntent || core.detectEntryIntent(userText);
         state.scenario = state.entryIntent;
         state.initialText = userText;
@@ -3839,6 +3980,7 @@ if (
     function resetJourney() {
         sessionStorage.removeItem(storageKey);
         state = createInitialState();
+        pendingArtifactPersistence = null;
         addMessage('assistant', 'Bonjour. Que souhaitez-vous améliorer ou mieux maîtriser dans votre organisation ?');
         render();
         elements.input.focus();
@@ -3898,6 +4040,125 @@ elements.form.addEventListener('submit', function (event) {
         if (!target) return;
 
         const action = target.dataset.action;
+
+        if (
+            action ===
+            'persist-artifact'
+        ) {
+            const persistence =
+                window.CivilinaArtifactPersistence;
+
+            const status =
+                target.parentElement
+                    ? target.parentElement.querySelector(
+                        '[data-persistence-status]'
+                    )
+                    : null;
+
+            if (
+                !persistence ||
+                typeof persistence.persistArtifact !==
+                    'function'
+            ) {
+                if (status) {
+                    status.textContent =
+                        'Le service de sauvegarde Civilina est indisponible.';
+                }
+
+                return;
+            }
+
+            if (
+                !pendingArtifactPersistence
+            ) {
+                if (status) {
+                    status.textContent =
+                        'Aucun livrable structuré à enregistrer.';
+                }
+
+                return;
+            }
+
+            target.disabled =
+                true;
+
+            target.textContent =
+                'Enregistrement…';
+
+            if (status) {
+                status.textContent =
+                    'Création du livrable et de sa première révision…';
+            }
+
+            persistence
+                .persistArtifact(
+                    pendingArtifactPersistence
+                )
+                .then(
+                    function (
+                        savedArtifact
+                    ) {
+                        const revision =
+                            savedArtifact &&
+                            savedArtifact.current_revision
+                                ? savedArtifact
+                                    .current_revision
+                                    .revision_label
+                                : 'DRAFT-01';
+
+                        target.textContent =
+                            'Enregistré — ' +
+                            revision;
+
+                        if (status) {
+                            status.textContent =
+                                'Artifact ' +
+                                savedArtifact.public_id +
+                                ' enregistré dans Civilina — ' +
+                                revision +
+                                '.';
+                        }
+
+                        pendingArtifactPersistence =
+                            Object.assign(
+                                {},
+                                pendingArtifactPersistence,
+                                {
+                                    persisted:
+                                        true,
+
+                                    public_id:
+                                        savedArtifact.public_id,
+
+                                    revision:
+                                        revision
+                                }
+                            );
+                    }
+                )
+                .catch(
+                    function (
+                        error
+                    ) {
+                        target.disabled =
+                            false;
+
+                        target.textContent =
+                            'Réessayer l’enregistrement';
+
+                        if (status) {
+                            status.textContent =
+                                error &&
+                                error.message
+                                    ? error.message
+                                    : 'Échec de l’enregistrement.';
+                        }
+                    }
+                );
+
+            return;
+        }
+
 
         if (action === 'confirm-context') {
             if (isArtifactReady()) {

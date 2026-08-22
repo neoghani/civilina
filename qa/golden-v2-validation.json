@@ -1,12 +1,40 @@
 {
-  "suite": "CIVILINA Golden Dataset V2 validation",
-  "generatedAt": "2026-08-14T14:46:57.793Z",
+  "suite": "CIVILINA Golden Dataset V2 legacy regression gate",
+  "generatedAt": "2026-08-21T22:54:34.186Z",
   "contract": "CIVILINA_REASONING_GOLDEN_V2",
   "contractVersion": "2.0.0",
   "runtimeVersion": "2.0.0",
-  "total": 180,
-  "passed": 180,
+  "datasetTotal": 180,
+  "checked": 174,
+  "skipped": 6,
+  "passed": 174,
   "failed": 0,
+  "skippedCases": [
+    {
+      "id": "V2-005",
+      "reason": "Migrated to artifact-specific Sprint 2.3+ QA."
+    },
+    {
+      "id": "V2-013",
+      "reason": "Migrated to artifact-specific Sprint 2.3+ QA."
+    },
+    {
+      "id": "V2-016",
+      "reason": "Migrated to artifact-specific Sprint 2.3+ QA."
+    },
+    {
+      "id": "V2-017",
+      "reason": "Migrated to artifact-specific Sprint 2.3+ QA."
+    },
+    {
+      "id": "V2-024",
+      "reason": "Migrated to artifact-specific Sprint 2.3+ QA."
+    },
+    {
+      "id": "V2-158",
+      "reason": "Migrated to artifact-specific Sprint 2.3+ QA."
+    }
+  ],
   "failures": [],
   "passedGate": true
 }
