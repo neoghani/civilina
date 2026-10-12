@@ -1,0 +1,443 @@
+
+:root{
+  --civ-ink:#0b1f2a;
+  --civ-ink-2:#173747;
+  --civ-navy:#08283b;
+  --civ-navy-2:#0d3b52;
+  --civ-teal:#0b7b78;
+  --civ-teal-2:#10948e;
+  --civ-gold:#d2a53d;
+  --civ-bg:#edf2f5;
+  --civ-panel:#ffffff;
+  --civ-soft:#f6f9fa;
+  --civ-line:#d4dee4;
+  --civ-line-2:#bdccd5;
+  --civ-muted:#6c7d88;
+  --civ-danger:#a74444;
+  --civ-ok:#23705d;
+  --civ-shadow:0 14px 36px rgba(7,34,50,.08);
+  --civ-shadow-soft:0 7px 20px rgba(7,34,50,.055);
+  --civ-radius:12px;
+}
+
+html{
+  background:var(--civ-bg);
+}
+
+body.civ-theme{
+  margin:0;
+  background:
+    radial-gradient(circle at 88% 0%, rgba(11,123,120,.08), transparent 26%),
+    radial-gradient(circle at 4% 0%, rgba(8,40,59,.06), transparent 22%),
+    var(--civ-bg) !important;
+  color:var(--civ-ink) !important;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif !important;
+  letter-spacing:-.005em;
+  min-height:100vh;
+}
+
+body.civ-theme::before{
+  content:"";
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:4px;
+  background:linear-gradient(90deg,var(--civ-navy),var(--civ-teal),var(--civ-gold));
+  z-index:99999;
+}
+
+body.civ-theme *{
+  scrollbar-width:thin;
+  scrollbar-color:#9fb1bc transparent;
+}
+
+body.civ-theme ::selection{
+  background:rgba(11,123,120,.18);
+}
+
+body.civ-theme h1,
+body.civ-theme h2,
+body.civ-theme h3,
+body.civ-theme h4{
+  color:var(--civ-ink) !important;
+  letter-spacing:-.025em;
+  font-weight:800;
+}
+
+body.civ-theme h1{
+  font-size:clamp(1.8rem,2.4vw,2.7rem);
+  line-height:1.04;
+}
+
+body.civ-theme p,
+body.civ-theme .muted{
+  color:var(--civ-muted);
+}
+
+body.civ-theme a{
+  text-decoration-thickness:1px;
+  text-underline-offset:2px;
+}
+
+body.civ-theme input,
+body.civ-theme select,
+body.civ-theme textarea{
+  border:1px solid var(--civ-line-2) !important;
+  border-radius:9px !important;
+  background:#fff !important;
+  color:var(--civ-ink) !important;
+  min-height:39px;
+  box-shadow:0 1px 0 rgba(255,255,255,.75) inset;
+  transition:border-color .16s ease,box-shadow .16s ease;
+}
+
+body.civ-theme input:focus,
+body.civ-theme select:focus,
+body.civ-theme textarea:focus{
+  outline:none !important;
+  border-color:var(--civ-teal) !important;
+  box-shadow:0 0 0 3px rgba(11,123,120,.12) !important;
+}
+
+body.civ-theme button,
+body.civ-theme .btn{
+  border-radius:9px !important;
+  font-weight:750 !important;
+  transition:transform .14s ease,box-shadow .14s ease,border-color .14s ease,background .14s ease;
+}
+
+body.civ-theme button:hover,
+body.civ-theme .btn:hover{
+  transform:translateY(-1px);
+}
+
+body.civ-theme .btn.primary,
+body.civ-theme .btn-primary,
+body.civ-theme button.primary,
+body.civ-theme button[type="submit"].primary{
+  background:linear-gradient(135deg,var(--civ-navy),var(--civ-navy-2)) !important;
+  color:#fff !important;
+  border-color:var(--civ-navy) !important;
+  box-shadow:0 8px 18px rgba(8,40,59,.18);
+}
+
+body.civ-theme .panel,
+body.civ-theme .card,
+body.civ-theme .stat,
+body.civ-theme .logic-card,
+body.civ-theme .support-card{
+  border:1px solid var(--civ-line) !important;
+  background:rgba(255,255,255,.94) !important;
+  box-shadow:var(--civ-shadow-soft);
+}
+
+body.civ-theme .panel,
+body.civ-theme .card{
+  border-radius:var(--civ-radius) !important;
+}
+
+body.civ-theme .card:hover,
+body.civ-theme a.panel:hover{
+  border-color:#8ea7b4 !important;
+  box-shadow:var(--civ-shadow);
+}
+
+body.civ-theme table{
+  border-collapse:separate;
+  border-spacing:0;
+  width:100%;
+  background:#fff;
+  border:1px solid var(--civ-line);
+  border-radius:11px;
+  overflow:hidden;
+}
+
+body.civ-theme th{
+  background:linear-gradient(180deg,#f5f8f9,#eef3f6) !important;
+  color:var(--civ-ink-2) !important;
+  font-size:.68rem !important;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  font-weight:800 !important;
+  border-bottom:1px solid var(--civ-line) !important;
+}
+
+body.civ-theme td{
+  border-bottom:1px solid #e9eef1 !important;
+}
+
+body.civ-theme tr:last-child td{
+  border-bottom:0 !important;
+}
+
+body.civ-theme tbody tr:hover td{
+  background:#f8fbfc;
+}
+
+body.civ-theme .badge{
+  border:1px solid var(--civ-line) !important;
+  background:#f4f8f9 !important;
+  color:var(--civ-ink-2) !important;
+  font-weight:750 !important;
+}
+
+body.civ-theme .badge.ok,
+body.civ-theme .ok{
+  color:var(--civ-ok) !important;
+}
+
+body.civ-theme .badge.warn,
+body.civ-theme .warn{
+  color:#9a6d12 !important;
+}
+
+body.civ-theme .badge.bad,
+body.civ-theme .bad{
+  color:var(--civ-danger) !important;
+}
+
+/* NAVIGATION CIVILINA */
+body.civ-theme .civ-eng-nav,
+body.civ-theme header.top,
+body.civ-theme .top{
+  background:linear-gradient(90deg,#071f2f,#0a3045 62%,#0c3b4b) !important;
+  border-bottom:1px solid rgba(255,255,255,.08) !important;
+  color:#fff !important;
+  box-shadow:0 8px 22px rgba(5,24,35,.16);
+}
+
+body.civ-theme .civ-eng-nav{
+  min-height:52px !important;
+  padding-top:8px !important;
+  padding-bottom:8px !important;
+}
+
+body.civ-theme .civ-eng-nav__link,
+body.civ-theme .civ-eng-nav__brand,
+body.civ-theme .civ-eng-nav__project,
+body.civ-theme header.top a,
+body.civ-theme .top a{
+  color:#fff !important;
+}
+
+body.civ-theme .civ-eng-nav__link{
+  border-color:rgba(255,255,255,.16) !important;
+  background:rgba(255,255,255,.055) !important;
+}
+
+body.civ-theme .civ-eng-nav__link:hover{
+  background:rgba(255,255,255,.11) !important;
+  border-color:rgba(255,255,255,.28) !important;
+}
+
+body.civ-theme .civ-eng-nav__brand{
+  color:#d7f3f0 !important;
+}
+
+body.civ-theme .civ-eng-nav__project{
+  color:rgba(255,255,255,.65) !important;
+}
+
+/* PAGE D'ACCUEIL / HERO */
+body.civ-theme main{
+  position:relative;
+}
+
+body.civ-theme .hero{
+  position:relative;
+  padding:26px 28px !important;
+  border:1px solid rgba(8,40,59,.13);
+  border-radius:16px;
+  background:
+    linear-gradient(125deg,rgba(255,255,255,.98),rgba(247,251,252,.96)),
+    #fff;
+  box-shadow:var(--civ-shadow);
+  overflow:hidden;
+}
+
+body.civ-theme .hero::after{
+  content:"";
+  position:absolute;
+  width:280px;
+  height:280px;
+  border-radius:50%;
+  right:-110px;
+  top:-160px;
+  background:radial-gradient(circle,rgba(11,123,120,.16),rgba(11,123,120,0));
+  pointer-events:none;
+}
+
+body.civ-theme .eyebrow{
+  color:var(--civ-teal) !important;
+  font-weight:850;
+  letter-spacing:.12em;
+}
+
+body.civ-theme .kpi{
+  border:1px solid var(--civ-line) !important;
+  background:#fff !important;
+  box-shadow:var(--civ-shadow-soft);
+}
+
+body.civ-theme .kpi strong{
+  color:var(--civ-navy) !important;
+}
+
+/* SAAS GRAPH */
+body.civ-theme .graph-wrap{
+  background:
+    linear-gradient(to right,rgba(8,40,59,.045) 1px,transparent 1px),
+    linear-gradient(to bottom,rgba(8,40,59,.045) 1px,transparent 1px),
+    linear-gradient(180deg,#f9fbfc,#f3f7f9) !important;
+  background-size:28px 28px !important;
+}
+
+body.civ-theme .node{
+  border-color:#c8d6de !important;
+  box-shadow:0 10px 24px rgba(8,40,59,.07) !important;
+}
+
+body.civ-theme .node.project{
+  background:
+    linear-gradient(145deg,#08283b,#0c4255) !important;
+  border-color:#08283b !important;
+  box-shadow:0 18px 38px rgba(8,40,59,.25) !important;
+}
+
+body.civ-theme .node.project strong{
+  color:#fff !important;
+}
+
+body.civ-theme .node.output{
+  background:linear-gradient(145deg,#edf8f5,#f7fbfa) !important;
+  border-color:#9fc7bb !important;
+}
+
+body.civ-theme .node.active .state{
+  background:var(--civ-teal) !important;
+  box-shadow:0 0 0 4px rgba(11,123,120,.10);
+}
+
+body.civ-theme .node .open{
+  color:var(--civ-teal) !important;
+}
+
+body.civ-theme .flow-strip{
+  background:linear-gradient(90deg,#08283b,#0c4255) !important;
+  border-top:0 !important;
+}
+
+body.civ-theme .flow-step{
+  border-right-color:rgba(255,255,255,.10) !important;
+}
+
+body.civ-theme .flow-step b{
+  color:#fff !important;
+}
+
+body.civ-theme .flow-step span{
+  color:rgba(255,255,255,.62) !important;
+}
+
+/* ACCUEIL CIVILINA / HUB */
+body.civ-theme .grid .card{
+  position:relative;
+  overflow:hidden;
+}
+
+body.civ-theme .grid .card::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:4px;
+  height:100%;
+  background:linear-gradient(180deg,var(--civ-teal),var(--civ-navy));
+  opacity:.92;
+}
+
+body.civ-theme .grid .card strong{
+  color:var(--civ-navy) !important;
+}
+
+/* MESSAGES */
+body.civ-theme .message,
+body.civ-theme .callout,
+body.civ-theme .note{
+  border-color:#b8cbd5 !important;
+  border-left:4px solid var(--civ-teal) !important;
+  background:#f9fcfc !important;
+  box-shadow:var(--civ-shadow-soft);
+}
+
+/* FOOTER VISUAL ANCHOR */
+body.civ-theme footer{
+  border-top:1px solid var(--civ-line) !important;
+  background:#e7eef2 !important;
+  color:var(--civ-muted) !important;
+}
+
+/* DENSITÉ DES PAGES */
+body.civ-theme .section{
+  margin-top:24px !important;
+}
+
+body.civ-theme .panel-head{
+  background:linear-gradient(180deg,#fff,#f8fafb);
+}
+
+body.civ-theme .section-title h2,
+body.civ-theme .panel-head h2{
+  color:var(--civ-navy) !important;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  body.civ-theme .hero{
+    padding:20px !important;
+  }
+
+  body.civ-theme .civ-eng-nav{
+    min-height:48px !important;
+  }
+}
+
+@media(max-width:600px){
+  body.civ-theme::before{
+    height:3px;
+  }
+
+  body.civ-theme .hero{
+    border-radius:12px;
+    padding:16px !important;
+  }
+
+  body.civ-theme h1{
+    font-size:1.9rem !important;
+  }
+
+  body.civ-theme .panel,
+  body.civ-theme .card,
+  body.civ-theme table{
+    border-radius:10px !important;
+  }
+}
+
+/* PRINT : revenir à une présentation neutre */
+@media print{
+  body.civ-theme{
+    background:#fff !important;
+  }
+  body.civ-theme::before{
+    display:none;
+  }
+  body.civ-theme .civ-eng-nav{
+    display:none !important;
+  }
+  body.civ-theme .panel,
+  body.civ-theme .card,
+  body.civ-theme table{
+    box-shadow:none !important;
+  }
+}

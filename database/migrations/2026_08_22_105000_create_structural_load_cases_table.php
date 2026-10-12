@@ -1,0 +1,3 @@
+<?php
+use Illuminate\Database\Migrations\Migration;use Illuminate\Database\Schema\Blueprint;use Illuminate\Support\Facades\Schema;
+return new class extends Migration{public function up():void{Schema::create('structural_load_cases',function(Blueprint $t){$t->id();$t->foreignId('project_id')->constrained()->cascadeOnDelete();$t->string('code',100);$t->string('name');$t->string('action_type',60);$t->decimal('self_weight_multiplier',10,4)->default(0);$t->json('metadata')->nullable();$t->timestamps();$t->unique(['project_id','code']);});}public function down():void{Schema::dropIfExists('structural_load_cases');}};

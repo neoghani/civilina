@@ -34,3 +34,4 @@ Route::prefix('artifacts')
 require __DIR__.'/organization-api.php';
 
 require __DIR__.'/organization-artifact-api.php';
+require __DIR__.'/engineering-api.php';

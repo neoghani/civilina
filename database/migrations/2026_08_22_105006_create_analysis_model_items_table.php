@@ -1,0 +1,3 @@
+<?php
+use Illuminate\Database\Migrations\Migration;use Illuminate\Database\Schema\Blueprint;use Illuminate\Support\Facades\Schema;
+return new class extends Migration{public function up():void{Schema::create('analysis_model_items',function(Blueprint $t){$t->id();$t->foreignId('analysis_model_id')->constrained()->cascadeOnDelete();$t->foreignId('technical_object_revision_id')->constrained('technical_object_revisions')->restrictOnDelete();$t->string('source_snapshot_hash',64);$t->string('external_key',150);$t->json('metadata')->nullable();$t->timestamps();$t->unique(['analysis_model_id','technical_object_revision_id']);$t->unique(['analysis_model_id','external_key']);});}public function down():void{Schema::dropIfExists('analysis_model_items');}};

@@ -125,6 +125,7 @@
             font-size: 0.9rem;
         }
     </style>
+@include('components.civilina-command-theme')
 </head>
 <body>
     <main class="login-shell">

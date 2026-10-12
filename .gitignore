@@ -22,3 +22,12 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+/storage/civilina_backups/
+/storage/civilina_patches/
+/storage/app/private/
+/database/*.sqlite
+/database/*.sqlite-*
+/database/*.sqlite3
+/database/*.sqlite3-*
+*.bak
+/New/civilina-database-structure.zip

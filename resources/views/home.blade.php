@@ -14,11 +14,11 @@
                 <div class="nav-links">
                     <a href="#platform">Plateforme</a>
                     <a href="#needs">Solutions</a>
-                    <a href="#engineering">Engineering</a>
+                    <a href="{{ route('engineering.entry') }}">Engineering</a>
                     <a href="#insights">Ressources</a>
                 </div>
                 <div class="nav-actions">
-                    <a class="login-link" href="#ai-command">Connexion</a>
+                    @include('partials.auth-nav')
                     <a class="btn btn-outline" href="mailto:abdelghani.bouhouche@civilina.com?subject=Demande%20de%20d%C3%A9monstration%20Civilina">Demander une démo</a>
                     <a class="btn btn-primary" href="#ai-command">Parler à Civilina AI</a>
                 </div>
@@ -35,7 +35,7 @@
                     <p>Civilina vous aide à comprendre, structurer, digitaliser et piloter votre organisation.</p>
                     <div class="hero-actions">
                         <a class="btn btn-primary" href="#ai-command">Parler à Civilina AI</a>
-                        <a class="btn btn-outline" href="#engineering">Voir Civilina Engineering</a>
+                        <a class="btn btn-outline" href="{{ route('engineering.entry') }}">Voir Civilina Engineering</a>
                     </div>
                     <div class="hero-micro">AI + expertise métier + intelligence de pilotage</div>
                 </div>
@@ -139,7 +139,7 @@
                     <h2>Civilina Engineering</h2>
                     <p><strong>Engineering, Construction & EPC</strong></p>
                     <p>La première solution sectorielle Civilina, conçue autour de la réalité des projets complexes.</p>
-                    <div class="engineering-action"><a class="btn btn-light" href="#engineering">Découvrir Civilina Engineering</a></div>
+                    <div class="engineering-action"><a class="btn btn-light" href="{{ route('engineering.entry') }}">Découvrir Civilina Engineering</a></div>
                 </div>
                 <div class="engineering-pillars">
                     <article class="pillar"><span>01</span><h3>Project Control</h3><p>Portfolio, WBS, planning, coûts, ressources, forecast.</p></article>
@@ -187,5 +187,6 @@
         <div class="shell footer-bottom"><span>© <span id="current-year">2026</span> Civilina. Tous droits réservés.</span><span>Digitalisation • Pilotage • Engineering</span></div>
     </footer>
 @endsection
+
 
 

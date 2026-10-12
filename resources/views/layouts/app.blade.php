@@ -77,6 +77,7 @@
         <script src="{{ asset('build/civilina-ai/'.$module) }}" defer></script>
     @endforeach
     <meta name="csrf-token" content="{{ csrf_token() }}">
+@include('components.civilina-command-theme')
 </head>
 <body data-reasoning-runtime="{{ config('civilina.reasoning_runtime') }}">
     @yield('content')

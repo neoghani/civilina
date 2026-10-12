@@ -1,0 +1,3 @@
+<?php
+use Illuminate\Database\Migrations\Migration;use Illuminate\Database\Schema\Blueprint;use Illuminate\Support\Facades\Schema;
+return new class extends Migration{public function up():void{Schema::create('structural_boundary_conditions',function(Blueprint $t){$t->id();$t->foreignId('project_id')->constrained()->cascadeOnDelete();$t->foreignId('technical_object_revision_id')->constrained('technical_object_revisions')->restrictOnDelete();$t->string('condition_type',80);$t->json('degrees_of_freedom');$t->json('stiffness')->nullable();$t->string('source_type',100)->nullable();$t->string('source_reference')->nullable();$t->json('metadata')->nullable();$t->timestamps();});}public function down():void{Schema::dropIfExists('structural_boundary_conditions');}};
