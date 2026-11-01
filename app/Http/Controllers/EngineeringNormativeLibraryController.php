@@ -9,6 +9,7 @@ use App\Models\EngineeringQaInspection;
 use App\Models\EngineeringQaNormativeLink;
 use App\Models\Organization;
 use App\Models\Project;
+use App\Services\Engineering\EngineeringTenantAccessService;
 use App\Services\Engineering\Normative\NormativeLibraryTaxonomyService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class EngineeringNormativeLibraryController extends Controller
         Project $project,
         NormativeLibraryTaxonomyService $taxonomy
     ): View {
-        $this->guardProject($organization, $project);
+        $this->guardProject('view', $organization, $project);
 
         $q = trim((string) $request->query('q', ''));
         $discipline = trim((string) $request->query('discipline', ''));
@@ -97,7 +98,7 @@ class EngineeringNormativeLibraryController extends Controller
         EngineeringNormativeStandard $standard,
         NormativeLibraryTaxonomyService $taxonomy
     ): View {
-        $this->guardProject($organization, $project);
+        $this->guardProject('view', $organization, $project);
 
         $standard->load([
             'sources' => fn ($q) => $q->orderBy('relative_path'),
@@ -133,7 +134,7 @@ class EngineeringNormativeLibraryController extends Controller
         EngineeringNormativeStandard $standard,
         EngineeringNormativeSource $source
     ): BinaryFileResponse {
-        $this->guardProject($organization, $project);
+        $this->guardProject('view', $organization, $project);
         abort_unless((int) $source->standard_id === (int) $standard->id, 404);
 
         $root = realpath(storage_path('app/private/engineering/standards_inbox'));
@@ -168,7 +169,7 @@ class EngineeringNormativeLibraryController extends Controller
         Project $project,
         EngineeringNormativeStandard $standard
     ): RedirectResponse {
-        $this->guardProject($organization, $project);
+        $this->guardProject('edit', $organization, $project);
 
         $validated = $request->validate([
             'title' => ['nullable','string','max:255'],
@@ -191,7 +192,7 @@ class EngineeringNormativeLibraryController extends Controller
         Project $project,
         EngineeringNormativeRequirement $requirement
     ): RedirectResponse {
-        $this->guardProject($organization, $project);
+        $this->guardProject('edit', $organization, $project);
 
         $validated = $request->validate([
             'requirement_type' => ['required','string','max:60'],
@@ -211,10 +212,16 @@ class EngineeringNormativeLibraryController extends Controller
         return back()->with('normative_message', 'Exigence / tolérance corrigée.');
     }
 
-    private function guardProject(Organization $organization, Project $project): void
-    {
-        if (isset($project->organization_id)) {
-            abort_unless((int) $project->organization_id === (int) $organization->id, 404);
-        }
+    private function guardProject(
+        string $ability,
+        Organization $organization,
+        Project $project
+    ): void {
+        app(EngineeringTenantAccessService::class)->authorizeProject(
+            $ability,
+            request()->user(),
+            $organization,
+            $project
+        );
     }
 }

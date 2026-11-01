@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\NormativeLibrarianDocument;
 use App\Models\Organization;
 use App\Models\Project;
+use App\Services\Engineering\EngineeringTenantAccessService;
 use App\Services\Engineering\NormativeLibrarian\NormativeClassificationRefiner;
 use App\Services\Engineering\NormativeLibrarian\NormativeLibrarianScanner;
 use App\Services\Engineering\NormativeLibrarian\NormativeManifestExporter;
@@ -19,7 +20,7 @@ class NormativeLibrarianController extends Controller
 {
     public function index(Request $request, Organization $organization, Project $project): View
     {
-        $this->guardProject($organization, $project);
+        $this->guardProject('view', $organization, $project);
 
         $q = trim((string) $request->query('q', ''));
         $discipline = trim((string) $request->query('discipline', ''));
@@ -116,7 +117,7 @@ class NormativeLibrarianController extends Controller
         Project $project,
         NormativeLibrarianDocument $document
     ): View {
-        $this->guardProject($organization, $project);
+        $this->guardProject('view', $organization, $project);
 
         return view('engineering.normative-librarian.show', compact(
             'organization', 'project', 'document'
@@ -128,7 +129,7 @@ class NormativeLibrarianController extends Controller
         Project $project,
         NormativeLibrarianDocument $document
     ): BinaryFileResponse {
-        $this->guardProject($organization, $project);
+        $this->guardProject('view', $organization, $project);
 
         $path = $document->source_path;
 
@@ -155,7 +156,7 @@ class NormativeLibrarianController extends Controller
         Project $project,
         NormativeLibrarianDocument $document
     ): RedirectResponse {
-        $this->guardProject($organization, $project);
+        $this->guardProject('edit', $organization, $project);
 
         $validated = $request->validate([
             'reference_code' => ['nullable', 'string', 'max:190'],
@@ -203,7 +204,7 @@ class NormativeLibrarianController extends Controller
         Project $project,
         NormativeLibrarianScanner $scanner
     ): RedirectResponse {
-        $this->guardProject($organization, $project);
+        $this->guardProject('edit', $organization, $project);
 
         $validated = $request->validate([
             'limit' => ['nullable', 'integer', 'min:1', 'max:500'],
@@ -228,7 +229,7 @@ class NormativeLibrarianController extends Controller
         Project $project,
         NormativeClassificationRefiner $refiner
     ): RedirectResponse {
-        $this->guardProject($organization, $project);
+        $this->guardProject('edit', $organization, $project);
 
         $validated = $request->validate([
             'limit' => ['nullable', 'integer', 'min:1', 'max:2000'],
@@ -251,7 +252,7 @@ class NormativeLibrarianController extends Controller
         Project $project,
         NormativeRegistryPublisher $publisher
     ): RedirectResponse {
-        $this->guardProject($organization, $project);
+        $this->guardProject('approve', $organization, $project);
 
         $stats = $publisher->publishAll();
 
@@ -266,7 +267,7 @@ class NormativeLibrarianController extends Controller
         Project $project,
         NormativeManifestExporter $exporter
     ): RedirectResponse {
-        $this->guardProject($organization, $project);
+        $this->guardProject('edit', $organization, $project);
 
         $path = $exporter->export();
 
@@ -276,13 +277,16 @@ class NormativeLibrarianController extends Controller
         );
     }
 
-    private function guardProject(Organization $organization, Project $project): void
-    {
-        if (isset($project->organization_id)) {
-            abort_unless(
-                (int) $project->organization_id === (int) $organization->id,
-                404
-            );
-        }
+    private function guardProject(
+        string $ability,
+        Organization $organization,
+        Project $project
+    ): void {
+        app(EngineeringTenantAccessService::class)->authorizeProject(
+            $ability,
+            request()->user(),
+            $organization,
+            $project
+        );
     }
 }

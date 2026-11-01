@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Organization;
 use App\Models\Project;
+use App\Services\Engineering\EngineeringTenantAccessService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,12 +15,12 @@ class EngineeringNormativePublishedRegistryController extends Controller
         Organization $organization,
         Project $project
     ) {
-        if (isset($project->organization_id)) {
-            abort_unless(
-                (int) $project->organization_id === (int) $organization->id,
-                404
-            );
-        }
+        app(EngineeringTenantAccessService::class)->authorizeProject(
+            'view',
+            request()->user(),
+            $organization,
+            $project
+        );
 
         $state = strtoupper(trim((string) $request->query('state', 'ACTIVE')));
         $type = strtoupper(trim((string) $request->query('type', '')));

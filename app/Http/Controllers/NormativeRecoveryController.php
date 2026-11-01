@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Organization;
 use App\Models\Project;
+use App\Services\Engineering\EngineeringTenantAccessService;
 use App\Services\Engineering\NormativeLibrarian\NormativeOcrQueueExporter;
 use App\Services\Engineering\NormativeLibrarian\NormativeReferenceRecoveryService;
 use Illuminate\Http\RedirectResponse;
@@ -17,7 +18,7 @@ class NormativeRecoveryController extends Controller
         Project $project,
         NormativeReferenceRecoveryService $service
     ): RedirectResponse {
-        $this->guardProject($organization,$project);
+        $this->guardProject('edit', $organization, $project);
 
         $validated = $request->validate([
             'limit'=>['nullable','integer','min:1','max:2500'],
@@ -38,7 +39,7 @@ class NormativeRecoveryController extends Controller
         Project $project,
         NormativeOcrQueueExporter $exporter
     ): RedirectResponse {
-        $this->guardProject($organization,$project);
+        $this->guardProject('edit', $organization, $project);
 
         $result = $exporter->export();
 
@@ -48,13 +49,16 @@ class NormativeRecoveryController extends Controller
         );
     }
 
-    private function guardProject(Organization $organization, Project $project): void
-    {
-        if (isset($project->organization_id)) {
-            abort_unless(
-                (int)$project->organization_id === (int)$organization->id,
-                404
-            );
-        }
+    private function guardProject(
+        string $ability,
+        Organization $organization,
+        Project $project
+    ): void {
+        app(EngineeringTenantAccessService::class)->authorizeProject(
+            $ability,
+            request()->user(),
+            $organization,
+            $project
+        );
     }
 }
