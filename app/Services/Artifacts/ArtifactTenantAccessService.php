@@ -120,4 +120,45 @@ class ArtifactTenantAccessService
             (int) $artifact->organization_id ===
                 (int) $organization->getKey();
     }
+
+    public function canViewArtifact(
+        User $user,
+        Artifact $artifact
+    ): bool {
+        if ($artifact->organization_id === null) {
+            return
+                (int) $artifact->owner_id ===
+                (int) $user->getKey();
+        }
+
+        $organization = Organization::query()
+            ->find($artifact->organization_id);
+
+        return $organization !== null &&
+            $this->organizationAccess->hasActiveMembership(
+                $user,
+                $organization
+            );
+    }
+
+    public function canEditArtifact(
+        User $user,
+        Artifact $artifact
+    ): bool {
+        if ($artifact->organization_id === null) {
+            return
+                (int) $artifact->owner_id ===
+                (int) $user->getKey();
+        }
+
+        $organization = Organization::query()
+            ->find($artifact->organization_id);
+
+        return $organization !== null &&
+            $this->organizationAccess->can(
+                $user,
+                $organization,
+                'edit_artifacts'
+            );
+    }
 }

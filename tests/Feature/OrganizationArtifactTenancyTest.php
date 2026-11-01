@@ -316,8 +316,12 @@ class OrganizationArtifactTenancyTest extends TestCase
     private function createArtifact(
         string $title = 'WBS — SP-01'
     ): Artifact {
-        $response = $this->postJson(
-            '/api/artifacts',
+        $creator = User::factory()->create();
+
+        $response = $this
+            ->actingAs($creator)
+            ->postJson(
+                '/api/artifacts',
             [
                 'type' => 'wbs',
                 'title' => $title,
