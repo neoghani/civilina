@@ -5,9 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Civilina — Engineering, Entreprise et Digital pour les projets d'ingénierie</title>
 <meta name="description" content="Civilina accompagne les bureaux d'études, les entreprises et les startups : gestion de projet selon ISO 10005/10006, plans d'assurance qualité, base normative technique, tableaux de bord ISO/PMI et plateformes de gestion sur mesure.">
-<!-- MAQUETTE V2 — non publiée. Ne pas déployer sans validation. -->
-<meta name="robots" content="noindex, nofollow">
-<link rel="icon" type="image/png" href="assets/brand/civilina-mark-2026.png">
+<link rel="canonical" href="https://civilina.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Civilina — Engineering, Entreprise et Digital pour les projets d'ingénierie">
+<meta property="og:description" content="Civilina accompagne les bureaux d'études, les entreprises et les startups : gestion de projet selon ISO 10005/10006, plans d'assurance qualité, base normative technique, tableaux de bord ISO/PMI et plateformes de gestion sur mesure.">
+<meta property="og:url" content="https://civilina.com/">
+<meta property="og:image" content="https://civilina.com/assets/brand/civilina-logo.png">
+<meta property="og:locale" content="fr_FR">
+<meta name="google-adsense-account" content="ca-pub-5595911673357804">
+<link rel="icon" type="image/png" href="assets/brand/civilina-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -20,12 +26,14 @@
     <a href="#" class="brand"><img src="assets/brand/civilina-logo.png" alt="">CIVILINA</a>
     <nav class="menu" id="menu">
       <a href="engineering/"><span class="dot" style="background:var(--eng)"></span>Engineering</a>
-      <a href="entreprise/"><span class="dot" style="background:var(--ent)"></span>Entreprise</a>
+      <a href="gestion-entreprise/"><span class="dot" style="background:var(--ent)"></span>Entreprise</a>
       <a href="digital/"><span class="dot" style="background:var(--dig)"></span>Digital</a>
       <a href="ia/"><span class="dot" style="background:var(--ia)"></span>CIVILINA IA</a>
       <a href="journal/">Journal</a>
       <a href="#apropos">À propos</a>
+      <a href="/login/" class="menu-login">Connexion</a>
     </nav>
+    <a href="/login/" class="nav-login">Connexion</a>
     <a href="#contact" class="btn btn-primary">Parler de votre projet</a>
     <button class="burger" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
   </div>
@@ -50,7 +58,7 @@
     </div>
     <div class="axes-visual">
       <a href="engineering/" class="axis-chip"><span class="n" style="background:var(--eng)">1</span><div><strong>CIVILINA Engineering</strong><small>Bureaux d'études : gestion de projet, PAQ, base normative</small></div></a>
-      <a href="entreprise/" class="axis-chip"><span class="n" style="background:var(--ent)">2</span><div><strong>CIVILINA Entreprise</strong><small>Gestion ISO / PMI et tableaux de bord web et Excel</small></div></a>
+      <a href="gestion-entreprise/" class="axis-chip"><span class="n" style="background:var(--ent)">2</span><div><strong>CIVILINA Entreprise</strong><small>Gestion ISO / PMI et tableaux de bord web et Excel</small></div></a>
       <a href="digital/" class="axis-chip"><span class="n" style="background:var(--dig)">3</span><div><strong>CIVILINA Digital</strong><small>Plateformes de gestion de projets et de chantiers</small></div></a>
       <a href="ia/" class="axis-chip ia"><span class="n" style="background:var(--ia)">IA</span><div><strong>CIVILINA IA</strong><small>L'outil qui assiste les trois axes</small></div></a>
     </div>
@@ -118,7 +126,7 @@
             <div class="domains"><span>ISO 9001</span><span>ISO 10006</span><span>PMI / PMBOK</span><span>QHSE</span></div>
           </div>
           <p class="note"><span class="badge b-live">Disponible</span></p>
-          <div class="axis-foot"><a href="entreprise/">Découvrir CIVILINA Entreprise →</a></div>
+          <div class="axis-foot"><a href="gestion-entreprise/">Découvrir CIVILINA Entreprise →</a></div>
         </div>
       </article>
 
@@ -241,11 +249,40 @@
       <div>
         <h2>Parlons de votre projet.</h2>
         <p>Dites-nous où vous en êtes : nous vous orientons vers l'axe adapté et vous proposons un premier diagnostic.</p>
+        <ul class="cta-axes"><li><a href="engineering/">Bureau d'études → CIVILINA Engineering</a></li><li><a href="gestion-entreprise/">Direction d'entreprise → CIVILINA Entreprise</a></li><li><a href="digital/">Besoin d'une plateforme → CIVILINA Digital</a></li></ul>
       </div>
-      <div class="choices">
-        <a href="engineering/#contact">Je suis un bureau d'études <span>→</span></a>
-        <a href="entreprise/#contact">Je dirige une entreprise <span>→</span></a>
-        <a href="digital/#contact">J'ai besoin d'une plateforme <span>→</span></a>
+      <div class="cform-wrap">
+      <div class="cform-ok" id="contact-ok" hidden><strong>Merci, votre demande a bien été envoyée.</strong> Nous vous répondons rapidement.</div>
+      <form class="cform" method="post" action="/contact/" id="contact-form">
+        <div class="hp" aria-hidden="true"><label>Site web <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <div class="row2">
+          <label>Nom <input type="text" name="name" required autocomplete="name"></label>
+          <label>Entreprise <input type="text" name="company" autocomplete="organization"></label>
+        </div>
+        <div class="row2">
+          <label>Fonction <input type="text" name="position" autocomplete="organization-title"></label>
+          <label>Téléphone <input type="tel" name="phone" autocomplete="tel"></label>
+        </div>
+        <label>E-mail <input type="email" name="email" required autocomplete="email"></label>
+        <label>Besoin principal
+          <select name="need" id="need">
+            <option value="Diagnostic">Diagnostic</option>
+            <option value="Management de projet">Management de projet, PAQ, ITP</option>
+            <option value="Structuration processus">Structuration des processus</option>
+            <option value="Qualité ISO 9001">Qualité ISO 9001</option>
+            <option value="QHSE">QHSE</option>
+            <option value="Tableaux de bord">Tableaux de bord</option>
+            <option value="Plateforme Laravel métier">Plateforme de gestion sur mesure</option>
+            <option value="Accompagnement mensuel">Accompagnement mensuel</option>
+            <option value="Audit">Audit</option>
+            <option value="Supply Chain">Supply chain</option>
+            <option value="Autre">Autre (dont accès pilote)</option>
+          </select>
+        </label>
+        <label>Message <textarea name="message" rows="4" required placeholder="Votre projet, votre contexte, vos délais…"></textarea></label>
+        <button type="submit" class="btn">Envoyer ma demande</button>
+        <p class="small">Vous pouvez aussi nous écrire sur <a href="https://www.linkedin.com/company/civilina" rel="noopener">LinkedIn</a>.</p>
+      </form>
       </div>
     </div>
   </div>
@@ -259,13 +296,16 @@
         <a href="#" class="brand"><img src="assets/brand/civilina-logo.png" alt="">CIVILINA</a>
         <p style="margin-top:.8rem;max-width:34ch">Engineering, management et digitalisation pour les projets d'ingénierie.</p>
       </div>
-      <div><h5>Axes</h5><ul><li><a href="engineering/">CIVILINA Engineering</a></li><li><a href="entreprise/">CIVILINA Entreprise</a></li><li><a href="digital/">CIVILINA Digital</a></li><li><a href="ia/">CIVILINA IA</a></li></ul></div>
+      <div><h5>Axes</h5><ul><li><a href="engineering/">CIVILINA Engineering</a></li><li><a href="gestion-entreprise/">CIVILINA Entreprise</a></li><li><a href="digital/">CIVILINA Digital</a></li><li><a href="ia/">CIVILINA IA</a></li></ul></div>
       <div><h5>Ressources</h5><ul><li><a href="journal/">Journal</a></li><li><a href="https://monprofil.civilina.com/">Mon Profil</a></li><li><a href="#apropos">À propos</a></li></ul></div>
-      <div><h5>Contact</h5><ul><li><a href="#contact">Demander un diagnostic</a></li><li><a href="#">LinkedIn</a></li></ul></div>
+      <div><h5>Contact</h5><ul><li><a href="/#contact">Demander un diagnostic</a></li><li><a href="https://www.linkedin.com/company/civilina" rel="noopener">LinkedIn</a></li></ul></div>
     </div>
-    <div class="legal"><span>© 2026 Civilina</span><span>Mentions légales · Confidentialité · Cookies · Conditions</span></div>
+    <div class="legal"><span>© 2026 Civilina</span><span><a href="/mentions-legales/">Mentions légales</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/cookies/">Cookies</a> · <a href="/conditions-utilisation/">Conditions</a></span></div>
   </div>
 </footer>
-
+<script>
+(function(){try{if(new URLSearchParams(location.search).get("contact")==="ok"){document.getElementById("contact-ok").hidden=false;}}catch(e){}})();
+(function(){try{var b=new URLSearchParams(location.search).get("besoin"),s=document.getElementById("need");if(b&&s){for(var i=0;i<s.options.length;i++){if(s.options[i].value===b){s.selectedIndex=i;break;}}}}catch(e){}})();
+</script>
 </body>
 </html>
