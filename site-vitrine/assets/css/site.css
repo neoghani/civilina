@@ -495,3 +495,7 @@ footer{padding:56px 0 32px;font-size:.9rem;color:var(--steel)}
 @media (max-width:560px){.cform .row2{grid-template-columns:1fr}}
 .cform-ok{background:#e7f4ee;color:#0c5a3d;border-radius:14px;padding:16px 18px;font-size:.95rem;margin-bottom:12px}
 .cform-wrap{min-width:0}
+/* Formulaire : les champs restent dans leur colonne */
+.cform label,.cform .row2 > *{min-width:0}
+.cform input,.cform select,.cform textarea{width:100%;min-width:0;max-width:100%;display:block}
+.cform textarea{resize:vertical}
