@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+// Dates in the register and the email use Algiers time (UTC+1).
+date_default_timezone_set('Africa/Algiers');
+
 /*
  * Civilina contact form handler (civilina.com/contact/).
  * 1. Validates the POST, 2. stores the request in a private JSON register
