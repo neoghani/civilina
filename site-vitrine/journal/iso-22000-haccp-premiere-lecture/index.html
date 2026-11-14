@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISO 22000 et HACCP : première lecture d'un système de sécurité des aliments | Civilina</title>
+<meta name="description" content="Comprendre l'HACCP et l'ISO 22000 : types de dangers, 7 principes et 12 étapes, programmes prérequis, PRPo et CCP, et ce que la démarche enseigne à tout système de contrôle. Guide pratique.">
+<!-- MAQUETTE V2 — non publiée. Ne pas déployer sans validation. -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://civilina.com/journal/iso-22000-haccp-premiere-lecture/">
+<link rel="icon" type="image/png" href="../../assets/brand/civilina-mark-2026.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"ISO 22000 et HACCP : première lecture d'un système de sécurité des aliments","inLanguage":"fr","datePublished":"2026-06-02","dateModified":"2026-11-14","author":{"@type":"Person","name":"Abdelghani Bouhouche","jobTitle":"Ingénieur civil, PMP"},"publisher":{"@type":"Organization","name":"Civilina","url":"https://civilina.com/"},"mainEntityOfPage":"https://civilina.com/journal/iso-22000-haccp-premiere-lecture/"}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="shell nav">
+    <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+    <nav class="menu" id="menu">
+      <a href="../../engineering/"><span class="dot" style="background:var(--eng)"></span>Engineering</a>
+      <a href="../../entreprise/"><span class="dot" style="background:var(--ent)"></span>Entreprise</a>
+      <a href="../../digital/"><span class="dot" style="background:var(--dig)"></span>Digital</a>
+      <a href="../../ia/"><span class="dot" style="background:var(--ia)"></span>CIVILINA IA</a>
+      <a href="../" class="active">Journal</a>
+      <a href="../../#apropos">À propos</a>
+    </nav>
+    <a href="../../entreprise/#contact" class="btn btn-primary">Parler de votre projet</a>
+    <button class="burger" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<main>
+<article>
+  <div class="art-wrap art-head">
+    <p class="crumbs"><a href="../../">Accueil</a> › <a href="../">Journal</a> › ISO 22000 et HACCP</p>
+    <span class="pill pill-ent">Entreprise · QHSE · ISO 22000</span>
+    <h1>ISO 22000 et HACCP : première lecture d'un système de sécurité des aliments</h1>
+    <div class="art-meta"><span>Par <b>Abdelghani Bouhouche</b>, ingénieur civil, PMP</span><span>Publié le 2 juin 2026 · mis à jour le 14 novembre 2026</span><span>Lecture : 7 min</span></div>
+  </div>
+  <figure class="art-cover"><img src="../../assets/journal/iso-22000-haccp.svg" alt="ISO 22000 et HACCP : première lecture"></figure>
+
+  <div class="art-wrap">
+    <p class="chapo">La sécurité des aliments introduit une logique de maîtrise très concrète : identifier ce qui peut rendre un produit dangereux, puis organiser les contrôles pour l'éviter, le réduire ou le maîtriser. L'HACCP en est la méthode, l'ISO 22000 le système de management. Voici une première lecture structurée, utile aux dirigeants comme aux responsables qualité qui découvrent le sujet.</p>
+
+    <nav class="toc" aria-label="Sommaire">
+      <strong>Sommaire</strong>
+      <ol>
+        <li><a href="#difference">HACCP et ISO 22000 : quelle différence ?</a></li>
+        <li><a href="#dangers">Les trois familles de dangers</a></li>
+        <li><a href="#haccp">La méthode HACCP : 7 principes, 12 étapes</a></li>
+        <li><a href="#prp">Programmes prérequis, PRPo et CCP</a></li>
+        <li><a href="#systeme">Ce que l'ISO 22000 ajoute</a></li>
+        <li><a href="#lecons">Ce que la démarche enseigne à tout système de contrôle</a></li>
+        <li><a href="#commencer">Par où commencer dans une PME ?</a></li>
+        <li><a href="#checklist">Checklist de première lecture</a></li>
+      </ol>
+    </nav>
+
+    <div class="prose">
+      <h2 id="difference">HACCP et ISO 22000 : quelle différence ?</h2>
+      <p>Les deux termes sont souvent employés l'un pour l'autre. Ils désignent pourtant deux choses complémentaires :</p>
+      <ul>
+        <li><strong>L'HACCP</strong> (<em>Hazard Analysis Critical Control Point</em>, analyse des dangers et points critiques pour leur maîtrise) est une <strong>méthode</strong>. Ses principes sont décrits par le Codex Alimentarius, la référence internationale en matière d'hygiène des aliments.</li>
+        <li><strong>L'ISO 22000</strong> est une <strong>norme de système de management de la sécurité des denrées alimentaires</strong>. Elle intègre la méthode HACCP dans un cadre complet : responsabilités, ressources, communication, maîtrise documentaire, vérification et amélioration. Elle est certifiable.</li>
+      </ul>
+      <p>En résumé : l'HACCP dit <em>comment analyser et maîtriser les dangers</em> ; l'ISO 22000 dit <em>comment organiser l'entreprise pour que cette maîtrise soit durable et démontrable</em>.</p>
+
+      <h2 id="dangers">Les trois familles de dangers</h2>
+      <p>Tout part de l'identification des dangers, c'est-à-dire de ce qui peut nuire à la santé du consommateur. On les classe en trois familles :</p>
+      <table>
+        <thead><tr><th>Famille</th><th>Exemples</th></tr></thead>
+        <tbody>
+          <tr><td>Biologiques</td><td>Bactéries pathogènes, virus, parasites, moisissures productrices de toxines</td></tr>
+          <tr><td>Chimiques</td><td>Résidus de produits de nettoyage, pesticides, allergènes non déclarés, migrations depuis les emballages</td></tr>
+          <tr><td>Physiques</td><td>Fragments de verre, de métal, de bois ou de plastique, corps étrangers</td></tr>
+        </tbody>
+      </table>
+      <p>Pour chaque étape du procédé, on se demande quel danger peut apparaître, être introduit ou se développer, puis on évalue sa gravité et sa probabilité. Cette analyse distingue ce qui relève des bonnes pratiques générales de ce qui exige une maîtrise spécifique.</p>
+
+      <h2 id="haccp">La méthode HACCP : 7 principes, 12 étapes</h2>
+      <p>La mise en place d'un plan HACCP suit traditionnellement douze étapes. Les cinq premières préparent l'analyse ; les sept suivantes appliquent les sept principes.</p>
+      <h3>Les étapes préliminaires</h3>
+      <ol>
+        <li>Constituer une équipe HACCP pluridisciplinaire.</li>
+        <li>Décrire le produit : composition, conditionnement, conservation.</li>
+        <li>Identifier son utilisation prévue et les consommateurs concernés.</li>
+        <li>Établir le diagramme de fabrication, étape par étape.</li>
+        <li>Vérifier ce diagramme sur place, dans les conditions réelles.</li>
+      </ol>
+      <h3>Les sept principes</h3>
+      <ol start="6">
+        <li><strong>Analyser les dangers</strong> et identifier les mesures de maîtrise.</li>
+        <li><strong>Déterminer les points critiques pour la maîtrise</strong> (CCP).</li>
+        <li><strong>Fixer des limites critiques</strong> validées pour chaque CCP.</li>
+        <li><strong>Mettre en place une surveillance</strong> de chaque CCP.</li>
+        <li><strong>Définir les actions correctives</strong> à mener en cas de dépassement.</li>
+        <li><strong>Valider le plan et vérifier</strong> régulièrement qu'il fonctionne.</li>
+        <li><strong>Documenter et enregistrer</strong> l'ensemble de la démarche.</li>
+      </ol>
+      <div class="box box-ex"><strong>Exemple type</strong>Dans une cuisine de production, la cuisson d'un produit carné est souvent un CCP : c'est l'étape qui élimine le danger biologique. La limite critique est un couple temps-température défini et validé pour ce produit ; la surveillance consiste à mesurer et enregistrer la température à cœur ; l'action corrective prévoit de prolonger la cuisson ou d'écarter le lot. Les valeurs exactes dépendent du produit et de la réglementation applicable : elles ne s'improvisent pas.</div>
+
+      <h2 id="prp">Programmes prérequis, PRPo et CCP</h2>
+      <p>L'une des forces de l'ISO 22000 est de distinguer trois niveaux de maîtrise, ce qui évite de transformer chaque étape en point critique.</p>
+      <table>
+        <thead><tr><th>Niveau</th><th>Rôle</th><th>Exemples</th></tr></thead>
+        <tbody>
+          <tr><td><strong>PRP</strong> — programmes prérequis</td><td>Conditions de base d'hygiène, valables pour toute l'activité</td><td>Nettoyage et désinfection, lutte contre les nuisibles, hygiène du personnel, maintenance, qualité de l'eau, gestion des déchets</td></tr>
+          <tr><td><strong>PRPo</strong> — prérequis opérationnels</td><td>Mesures de maîtrise d'un danger significatif, surveillées selon des critères d'action</td><td>Tri visuel des matières premières, maîtrise de la température d'une chambre froide</td></tr>
+          <tr><td><strong>CCP</strong> — points critiques</td><td>Étapes où une limite critique mesurable doit être respectée en permanence</td><td>Cuisson, pasteurisation, détection de métaux</td></tr>
+        </tbody>
+      </table>
+      <p>Un système bien construit repose d'abord sur des PRP solides. Moins les bases sont tenues, plus les CCP doivent compenser, et plus le système devient fragile.</p>
+
+      <h2 id="systeme">Ce que l'ISO 22000 ajoute</h2>
+      <p>L'ISO 22000 suit la structure commune aux normes de systèmes de management de l'ISO, ce qui facilite son intégration avec l'ISO 9001. Elle apporte notamment :</p>
+      <ul>
+        <li>l'engagement de la direction et des responsabilités clairement attribuées ;</li>
+        <li>une <strong>communication</strong> organisée avec les fournisseurs, les clients et les autorités, le long de la chaîne alimentaire ;</li>
+        <li>la <strong>traçabilité</strong> des produits, en amont et en aval ;</li>
+        <li>la préparation aux situations d'urgence et la gestion des produits potentiellement dangereux, y compris le retrait ou le rappel ;</li>
+        <li>la <strong>validation, la vérification et l'amélioration</strong> continue du système.</li>
+      </ul>
+      <p>Elle articule deux niveaux d'amélioration : celui de l'organisation dans son ensemble, et celui des opérations, où vivent les PRP, les PRPo et le plan HACCP. Certains référentiels de certification, comme FSSC 22000, s'appuient sur l'ISO 22000 en la complétant par des programmes prérequis propres à chaque secteur.</p>
+
+      <h2 id="lecons">Ce que la démarche enseigne à tout système de contrôle</h2>
+      <p>Pour un ingénieur habitué aux projets de construction, la logique HACCP est étonnamment familière. Un <a href="../construire-itp-points-arret-temoin-revue/" style="color:var(--blue);text-decoration:underline">plan d'inspection et d'essais (ITP)</a> de chantier fonctionne sur le même principe :</p>
+      <table>
+        <thead><tr><th>HACCP</th><th>Chantier (ITP)</th></tr></thead>
+        <tbody>
+          <tr><td>Analyse des dangers</td><td>Identification des risques qualité par ouvrage</td></tr>
+          <tr><td>Point critique (CCP)</td><td>Point d'arrêt : rien ne continue sans validation</td></tr>
+          <tr><td>Limite critique</td><td>Critère d'acceptation issu de la spécification</td></tr>
+          <tr><td>Surveillance et enregistrement</td><td>Inspection, mesure et PV</td></tr>
+          <tr><td>Action corrective</td><td>Non-conformité et traitement</td></tr>
+        </tbody>
+      </table>
+      <p>La leçon est la même dans les deux mondes : <strong>on ne contrôle pas tout avec la même intensité</strong>. On identifie les points où une défaillance aurait des conséquences graves, on y concentre les contrôles, on fixe des critères mesurables, et on garde la preuve de ce qui a été fait.</p>
+      <div class="box box-key"><strong>À retenir</strong>L'HACCP part du danger et du terrain, pas du document. C'est ce qui rend la méthode efficace, et c'est une bonne inspiration pour tout système qualité.</div>
+
+      <h2 id="commencer">Par où commencer dans une PME ?</h2>
+      <p>Pour une petite entreprise agroalimentaire, une restauration collective ou un atelier de transformation, la démarche peut paraître lourde. Elle devient abordable si on la prend dans le bon ordre.</p>
+      <ol>
+        <li><strong>Faire l'état des lieux des bonnes pratiques d'hygiène.</strong> Nettoyage, lutte contre les nuisibles, hygiène du personnel, chaîne du froid, eau, déchets : ce sont les PRP. S'ils ne sont pas tenus, aucun plan HACCP ne compensera.</li>
+        <li><strong>Décrire honnêtement ce qui se passe.</strong> Le diagramme de fabrication doit refléter la réalité de l'atelier, y compris les étapes que l'on préférerait ne pas montrer : attentes, retouches, stockages intermédiaires.</li>
+        <li><strong>Analyser les dangers avec ceux qui produisent.</strong> Les opérateurs connaissent les incidents, les contournements et les points faibles mieux que quiconque.</li>
+        <li><strong>Limiter les CCP au strict nécessaire.</strong> Trop de points critiques diluent l'attention et rendent la surveillance impossible à tenir.</li>
+        <li><strong>Rendre la surveillance simple.</strong> Une fiche d'enregistrement claire, au bon endroit, remplie au bon moment, vaut mieux qu'un classeur complet rempli en fin de semaine.</li>
+        <li><strong>Vérifier et ajuster.</strong> Analyses de laboratoire, audits internes, réclamations et incidents servent à confirmer que le plan fonctionne, ou à le corriger.</li>
+      </ol>
+      <p>La certification ISO 22000 peut venir ensuite, lorsque les bases sont solides. Elle est alors la reconnaissance d'un système qui fonctionne, et non une fin en soi. Dans tous les cas, la réglementation sanitaire du pays et les exigences des clients restent le premier cadre à respecter.</p>
+
+      <h2 id="checklist">Checklist de première lecture</h2>
+      <ul class="checklist">
+        <li>Une équipe HACCP pluridisciplinaire est désignée.</li>
+        <li>Les produits et leur utilisation prévue sont décrits.</li>
+        <li>Le diagramme de fabrication est établi et vérifié sur place.</li>
+        <li>Les dangers sont identifiés par étape et par famille.</li>
+        <li>Les PRP de base sont en place et vérifiés.</li>
+        <li>Les PRPo et les CCP sont distingués et justifiés.</li>
+        <li>Les limites critiques sont validées, la surveillance et les actions correctives définies.</li>
+        <li>La traçabilité et la procédure de retrait ou de rappel sont testées.</li>
+      </ul>
+      <p>Cette liste aide à situer une entreprise ; elle ne remplace ni l'étude HACCP, ni la connaissance de la réglementation applicable à vos produits.</p>
+
+      <div class="sources"><strong>Références citées</strong>
+        <ul>
+          <li>Codex Alimentarius — Principes généraux d'hygiène alimentaire, incluant le système HACCP.</li>
+          <li>ISO 22000 — Systèmes de management de la sécurité des denrées alimentaires — Exigences pour tout organisme appartenant à la chaîne alimentaire.</li>
+        </ul>
+        <p style="margin-top:.6rem">Consultez l'édition en vigueur des textes auprès de leur éditeur officiel, ainsi que la réglementation applicable dans votre pays. Cet article présente une lecture pratique ; il ne reproduit pas le texte des normes.</p>
+      </div>
+    </div>
+
+    <div class="author">
+      <img src="../../assets/brand/abdelghani-bouhouche.jpg" alt="Abdelghani Bouhouche">
+      <div><strong>Abdelghani Bouhouche</strong><p>Ingénieur civil et PMP, fondateur de Civilina. Expérience en management de projet, qualité, QHSE et coordination opérationnelle, en Algérie et à l'international.</p></div>
+    </div>
+
+    <div class="art-cta">
+      <h3>Structurer votre système QHSE ?</h3>
+      <p>CIVILINA Entreprise vous aide à organiser vos processus, vos contrôles et vos indicateurs, sur une base ISO.</p>
+      <a href="../../entreprise/" class="btn">Découvrir CIVILINA Entreprise →</a>
+    </div>
+  </div>
+</article>
+</main>
+
+<footer>
+  <div class="shell">
+    <div class="foot">
+      <div>
+        <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+        <p style="margin-top:.8rem;max-width:34ch">Engineering, management et digitalisation pour les projets d'ingénierie.</p>
+      </div>
+      <div><h5>Axes</h5><ul><li><a href="../../engineering/">CIVILINA Engineering</a></li><li><a href="../../entreprise/">CIVILINA Entreprise</a></li><li><a href="../../digital/">CIVILINA Digital</a></li><li><a href="../../ia/">CIVILINA IA</a></li></ul></div>
+      <div><h5>Journal</h5><ul><li><a href="../iso-10006-projets-epc-systeme-pilotable/">ISO 10006 et projets EPC</a></li><li><a href="../iso-9001-systeme-qualite-utile/">ISO 9001 : un système qualité utile</a></li><li><a href="../">Tous les articles</a></li></ul></div>
+      <div><h5>Contact</h5><ul><li><a href="../../#contact">Demander un diagnostic</a></li><li><a href="#">LinkedIn</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Civilina</span><span>Mentions légales · Confidentialité · Cookies · Conditions</span></div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rédiger un Plan d'Assurance Qualité (PAQ) selon l'ISO 10005 : contenu, étapes et pièges | Civilina</title>
+<meta name="description" content="Guide pratique pour rédiger un Plan d'Assurance Qualité (PAQ) de projet selon les lignes directrices de l'ISO 10005 : définition, contenu type, étapes, spécificités des bureaux d'études, erreurs et checklist.">
+<!-- MAQUETTE V2 — non publiée. Ne pas déployer sans validation. -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://civilina.com/journal/rediger-plan-assurance-qualite-paq-iso-10005/">
+<link rel="icon" type="image/png" href="../../assets/brand/civilina-mark-2026.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Rédiger un Plan d'Assurance Qualité (PAQ) selon l'ISO 10005","inLanguage":"fr","datePublished":"2026-11-14","dateModified":"2026-11-14","author":{"@type":"Person","name":"Abdelghani Bouhouche","jobTitle":"Ingénieur civil, PMP"},"publisher":{"@type":"Organization","name":"Civilina","url":"https://civilina.com/"},"mainEntityOfPage":"https://civilina.com/journal/rediger-plan-assurance-qualite-paq-iso-10005/"}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="shell nav">
+    <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+    <nav class="menu" id="menu">
+      <a href="../../engineering/"><span class="dot" style="background:var(--eng)"></span>Engineering</a>
+      <a href="../../entreprise/"><span class="dot" style="background:var(--ent)"></span>Entreprise</a>
+      <a href="../../digital/"><span class="dot" style="background:var(--dig)"></span>Digital</a>
+      <a href="../../ia/"><span class="dot" style="background:var(--ia)"></span>CIVILINA IA</a>
+      <a href="../" class="active">Journal</a>
+      <a href="../../#apropos">À propos</a>
+    </nav>
+    <a href="../../engineering/#contact" class="btn btn-primary">Parler de votre projet</a>
+    <button class="burger" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<main>
+<article>
+  <div class="art-wrap art-head">
+    <p class="crumbs"><a href="../../">Accueil</a> › <a href="../">Journal</a> › Rédiger un PAQ selon l'ISO 10005</p>
+    <span class="pill pill-eng">Engineering · ISO 10005</span>
+    <h1>Rédiger un Plan d'Assurance Qualité (PAQ) selon l'ISO 10005</h1>
+    <div class="art-meta"><span>Par <b>Abdelghani Bouhouche</b>, ingénieur civil, PMP</span><span>Publié le 14 novembre 2026</span><span>Lecture : 8 min</span></div>
+  </div>
+  <figure class="art-cover"><img src="../../assets/journal/rediger-paq-iso-10005.svg" alt="Rédiger un PAQ selon l'ISO 10005"></figure>
+
+  <div class="art-wrap">
+    <p class="chapo">« Merci de nous transmettre votre PAQ avant le démarrage des prestations. » La demande arrive souvent juste après la signature du marché, et le document est alors rédigé dans l'urgence, à partir d'un modèle d'un autre projet. Pourtant, un PAQ bien construit est l'un des outils les plus utiles d'un projet. Voici comment le rédiger en s'appuyant sur les lignes directrices de l'ISO 10005.</p>
+
+    <nav class="toc" aria-label="Sommaire">
+      <strong>Sommaire</strong>
+      <ol>
+        <li><a href="#definition">Qu'est-ce qu'un PAQ ?</a></li>
+        <li><a href="#distinction">PAQ, manuel qualité et ITP : ne pas confondre</a></li>
+        <li><a href="#quand">Quand le PAQ est-il demandé ?</a></li>
+        <li><a href="#contenu">Le contenu type d'un PAQ</a></li>
+        <li><a href="#etapes">Les cinq étapes de rédaction</a></li>
+        <li><a href="#vivre">Faire vivre le PAQ pendant le projet</a></li>
+        <li><a href="#be">Les spécificités d'un PAQ de bureau d'études</a></li>
+        <li><a href="#erreurs">Les erreurs fréquentes</a></li>
+        <li><a href="#checklist">Checklist avant envoi</a></li>
+      </ol>
+    </nav>
+
+    <div class="prose">
+      <h2 id="definition">Qu'est-ce qu'un PAQ ?</h2>
+      <p>Le Plan d'Assurance Qualité, que l'ISO appelle simplement <strong>plan qualité</strong>, est le document qui précise, pour un objet donné, <strong>quelles actions, quelles responsabilités et quelles ressources</strong> seront mises en œuvre pour en garantir la qualité. Cet objet peut être un projet, un contrat, une mission d'études, un ouvrage ou un produit.</p>
+      <p>Sa force tient à ce mot : <em>donné</em>. Le PAQ ne décrit pas l'entreprise en général ; il décrit comment l'entreprise va s'organiser <strong>pour ce projet-là</strong>, avec ses exigences contractuelles, ses intervenants, ses risques et son planning.</p>
+      <p>L'<strong>ISO 10005</strong> fournit des lignes directrices pour établir, revoir, accepter, appliquer et réviser un plan qualité. Comme l'ISO 10006, ce n'est pas une norme certifiable : c'est un guide, utilisable que l'entreprise soit certifiée ISO 9001 ou non.</p>
+      <div class="box box-key"><strong>À retenir</strong>Un bon PAQ répond, pour un projet précis, à trois questions : qui est responsable de quoi, comment la qualité sera vérifiée, et quelles preuves en resteront.</div>
+
+      <h2 id="distinction">PAQ, manuel qualité et ITP : ne pas confondre</h2>
+      <table>
+        <thead><tr><th>Document</th><th>Périmètre</th><th>Question à laquelle il répond</th></tr></thead>
+        <tbody>
+          <tr><td>Manuel ou système qualité</td><td>Toute l'entreprise, durablement</td><td>Comment fonctionnons-nous en général ?</td></tr>
+          <tr><td><strong>PAQ</strong></td><td>Un projet ou un contrat</td><td>Comment allons-nous assurer la qualité sur ce projet ?</td></tr>
+          <tr><td>ITP</td><td>Un ouvrage ou un lot de travaux</td><td>Quels contrôles, quand, par qui, avec quel critère et quelle preuve ?</td></tr>
+          <tr><td>Procédures et modes opératoires</td><td>Une activité précise</td><td>Comment réaliser cette tâche correctement ?</td></tr>
+        </tbody>
+      </table>
+      <p>Le PAQ fait le lien entre ces niveaux : il <strong>renvoie</strong> aux procédures existantes de l'entreprise plutôt que de les recopier, et il <strong>annonce</strong> les <a href="../construire-itp-points-arret-temoin-revue/" style="color:var(--blue);text-decoration:underline">ITP</a> qui détailleront les contrôles ouvrage par ouvrage.</p>
+
+      <h2 id="quand">Quand le PAQ est-il demandé ?</h2>
+      <p>Le PAQ est généralement exigé par le marché, dans le cahier des charges ou les clauses administratives. Selon les projets, on rencontre trois moments :</p>
+      <ul>
+        <li><strong>À l'offre</strong> : certains marchés demandent un document d'organisation qualité simplifié, parfois appelé schéma organisationnel du PAQ (SOPAQ), qui montre comment le candidat compte s'organiser. Il pèse alors dans la note technique.</li>
+        <li><strong>Avant le démarrage</strong> : le PAQ complet est remis au maître d'ouvrage ou au maître d'œuvre, qui le revoit et l'accepte, parfois après observations.</li>
+        <li><strong>Pendant le projet</strong> : le PAQ est révisé lorsque l'organisation, le périmètre ou les intervenants changent.</li>
+      </ul>
+      <p>Même lorsque le client ne l'exige pas, un PAQ court reste utile sur tout projet comportant plusieurs intervenants ou des exigences techniques importantes.</p>
+
+      <h2 id="contenu">Le contenu type d'un PAQ</h2>
+      <p>L'ISO 10005 propose une liste de rubriques à adapter au projet. Toutes ne sont pas nécessaires partout : un plan qualité doit rester proportionné. Voici les rubriques les plus courantes et ce qu'il faut y écrire.</p>
+      <table>
+        <thead><tr><th>Rubrique</th><th>Ce qu'on y écrit concrètement</th></tr></thead>
+        <tbody>
+          <tr><td>Objet et domaine d'application</td><td>Le projet, les prestations couvertes, les exclusions</td></tr>
+          <tr><td>Éléments d'entrée</td><td>Pièces du marché, exigences du client, réglementation, normes applicables</td></tr>
+          <tr><td>Objectifs qualité</td><td>Quelques objectifs mesurables propres au projet</td></tr>
+          <tr><td>Organisation et responsabilités</td><td>Organigramme, rôles, délégations, matrice RACI</td></tr>
+          <tr><td>Maîtrise des documents</td><td>Codification, circuit de vérification et d'approbation, indices, diffusion, archivage</td></tr>
+          <tr><td>Ressources</td><td>Personnel clé et compétences, moyens, logiciels, laboratoires</td></tr>
+          <tr><td>Communication</td><td>Interlocuteurs, réunions, comptes rendus, traitement des demandes du client</td></tr>
+          <tr><td>Conception et études</td><td>Données d'entrée, revues, vérifications, validations, gestion des modifications</td></tr>
+          <tr><td>Achats et sous-traitance</td><td>Sélection, exigences transmises, contrôle des prestations externes</td></tr>
+          <tr><td>Réalisation</td><td>Méthodes, procédures d'exécution, ITP</td></tr>
+          <tr><td>Identification et traçabilité</td><td>Comment retrouver l'origine d'un matériau, d'un document, d'une décision</td></tr>
+          <tr><td>Non-conformités</td><td>Détection, enregistrement, traitement, décision, recontrôle</td></tr>
+          <tr><td>Surveillance et mesure</td><td>Contrôles, essais, indicateurs suivis</td></tr>
+          <tr><td>Audits</td><td>Audits internes ou du client prévus sur le projet</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="etapes">Les cinq étapes de rédaction</h2>
+      <ol>
+        <li><strong>Rassembler les éléments d'entrée.</strong> Relire le marché, le cahier des charges, les plans, les exigences qualité du client et la liste des normes applicables. Noter chaque exigence qui concerne la qualité.</li>
+        <li><strong>Rédiger en partant du projet, pas du modèle.</strong> Un modèle donne la structure ; le contenu vient du projet : ses intervenants, ses risques, ses ouvrages, ses délais.</li>
+        <li><strong>Faire revoir en interne.</strong> Le chef de projet et les responsables techniques vérifient que le PAQ décrit ce qui sera réellement fait. Un PAQ que l'équipe ne reconnaît pas ne sera pas appliqué.</li>
+        <li><strong>Soumettre et faire accepter.</strong> Le client ou son représentant revoit le document ; ses observations sont traitées et tracées dans une nouvelle révision.</li>
+        <li><strong>Appliquer, vérifier et réviser.</strong> Le PAQ est présenté aux équipes au démarrage, suivi pendant le projet, et mis à jour à chaque changement significatif.</li>
+      </ol>
+      <div class="box box-ex"><strong>Exemple type</strong>Pour un projet de bâtiment de taille moyenne, un PAQ efficace tient souvent en une vingtaine de pages, complétées par des annexes : organigramme, matrice RACI, liste des procédures applicables, liste des ITP prévus et modèles de formulaires. Au-delà, il est rarement lu.</div>
+
+      <h2 id="vivre">Faire vivre le PAQ pendant le projet</h2>
+      <p>Un PAQ accepté puis rangé dans un classeur n'a servi qu'à satisfaire une clause du marché. Pour qu'il devienne un outil de pilotage, trois habitudes suffisent.</p>
+      <p><strong>Fixer des objectifs qualité vérifiables.</strong> Ils doivent être propres au projet et mesurables, par exemple : toutes les notes de calcul vérifiées avant diffusion ; aucune observation du contrôleur technique laissée sans réponse au-delà du délai convenu ; chaque non-conformité clôturée avec un recontrôle documenté. Ce sont des engagements d'organisation, que l'équipe peut suivre et prouver.</p>
+      <p><strong>Suivre le PAQ en réunion.</strong> Un point qualité de quelques minutes dans la réunion de projet permet de regarder les non-conformités ouvertes, les documents en attente de visa et les écarts par rapport aux objectifs.</p>
+      <p><strong>Réviser au bon moment.</strong> Un changement de responsable, l'arrivée d'un sous-traitant, une extension du périmètre ou une nouvelle exigence du client justifient une nouvelle révision. Le tableau des révisions, en tête du document, en garde la trace.</p>
+
+      <h2 id="be">Les spécificités d'un PAQ de bureau d'études</h2>
+      <p>Pour un bureau d'études, le « produit » est un ensemble de documents : notes de calcul, plans, spécifications, rapports. Le PAQ doit donc insister sur la maîtrise des études. Cinq points méritent une attention particulière :</p>
+      <ul>
+        <li><strong>Les données d'entrée et hypothèses</strong> : elles sont listées, datées et validées avant de lancer les calculs. Une hypothèse qui change doit déclencher une revue.</li>
+        <li><strong>La vérification indépendante</strong> : chaque note de calcul est vérifiée par une autre personne que son auteur, et la vérification est tracée.</li>
+        <li><strong>Les logiciels de calcul</strong> : version utilisée, conditions d'emploi, et cohérence des résultats contrôlée par des calculs simplifiés ou des ordres de grandeur.</li>
+        <li><strong>Le circuit de diffusion et de visa</strong> : qui émet, qui vérifie, qui approuve, et comment les observations du client ou du contrôleur sont traitées.</li>
+        <li><strong>La gestion des révisions</strong> : chaque indice indique ce qui a changé et pourquoi, pour que le chantier sache toujours quelle version appliquer.</li>
+      </ul>
+
+      <h2 id="erreurs">Les erreurs fréquentes</h2>
+      <div class="box box-warn"><strong>À éviter</strong>
+        <ul>
+          <li>Reprendre le PAQ d'un autre projet en changeant seulement le nom du client.</li>
+          <li>Recopier le manuel qualité de l'entreprise au lieu d'y renvoyer.</li>
+          <li>Nommer des responsables qui ne travailleront pas sur le projet.</li>
+          <li>Promettre des contrôles que l'organisation ne pourra pas tenir.</li>
+          <li>Ne jamais présenter le PAQ aux équipes qui doivent l'appliquer.</li>
+          <li>Laisser le PAQ inchangé alors que l'organisation du projet a évolué.</li>
+        </ul>
+      </div>
+
+      <h2 id="checklist">Checklist avant envoi</h2>
+      <ul class="checklist">
+        <li>Le domaine d'application et les exclusions sont explicites.</li>
+        <li>Toutes les exigences qualité du marché sont reprises ou traitées.</li>
+        <li>L'organigramme et la matrice RACI correspondent aux personnes réellement affectées.</li>
+        <li>Le circuit des documents (émission, vérification, approbation, diffusion) est décrit.</li>
+        <li>Les procédures existantes sont citées par leur référence, pas recopiées.</li>
+        <li>Les ITP prévus sont listés, avec leur calendrier de remise.</li>
+        <li>Le traitement des non-conformités est défini, avec les responsables.</li>
+        <li>Le document porte un indice, une date, un rédacteur, un vérificateur et un approbateur.</li>
+      </ul>
+      <p>Un PAQ réussi n'est pas celui qui obtient le meilleur commentaire du client ; c'est celui que l'équipe ouvre encore à la moitié du projet pour savoir comment faire.</p>
+
+      <div class="sources"><strong>Références citées</strong>
+        <ul>
+          <li>ISO 10005 — Management de la qualité — Lignes directrices pour les plans qualité.</li>
+          <li>ISO 10006 — Management de la qualité — Lignes directrices pour le management de la qualité dans les projets.</li>
+          <li>ISO 9001 — Systèmes de management de la qualité — Exigences.</li>
+        </ul>
+        <p style="margin-top:.6rem">Consultez l'édition en vigueur des normes auprès de leur éditeur officiel, ainsi que les exigences propres à votre marché. Cet article présente une méthode ; il ne reproduit pas le texte des normes.</p>
+      </div>
+    </div>
+
+    <div class="author">
+      <img src="../../assets/brand/abdelghani-bouhouche.jpg" alt="Abdelghani Bouhouche">
+      <div><strong>Abdelghani Bouhouche</strong><p>Ingénieur civil et PMP, fondateur de Civilina. Expérience en management de projet, qualité, QHSE et coordination opérationnelle, en Algérie et à l'international.</p></div>
+    </div>
+
+    <div class="art-cta">
+      <h3>Un PAQ à remettre pour votre prochain marché ?</h3>
+      <p>CIVILINA Engineering rédige avec vous un PAQ adapté à votre projet, avec la matrice RACI, les procédures associées et la liste des ITP.</p>
+      <a href="../../engineering/" class="btn">Découvrir CIVILINA Engineering →</a>
+    </div>
+  </div>
+</article>
+</main>
+
+<footer>
+  <div class="shell">
+    <div class="foot">
+      <div>
+        <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+        <p style="margin-top:.8rem;max-width:34ch">Engineering, management et digitalisation pour les projets d'ingénierie.</p>
+      </div>
+      <div><h5>Axes</h5><ul><li><a href="../../engineering/">CIVILINA Engineering</a></li><li><a href="../../entreprise/">CIVILINA Entreprise</a></li><li><a href="../../digital/">CIVILINA Digital</a></li><li><a href="../../ia/">CIVILINA IA</a></li></ul></div>
+      <div><h5>Journal</h5><ul><li><a href="../construire-itp-points-arret-temoin-revue/">Construire un ITP</a></li><li><a href="../iso-10006-projets-epc-systeme-pilotable/">ISO 10006 et projets EPC</a></li><li><a href="../">Tous les articles</a></li></ul></div>
+      <div><h5>Contact</h5><ul><li><a href="../../#contact">Demander un diagnostic</a></li><li><a href="#">LinkedIn</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Civilina</span><span>Mentions légales · Confidentialité · Cookies · Conditions</span></div>
+  </div>
+</footer>
+</body>
+</html>

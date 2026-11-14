@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Construire un ITP : points d'arrêt, de témoin et de revue, critères et preuves | Civilina</title>
+<meta name="description" content="Guide pratique pour construire un plan d'inspection et d'essais (ITP) : structure, points d'arrêt (H), de témoin (W) et de revue (R), critères d'acceptation, preuves, exemple commenté et checklist.">
+<!-- MAQUETTE V2 — non publiée. Ne pas déployer sans validation. -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://civilina.com/journal/construire-itp-points-arret-temoin-revue/">
+<link rel="icon" type="image/png" href="../../assets/brand/civilina-mark-2026.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Construire un ITP : points d'arrêt, de témoin et de revue","inLanguage":"fr","datePublished":"2026-11-14","dateModified":"2026-11-14","author":{"@type":"Person","name":"Abdelghani Bouhouche","jobTitle":"Ingénieur civil, PMP"},"publisher":{"@type":"Organization","name":"Civilina","url":"https://civilina.com/"},"mainEntityOfPage":"https://civilina.com/journal/construire-itp-points-arret-temoin-revue/"}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="shell nav">
+    <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+    <nav class="menu" id="menu">
+      <a href="../../engineering/"><span class="dot" style="background:var(--eng)"></span>Engineering</a>
+      <a href="../../entreprise/"><span class="dot" style="background:var(--ent)"></span>Entreprise</a>
+      <a href="../../digital/"><span class="dot" style="background:var(--dig)"></span>Digital</a>
+      <a href="../../ia/"><span class="dot" style="background:var(--ia)"></span>CIVILINA IA</a>
+      <a href="../" class="active">Journal</a>
+      <a href="../../#apropos">À propos</a>
+    </nav>
+    <a href="../../engineering/#contact" class="btn btn-primary">Parler de votre projet</a>
+    <button class="burger" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<main>
+<article>
+  <div class="art-wrap art-head">
+    <p class="crumbs"><a href="../../">Accueil</a> › <a href="../">Journal</a> › Construire un ITP</p>
+    <span class="pill pill-eng">Engineering · QA/QC</span>
+    <h1>Construire un ITP : points d'arrêt, de témoin et de revue</h1>
+    <div class="art-meta"><span>Par <b>Abdelghani Bouhouche</b>, ingénieur civil, PMP</span><span>Publié le 14 novembre 2026</span><span>Lecture : 8 min</span></div>
+  </div>
+  <figure class="art-cover"><img src="../../assets/journal/construire-itp.svg" alt="Construire un ITP : arrêt, témoin, revue"></figure>
+
+  <div class="art-wrap">
+    <p class="chapo">Sur un chantier, les contrôles sont presque toujours faits. Ce qui manque souvent, c'est la preuve qu'ils ont été faits au bon moment, par la bonne personne, selon le bon critère. Le plan d'inspection et d'essais, ou ITP, sert précisément à cela. Voici comment en construire un qui soit utile sur le terrain, et pas seulement présentable au client.</p>
+
+    <nav class="toc" aria-label="Sommaire">
+      <strong>Sommaire</strong>
+      <ol>
+        <li><a href="#definition">Qu'est-ce qu'un ITP ?</a></li>
+        <li><a href="#acteurs">Qui le rédige, qui l'approuve</a></li>
+        <li><a href="#structure">Les colonnes d'un ITP</a></li>
+        <li><a href="#points">Points d'arrêt, de témoin et de revue</a></li>
+        <li><a href="#exemple">Exemple commenté : un voile en béton armé</a></li>
+        <li><a href="#criteres">Écrire de bons critères d'acceptation</a></li>
+        <li><a href="#preuve">De l'ITP au PV : la chaîne de preuve</a></li>
+        <li><a href="#erreurs">Les erreurs fréquentes</a></li>
+        <li><a href="#checklist">Checklist avant diffusion</a></li>
+      </ol>
+    </nav>
+
+    <div class="prose">
+      <h2 id="definition">Qu'est-ce qu'un ITP ?</h2>
+      <p>L'ITP (de l'anglais <em>Inspection and Test Plan</em>) est un tableau qui liste, pour un ouvrage ou un lot de travaux, <strong>toutes les vérifications prévues</strong> : ce qui est contrôlé, à quel moment, par qui, selon quelle référence, avec quel critère d'acceptation et quel document de preuve. En français, on parle aussi de plan d'inspection et d'essais, de plan de contrôle ou de programme de points critiques.</p>
+      <p>L'ITP n'est pas un document isolé. Il découle du <a href="../rediger-plan-assurance-qualite-paq-iso-10005/" style="color:var(--blue);text-decoration:underline"><strong>plan d'assurance qualité</strong></a> (PAQ) du projet, qui fixe l'organisation générale de la qualité, et il s'appuie sur les documents techniques : plans d'exécution, spécifications du marché, notes de calcul et normes applicables. Il est en quelque sorte la traduction opérationnelle du PAQ pour un ouvrage donné.</p>
+      <div class="box box-key"><strong>À retenir</strong>Un ITP répond à une question simple : « Qu'allons-nous vérifier, quand, comment, selon quel critère, et comment le prouverons-nous ? » Si l'une de ces réponses manque sur une ligne, la ligne n'est pas finie.</div>
+
+      <h2 id="acteurs">Qui le rédige, qui l'approuve</h2>
+      <p>En général, l'ITP est <strong>rédigé par l'entreprise qui réalise les travaux</strong>, car c'est elle qui connaît ses méthodes et ses moyens de contrôle. Il est ensuite <strong>soumis à l'approbation</strong> du maître d'œuvre ou du représentant du client, et parfois d'un organisme de contrôle, selon ce que prévoit le marché.</p>
+      <p>Pour les éléments fabriqués hors du chantier, comme une charpente métallique ou des équipements, le fabricant établit souvent son propre ITP, que l'entreprise principale intègre à son dispositif. Le point important est que chaque partie sache, avant le début des travaux, à quels contrôles elle doit participer et quand elle sera prévenue.</p>
+      <p>Un ITP n'est utilisable sur chantier qu'une fois <strong>approuvé et diffusé dans sa dernière révision</strong>. Une version de travail qui circule par messagerie n'a pas de valeur contractuelle.</p>
+
+      <h2 id="structure">Les colonnes d'un ITP</h2>
+      <p>Les formats varient d'un projet à l'autre, mais on retrouve presque toujours les mêmes colonnes :</p>
+      <table>
+        <thead><tr><th>Colonne</th><th>Ce qu'elle contient</th></tr></thead>
+        <tbody>
+          <tr><td>N° et étape</td><td>L'activité contrôlée, dans l'ordre chronologique de réalisation</td></tr>
+          <tr><td>Document de référence</td><td>Plan, spécification ou norme qui fixe l'exigence, avec son indice ou son édition</td></tr>
+          <tr><td>Caractéristique contrôlée</td><td>Ce que l'on vérifie précisément : dimension, position, résistance, aspect, document</td></tr>
+          <tr><td>Méthode et moyen</td><td>Visuel, mesure, essai, revue documentaire ; instrument utilisé</td></tr>
+          <tr><td>Fréquence ou étendue</td><td>À chaque élément, par lot, par volume, par échantillonnage</td></tr>
+          <tr><td>Critère d'acceptation</td><td>La valeur ou la condition qui rend le résultat acceptable, et sa source</td></tr>
+          <tr><td>Intervention par partie</td><td>Le type de point pour l'entreprise, le maître d'œuvre, le client ou un tiers</td></tr>
+          <tr><td>Document de preuve</td><td>Fiche de contrôle, PV, rapport d'essai, certificat</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="points">Points d'arrêt, de témoin et de revue</h2>
+      <p>Le cœur de l'ITP, ce sont les <strong>types de points</strong>. Ils indiquent comment chaque partie intervient sur chaque contrôle. Les trois plus courants sont :</p>
+      <table>
+        <thead><tr><th>Point</th><th>Signification</th><th>Conséquence sur le chantier</th></tr></thead>
+        <tbody>
+          <tr><td><strong>H</strong> — point d'arrêt (<em>Hold</em>)</td><td>La partie concernée doit être présente ou donner son accord écrit</td><td>Les travaux ne peuvent pas continuer sans libération formelle</td></tr>
+          <tr><td><strong>W</strong> — point de témoin (<em>Witness</em>)</td><td>La partie est prévenue et peut assister au contrôle</td><td>Si elle ne se présente pas dans le délai convenu, les travaux peuvent continuer</td></tr>
+          <tr><td><strong>R</strong> — revue (<em>Review</em>)</td><td>La partie examine les documents et enregistrements</td><td>Pas de présence physique ; vérification sur pièces</td></tr>
+        </tbody>
+      </table>
+      <p>Certains projets ajoutent d'autres codes, par exemple <strong>P</strong> pour l'exécution du contrôle par l'entreprise elle-même, ou <strong>S</strong> pour une surveillance par sondage. L'essentiel est que la légende soit écrite sur l'ITP et comprise par tous.</p>
+      <p>Les <strong>délais de notification</strong> des points H et W, c'est-à-dire combien de temps à l'avance il faut prévenir, doivent être fixés dans le marché ou dans le PAQ. Sans cette règle, un point d'arrêt peut bloquer un chantier pendant des jours.</p>
+      <div class="box box-warn"><strong>Attention</strong>Mettre des points d'arrêt partout ne rend pas un ouvrage plus sûr : cela ralentit le chantier et dilue l'attention. Les points H se réservent aux étapes où une erreur deviendrait invisible ou irréversible, par exemple avant de couler du béton sur des armatures.</div>
+
+      <h2 id="exemple">Exemple commenté : un voile en béton armé</h2>
+      <p>Voici un extrait simplifié d'ITP pour la réalisation d'un voile en béton armé. Les critères renvoient volontairement aux documents du projet : ce sont eux, et non l'ITP, qui fixent les valeurs.</p>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Étape</th><th>Critère d'acceptation</th><th>Entreprise</th><th>Maître d'œuvre</th><th>Preuve</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Implantation et traçage</td><td>Position et cotes conformes au plan d'implantation</td><td>P</td><td>W</td><td>Fiche d'implantation</td></tr>
+          <tr><td>2</td><td>Réception des aciers livrés</td><td>Nuance et diamètres conformes à la commande ; documents du fournisseur présents</td><td>P</td><td>R</td><td>Bon de livraison, certificats</td></tr>
+          <tr><td>3</td><td>Ferraillage en place</td><td>Diamètres, espacements, recouvrements et enrobages conformes au plan de ferraillage</td><td>P</td><td><strong>H</strong></td><td>PV de réception du ferraillage</td></tr>
+          <tr><td>4</td><td>Coffrage</td><td>Aplomb, dimensions et stabilité conformes aux plans et à la méthode</td><td>P</td><td>W</td><td>Fiche de contrôle coffrage</td></tr>
+          <tr><td>5</td><td>Réception du béton livré</td><td>Classe et caractéristiques conformes à la commande</td><td>P</td><td>R</td><td>Bon de livraison</td></tr>
+          <tr><td>6</td><td>Essais sur béton frais et prélèvements</td><td>Selon la spécification du projet</td><td>P</td><td>W</td><td>Fiche d'essai, bordereau de prélèvement</td></tr>
+          <tr><td>7</td><td>Décoffrage et état de surface</td><td>Aspect et tolérances selon la spécification</td><td>P</td><td>W</td><td>Fiche de contrôle, photos</td></tr>
+          <tr><td>8</td><td>Résultats des essais en laboratoire</td><td>Résistance conforme à la classe prescrite</td><td>P</td><td>R</td><td>Rapport du laboratoire</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>On remarque que le seul point d'arrêt du maître d'œuvre se situe à l'étape 3 : une fois le béton coulé, le ferraillage n'est plus vérifiable. Les autres contrôles sont des points de témoin ou des revues documentaires, ce qui laisse le chantier avancer tout en gardant une trace de chaque vérification.</p>
+
+      <h2 id="criteres">Écrire de bons critères d'acceptation</h2>
+      <p>La colonne la plus souvent mal remplie est celle des critères. « Conforme » ou « bon état » ne sont pas des critères : ce sont des conclusions. Un bon critère d'acceptation est :</p>
+      <ul>
+        <li><strong>vérifiable</strong> : deux contrôleurs différents arrivent au même résultat ;</li>
+        <li><strong>sourcé</strong> : il renvoie au plan, à la spécification ou à la norme qui le fixe, avec son indice ou son édition ;</li>
+        <li><strong>complet</strong> : il précise l'unité et la tolérance lorsque la caractéristique est mesurable ;</li>
+        <li><strong>applicable</strong> : il correspond aux exigences réellement retenues pour ce projet, et non à une liste générique.</li>
+      </ul>
+      <p>Lorsque la valeur n'est pas encore connue, la bonne pratique est de l'écrire clairement (« à définir selon la spécification du lot X ») plutôt que de reprendre une valeur d'un autre projet. Une valeur recopiée sans vérification est plus dangereuse qu'une case vide signalée.</p>
+
+      <h2 id="preuve">De l'ITP au PV : la chaîne de preuve</h2>
+      <p>Un ITP bien construit permet de remonter, à partir de n'importe quel PV, jusqu'à l'exigence d'origine :</p>
+      <p><strong>Exigence</strong> (plan, spécification, norme et édition) → <strong>ligne d'ITP</strong> → <strong>inspection</strong> réalisée → <strong>preuve</strong> (mesure, photo, rapport) → <strong>PV</strong> signé → et, si le résultat n'est pas acceptable, <strong>non-conformité</strong> avec son traitement et son recontrôle.</p>
+      <p>C'est cette chaîne qu'un auditeur, un client ou un expert vérifiera en cas de litige. Elle suppose que chaque PV porte la référence de la ligne d'ITP concernée et que les documents de preuve soient classés de manière à être retrouvés rapidement. Sur les projets importants, un registre ou une plateforme qui relie automatiquement ces éléments fait gagner un temps considérable.</p>
+
+      <h2 id="erreurs">Les erreurs fréquentes</h2>
+      <div class="box box-warn"><strong>À éviter</strong>
+        <ul>
+          <li>Copier l'ITP d'un autre projet sans vérifier les références et les critères.</li>
+          <li>Écrire « conforme » ou « selon normes » dans la colonne des critères.</li>
+          <li>Multiplier les points d'arrêt jusqu'à bloquer le chantier.</li>
+          <li>Ne pas fixer les délais de notification des points H et W.</li>
+          <li>Utiliser sur chantier une version non approuvée de l'ITP.</li>
+          <li>Signer des PV qui ne renvoient à aucune ligne d'ITP.</li>
+        </ul>
+      </div>
+
+      <h2 id="checklist">Checklist avant diffusion</h2>
+      <ul class="checklist">
+        <li>Chaque étape de réalisation importante a au moins une ligne de contrôle.</li>
+        <li>Chaque ligne renvoie à un document de référence avec son indice ou son édition.</li>
+        <li>Chaque critère est vérifiable, sourcé et précise l'unité si nécessaire.</li>
+        <li>Les points H sont limités aux étapes irréversibles ou critiques.</li>
+        <li>La légende des points et les délais de notification sont écrits.</li>
+        <li>Chaque ligne indique le document de preuve attendu.</li>
+        <li>L'ITP est approuvé par les parties prévues au marché.</li>
+        <li>La dernière révision est diffusée aux équipes de chantier.</li>
+      </ul>
+      <p>Un ITP réussi se reconnaît à ce que le chef de chantier l'ouvre spontanément avant chaque étape, pour savoir qui prévenir et quoi préparer.</p>
+
+      <div class="sources"><strong>Références citées</strong>
+        <ul>
+          <li>ISO 10005 — Management de la qualité — Lignes directrices pour les plans qualité.</li>
+          <li>ISO 9001 — Systèmes de management de la qualité — Exigences.</li>
+          <li>Documents du marché : plans d'exécution, spécifications techniques et normes applicables au projet.</li>
+        </ul>
+        <p style="margin-top:.6rem">Les valeurs de critères d'acceptation dépendent de chaque projet et des normes retenues dans son marché. Cet article présente une méthode ; il ne remplace ni les documents du projet, ni le texte des normes.</p>
+      </div>
+    </div>
+
+    <div class="author">
+      <img src="../../assets/brand/abdelghani-bouhouche.jpg" alt="Abdelghani Bouhouche">
+      <div><strong>Abdelghani Bouhouche</strong><p>Ingénieur civil et PMP, fondateur de Civilina. Expérience en management de projet, qualité, QHSE et coordination opérationnelle, en Algérie et à l'international.</p></div>
+    </div>
+
+    <div class="art-cta">
+      <h3>Des ITP prêts pour vos ouvrages ?</h3>
+      <p>CIVILINA Engineering prépare avec vous vos ITP, vos modèles de PV et le circuit de traitement des non-conformités, dans le cadre de votre plan qualité.</p>
+      <a href="../../engineering/" class="btn">Découvrir CIVILINA Engineering →</a>
+    </div>
+  </div>
+</article>
+</main>
+
+<footer>
+  <div class="shell">
+    <div class="foot">
+      <div>
+        <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+        <p style="margin-top:.8rem;max-width:34ch">Engineering, management et digitalisation pour les projets d'ingénierie.</p>
+      </div>
+      <div><h5>Axes</h5><ul><li><a href="../../engineering/">CIVILINA Engineering</a></li><li><a href="../../entreprise/">CIVILINA Entreprise</a></li><li><a href="../../digital/">CIVILINA Digital</a></li><li><a href="../../ia/">CIVILINA IA</a></li></ul></div>
+      <div><h5>Journal</h5><ul><li><a href="../iso-10006-projets-epc-systeme-pilotable/">ISO 10006 et projets EPC</a></li><li><a href="../rediger-plan-assurance-qualite-paq-iso-10005/">Rédiger un PAQ selon l'ISO 10005</a></li><li><a href="../">Tous les articles</a></li></ul></div>
+      <div><h5>Contact</h5><ul><li><a href="../../#contact">Demander un diagnostic</a></li><li><a href="#">LinkedIn</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Civilina</span><span>Mentions légales · Confidentialité · Cookies · Conditions</span></div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Journal Civilina — Guides pratiques en gestion de projet, qualité, QA/QC et QHSE</title>
+<meta name="description" content="Guides pratiques et analyses terrain de Civilina : management de projet ISO 10006, qualité ISO 9001, QA/QC, ITP, QHSE, tableaux de bord et digitalisation des projets d'ingénierie.">
+<!-- MAQUETTE V2 — non publiée. Ne pas déployer sans validation. -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="../assets/brand/civilina-mark-2026.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+
+<header>
+  <div class="shell nav">
+    <a href="../" class="brand"><img src="../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+    <nav class="menu" id="menu">
+      <a href="../engineering/"><span class="dot" style="background:var(--eng)"></span>Engineering</a>
+      <a href="../entreprise/"><span class="dot" style="background:var(--ent)"></span>Entreprise</a>
+      <a href="../digital/"><span class="dot" style="background:var(--dig)"></span>Digital</a>
+      <a href="../ia/"><span class="dot" style="background:var(--ia)"></span>CIVILINA IA</a>
+      <a href="../journal/" class="active">Journal</a>
+      <a href="../#apropos">À propos</a>
+    </nav>
+    <a href="../#contact" class="btn btn-primary">Parler de votre projet</a>
+    <button class="burger" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<main>
+<section class="j-hero">
+  <div class="shell">
+    <p class="crumbs"><a href="../">Accueil</a> › Journal</p>
+    <p class="eyebrow">Journal Civilina</p>
+    <h1 style="font-size:clamp(2rem,4vw,3rem);margin:.6rem 0 1rem">Guides pratiques pour piloter vos projets, votre qualité et vos chantiers.</h1>
+    <p class="lead">Des articles écrits à partir de l'expérience terrain : méthodes, modèles et points de vigilance, en gestion de projet, qualité, QA/QC, QHSE et digitalisation.</p>
+    <div class="j-filters" id="filters">
+      <a href="#" class="on" data-f="all">Tous les articles</a>
+      <a href="#" data-f="eng">Engineering · Projet et QA/QC</a>
+      <a href="#" data-f="ent">Entreprise · Qualité et QHSE</a>
+      <a href="#" data-f="dig">Digital · Outils et pilotage</a>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:24px">
+  <div class="shell">
+    <div class="j-list" id="list">
+      <a class="j-card" data-axis="dig" href="passer-excel-plateforme-gestion/">
+        <img src="../assets/journal/excel-plateforme.svg" alt="" loading="lazy">
+        <div class="in">
+          <span class="pill pill-dig">Digital · Outils et pilotage</span>
+          <h3>Passer d'Excel à une plateforme de gestion : quand et comment le faire</h3>
+          <p>Les signaux qui ne trompent pas, les trois options possibles et une méthode par étapes pour réussir la bascule.</p>
+          <span class="meta">Abdelghani Bouhouche · 14 novembre 2026 · 8 min</span>
+        </div>
+      </a>
+      <a class="j-card" data-axis="ent" href="iso-ou-pmi-structurer-gestion-entreprise/">
+        <img src="../assets/journal/iso-ou-pmi.svg" alt="" loading="lazy">
+        <div class="in">
+          <span class="pill pill-ent">Entreprise · ISO · PMI</span>
+          <h3>ISO ou PMI : quelle base pour structurer la gestion de son entreprise ?</h3>
+          <p>Ce que chaque approche apporte, la différence entre certifier une organisation et une personne, et comment les combiner.</p>
+          <span class="meta">Abdelghani Bouhouche · 14 novembre 2026 · 8 min</span>
+        </div>
+      </a>
+      <a class="j-card" data-axis="eng" href="rediger-plan-assurance-qualite-paq-iso-10005/">
+        <img src="../assets/journal/rediger-paq-iso-10005.svg" alt="" loading="lazy">
+        <div class="in">
+          <span class="pill pill-eng">Engineering · ISO 10005</span>
+          <h3>Rédiger un Plan d'Assurance Qualité (PAQ) selon l'ISO 10005</h3>
+          <p>Définition, contenu type, étapes de rédaction et spécificités des bureaux d'études, avec une checklist avant envoi.</p>
+          <span class="meta">Abdelghani Bouhouche · 14 novembre 2026 · 8 min</span>
+        </div>
+      </a>
+      <a class="j-card" data-axis="eng" href="construire-itp-points-arret-temoin-revue/">
+        <img src="../assets/journal/construire-itp.svg" alt="" loading="lazy">
+        <div class="in">
+          <span class="pill pill-eng">Engineering · QA/QC</span>
+          <h3>Construire un ITP : points d'arrêt, de témoin et de revue</h3>
+          <p>Structure, types de points, critères d'acceptation et chaîne de preuve, avec un exemple commenté sur un voile en béton armé.</p>
+          <span class="meta">Abdelghani Bouhouche · 14 novembre 2026 · 8 min</span>
+        </div>
+      </a>
+      <a class="j-card" data-axis="eng" href="iso-10006-projets-epc-systeme-pilotable/">
+        <img src="../assets/journal/iso-10006-projets-epc.svg" alt="" loading="lazy">
+        <div class="in">
+          <span class="pill pill-eng">Engineering · ISO 10006</span>
+          <h3>ISO 10006 et projets EPC : construire un système de management de projet pilotable</h3>
+          <p>Organisation, documentation, jalons, responsabilités et indicateurs : ce que l'ISO 10006 apporte concrètement à un projet EPC.</p>
+          <span class="meta">Abdelghani Bouhouche · Mis à jour le 14 novembre 2026 · 7 min</span>
+        </div>
+      </a>
+      <a class="j-card" data-axis="ent" href="iso-9001-systeme-qualite-utile/">
+        <img src="../assets/journal/iso-9001-qualite-utile.svg" alt="" loading="lazy">
+        <div class="in">
+          <span class="pill pill-ent">Entreprise · ISO 9001</span>
+          <h3>ISO 9001 : structurer un système qualité utile, pas seulement documentaire</h3>
+          <p>Processus, preuves, indicateurs et audits : comment faire de l'ISO 9001 un outil de pilotage plutôt qu'une pile de documents.</p>
+          <span class="meta">Abdelghani Bouhouche · Mis à jour le 14 novembre 2026 · 7 min</span>
+        </div>
+      </a>
+      <a class="j-card" data-axis="ent" href="iso-22000-haccp-premiere-lecture/">
+        <img src="../assets/journal/iso-22000-haccp.svg" alt="" loading="lazy">
+        <div class="in">
+          <span class="pill pill-ent">Entreprise · QHSE · ISO 22000</span>
+          <h3>ISO 22000 et HACCP : première lecture d'un système de sécurité des aliments</h3>
+          <p>Dangers, programmes prérequis, points critiques et système de management : les bases pour comprendre la démarche.</p>
+          <span class="meta">Abdelghani Bouhouche · Mis à jour le 14 novembre 2026 · 7 min</span>
+        </div>
+      </a>
+    </div>
+    <p id="empty" class="lead" style="display:none;margin-top:12px">Les premiers articles de cette rubrique sont en cours de rédaction.</p>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="shell">
+    <div class="section-head">
+      <p class="eyebrow">Ligne éditoriale</p>
+      <h2>Trois rubriques, alignées sur nos trois axes.</h2>
+      <p class="lead">Chaque article part d'une situation réelle de projet ou d'entreprise et se termine par des éléments directement utilisables : checklist, modèle ou points de vigilance.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar"><span class="pill pill-eng">Engineering</span><h3>Projet et QA/QC</h3><p>Management de projet selon l'ISO 10006, plans qualité, ITP, inspections, PV, non-conformités, réception et DOE.</p></div>
+      <div class="pillar"><span class="pill pill-ent">Entreprise</span><h3>Qualité, QHSE et pilotage</h3><p>ISO 9001, bonnes pratiques PMI, processus, RACI, indicateurs, tableaux de bord, sécurité des aliments et QHSE.</p></div>
+      <div class="pillar"><span class="pill pill-dig">Digital</span><h3>Outils et digitalisation</h3><p>Passer d'Excel à une plateforme, suivi de chantier, traçabilité des décisions et bon usage de l'IA en ingénierie.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="shell">
+    <div class="foot">
+      <div>
+        <a href="../" class="brand"><img src="../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+        <p style="margin-top:.8rem;max-width:34ch">Engineering, management et digitalisation pour les projets d'ingénierie.</p>
+      </div>
+      <div><h5>Axes</h5><ul><li><a href="../engineering/">CIVILINA Engineering</a></li><li><a href="../entreprise/">CIVILINA Entreprise</a></li><li><a href="../digital/">CIVILINA Digital</a></li><li><a href="../ia/">CIVILINA IA</a></li></ul></div>
+      <div><h5>Ressources</h5><ul><li><a href="../journal/">Journal</a></li><li><a href="https://monprofil.civilina.com/">Mon Profil</a></li><li><a href="../#apropos">À propos</a></li></ul></div>
+      <div><h5>Contact</h5><ul><li><a href="../#contact">Demander un diagnostic</a></li><li><a href="#">LinkedIn</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Civilina</span><span>Mentions légales · Confidentialité · Cookies · Conditions</span></div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('filters').addEventListener('click', function (e) {
+  var a = e.target.closest('a'); if (!a) return; e.preventDefault();
+  this.querySelectorAll('a').forEach(function (x) { x.classList.toggle('on', x === a); });
+  var f = a.dataset.f, shown = 0;
+  document.querySelectorAll('#list .j-card').forEach(function (c) {
+    var ok = f === 'all' || c.dataset.axis === f; c.style.display = ok ? '' : 'none'; if (ok) shown++;
+  });
+  document.getElementById('empty').style.display = shown ? 'none' : 'block';
+});
+</script>
+</body>
+</html>

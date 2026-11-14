@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISO 10006 et projets EPC : construire un système de management de projet pilotable | Civilina</title>
+<meta name="description" content="Ce que l'ISO 10006 apporte concrètement à un projet EPC : organisation, interfaces études-achats-construction, maîtrise documentaire, jalons, risques et indicateurs. Guide pratique et checklist.">
+<!-- MAQUETTE V2 — non publiée. Ne pas déployer sans validation. -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://civilina.com/journal/iso-10006-projets-epc-systeme-pilotable/">
+<link rel="icon" type="image/png" href="../../assets/brand/civilina-mark-2026.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"ISO 10006 et projets EPC : construire un système de management de projet pilotable","inLanguage":"fr","datePublished":"2026-06-02","dateModified":"2026-11-14","author":{"@type":"Person","name":"Abdelghani Bouhouche","jobTitle":"Ingénieur civil, PMP"},"publisher":{"@type":"Organization","name":"Civilina","url":"https://civilina.com/"},"mainEntityOfPage":"https://civilina.com/journal/iso-10006-projets-epc-systeme-pilotable/"}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="shell nav">
+    <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+    <nav class="menu" id="menu">
+      <a href="../../engineering/"><span class="dot" style="background:var(--eng)"></span>Engineering</a>
+      <a href="../../entreprise/"><span class="dot" style="background:var(--ent)"></span>Entreprise</a>
+      <a href="../../digital/"><span class="dot" style="background:var(--dig)"></span>Digital</a>
+      <a href="../../ia/"><span class="dot" style="background:var(--ia)"></span>CIVILINA IA</a>
+      <a href="../" class="active">Journal</a>
+      <a href="../../#apropos">À propos</a>
+    </nav>
+    <a href="../../engineering/#contact" class="btn btn-primary">Parler de votre projet</a>
+    <button class="burger" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<main>
+<article>
+  <div class="art-wrap art-head">
+    <p class="crumbs"><a href="../../">Accueil</a> › <a href="../">Journal</a> › ISO 10006 et projets EPC</p>
+    <span class="pill pill-eng">Engineering · ISO 10006</span>
+    <h1>ISO 10006 et projets EPC : construire un système de management de projet pilotable</h1>
+    <div class="art-meta"><span>Par <b>Abdelghani Bouhouche</b>, ingénieur civil, PMP</span><span>Publié le 2 juin 2026 · mis à jour le 14 novembre 2026</span><span>Lecture : 7 min</span></div>
+  </div>
+  <figure class="art-cover"><img src="../../assets/journal/iso-10006-projets-epc.svg" alt="ISO 10006 et projets EPC : un système pilotable"></figure>
+
+  <div class="art-wrap">
+    <p class="chapo">Un projet EPC réunit des études, des achats, de la construction, des sous-traitants, des contrats et des milliers de documents. Sa réussite dépend autant de l'organisation que de la technique. L'ISO 10006 propose une lecture qualité du management de projet : voici comment la transformer en système concret, lisible et pilotable.</p>
+
+    <nav class="toc" aria-label="Sommaire">
+      <strong>Sommaire</strong>
+      <ol>
+        <li><a href="#pourquoi">Pourquoi les projets EPC sont difficiles à piloter</a></li>
+        <li><a href="#iso10006">Ce qu'est (et n'est pas) l'ISO 10006</a></li>
+        <li><a href="#briques">Les six briques d'un système pilotable</a></li>
+        <li><a href="#interfaces">Maîtriser les interfaces études, achats et construction</a></li>
+        <li><a href="#pmi">ISO 10006 et culture PMI : deux approches complémentaires</a></li>
+        <li><a href="#erreurs">Les erreurs fréquentes</a></li>
+        <li><a href="#checklist">Checklist de démarrage</a></li>
+      </ol>
+    </nav>
+
+    <div class="prose">
+      <h2 id="pourquoi">Pourquoi les projets EPC sont difficiles à piloter</h2>
+      <p>Dans un contrat EPC (<em>Engineering, Procurement, Construction</em>), une même organisation porte la conception, l'approvisionnement et la réalisation. Cette intégration est un avantage pour le client, qui n'a qu'un interlocuteur. Pour l'entreprise, elle concentre les difficultés : chaque retard d'étude décale une commande, chaque commande tardive décale un chantier, et chaque modification sur site remonte vers les études.</p>
+      <p>Les causes de dérive observées sur le terrain sont rarement techniques. Elles tiennent surtout à l'organisation :</p>
+      <ul>
+        <li>des responsabilités mal définies entre les disciplines et entre le siège et le site ;</li>
+        <li>des documents dont on ne sait plus quelle révision est applicable ;</li>
+        <li>des décisions prises en réunion mais jamais suivies ;</li>
+        <li>des risques connus de tous mais inscrits nulle part ;</li>
+        <li>un planning mis à jour pour le client, mais pas utilisé pour piloter.</li>
+      </ul>
+      <p>Autrement dit, l'expertise est présente, mais le système qui permettrait de la coordonner ne l'est pas. C'est précisément le terrain de l'ISO 10006.</p>
+
+      <h2 id="iso10006">Ce qu'est (et n'est pas) l'ISO 10006</h2>
+      <p>L'ISO 10006 donne des <strong>lignes directrices pour le management de la qualité dans les projets</strong>. Elle reprend la logique des systèmes de management de la qualité de la famille ISO 9000 et l'applique à l'environnement particulier du projet : une organisation temporaire, des objectifs uniques, des contraintes de délai et de coût.</p>
+      <p>Trois points sont importants pour bien l'utiliser :</p>
+      <ul>
+        <li><strong>Ce n'est pas une norme certifiable.</strong> Contrairement à l'ISO 9001, elle ne contient pas d'exigences auditées par un organisme certificateur. C'est un guide de bonnes pratiques.</li>
+        <li><strong>Ce n'est pas un manuel de gestion de projet.</strong> Elle ne décrit pas les techniques de planification ou de calcul des coûts ; elle indique comment la qualité doit être intégrée dans les processus du projet.</li>
+        <li><strong>Elle s'adapte à la taille du projet.</strong> Un petit projet de bâtiment et un grand complexe industriel n'ont pas besoin du même niveau de formalisme.</li>
+      </ul>
+      <p>Son apport principal est de rappeler qu'un projet doit avoir des processus explicites : stratégie et pilotage, gestion des interdépendances, périmètre, délais, coûts, ressources, personnel, communication, risques et achats. Chacun de ces processus doit être organisé, confié à un responsable, revu et amélioré.</p>
+      <div class="box box-key"><strong>À retenir</strong>L'ISO 10006 ne demande pas de produire plus de documents. Elle demande que chaque processus du projet soit défini, attribué, suivi et revu, avec des preuves.</div>
+
+      <h2 id="briques">Les six briques d'un système pilotable</h2>
+      <p>Un système de management de projet pilotable n'est pas une collection de fichiers. C'est une architecture de travail, que l'on peut résumer en six briques.</p>
+
+      <h3>1. Une organisation projet lisible</h3>
+      <p>L'organigramme projet doit montrer les rôles réels : directeur de projet, responsables des études, des achats, de la construction, de la qualité et du HSE, contrôle de projet, et leurs relais sur site. Il est complété par une <strong>matrice des responsabilités (RACI)</strong>, qui précise pour chaque activité clé qui réalise, qui approuve, qui est consulté et qui est informé.</p>
+
+      <h3>2. Une maîtrise documentaire stricte</h3>
+      <p>Sur un projet EPC, le document est la monnaie d'échange : plans, notes de calcul, spécifications, fiches techniques, procédures. Il faut une règle commune de codification, un circuit de vérification et d'approbation, une gestion des indices de révision et un registre des transmissions. La question « quelle révision est applicable sur site aujourd'hui ? » doit avoir une réponse immédiate.</p>
+
+      <h3>3. Un planning vivant et des jalons décisionnels</h3>
+      <p>Le planning de référence (<em>baseline</em>) est figé une fois approuvé ; le planning actualisé est comparé à cette référence à chaque période. Les <strong>jalons</strong> ne sont pas seulement des dates : ce sont des points de décision, associés à des livrables et à des critères de passage (par exemple, « études de génie civil approuvées » avant « lancement des commandes d'acier »).</p>
+
+      <h3>4. Une gestion des risques active</h3>
+      <p>Le registre des risques recense chaque risque, sa cause, son effet sur le délai, le coût ou la qualité, la réponse retenue et son responsable. Il est revu à chaque réunion de pilotage, pas seulement au démarrage. Un risque sans responsable ni échéance n'est pas géré.</p>
+
+      <h3>5. Un plan qualité du projet</h3>
+      <p>Le plan qualité (ou PAQ) décrit comment la qualité sera assurée sur ce projet précis : organisation, maîtrise des documents, vérification des études, contrôle des fournisseurs, <a href="../construire-itp-points-arret-temoin-revue/" style="color:var(--blue);text-decoration:underline">plans d'inspection et d'essais</a>, traitement des non-conformités, audits. L'ISO 10005 fournit des lignes directrices pour <a href="../rediger-plan-assurance-qualite-paq-iso-10005/" style="color:var(--blue);text-decoration:underline">le rédiger</a> ; l'ISO 10006 en fait une pièce centrale du système.</p>
+
+      <h3>6. Des indicateurs et des rituels de pilotage</h3>
+      <p>Quelques indicateurs suffisent, s'ils sont fiables : avancement physique comparé au prévu, écart de coût, livrables d'études approuvés, commandes critiques en retard, non-conformités ouvertes, actions en retard. Ils alimentent des rituels réguliers : réunion hebdomadaire de coordination, revue mensuelle de projet, revues aux jalons.</p>
+
+      <div class="box box-ex"><strong>Exemple type</strong>Sur un projet de station industrielle, un tableau de bord mensuel tient sur une page : avancement par discipline, dix risques principaux, commandes critiques, non-conformités ouvertes et décisions attendues du client. La direction lit la situation en cinq minutes et consacre la réunion aux décisions plutôt qu'à la collecte d'informations.</div>
+
+      <h2 id="interfaces">Maîtriser les interfaces études, achats et construction</h2>
+      <p>Les pertes de temps d'un projet EPC se logent presque toujours aux interfaces. Trois d'entre elles méritent une attention particulière.</p>
+      <table>
+        <thead><tr><th>Interface</th><th>Risque typique</th><th>Pratique utile</th></tr></thead>
+        <tbody>
+          <tr><td>Études → Achats</td><td>Commande lancée sur une spécification non approuvée</td><td>Statut documentaire obligatoire avant toute demande d'achat</td></tr>
+          <tr><td>Achats → Construction</td><td>Matériel livré sans certificats ni contrôle de réception</td><td>Plan d'inspection fournisseur et contrôle à réception tracé</td></tr>
+          <tr><td>Construction → Études</td><td>Modification sur site non reportée dans les plans</td><td>Demande de modification formelle et mise à jour des plans d'exécution</td></tr>
+        </tbody>
+      </table>
+      <p>L'ISO 10006 parle ici de <strong>gestion des interdépendances</strong> : identifier les liens entre processus et désigner qui les coordonne. Concrètement, cela passe par une liste des interfaces, un responsable pour chacune et un point régulier en réunion de coordination.</p>
+
+      <h2 id="pmi">ISO 10006 et culture PMI : deux approches complémentaires</h2>
+      <p>Pour une comparaison détaillée, voir aussi notre guide <a href="../iso-ou-pmi-structurer-gestion-entreprise/" style="color:var(--blue);text-decoration:underline">ISO ou PMI : quelle base pour structurer la gestion de son entreprise ?</a></p>
+      <p>Les professionnels formés aux bonnes pratiques du PMI (<em>Project Management Institute</em>) retrouvent dans l'ISO 10006 des notions familières : intégration, périmètre, délais, coûts, ressources, communication, risques, approvisionnements et parties prenantes. Les deux approches ne s'opposent pas.</p>
+      <ul>
+        <li>Les pratiques du PMI apportent les <strong>techniques de management de projet</strong> : découpage du travail, planification, maîtrise des coûts, gestion des risques.</li>
+        <li>L'ISO 10006 apporte la <strong>logique de système qualité</strong> : processus définis, responsabilités, preuves, revues et amélioration continue.</li>
+      </ul>
+      <p>Combinées, elles donnent un projet à la fois bien planifié et bien maîtrisé. C'est l'approche que nous retenons dans nos guides de gestion de projet pour les bureaux d'études et les entreprises.</p>
+
+      <h2 id="erreurs">Les erreurs fréquentes</h2>
+      <div class="box box-warn"><strong>À éviter</strong>
+        <ul>
+          <li>Rédiger un plan qualité pour le client, puis ne jamais l'utiliser sur le projet.</li>
+          <li>Créer des procédures génériques copiées d'un autre projet, sans les adapter.</li>
+          <li>Confondre planning de communication et planning de pilotage.</li>
+          <li>Suivre trente indicateurs dont personne ne vérifie la source.</li>
+          <li>Tenir un registre des risques au démarrage, puis l'oublier.</li>
+          <li>Laisser les décisions de réunion sans responsable ni échéance.</li>
+        </ul>
+      </div>
+
+      <h2 id="checklist">Checklist de démarrage</h2>
+      <p>Pour poser les bases d'un système pilotable dès le lancement d'un projet :</p>
+      <ul class="checklist">
+        <li>L'organigramme projet et la matrice RACI sont diffusés et compris.</li>
+        <li>Les règles de codification et le circuit d'approbation des documents sont définis.</li>
+        <li>Le planning de référence est approuvé et les jalons décisionnels sont identifiés.</li>
+        <li>Le registre des risques est ouvert, avec un responsable par risque.</li>
+        <li>Le plan qualité du projet est rédigé et présenté aux équipes.</li>
+        <li>La liste des interfaces et leurs responsables est établie.</li>
+        <li>Les indicateurs sont choisis, avec leur formule et leur source.</li>
+        <li>Les réunions de pilotage et leur fréquence sont planifiées.</li>
+      </ul>
+      <p>Cette liste ne garantit pas la réussite d'un projet, mais elle évite la plupart des dérives d'organisation. Le reste est une affaire de discipline : faire vivre le système, semaine après semaine.</p>
+
+      <div class="sources"><strong>Références citées</strong>
+        <ul>
+          <li>ISO 10006 — Management de la qualité — Lignes directrices pour le management de la qualité dans les projets.</li>
+          <li>ISO 10005 — Management de la qualité — Lignes directrices pour les plans qualité.</li>
+          <li>Bonnes pratiques du Project Management Institute (PMI).</li>
+        </ul>
+        <p style="margin-top:.6rem">Consultez l'édition en vigueur des normes auprès de leur éditeur officiel. Cet article présente une lecture pratique ; il ne reproduit pas le texte des normes.</p>
+      </div>
+    </div>
+
+    <div class="author">
+      <img src="../../assets/brand/abdelghani-bouhouche.jpg" alt="Abdelghani Bouhouche">
+      <div><strong>Abdelghani Bouhouche</strong><p>Ingénieur civil et PMP, fondateur de Civilina. Expérience en management de projet, qualité, QHSE et coordination opérationnelle, en Algérie et à l'international.</p></div>
+    </div>
+
+    <div class="art-cta">
+      <h3>Mettre en place ce système sur vos projets ?</h3>
+      <p>CIVILINA Engineering construit avec vous un guide de gestion de projet inspiré de l'ISO 10006 et le plan qualité de votre projet.</p>
+      <a href="../../engineering/" class="btn">Découvrir CIVILINA Engineering →</a>
+    </div>
+  </div>
+</article>
+</main>
+
+<footer>
+  <div class="shell">
+    <div class="foot">
+      <div>
+        <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+        <p style="margin-top:.8rem;max-width:34ch">Engineering, management et digitalisation pour les projets d'ingénierie.</p>
+      </div>
+      <div><h5>Axes</h5><ul><li><a href="../../engineering/">CIVILINA Engineering</a></li><li><a href="../../entreprise/">CIVILINA Entreprise</a></li><li><a href="../../digital/">CIVILINA Digital</a></li><li><a href="../../ia/">CIVILINA IA</a></li></ul></div>
+      <div><h5>Journal</h5><ul><li><a href="../iso-9001-systeme-qualite-utile/">ISO 9001 : un système qualité utile</a></li><li><a href="../construire-itp-points-arret-temoin-revue/">Construire un ITP</a></li><li><a href="../">Tous les articles</a></li></ul></div>
+      <div><h5>Contact</h5><ul><li><a href="../../#contact">Demander un diagnostic</a></li><li><a href="#">LinkedIn</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Civilina</span><span>Mentions légales · Confidentialité · Cookies · Conditions</span></div>
+  </div>
+</footer>
+</body>
+</html>
