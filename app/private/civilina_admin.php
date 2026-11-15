@@ -68,7 +68,7 @@ function civilina_admin_start(string $title, string $view, array $user): void
     $first = (string) ($user['first_name'] ?? $user['name'] ?? '');
     ?>
 <!doctype html>
-<html lang="fr">
+<html lang="fr"<?= civilina_theme_attr() ?>>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -106,6 +106,7 @@ function civilina_admin_start(string $title, string $view, array $user): void
     <header class="bo-top">
       <h1><?= h($title) ?></h1>
       <div class="bo-user">
+        <?= civilina_theme_switch() ?>
         <span><?= h($first) ?> · <b><?= h(civilina_user_label($user)) ?></b></span>
         <a class="bo-btn bo-btn-ghost" href="/logout/">Déconnexion</a>
       </div>

@@ -14,8 +14,124 @@ function civilina_private_dir(): string
 require_once __DIR__ . '/civilina_db.php';
 require_once __DIR__ . '/civilina_journal.php';
 
+/*
+ * Day/night mode. No cookie: the device preference applies (CSS
+ * prefers-color-scheme). The switch is a plain link (?theme=light|dark) that
+ * stores the choice for a year in the civilina_theme cookie and reloads the
+ * page; no JavaScript, so it also works under the back-office CSP.
+ */
+const CIVILINA_THEME_COOKIE = 'civilina_theme';
+
+function civilina_theme(): string
+{
+    $theme = (string) ($_COOKIE[CIVILINA_THEME_COOKIE] ?? '');
+    return in_array($theme, ['light', 'dark'], true) ? $theme : '';
+}
+
+function civilina_theme_url(?string $theme): string
+{
+    $uri = (string) ($_SERVER['REQUEST_URI'] ?? '/');
+    $path = (string) (parse_url($uri, PHP_URL_PATH) ?: '/');
+    parse_str((string) (parse_url($uri, PHP_URL_QUERY) ?? ''), $query);
+    unset($query['theme']);
+    if ($theme !== null) {
+        $query['theme'] = $theme;
+    }
+    return $path . ($query ? '?' . http_build_query($query) : '');
+}
+
+function civilina_apply_theme_request(): void
+{
+    $theme = $_GET['theme'] ?? null;
+    if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET' || !is_string($theme) || !in_array($theme, ['light', 'dark'], true)) {
+        return;
+    }
+    setcookie(CIVILINA_THEME_COOKIE, $theme, [
+        'expires' => time() + 365 * 86400,
+        'path' => '/',
+        'secure' => true,
+        'httponly' => false,
+        'samesite' => 'Lax',
+    ]);
+    header('Location: ' . civilina_theme_url(null), true, 303);
+    exit;
+}
+
+function civilina_theme_attr(): string
+{
+    $theme = civilina_theme();
+    return $theme !== '' ? ' data-theme="' . $theme . '"' : '';
+}
+
+/** Both links are rendered; CSS shows the one that leads to the other mode. */
+function civilina_theme_switch(): string
+{
+    return '<span class="theme-switch">'
+        . '<a class="ts-to-dark" href="' . h(civilina_theme_url('dark')) . '" title="Passer en mode nuit" aria-label="Mode jour actif. Passer en mode nuit"><span class="ts-track"><span class="ts-knob">☀</span></span><span class="ts-label">Jour</span></a>'
+        . '<a class="ts-to-light" href="' . h(civilina_theme_url('light')) . '" title="Passer en mode jour" aria-label="Mode nuit actif. Passer en mode jour"><span class="ts-track"><span class="ts-knob">☾</span></span><span class="ts-label">Nuit</span></a>'
+        . '</span>';
+}
+
+/**
+ * Day mode of the member pages (login, register, member area, MBTI), which are
+ * dark by default. Each rule is emitted twice: for an explicit choice
+ * (data-theme="light") and for a light device preference without a choice.
+ */
+function civilina_member_theme_css(): string
+{
+    $rules = [
+        ':root' => '--line:#dce3eb;--muted:#5d6673;color-scheme:light',
+        'body' => 'background:#f5f7fa;color:#102033',
+        'body::before' => 'background:linear-gradient(120deg,rgba(245,247,250,.95),rgba(232,239,249,.92)),url("/assets/brand/civilina-engineering-plans.jpg") center/cover no-repeat',
+        'body::after' => 'background:linear-gradient(rgba(0,59,140,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(0,59,140,.045) 1px,transparent 1px);background-size:44px 44px,44px 44px',
+        '.site-header' => 'background:rgba(255,255,255,.88);border-bottom-color:#dce3eb',
+        '.nav-links' => 'color:#102033',
+        '.nav-links a:hover' => 'color:#003b8c',
+        '.glass-card, .card, .question-card, .choice-card' => 'background:#fff;border-color:#dce3eb;box-shadow:0 18px 50px rgba(16,32,51,.08)',
+        '.dash-head' => 'background:linear-gradient(120deg,rgba(255,255,255,.95),rgba(232,239,249,.9)),url("/assets/brand/civilina-engineering-plans.jpg") center/cover no-repeat;border-color:#dce3eb;box-shadow:0 22px 60px rgba(16,32,51,.08)',
+        'h1, h2, h3, .card strong' => 'color:#102033',
+        'p' => 'color:#5d6673',
+        'label' => 'color:#102033',
+        'input, select' => 'border-color:#c9d3df',
+        '.eyebrow' => 'color:#0089c4',
+        '.chip' => 'color:#003b8c;background:#e8eff9;border-color:#c9d9f0',
+        '.btn-light' => 'color:#003b8c;background:#e8eff9;border-color:#c9d9f0',
+        '.btn-ghost' => 'color:#102033;background:#fff;border-color:#dce3eb',
+        '.error' => 'color:#8a1c1c;background:#fdecec;border-color:#f3b9b9',
+        '.success' => 'color:#0f5e40;background:#e7f4ee;border-color:#b7dfc9',
+        '.identity-card, .identity-card h1' => 'color:#fff',
+        '.identity-card p' => 'color:#dcebf7',
+        '.site-footer' => 'background:#fff;color:#5d6673;border-top-color:#dce3eb',
+        '.site-footer strong' => 'color:#102033',
+        '.lang-switcher a' => 'color:#003b8c;background:#fff;border-color:#dce3eb',
+        '.progress-box' => 'background:rgba(255,255,255,.95);border-color:#dce3eb',
+        '.progress-track, .score-meter' => 'background:#e3e9f0',
+        '.ts-to-dark' => 'display:inline-flex',
+        '.ts-to-light' => 'display:none',
+    ];
+
+    $emit = static function (string $prefix) use ($rules): string {
+        $css = '';
+        foreach ($rules as $selectors => $declarations) {
+            $parts = array_map(static fn (string $s): string => $s === ':root' ? $prefix : $prefix . ' ' . trim($s), explode(',', $selectors));
+            $css .= implode(',', $parts) . '{' . $declarations . '}';
+        }
+        return $css;
+    };
+
+    return $emit(':root[data-theme="light"]')
+        . '@media (prefers-color-scheme:light){' . $emit(':root:not([data-theme="dark"])') . '}'
+        . '.theme-switch a{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:.8rem;color:inherit}'
+        . '.ts-track{position:relative;display:inline-block;width:44px;height:24px;border-radius:999px;background:#1d2f45;border:1px solid #31475e}'
+        . '.ts-knob{position:absolute;top:2px;left:22px;width:18px;height:18px;border-radius:50%;background:#0b1828;color:#ffd77a;display:grid;place-items:center;font-size:12px;line-height:1}'
+        . '.ts-to-dark .ts-track{background:#dbe5f1;border-color:#c5d3e3}.ts-to-dark .ts-knob{left:2px;background:#fff;color:#c58a00;box-shadow:0 1px 3px rgba(0,0,0,.2)}'
+        . '.ts-to-dark{display:none}.ts-to-light{display:inline-flex}';
+}
+
 function civilina_boot(): void
 {
+    civilina_apply_theme_request();
+
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_set_cookie_params([
             'lifetime' => 0,
@@ -240,7 +356,7 @@ function civilina_page_start(string $title, string $class = 'auth-page', string 
             break;
         }
     }
-    echo '<!doctype html><html lang="' . h($locale) . '" dir="' . h($dir) . '"><head><meta charset="utf-8">';
+    echo '<!doctype html><html lang="' . h($locale) . '" dir="' . h($dir) . '"' . civilina_theme_attr() . '><head><meta charset="utf-8">';
     echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
     echo '<title>' . h($title) . '</title>';
     echo '<meta name="description" content="' . h($description) . '">';
@@ -280,7 +396,7 @@ function civilina_page_start(string $title, string $class = 'auth-page', string 
         .site-footer{padding:34px 0;color:#b9cada;border-top:1px solid var(--line);background:rgba(3,10,20,.72)}.footer-grid{display:flex;justify-content:space-between;gap:20px;align-items:center}.footer-links{display:flex;gap:16px;flex-wrap:wrap;font-weight:850}
         @media(max-width:940px){.nav{align-items:flex-start;flex-direction:column;padding:16px 0}.nav-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:min(100%,390px);gap:8px}.nav-links a{border:1px solid var(--line);border-radius:999px;padding:8px 9px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.auth-grid,.grid-3,.grid-4{grid-template-columns:1fr}.identity-card{min-height:420px}.form-row{grid-template-columns:1fr}.footer-grid{align-items:flex-start;flex-direction:column}}
         @media(max-width:560px){.shell{padding:0 14px}.auth-hero,.dash{padding:36px 0}.glass-card,.dash-head{padding:22px}.actions .btn{width:100%}.identity-card h1,.dash-head h1{font-size:2.4rem}.question-options{grid-template-columns:1fr}}
-    </style></head><body class="' . h($bodyClass) . '">';
+    </style><style>' . civilina_member_theme_css() . '</style></head><body class="' . h($bodyClass) . '">';
     echo '<header class="site-header"><div class="shell nav"><a class="brand" href="/"><span class="brand-mark"><img src="/assets/brand/civilina-logo.png" alt="Logo Civilina"></span><span>CIVILINA</span></a><nav class="nav-links" aria-label="Navigation principale">';
     // Same sections as the public site (V2): the three axes, CIVILINA IA and the Journal.
     echo '<a href="/engineering/">Engineering</a><a href="/gestion-entreprise/">Entreprise</a><a href="/digital/">Digital</a><a href="/ia/">CIVILINA IA</a><a href="/journal/">Journal</a>';
@@ -293,7 +409,7 @@ function civilina_page_start(string $title, string $class = 'auth-page', string 
     } else {
         echo '<a href="/login/">Connexion</a>';
     }
-    echo '</nav></div></header>';
+    echo '</nav>' . civilina_theme_switch() . '</div></header>';
 }
 
 function civilina_page_end(): void
