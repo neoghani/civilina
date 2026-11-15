@@ -7,13 +7,13 @@ date_default_timezone_set('Africa/Algiers');
 
 /*
  * Civilina contact form handler (civilina.com/contact/).
- * 1. Validates the POST, 2. stores the request in a private JSON register
- * (outside public_html), 3. emails a notification to Civilina.
+ * 1. Validates the POST, 2. stores the request in the back-office database
+ * (civilina_private/storage, outside public_html), 3. emails a notification to Civilina.
  * The visitor is redirected to /?contact=ok#contact once the request is stored;
  * an email failure never loses the request (it is logged privately instead).
  */
 
-$privateDir = '/home/feuvwywx/civilina_private';
+$privateDir = dirname(rtrim((string) ($_SERVER['DOCUMENT_ROOT'] ?? '/home/feuvwywx/public_html'), '/')) . '/civilina_private';
 $storageFile = $privateDir . '/contact_requests.json';
 $mailLogFile = $privateDir . '/contact_mail.log';
 
@@ -70,7 +70,7 @@ function civilina_notify(array $request, string $logFile): void
         '',
         '—',
         'Répondez directement à cet e-mail pour écrire au demandeur.',
-        'Toutes les demandes sont conservées dans civilina_private/contact_requests.json.',
+        'Suivi de la demande : https://civilina.com/admin/?view=contacts',
     ];
     $body = implode("\r\n", $lines);
 
@@ -143,15 +143,6 @@ if (!is_dir($privateDir) && !mkdir($privateDir, 0750, true) && !is_dir($privateD
     civilina_error('La demande n’a pas pu être enregistrée. Merci de réessayer plus tard.');
 }
 
-$requests = [];
-if (is_file($storageFile)) {
-    $raw = file_get_contents($storageFile);
-    $decoded = json_decode($raw ?: '[]', true);
-    if (is_array($decoded)) {
-        $requests = array_values($decoded);
-    }
-}
-
 $request = [
     'id' => bin2hex(random_bytes(8)),
     'created_at' => date('c'),
@@ -166,11 +157,30 @@ $request = [
     'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
     'user_agent' => mb_substr((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 500),
 ];
-$requests[] = $request;
+// 1. Back-office database. 2. If it is unavailable, the legacy JSON register,
+// so that a request is never lost.
+$stored = false;
+try {
+    require_once $privateDir . '/civilina_db.php';
+    civilina_contact_insert($request);
+    $stored = true;
+} catch (Throwable $e) {
+    civilina_log_mail($mailLogFile, 'DB-FALLBACK ' . $request['id'] . ' ' . get_class($e));
+}
 
-$encoded = json_encode($requests, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-if ($encoded === false || file_put_contents($storageFile, $encoded, LOCK_EX) === false) {
-    civilina_error('La demande n’a pas pu être enregistrée. Merci de réessayer plus tard.');
+if (!$stored) {
+    $requests = [];
+    if (is_file($storageFile)) {
+        $decoded = json_decode((string) file_get_contents($storageFile) ?: '[]', true);
+        if (is_array($decoded)) {
+            $requests = array_values($decoded);
+        }
+    }
+    $requests[] = $request;
+    $encoded = json_encode($requests, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    if ($encoded === false || file_put_contents($storageFile, $encoded, LOCK_EX) === false) {
+        civilina_error('La demande n’a pas pu être enregistrée. Merci de réessayer plus tard.');
+    }
 }
 
 civilina_notify($request, $mailLogFile);
