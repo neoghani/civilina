@@ -221,3 +221,66 @@ Lien de l'article en commentaire.
 Lien de partage : https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcivilina.com%2Fjournal%2Fdecision-applicabilite-norme-projet%2F
 Date proposée : mardi 22 décembre.
 #Normes #QAQC #GénieCivil #BureauDÉtudes #GestionDeProjet
+
+## Page entreprise : améliorations (analyse du 15/11/2026)
+
+Constat sur la page publique https://www.linkedin.com/company/civilina (652 abonnés) :
+
+| Élément | Aujourd'hui | À faire |
+|---|---|---|
+| Site web | Absent de la section « À propos » | Ajouter https://civilina.com et activer le bouton « Visiter le site » |
+| Slogan | « La plateforme digitale pour mieux piloter les projets, la qualité et la performance. » | Remplacer par le slogan ci-dessous, aligné sur les 3 axes |
+| Présentation | Liste « Expertise Béton, Charpente, SMQ, Agile, Système de Projet » | Remplacer par le texte ci-dessous (3 axes + IA + Journal) |
+| Secteur | Construction | Envisager « Génie civil » (Civil Engineering), plus proche de l'activité |
+| Spécialités | 6 | Passer à la liste ci-dessous |
+| Type | Partenariat | Vérifier que c'est bien la forme juridique réelle |
+| Adresse | Adresse complète affichée | Si c'est un domicile, n'afficher que la ville (Béjaïa) |
+| Publication épinglée | Aucune | Épingler le post de lancement du nouveau site |
+| Rythme | Dernier post il y a 1 mois | 2 posts par semaine selon le calendrier |
+
+### Slogan (120 caractères maximum)
+
+Engineering, gestion ISO et PMI, plateformes digitales : pilotez vos projets et vos chantiers | civilina.com
+
+### Présentation (« À propos »)
+
+Civilina accompagne les bureaux d'études, les entreprises et les startups pour structurer, piloter et digitaliser leurs projets.
+
+Trois axes :
+
+CIVILINA Engineering — pour les bureaux d'études : guide de gestion de projet inspiré de l'ISO 10006, Plans d'Assurance Qualité selon l'ISO 10005, ITP et contrôles tracés, et une base normative pour retrouver la norme, l'édition et la clause applicables (accès pilote).
+
+CIVILINA Entreprise — pour les PME et les directions : une gestion construite sur l'ISO 9001 ou les bonnes pratiques du PMI, des processus et responsabilités clairs, des indicateurs utiles et des tableaux de bord web et Excel.
+
+CIVILINA Digital — pour les startups et les entreprises : des plateformes de gestion sur mesure pour suivre projets et chantiers, documents, photos, réserves et décisions, avec un tableau de bord pour la direction.
+
+CIVILINA IA, l'outil qui assiste les trois axes, prépare des brouillons structurés (ITP, WBS, RACI, registre des risques). Il signale ce qui manque au lieu de l'inventer : l'ingénieur décide.
+
+Le Journal Civilina publie chaque semaine des guides pratiques : ITP, PAQ, non-conformités, PV d'inspection, lecture des normes, ISO 9001, ISO 10006, pilotage de projet.
+
+Fondée par Abdelghani Bouhouche, ingénieur civil et PMP.
+
+civilina.com
+
+### Spécialités
+
+Gestion de projet, ISO 10006, ISO 10005, Plan d'Assurance Qualité, ISO 9001, PMI, QA/QC, ITP, Contrôle qualité, Normes techniques, Génie civil, Charpente métallique, Béton, QHSE, Tableaux de bord, KPI, Digitalisation, Plateformes de gestion, Laravel, Suivi de chantier
+
+### Post de lancement à épingler (lundi 16 novembre, depuis la page)
+
+Le nouveau civilina.com est en ligne.
+
+Civilina s'organise désormais autour de trois axes :
+
+→ CIVILINA Engineering, pour les bureaux d'études : gestion de projet ISO 10006, PAQ ISO 10005, ITP et base normative ;
+→ CIVILINA Entreprise, pour les PME et les directions : une gestion bâtie sur l'ISO ou le PMI, et des tableaux de bord web et Excel ;
+→ CIVILINA Digital, pour les startups et les entreprises : des plateformes de suivi de projets et de chantiers.
+
+Et CIVILINA IA, l'outil qui prépare vos ITP, WBS et matrices RACI, sans jamais inventer une norme ou une tolérance.
+
+Le Journal Civilina publie aussi des guides pratiques : ITP, PAQ, non-conformités, PV d'inspection, lecture des normes. Un nouveau guide chaque semaine, ici même.
+
+Lequel de ces sujets vous concerne le plus aujourd'hui ?
+
+Lien du site en commentaire : https://civilina.com
+#Civilina #GénieCivil #GestionDeProjet #QAQC #Digitalisation
