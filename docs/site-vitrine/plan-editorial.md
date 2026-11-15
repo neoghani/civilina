@@ -36,7 +36,7 @@
 | 9 | Applicable, non applicable, à confirmer : documenter la décision | Engineering | ✅ Écrit et publié le 15/11/2026 |
 | 10 | Gérer les changements d'édition d'une norme sur un projet | Engineering | ✅ Écrit et publié le 15/11/2026 |
 | 11 | Construire une WBS utile | Engineering | ✅ Écrit et publié le 15/11/2026 |
-| 12 | Réception, réserves et levée de réserves | Engineering | À écrire |
+| 12 | Réception, réserves et levée de réserves | Engineering | ✅ Écrit et publié le 16/11/2026 |
 | 13 | Constituer un DOE complet | Engineering | À écrire |
 | 14 | ISO ou PMI : quelle base pour structurer la gestion de son entreprise ? | Entreprise | ✅ Écrit le 14/11/2026 |
 | 15 | La matrice RACI : modèle commenté | Entreprise | À écrire |

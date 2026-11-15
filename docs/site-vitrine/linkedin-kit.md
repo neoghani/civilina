@@ -325,3 +325,20 @@ Lien de partage : https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2
 - **15/11/2026** — Appliqué sur la page (admin LinkedIn) : slogan, présentation (1 293 caractères), site web `https://civilina.com` (case « pas de site web » décochée), 20 spécialités, bouton personnalisé « Consulter le site web » → `https://civilina.com`. Post de lancement publié depuis la page, lien en commentaire (depuis le profil d'Abdelghani), post ajouté à « Notre sélection ».
 - **15/11/2026** — Secteur passé de « Construction » à « Génie civil » (cœur de métier). LinkedIn n'autorise qu'un seul secteur : le multi-secteur est porté par la présentation et les spécialités.
 - Non modifiés (décision du propriétaire) : type d'entreprise, adresse, téléphone, taille.
+
+### 14. Réception, réserves et levée de réserves
+
+« Reprendre les finitions. » Une réserve comme celle-ci peut traîner des mois.
+
+Une réserve exploitable contient :
+→ un numéro et une localisation précise ;
+→ une description factuelle et l'exigence concernée ;
+→ un responsable, un délai, et la preuve attendue pour la lever.
+
+Et la meilleure réserve reste celle qui n'a jamais été écrite : les visites internes avant la réception éliminent la plupart des défauts.
+
+Combien de temps vos dernières réserves mettent-elles à être levées ?
+
+Lien de l'article en commentaire.
+Lien de partage : https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcivilina.com%2Fjournal%2Freception-reserves-levee%2F
+#GénieCivil #BTP #Réception #QAQC #GestionDeChantier
