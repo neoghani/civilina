@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le PV d'inspection : ce qu'un auditeur doit pouvoir retrouver | Civilina</title>
+<meta name="description" content="Rédiger un procès-verbal d'inspection qui tient à l'audit : contenu type, mesures et critères, signatures, numérotation, lien avec l'ITP et les non-conformités, exemple commenté et checklist.">
+<link rel="canonical" href="https://civilina.com/journal/pv-inspection-tracabilite-audit/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Le PV d'inspection : ce qu'un auditeur doit pouvoir retrouver | Civilina">
+<meta property="og:description" content="Rédiger un procès-verbal d'inspection qui tient à l'audit : contenu type, mesures et critères, signatures, numérotation, lien avec l'ITP et les non-conformités, exemple commenté et checklist.">
+<meta property="og:url" content="https://civilina.com/journal/pv-inspection-tracabilite-audit/">
+<meta property="og:image" content="https://civilina.com/assets/brand/civilina-logo.png">
+<meta property="og:locale" content="fr_FR">
+<meta name="google-adsense-account" content="ca-pub-5595911673357804">
+<link rel="icon" type="image/png" href="../../assets/brand/civilina-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Le PV d'inspection : ce qu'un auditeur doit pouvoir retrouver","inLanguage":"fr","datePublished":"2026-11-15","dateModified":"2026-11-15","author":{"@type":"Person","name":"Abdelghani Bouhouche","jobTitle":"Ingénieur civil, PMP"},"publisher":{"@type":"Organization","name":"Civilina","url":"https://civilina.com/"},"mainEntityOfPage":"https://civilina.com/journal/pv-inspection-tracabilite-audit/"}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5595911673357804" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header>
+  <div class="shell nav">
+    <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+    <nav class="menu" id="menu">
+      <a href="../../engineering/"><span class="dot" style="background:var(--eng)"></span>Engineering</a>
+      <a href="../../gestion-entreprise/"><span class="dot" style="background:var(--ent)"></span>Entreprise</a>
+      <a href="../../digital/"><span class="dot" style="background:var(--dig)"></span>Digital</a>
+      <a href="../../ia/"><span class="dot" style="background:var(--ia)"></span>CIVILINA IA</a>
+      <a href="../" class="active">Journal</a>
+      <a href="../../#apropos">À propos</a>
+      <a href="/login/" class="menu-login">Connexion</a>
+    </nav>
+    <a href="/login/" class="nav-login">Connexion</a>
+    <a href="../../engineering/#contact" class="btn btn-primary">Parler de votre projet</a>
+    <button class="burger" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<main>
+<article>
+  <div class="art-wrap art-head">
+    <p class="crumbs"><a href="../../">Accueil</a> › <a href="../">Journal</a> › Le PV d'inspection</p>
+    <span class="pill pill-eng">Engineering · QA/QC</span>
+    <h1>Le PV d'inspection : ce qu'un auditeur doit pouvoir retrouver</h1>
+    <div class="art-meta"><span>Par <b>Abdelghani Bouhouche</b>, ingénieur civil, PMP</span><span>Publié le 15 novembre 2026</span><span>Lecture : 8 min</span></div>
+  </div>
+  <figure class="art-cover"><img src="../../assets/journal/pv-inspection.svg" alt="Le PV d'inspection qui tient à l'audit"></figure>
+
+  <div class="art-wrap">
+    <p class="chapo">Des mois après un contrôle, il ne reste souvent qu'une feuille signée. C'est elle qu'un auditeur, un client ou un expert ouvrira en cas de doute. Si elle dit seulement « conforme », elle ne prouve presque rien. Voici comment rédiger un procès-verbal d'inspection qui permet de retrouver, sans poser de questions, ce qui a été contrôlé, comment, par qui et avec quel résultat.</p>
+
+    <nav class="toc" aria-label="Sommaire">
+      <strong>Sommaire</strong>
+      <ol>
+        <li><a href="#role">Le rôle du PV d'inspection</a></li>
+        <li><a href="#test">Le test de l'auditeur : huit questions</a></li>
+        <li><a href="#contenu">Le contenu type d'un PV</a></li>
+        <li><a href="#mesures">Écrire les mesures, pas seulement la conclusion</a></li>
+        <li><a href="#signatures">Signatures, présence et réserves</a></li>
+        <li><a href="#exemple">Exemple commenté : PV de réception du ferraillage</a></li>
+        <li><a href="#classement">Numéroter, classer, retrouver</a></li>
+        <li><a href="#refaire">Quand faut-il établir un nouveau PV ?</a></li>
+        <li><a href="#erreurs">Les erreurs fréquentes</a></li>
+        <li><a href="#checklist">Checklist avant signature</a></li>
+      </ol>
+    </nav>
+
+    <div class="prose">
+      <h2 id="role">Le rôle du PV d'inspection</h2>
+      <p>Le procès-verbal d'inspection est le document signé qui <strong>atteste qu'un contrôle a été réalisé</strong>, en donne le résultat et la décision qui en découle. Il est la dernière maille de la chaîne qualité d'un projet : l'exigence est fixée par les documents du marché, le contrôle est planifié dans l'<a href="../construire-itp-points-arret-temoin-revue/" style="color:var(--blue);text-decoration:underline">ITP</a>, et le PV en garde la preuve.</p>
+      <p>Plusieurs documents voisins coexistent sur un projet. Les distinguer évite de leur demander ce qu'ils ne peuvent pas prouver :</p>
+      <table>
+        <thead><tr><th>Document</th><th>Ce qu'il contient</th></tr></thead>
+        <tbody>
+          <tr><td><strong>PV d'inspection</strong></td><td>Le contrôle réalisé, son résultat et la décision, signés par les parties présentes</td></tr>
+          <tr><td>Fiche de contrôle</td><td>Les relevés détaillés d'un contrôle ; souvent annexée au PV</td></tr>
+          <tr><td>Rapport d'essai</td><td>Les résultats d'un laboratoire ou d'un essai spécifique</td></tr>
+          <tr><td>PV de réception</td><td>L'acceptation d'un ouvrage ou d'une partie d'ouvrage, avec ou sans réserves</td></tr>
+          <tr><td>Fiche de non-conformité</td><td>L'écart constaté et son traitement, lorsque le résultat n'est pas acceptable</td></tr>
+        </tbody>
+      </table>
+      <div class="box box-key"><strong>À retenir</strong>Un PV ne remplace pas les relevés : il les résume et les engage. Les mesures détaillées vont en annexe, mais le PV doit indiquer où les trouver.</div>
+
+      <h2 id="test">Le test de l'auditeur : huit questions</h2>
+      <p>Un bon PV permet de répondre à ces huit questions sans rien demander à personne :</p>
+      <ol>
+        <li><strong>Quoi ?</strong> Quel ouvrage, quel élément, quelle localisation précise.</li>
+        <li><strong>Par rapport à quoi ?</strong> Quelle exigence : plan et indice, spécification, norme et édition, ligne d'ITP.</li>
+        <li><strong>Comment ?</strong> Quelle méthode de contrôle, avec quel instrument.</li>
+        <li><strong>Quel résultat ?</strong> Les valeurs relevées, avec leurs unités, comparées au critère.</li>
+        <li><strong>Qui ?</strong> L'inspecteur, les témoins présents, leur fonction.</li>
+        <li><strong>Quand ?</strong> La date et, si utile, l'heure du contrôle.</li>
+        <li><strong>Quelle décision ?</strong> Accepté, refusé, ou accepté sous réserve avec référence de la non-conformité.</li>
+        <li><strong>Quelles preuves ?</strong> Photos, fiches de relevés, rapports d'essai, et où ils sont classés.</li>
+      </ol>
+      <p>Si l'une de ces réponses manque, le PV reste un document administratif, pas une preuve.</p>
+
+      <h2 id="contenu">Le contenu type d'un PV</h2>
+      <table>
+        <thead><tr><th>Rubrique</th><th>Contenu</th></tr></thead>
+        <tbody>
+          <tr><td>En-tête</td><td>Projet, numéro de PV, date, lot, ouvrage, localisation</td></tr>
+          <tr><td>Références</td><td>Ligne d'ITP, plans et indices, spécifications, normes et éditions applicables</td></tr>
+          <tr><td>Objet du contrôle</td><td>Ce qui est vérifié et le type de point (arrêt, témoin, revue)</td></tr>
+          <tr><td>Méthode et moyens</td><td>Visuel, mesure, essai ; instruments identifiés et en cours de validité d'étalonnage</td></tr>
+          <tr><td>Résultats</td><td>Valeurs relevées ou constats, critère d'acceptation, écart éventuel</td></tr>
+          <tr><td>Décision</td><td>Accepté, refusé, accepté sous réserve ; référence de la non-conformité le cas échéant</td></tr>
+          <tr><td>Annexes</td><td>Liste des fiches, photos et rapports joints</td></tr>
+          <tr><td>Signatures</td><td>Nom, fonction, organisme et signature de chaque partie présente</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="mesures">Écrire les mesures, pas seulement la conclusion</h2>
+      <p>La faiblesse la plus courante d'un PV est de ne contenir qu'une case cochée « conforme ». Or une conclusion sans mesure ne peut pas être vérifiée, ni contestée, ni réutilisée. Pour chaque caractéristique mesurable, le PV ou sa fiche annexe indique :</p>
+      <ul>
+        <li>la <strong>valeur relevée</strong>, ou la plage des valeurs relevées, avec son <strong>unité</strong> ;</li>
+        <li>le <strong>critère d'acceptation</strong> et sa source (plan, spécification, norme et édition) ;</li>
+        <li>l'<strong>instrument</strong> utilisé et, si l'exigence le prévoit, la validité de son étalonnage ;</li>
+        <li>la <strong>localisation</strong> des points de mesure, sur un croquis ou une photo si nécessaire.</li>
+      </ul>
+      <p>Lorsque le critère n'est pas connu au moment du contrôle, le PV doit le dire plutôt que de conclure. Une valeur relevée sans critère reste utile ; une conclusion sans valeur ne l'est pas.</p>
+
+      <h2 id="signatures">Signatures, présence et réserves</h2>
+      <p>La signature engage. Elle doit donc correspondre à ce que chacun a réellement fait :</p>
+      <ul>
+        <li>pour un <strong>point d'arrêt</strong>, la signature de la partie qui libère l'étape est indispensable avant de poursuivre les travaux ;</li>
+        <li>pour un <strong>point de témoin</strong>, le PV indique si la partie notifiée était présente ou absente, avec la preuve de la notification ;</li>
+        <li>une partie en désaccord signe <strong>avec réserve</strong>, en écrivant l'objet de sa réserve, plutôt que de refuser de signer sans explication ;</li>
+        <li>chaque signataire est identifié par son nom, sa fonction et son organisme, pas seulement par un paraphe.</li>
+      </ul>
+
+      <h2 id="exemple">Exemple commenté : PV de réception du ferraillage</h2>
+      <p>Voici à quoi ressemble, en version simplifiée, un PV de réception du ferraillage d'une dalle. Les valeurs sont remplacées par leur nature : sur un vrai PV, elles proviennent des mesures et des documents du projet.</p>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Rubrique</th><th>Exemple de contenu</th></tr></thead>
+        <tbody>
+          <tr><td>N° de PV</td><td>PV-[projet]-GO-[n°]</td></tr>
+          <tr><td>Ouvrage</td><td>Dalle haute du niveau 2, zone comprise entre deux files d'axes identifiées</td></tr>
+          <tr><td>Références</td><td>Ligne 3 de l'ITP gros œuvre ; plan de ferraillage indice en vigueur ; spécification du lot</td></tr>
+          <tr><td>Type de point</td><td>Point d'arrêt du maître d'œuvre</td></tr>
+          <tr><td>Contrôles</td><td>Diamètres et nombre de barres, espacements, recouvrements, enrobages, calage, propreté</td></tr>
+          <tr><td>Résultats</td><td>Valeurs relevées par zone sur la fiche annexe n° 1, comparées aux valeurs du plan</td></tr>
+          <tr><td>Décision</td><td>Accepté, ou refusé avec ouverture d'une fiche de non-conformité référencée</td></tr>
+          <tr><td>Annexes</td><td>Fiche de relevés, photos repérées, plan annoté</td></tr>
+          <tr><td>Signatures</td><td>Chef de chantier, responsable qualité de l'entreprise, représentant du maître d'œuvre</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Si le contrôle révèle un écart, le PV ne le règle pas : il renvoie vers une <a href="../cycle-non-conformite-ncr-constat-cloture/" style="color:var(--blue);text-decoration:underline">fiche de non-conformité</a>, et un nouveau PV est établi après correction et recontrôle.</p>
+
+      <h2 id="classement">Numéroter, classer, retrouver</h2>
+      <p>Un PV introuvable n'a pas plus de valeur qu'un PV inexistant. Trois règles simples rendent le classement fiable :</p>
+      <ul>
+        <li><strong>Une codification unique</strong>, définie dans le <a href="../rediger-plan-assurance-qualite-paq-iso-10005/" style="color:var(--blue);text-decoration:underline">plan qualité</a> : projet, lot, type de contrôle, numéro chronologique.</li>
+        <li><strong>Un registre des PV</strong>, qui relie chaque PV à sa ligne d'ITP, son ouvrage, sa date, sa décision et ses éventuelles non-conformités.</li>
+        <li><strong>Un archivage prévu dès le départ</strong>, car les PV rejoignent le dossier des ouvrages exécutés remis en fin de projet.</li>
+      </ul>
+      <p>Sur les projets importants, une <a href="../passer-excel-plateforme-gestion/" style="color:var(--blue);text-decoration:underline">plateforme de suivi</a> fait gagner beaucoup de temps : le PV est créé depuis la ligne d'ITP, les photos y sont rattachées sur le terrain, et le registre se met à jour seul.</p>
+
+      <h2 id="refaire">Quand faut-il établir un nouveau PV ?</h2>
+      <p>Un PV fige une situation à un instant donné. Il ne doit pas être modifié après signature : lorsqu'une situation change, on établit un nouveau PV qui fait référence au précédent. C'est notamment le cas :</p>
+      <ul>
+        <li><strong>après une correction</strong> : le recontrôle fait l'objet d'un nouveau PV, qui cite la fiche de non-conformité et le PV initial ;</li>
+        <li><strong>après un changement d'indice</strong> du plan ou de la spécification, si l'élément contrôlé est concerné par la modification ;</li>
+        <li><strong>après un événement sur l'élément déjà accepté</strong> : dégradation, intempérie, intervention d'un autre corps d'état avant l'étape suivante ;</li>
+        <li><strong>lorsqu'un point d'arrêt a été franchi sans libération</strong> : la situation est enregistrée en non-conformité, puis traitée comme telle.</li>
+      </ul>
+      <p>Corriger un PV signé à la main, raturer une valeur ou remplacer une page fragilise toute la chaîne de preuve. Un PV qui en remplace un autre doit le dire clairement, avec la raison et la date.</p>
+
+      <h2 id="erreurs">Les erreurs fréquentes</h2>
+      <div class="box box-warn"><strong>À éviter</strong>
+        <ul>
+          <li>Un PV qui se limite à « conforme » sans valeurs ni critère.</li>
+          <li>Des références de plan sans indice, ou de norme sans édition.</li>
+          <li>Un PV signé après coup, sans que le signataire ait assisté au contrôle.</li>
+          <li>Un instrument de mesure non identifié, ou dont l'étalonnage a expiré.</li>
+          <li>Un écart noté dans le PV mais jamais ouvert en non-conformité.</li>
+          <li>Des PV numérotés différemment selon les équipes, impossibles à relier.</li>
+        </ul>
+      </div>
+
+      <h2 id="checklist">Checklist avant signature</h2>
+      <ul class="checklist">
+        <li>L'ouvrage et la localisation sont décrits sans ambiguïté.</li>
+        <li>La ligne d'ITP et les documents de référence sont cités avec indice ou édition.</li>
+        <li>La méthode et l'instrument sont indiqués.</li>
+        <li>Les valeurs relevées figurent, avec unités et critère d'acceptation.</li>
+        <li>La décision est explicite ; une non-conformité est ouverte si nécessaire.</li>
+        <li>Les annexes sont listées et jointes.</li>
+        <li>Chaque signataire est identifié, et sa présence ou son absence est notée.</li>
+        <li>Le PV porte un numéro unique et est inscrit au registre.</li>
+      </ul>
+      <p>Un bon PV se reconnaît à un détail : quelqu'un qui n'était pas là peut le lire dans trois ans et comprendre exactement ce qui s'est passé.</p>
+
+      <div class="sources"><strong>Références citées</strong>
+        <ul>
+          <li>ISO 9001 — Systèmes de management de la qualité — Exigences (informations documentées, surveillance et mesure, libération des produits).</li>
+          <li>ISO 10005 — Management de la qualité — Lignes directrices pour les plans qualité.</li>
+          <li>Documents du marché : plans d'exécution, spécifications techniques, plan d'assurance qualité et ITP du projet.</li>
+        </ul>
+        <p style="margin-top:.6rem">Le contenu exigé d'un PV et les parties qui le signent dépendent du contrat de chaque projet. Cet article présente une méthode ; il ne remplace ni les documents du projet, ni le texte des normes.</p>
+      </div>
+    </div>
+
+    <div class="author">
+      <img src="../../assets/brand/abdelghani-bouhouche.jpg" alt="Abdelghani Bouhouche">
+      <div><strong>Abdelghani Bouhouche</strong><p>Ingénieur civil et PMP, fondateur de Civilina. Expérience en management de projet, qualité, QHSE et coordination opérationnelle, en Algérie et à l'international.</p></div>
+    </div>
+
+    <div class="art-cta">
+      <h3>Des PV et un registre prêts pour vos projets ?</h3>
+      <p>CIVILINA Engineering prépare avec vous vos modèles de PV, leur codification et le registre qui les relie aux ITP et aux non-conformités.</p>
+      <a href="../../engineering/" class="btn">Découvrir CIVILINA Engineering →</a>
+    </div>
+  </div>
+</article>
+</main>
+
+<footer>
+  <div class="shell">
+    <div class="foot">
+      <div>
+        <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+        <p style="margin-top:.8rem;max-width:34ch">Engineering, management et digitalisation pour les projets d'ingénierie.</p>
+      </div>
+      <div><h5>Axes</h5><ul><li><a href="../../engineering/">CIVILINA Engineering</a></li><li><a href="../../gestion-entreprise/">CIVILINA Entreprise</a></li><li><a href="../../digital/">CIVILINA Digital</a></li><li><a href="../../ia/">CIVILINA IA</a></li></ul></div>
+      <div><h5>Journal</h5><ul><li><a href="../construire-itp-points-arret-temoin-revue/">Construire un ITP</a></li><li><a href="../cycle-non-conformite-ncr-constat-cloture/">Le cycle d'une non-conformité</a></li><li><a href="../">Tous les articles</a></li></ul></div>
+      <div><h5>Contact</h5><ul><li><a href="/#contact">Demander un diagnostic</a></li><li><a href="https://www.linkedin.com/company/civilina" rel="noopener">LinkedIn</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Civilina</span><span><a href="/mentions-legales/">Mentions légales</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/cookies/">Cookies</a> · <a href="/conditions-utilisation/">Conditions</a></span></div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1a33"/><stop offset="1" stop-color="#1f5f73"/></linearGradient></defs>
+<rect width="1200" height="630" fill="url(#g)"/>
+<circle cx="1060" cy="70" r="230" fill="#ffffff" opacity=".06"/>
+<circle cx="80" cy="610" r="170" fill="#ffffff" opacity=".05"/>
+<g fill="none" stroke="#ffffff" stroke-opacity=".08" stroke-width="2"><path d="M760 630 L1200 190"/><path d="M860 630 L1200 290"/><path d="M960 630 L1200 390"/></g>
+<rect x="88" y="112" width="56" height="5" rx="2" fill="#f0b44c"/>
+<text x="88" y="172" font-family="Inter,Arial,sans-serif" font-size="30" font-weight="700" fill="#7fd3ff" letter-spacing="1">ENGINEERING · QA/QC</text>
+<text font-family="Inter,Arial,sans-serif" font-size="62" font-weight="800" fill="#ffffff"><tspan x="88" y="262">Le PV d'inspection</tspan><tspan x="88" y="338">qui tient à l'audit</tspan></text>
+<text x="88" y="418" font-family="Inter,Arial,sans-serif" font-size="30" fill="#c9d6ea">Ce qu'un auditeur doit pouvoir retrouver</text>
+<text x="88" y="552" font-family="Inter,Arial,sans-serif" font-size="28" font-weight="800" fill="#ffffff" letter-spacing="3">CIVILINA <tspan font-weight="500" letter-spacing="0" fill="#9fb0c8">Journal</tspan></text>
+</svg>
