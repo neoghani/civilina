@@ -506,3 +506,67 @@ footer{padding:56px 0 32px;font-size:.9rem;color:var(--steel)}
 .share .share-li{background:#0a66c2;border-color:#0a66c2;color:#fff}
 .share .share-li:hover{background:#004182}
 .share button:hover{border-color:var(--blue-2)}
+
+/* ===== Mode jour / nuit =====
+   assets/js/theme.js sets <html data-theme="light|dark"> before the page is
+   drawn: the saved choice (cookie civilina_theme, shared with the member area)
+   or else the device preference. Day rules above stay the default. */
+.theme-switch{display:inline-flex;align-items:center;gap:8px;margin-left:auto;padding:4px;border:0;background:none;font:inherit;font-size:.85rem;font-weight:700;color:var(--steel);cursor:pointer}
+.theme-switch:hover{color:var(--navy)}
+.theme-switch + .nav-login{margin-left:.4rem}
+.ts-track{position:relative;display:inline-block;width:44px;height:24px;border-radius:999px;background:#dbe5f1;border:1px solid #c5d3e3;transition:background .2s}
+.ts-knob{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;color:#c58a00;display:grid;place-items:center;font-size:12px;line-height:1;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .2s,background .2s}
+.ts-knob::before{content:"☀"}
+.ts-label::before{content:"Jour"}
+@media (max-width:1120px){.theme-switch{margin-right:.6rem}}
+@media (max-width:560px){.ts-label{display:none}}
+
+:root[data-theme="dark"]{
+  --blue:#7fb2ff; --blue-2:#6fb6ff; --digital:#36b9f0; --navy:#e6edf5; --graphite:#c9d3df;
+  --steel:#9fb0c3; --cloud:#132235; --white:#0b1522; --line:#24384f; --line-dark:#31475e;
+  --eng:#8db8ff; --eng-soft:#13284a; --ent:#6fd3a3; --ent-soft:#10331f;
+  --dig:#6fcff5; --dig-soft:#0d2f40; --ia:#b5a3ff; --ia-soft:#241a4d;
+  --shadow:0 20px 55px rgba(0,0,0,.35);
+  --surface:#111f30;
+  color-scheme:dark}
+:root[data-theme="dark"] .ts-track{background:#1d2f45;border-color:#31475e}
+:root[data-theme="dark"] .ts-knob{left:22px;background:#0b1828;color:#ffd77a}
+:root[data-theme="dark"] .ts-knob::before{content:"☾"}
+:root[data-theme="dark"] .ts-label::before{content:"Nuit"}
+:root[data-theme="dark"] header{background:rgba(11,21,34,.92)}
+:root[data-theme="dark"] .brand img{background:#fff;border-radius:10px;padding:3px}
+:root[data-theme="dark"] .menu.open{background:var(--surface)}
+:root[data-theme="dark"] .menu.open a{border-bottom-color:var(--line)}
+/* Cards and panels that were white */
+:root[data-theme="dark"] :is(.btn-ghost,.axis-chip,.axis,.step,.ref,.post,.fact,.pain,.offer .panel,.dom,.tl,.deliv,.faq details,.cmp,.dash,.fmt,.kc,.app,.mod,.case > div,.tech span,.bld,.demo,.pr,.j-filters a,.j-card,.pillar,.share a,.share button){background:var(--surface)}
+:root[data-theme="dark"] .axis-chip.ia{background:var(--ia-soft)}
+:root[data-theme="dark"] .share .share-li{background:#0a66c2;border-color:#0a66c2;color:#fff}
+:root[data-theme="dark"] .page-hero{background:linear-gradient(180deg,var(--c-soft),var(--white))}
+:root[data-theme="dark"] .j-hero{background:linear-gradient(180deg,var(--cloud),var(--white))}
+:root[data-theme="dark"] .prose{color:#c9d3df}
+/* Light accent backgrounds keep dark text */
+:root[data-theme="dark"] .btn-primary{background:#2563c9;box-shadow:0 10px 25px rgba(0,0,0,.35)}
+:root[data-theme="dark"] .btn-primary:hover{background:#2f72e0}
+:root[data-theme="dark"] .page-hero .btn-primary{background:var(--c);color:#0b1522}
+:root[data-theme="dark"] :is(.axis-chip .n,.tl::before,.ask){color:#0b1522}
+:root[data-theme="dark"] .j-filters a.on{background:var(--navy);border-color:var(--navy);color:#0b1522}
+:root[data-theme="dark"] :is(.art-cta .btn,.cform .btn){background:#fff;color:#102033}
+/* Dark blocks that used the navy token as background */
+:root[data-theme="dark"] .cta{background:#0e1b2b;border:1px solid var(--line)}
+:root[data-theme="dark"] .art-cta{background:#13233a;border:1px solid var(--line)}
+:root[data-theme="dark"] .app-side{background:#070f1a}
+:root[data-theme="dark"] .ia-band,:root[data-theme="dark"] .page-hero.ia-hero{border:1px solid #2a2357}
+/* Status colours */
+:root[data-theme="dark"] :is(.b-live,.st-ok,.al-ok,.cform-ok){background:#10331f;color:#6fd3a3}
+:root[data-theme="dark"] :is(.b-pilot,.st-run,.al-warn,.dash-bar small,.app-top small,.demo-head small){background:#3a2a0c;color:#f2c26b}
+:root[data-theme="dark"] :is(.st-late,.isnot div){background:#3a1616;color:#ffb3b3}
+:root[data-theme="dark"] .al-info{color:#c9bcff}
+:root[data-theme="dark"] .up{color:#6fd3a3}
+:root[data-theme="dark"] .down{color:#ff8f8f}
+:root[data-theme="dark"] .miss{color:#f2c26b}
+:root[data-theme="dark"] .box-ex{background:#33270f;border-left-color:#c98616}
+:root[data-theme="dark"] .box-ex > strong{color:#f2c26b}
+:root[data-theme="dark"] .box-warn{background:#3a1616;border-left-color:#c84141}
+:root[data-theme="dark"] .box-warn > strong{color:#ff8f8f}
+:root[data-theme="dark"] .ph div{background:linear-gradient(135deg,#1d2f45,#132235)}
+:root[data-theme="dark"] .ph div::after{border-color:rgba(230,237,245,.2)}
