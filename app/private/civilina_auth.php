@@ -101,6 +101,7 @@ function civilina_member_theme_css(): string
         '.success' => 'color:#0f5e40;background:#e7f4ee;border-color:#b7dfc9',
         '.identity-card, .identity-card h1' => 'color:#fff',
         '.identity-card p' => 'color:#dcebf7',
+        '.identity-card .eyebrow' => 'color:#7fd3ff',
         '.site-footer' => 'background:#fff;color:#5d6673;border-top-color:#dce3eb',
         '.site-footer strong' => 'color:#102033',
         '.lang-switcher a' => 'color:#003b8c;background:#fff;border-color:#dce3eb',
@@ -125,7 +126,8 @@ function civilina_member_theme_css(): string
         . '.ts-track{position:relative;display:inline-block;width:44px;height:24px;border-radius:999px;background:#1d2f45;border:1px solid #31475e}'
         . '.ts-knob{position:absolute;top:2px;left:22px;width:18px;height:18px;border-radius:50%;background:#0b1828;color:#ffd77a;display:grid;place-items:center;font-size:12px;line-height:1}'
         . '.ts-to-dark .ts-track{background:#dbe5f1;border-color:#c5d3e3}.ts-to-dark .ts-knob{left:2px;background:#fff;color:#c58a00;box-shadow:0 1px 3px rgba(0,0,0,.2)}'
-        . '.ts-to-dark{display:none}.ts-to-light{display:inline-flex}';
+        // Must outrank ".theme-switch a" above; the day rules (prefixed) outrank these.
+        . '.theme-switch .ts-to-dark{display:none}.theme-switch .ts-to-light{display:inline-flex}';
 }
 
 function civilina_boot(): void
@@ -394,8 +396,8 @@ function civilina_page_start(string $title, string $class = 'auth-page', string 
         .score-bars{display:grid;gap:10px}.score-line{display:grid;grid-template-columns:42px 1fr 42px;gap:10px;align-items:center}.score-meter{height:10px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden}.score-meter span{display:block;height:100%;background:linear-gradient(90deg,#24d3ee,#d7ae5f)}
         body.rtl{text-align:right}.rtl .nav,.rtl .footer-grid{direction:rtl}.rtl .brand,.rtl .actions,.rtl .post-meta,.rtl .choice-card{direction:rtl}.rtl .eyebrow::before{order:2}.rtl .question-options{direction:rtl}
         .site-footer{padding:34px 0;color:#b9cada;border-top:1px solid var(--line);background:rgba(3,10,20,.72)}.footer-grid{display:flex;justify-content:space-between;gap:20px;align-items:center}.footer-links{display:flex;gap:16px;flex-wrap:wrap;font-weight:850}
-        @media(max-width:940px){.nav{align-items:flex-start;flex-direction:column;padding:16px 0}.nav-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:min(100%,390px);gap:8px}.nav-links a{border:1px solid var(--line);border-radius:999px;padding:8px 9px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.auth-grid,.grid-3,.grid-4{grid-template-columns:1fr}.identity-card{min-height:420px}.form-row{grid-template-columns:1fr}.footer-grid{align-items:flex-start;flex-direction:column}}
-        @media(max-width:560px){.shell{padding:0 14px}.auth-hero,.dash{padding:36px 0}.glass-card,.dash-head{padding:22px}.actions .btn{width:100%}.identity-card h1,.dash-head h1{font-size:2.4rem}.question-options{grid-template-columns:1fr}}
+        @media(max-width:940px){.nav{align-items:flex-start;flex-direction:column;padding:16px 20px}.nav-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:min(100%,390px);gap:8px}.nav-links a{border:1px solid var(--line);border-radius:999px;padding:8px 9px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.auth-grid,.grid-3,.grid-4{grid-template-columns:1fr}.identity-card{min-height:420px}.form-row{grid-template-columns:1fr}.footer-grid{align-items:flex-start;flex-direction:column}}
+        @media(max-width:560px){.shell{padding:0 14px}.nav{padding:14px}.auth-hero,.dash{padding:36px 0}.glass-card,.dash-head{padding:22px}.actions .btn{width:100%}.identity-card h1,.dash-head h1{font-size:2.4rem}.question-options{grid-template-columns:1fr}}
     </style><style>' . civilina_member_theme_css() . '</style></head><body class="' . h($bodyClass) . '">';
     echo '<header class="site-header"><div class="shell nav"><a class="brand" href="/"><span class="brand-mark"><img src="/assets/brand/civilina-logo.png" alt="Logo Civilina"></span><span>CIVILINA</span></a><nav class="nav-links" aria-label="Navigation principale">';
     // Same sections as the public site (V2): the three axes, CIVILINA IA and the Journal.

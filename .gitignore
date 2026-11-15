@@ -28,3 +28,6 @@ Homestead.json
 .env.production
 .phpactor.json
 auth.json
+
+# Local dev data for the PHP app (users, contacts, SQLite): never commit
+/civilina_private/

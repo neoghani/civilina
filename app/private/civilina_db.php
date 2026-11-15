@@ -35,7 +35,9 @@ const CIVILINA_CONTACT_STATUSES = [
 
 function civilina_db_private_dir(): string
 {
-    return __DIR__;
+    // Local dev router (app/tools/dev-router.php) points this to a git-ignored folder.
+    $dir = getenv('CIVILINA_PRIVATE_DIR');
+    return is_string($dir) && $dir !== '' ? $dir : __DIR__;
 }
 
 function civilina_db(): PDO
