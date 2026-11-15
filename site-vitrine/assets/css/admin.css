@@ -7,19 +7,22 @@
   --side:#0b1828;--side-text:#c9d6ea;--side-muted:#7f8fa6;--side-line:#1f3247;
   --eng:#003b8c;--eng-soft:#e8eff9;--ent:#16845b;--ent-soft:#e7f4ee;--dig:#006b99;--dig-bar:#0089c4;--dig-soft:#e3f4fb;--ia:#6b4fd8;--ia-soft:#efebfc;
   --warn:#9a5b00;--warn-soft:#fff4e0;--warn-line:#f1cf94;--ok:#16845b;--ok-line:#b7dfc9;--note-line:#c9d9f0;--note-text:#173a6b;--q:#a5afbd;
+  --chart-eng:#2a62c9;--chart-ent:#16845b;--chart-dig:#0089c4;--chart-other:#8a94a3;
   --radius:14px;color-scheme:light}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0b1522;--surface:#111f30;--text:#e6edf5;--muted:#9fb0c3;--line:#24384f;--line-soft:#1b2c40;--hover:#15263a;--chip:#1d2f45;--chip-text:#b4c3d4;
   --link:#7fb2ff;--primary:#2563c9;--primary-hover:#2f72e0;--input:#0d1928;--meter:#1d2f45;
   --side:#070f1a;--side-text:#c9d6ea;--side-muted:#6d7d93;--side-line:#16263a;
   --eng:#8db8ff;--eng-soft:#13284a;--ent:#6fd3a3;--ent-soft:#10331f;--dig:#6fcff5;--dig-bar:#2fb3ea;--dig-soft:#0d2f40;--ia:#b5a3ff;--ia-soft:#241a4d;
-  --warn:#f2c26b;--warn-soft:#3a2a0c;--warn-line:#6b4d16;--ok:#6fd3a3;--ok-line:#1f5a3c;--note-line:#24426e;--note-text:#c3d6f5;--q:#6d7d93;color-scheme:dark}}
+  --warn:#f2c26b;--warn-soft:#3a2a0c;--warn-line:#6b4d16;--ok:#6fd3a3;--ok-line:#1f5a3c;--note-line:#24426e;--note-text:#c3d6f5;--q:#6d7d93;
+  --chart-eng:#5585e6;--chart-ent:#22a06b;--chart-dig:#0f95d1;--chart-other:#6d7d93;color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0b1522;--surface:#111f30;--text:#e6edf5;--muted:#9fb0c3;--line:#24384f;--line-soft:#1b2c40;--hover:#15263a;--chip:#1d2f45;--chip-text:#b4c3d4;
   --link:#7fb2ff;--primary:#2563c9;--primary-hover:#2f72e0;--input:#0d1928;--meter:#1d2f45;
   --side:#070f1a;--side-text:#c9d6ea;--side-muted:#6d7d93;--side-line:#16263a;
   --eng:#8db8ff;--eng-soft:#13284a;--ent:#6fd3a3;--ent-soft:#10331f;--dig:#6fcff5;--dig-bar:#2fb3ea;--dig-soft:#0d2f40;--ia:#b5a3ff;--ia-soft:#241a4d;
-  --warn:#f2c26b;--warn-soft:#3a2a0c;--warn-line:#6b4d16;--ok:#6fd3a3;--ok-line:#1f5a3c;--note-line:#24426e;--note-text:#c3d6f5;--q:#6d7d93;color-scheme:dark}
+  --warn:#f2c26b;--warn-soft:#3a2a0c;--warn-line:#6b4d16;--ok:#6fd3a3;--ok-line:#1f5a3c;--note-line:#24426e;--note-text:#c3d6f5;--q:#6d7d93;
+  --chart-eng:#5585e6;--chart-ent:#22a06b;--chart-dig:#0f95d1;--chart-other:#6d7d93;color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;font-size:15px}
 a{color:var(--link)}
@@ -84,16 +87,17 @@ tbody tr:hover{background:var(--hover)}
 .status-done{background:var(--ent-soft);color:var(--ent)}
 .status-archived{background:var(--chip);color:var(--chip-text)}
 .bars{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.bars li{display:grid;grid-template-columns:96px 1fr 28px;align-items:center;gap:10px;font-size:.88rem}
-.bars b{text-align:right}
+.bars li{display:grid;grid-template-columns:minmax(96px,9.5rem) 1fr 3.2rem;align-items:center;gap:10px;font-size:.88rem}
+.bars b{text-align:right;white-space:nowrap}
 meter{width:100%;height:10px;-webkit-appearance:none;appearance:none;background:var(--meter);border:0;border-radius:999px}
 meter::-webkit-meter-bar{background:var(--meter);border:0;border-radius:999px;height:10px}
-meter::-webkit-meter-optimum-value{background:var(--eng);border-radius:999px}
-meter::-moz-meter-bar{background:var(--eng);border-radius:999px}
-.m-entreprise::-webkit-meter-optimum-value{background:var(--ent)}.m-entreprise::-moz-meter-bar{background:var(--ent)}
-.m-digital::-webkit-meter-optimum-value{background:var(--dig-bar)}.m-digital::-moz-meter-bar{background:var(--dig-bar)}
-.m-ia::-webkit-meter-optimum-value{background:var(--ia)}.m-ia::-moz-meter-bar{background:var(--ia)}
-.m-a_qualifier::-webkit-meter-optimum-value{background:var(--q)}.m-a_qualifier::-moz-meter-bar{background:var(--q)}
+/* Chart marks use colours validated for each mode (lightness band, CVD and normal-vision separation, contrast). */
+meter::-webkit-meter-optimum-value{background:var(--chart-eng);border-radius:999px}
+meter::-moz-meter-bar{background:var(--chart-eng);border-radius:999px}
+.m-entreprise::-webkit-meter-optimum-value{background:var(--chart-ent)}.m-entreprise::-moz-meter-bar{background:var(--chart-ent)}
+.m-digital::-webkit-meter-optimum-value{background:var(--chart-dig)}.m-digital::-moz-meter-bar{background:var(--chart-dig)}
+.m-ia::-webkit-meter-optimum-value,.m-other::-webkit-meter-optimum-value,.m-a_qualifier::-webkit-meter-optimum-value{background:var(--chart-other)}
+.m-ia::-moz-meter-bar,.m-other::-moz-meter-bar,.m-a_qualifier::-moz-meter-bar{background:var(--chart-other)}
 .list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .list a{font-weight:600;text-decoration:none;color:var(--text)}
 .list a:hover{color:var(--link)}
@@ -125,6 +129,27 @@ textarea{width:100%;resize:vertical}
 .soon-tag{display:inline-block;background:var(--eng-soft);color:var(--eng);border-radius:999px;padding:4px 12px;font-size:.8rem;font-weight:700}
 .checklist{padding-left:1.2rem}
 .checklist li{margin:6px 0}
+/* Statistics (M1) */
+.kpi-link{display:block;text-decoration:none;color:inherit}
+.kpi-link:hover{border-color:var(--chart-eng)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.seg a{padding:7px 14px;font-size:.88rem;font-weight:600;color:var(--muted);text-decoration:none;border-left:1px solid var(--line)}
+.seg a:first-child{border-left:0}
+.seg a.on{background:var(--primary);color:#fff}
+.chart{display:block;width:100%;height:auto;margin:4px 0 6px}
+.chart text{fill:var(--muted);font-size:12.5px;font-family:inherit}
+.chart .grid{stroke:var(--line-soft);stroke-width:1}
+.chart .axis{stroke:var(--line);stroke-width:1}
+.chart .bar{fill:var(--chart-eng)}
+.chart .hit{fill:transparent}
+.chart .day:hover .bar{fill:var(--primary-hover)}
+.chart .day:hover .hit{fill:var(--hover)}
+.data-table{margin-top:8px;font-size:.88rem}
+.data-table summary{cursor:pointer;color:var(--muted);font-weight:600}
+.data-table table{margin-top:8px}
+.list.compact{gap:6px;font-size:.88rem}
+.list.compact small{display:inline;margin-left:6px}
+.panel .hint{margin-top:10px}
 /* Day/night switch: both links are rendered, CSS shows the one leading to the other mode. */
 .theme-switch a{display:inline-flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;font-weight:600;font-size:.85rem}
 .theme-switch a:hover{color:var(--text)}

@@ -1,4 +1,4 @@
-/* Civilina day/night mode for the public site.
+/* Civilina public site script: day/night mode and audience beacon.
    Loaded in the document head (blocking, tiny) so the right mode is applied before the
    first paint. Choice stored in the civilina_theme cookie, shared with the
    member area and back-office (PHP); without a choice, the device decides. */
@@ -41,4 +41,30 @@
     document.cookie = 'civilina_theme=' + next + '; path=/; max-age=31536000; SameSite=Lax' + (location.protocol === 'https:' ? '; Secure' : '');
     apply(next);
   });
+
+  /* Audience measurement without cookies: one anonymous beacon per page view,
+     sent to /visite/ only once the page is actually shown (not for pages
+     prerendered or opened in a background tab and never looked at). */
+  function sendVisit() {
+    try {
+      var data = JSON.stringify({ p: location.pathname, r: document.referrer || '', q: location.search || '', w: window.innerWidth || 0 });
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon('/visite/', new Blob([data], { type: 'text/plain' }));
+      } else if (window.fetch) {
+        fetch('/visite/', { method: 'POST', body: data, keepalive: true, credentials: 'same-origin' });
+      }
+    } catch (error) { /* never disturb the page */ }
+  }
+  function sendWhenVisible() {
+    if (document.visibilityState === 'visible') {
+      sendVisit();
+      return;
+    }
+    document.addEventListener('visibilitychange', function onVisible() {
+      if (document.visibilityState !== 'visible') return;
+      document.removeEventListener('visibilitychange', onVisible);
+      sendVisit();
+    });
+  }
+  document.addEventListener('DOMContentLoaded', sendWhenVisible);
 })();

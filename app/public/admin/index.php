@@ -80,6 +80,9 @@ if ($view === 'dashboard') {
     $waiting = $db->prepare("SELECT COUNT(*) FROM contacts WHERE status = 'new' AND created_at < ?");
     $waiting->execute([date('c', strtotime('-48 hours'))]);
     $oldNew = (int) $waiting->fetchColumn();
+    $audience = civilina_stats_totals(...civilina_stats_range(7));
+    $audiencePrev = civilina_stats_totals(...civilina_stats_range(7, 1));
+    $audienceTrend = civilina_stats_trend($audience['visits'], $audiencePrev['visits']);
 
     civilina_admin_start('Tableau de bord', $view, $user);
     ?>
@@ -92,7 +95,7 @@ if ($view === 'dashboard') {
       <article class="kpi"><span>Demandes de contact</span><strong><?= $contactTotal ?></strong><small><?= $contactNew ?> à traiter · <?= $contactLast30 ?> sur 30 jours</small></article>
       <article class="kpi"><span>Comptes inscrits</span><strong><?= $userTotal ?></strong><small><?= (int) ($usersByRole['admin'] ?? 0) ?> admin · <?= $userTotal - (int) ($usersByRole['admin'] ?? 0) ?> membres</small></article>
       <article class="kpi"><span>Tests MBTI</span><strong><?= $mbtiCount ?></strong><small>Résultats enregistrés</small></article>
-      <article class="kpi kpi-soon"><span>Audience du site</span><strong>—</strong><small>Mesure des visites activée au jalon M1, jeudi 19/11</small></article>
+      <a class="kpi kpi-link" href="<?= h(civilina_admin_url('stats')) ?>"><span>Visites · 7 jours</span><strong><?= $audience['visits'] ?></strong><small><?= $audience['views'] ?> pages vues<?php if ($audienceTrend !== null): ?> · <?= $audienceTrend >= 0 ? '+' : '' ?><?= $audienceTrend ?> % vs 7 j précédents<?php endif; ?></small></a>
     </section>
 
     <div class="bo-grid">
@@ -140,7 +143,7 @@ if ($view === 'dashboard') {
         <div class="panel-head"><h2>Feuille de route</h2></div>
         <ol class="roadmap">
           <li class="done"><b>M0</b> Socle, nettoyage, sécurité <small>17/11</small></li>
-          <li><b>M1</b> Statistiques d'audience <small>19/11</small></li>
+          <li class="done"><b>M1</b> Statistiques d'audience <small>19/11</small></li>
           <li><b>M2</b> Éditeur du Journal <small>24/11</small></li>
           <li><b>M3</b> Newsletter <small>29/11 · 1er envoi 01/12</small></li>
           <li><b>M4</b> Offres et prospection <small>07/12</small></li>
@@ -373,9 +376,171 @@ if ($view === 'security') {
     exit;
 }
 
+if ($view === 'stats') {
+    $periods = [7 => '7 jours', 30 => '30 jours', 90 => '90 jours'];
+    $days = (int) ($_GET['days'] ?? 30);
+    if (!isset($periods[$days])) {
+        $days = 30;
+    }
+    [$from, $to] = civilina_stats_range($days);
+    [$prevFrom, $prevTo] = civilina_stats_range($days, 1);
+    $totals = civilina_stats_totals($from, $to);
+    $previous = civilina_stats_totals($prevFrom, $prevTo);
+    $daily = civilina_stats_daily($from, $to);
+    $pages = civilina_stats_pages($from, $to, 15);
+    $sources = civilina_stats_sources($from, $to);
+    $referrers = civilina_stats_referrers($from, $to);
+    $devices = civilina_stats_devices($from, $to);
+    $axes = civilina_stats_axes($from, $to);
+    $contacts = civilina_stats_contacts($from, $to);
+    $since = (string) $db->query('SELECT MIN(day) FROM page_views')->fetchColumn();
+    $conversion = $totals['visits'] > 0 ? round($contacts * 100 / $totals['visits'], 1) : null;
+    $perVisit = $totals['visits'] > 0 ? round($totals['views'] / $totals['visits'], 1) : null;
+    $trend = static function (int $now, int $before): string {
+        $t = civilina_stats_trend($now, $before);
+        return $t === null ? 'pas de période précédente' : ($t >= 0 ? '+' : '') . $t . ' % vs période précédente';
+    };
+    $shortDate = static fn (string $day): string => date('d/m', strtotime($day));
+
+    // Daily visits: inline SVG bars (rounded tops on a flat baseline, 2px gaps, native tooltip per day).
+    $chartW = 720;
+    $chartH = 220;
+    $padL = 34;
+    $padB = 26;
+    $padT = 12;
+    $plotW = $chartW - $padL - 6;
+    $plotH = $chartH - $padB - $padT;
+    $max = max(1, ...array_column($daily, 'visits'));
+    $step = $max <= 5 ? 1 : ($max <= 20 ? 5 : ($max <= 100 ? 20 : (int) (10 ** floor(log10($max)))));
+    $yMax = (int) (ceil($max / $step) * $step);
+    $count = count($daily);
+    $gap = 2;
+    $barW = max(1.0, ($plotW - $gap * ($count - 1)) / $count);
+    $bar = static function (float $x, float $y, float $w, float $hgt): string {
+        $r = min(4.0, $w / 2, $hgt);
+        $base = $y + $hgt;
+        return sprintf('M%.1f %.1fV%.1fQ%.1f %.1f %.1f %.1fH%.1fQ%.1f %.1f %.1f %.1fV%.1fZ', $x, $base, $y + $r, $x, $y, $x + $r, $y, $x + $w - $r, $x + $w, $y, $x + $w, $y + $r, $base);
+    };
+
+    civilina_admin_start('Statistiques', $view, $user);
+    ?>
+    <div class="filters">
+      <nav class="seg" aria-label="Période">
+        <?php foreach ($periods as $value => $label): ?>
+          <a class="<?= $value === $days ? 'on' : '' ?>" href="<?= h(civilina_admin_url('stats', ['days' => $value])) ?>"><?= h($label) ?></a>
+        <?php endforeach; ?>
+      </nav>
+      <span class="count">Du <?= h($shortDate($from)) ?> au <?= h($shortDate($to)) ?><?= $since !== '' ? ' · mesure active depuis le ' . h(date('d/m/Y', strtotime($since))) : '' ?></span>
+    </div>
+
+    <?php if ($since === ''): ?>
+      <p class="bo-note">Aucune visite enregistrée pour l'instant. Les chiffres apparaîtront dès les premières visites du site public (vos propres visites d'administrateur connecté ne sont pas comptées).</p>
+    <?php endif; ?>
+
+    <section class="kpis">
+      <article class="kpi"><span>Visites</span><strong><?= $totals['visits'] ?></strong><small><?= h($trend($totals['visits'], $previous['visits'])) ?></small></article>
+      <article class="kpi"><span>Pages vues</span><strong><?= $totals['views'] ?></strong><small><?= h($trend($totals['views'], $previous['views'])) ?></small></article>
+      <article class="kpi"><span>Pages par visite</span><strong><?= $perVisit === null ? '—' : h(number_format($perVisit, 1, ',', ' ')) ?></strong><small>Profondeur de lecture</small></article>
+      <article class="kpi"><span>Demandes de contact</span><strong><?= $contacts ?></strong><small>Sur la même période</small></article>
+      <article class="kpi"><span>Taux de conversion</span><strong><?= $conversion === null ? '—' : h(number_format($conversion, 1, ',', ' ')) . ' %' ?></strong><small>Demandes ÷ visites</small></article>
+    </section>
+
+    <div class="bo-grid">
+      <section class="panel panel-wide">
+        <div class="panel-head"><h2>Visites par jour</h2><small>Survolez une barre pour le détail</small></div>
+        <svg class="chart" viewBox="0 0 <?= $chartW ?> <?= $chartH ?>" role="img" aria-label="Visites par jour, du <?= h($shortDate($from)) ?> au <?= h($shortDate($to)) ?>">
+          <?php for ($v = 0; $v <= $yMax; $v += $step):
+              $y = $padT + $plotH - $plotH * $v / $yMax; ?>
+            <line class="<?= $v === 0 ? 'axis' : 'grid' ?>" x1="<?= $padL ?>" x2="<?= $chartW - 6 ?>" y1="<?= round($y, 1) ?>" y2="<?= round($y, 1) ?>"/>
+            <text x="<?= $padL - 6 ?>" y="<?= round($y + 4, 1) ?>" text-anchor="end"><?= $v ?></text>
+          <?php endfor; ?>
+          <?php foreach ($daily as $i => $d):
+              $x = $padL + $i * ($barW + $gap);
+              $hgt = $plotH * $d['visits'] / $yMax; ?>
+            <g class="day">
+              <title><?= h(date('d/m', strtotime($d['day']))) ?> : <?= $d['visits'] ?> visite<?= $d['visits'] > 1 ? 's' : '' ?>, <?= $d['views'] ?> page<?= $d['views'] > 1 ? 's' : '' ?> vue<?= $d['views'] > 1 ? 's' : '' ?></title>
+              <rect class="hit" x="<?= round($x, 1) ?>" y="<?= $padT ?>" width="<?= round($barW + $gap, 1) ?>" height="<?= $plotH ?>"/>
+              <?php if ($d['visits'] > 0): ?><path class="bar" d="<?= $bar($x, $padT + $plotH - $hgt, $barW, $hgt) ?>"/><?php endif; ?>
+            </g>
+          <?php endforeach; ?>
+          <?php foreach (array_unique([0, intdiv($count - 1, 2), $count - 1]) as $i):
+              $x = $padL + $i * ($barW + $gap) + $barW / 2; ?>
+            <text x="<?= round($x, 1) ?>" y="<?= $chartH - 6 ?>" text-anchor="<?= $i === 0 ? 'start' : ($i === $count - 1 ? 'end' : 'middle') ?>"><?= h($shortDate($daily[$i]['day'])) ?></text>
+          <?php endforeach; ?>
+        </svg>
+        <details class="data-table">
+          <summary>Voir le tableau des données</summary>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Jour</th><th>Visites</th><th>Pages vues</th></tr></thead>
+            <tbody><?php foreach (array_reverse($daily) as $d): ?><tr><td><?= h(date('d/m/Y', strtotime($d['day']))) ?></td><td><?= $d['visits'] ?></td><td><?= $d['views'] ?></td></tr><?php endforeach; ?></tbody>
+          </table></div>
+        </details>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><h2>Pages vues par axe</h2></div>
+        <?php $axisTotal = max(1, array_sum($axes)); $axisLabels = ['engineering' => 'Engineering', 'entreprise' => 'Entreprise', 'digital' => 'Digital', 'other' => 'Accueil, Journal, IA']; ?>
+        <ul class="bars">
+          <?php foreach ($axisLabels as $key => $label): ?>
+            <li><span><?= h($label) ?></span><meter class="m-<?= h($key) ?>" min="0" max="<?= $axisTotal ?>" value="<?= (int) $axes[$key] ?>"><?= (int) $axes[$key] ?></meter><b><?= (int) $axes[$key] ?></b></li>
+          <?php endforeach; ?>
+        </ul>
+        <p class="hint">Page de l'axe et articles du Journal rattachés à cet axe.</p>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><h2>D'où viennent les visites</h2></div>
+        <?php $sourceTotal = max(1, array_sum($sources)); ?>
+        <ul class="bars">
+          <?php foreach (CIVILINA_STATS_SOURCES as $key => $label): $n = (int) ($sources[$key] ?? 0); ?>
+            <li><span><?= h($label) ?></span><meter min="0" max="<?= $sourceTotal ?>" value="<?= $n ?>"><?= $n ?></meter><b><?= $n ?></b></li>
+          <?php endforeach; ?>
+        </ul>
+        <?php if ($referrers): ?>
+          <h3>Sites d'origine</h3>
+          <ul class="list compact"><?php foreach ($referrers as $hostName => $n): ?><li><?= h($hostName) ?> <small><?= (int) $n ?> visite<?= $n > 1 ? 's' : '' ?></small></li><?php endforeach; ?></ul>
+        <?php endif; ?>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><h2>Appareils</h2></div>
+        <?php $deviceTotal = max(1, array_sum($devices)); ?>
+        <ul class="bars">
+          <?php foreach (CIVILINA_STATS_DEVICES as $key => $label): $n = (int) ($devices[$key] ?? 0); ?>
+            <li><span><?= h($label) ?></span><meter min="0" max="<?= $deviceTotal ?>" value="<?= $n ?>"><?= $n ?></meter><b><?= round($n * 100 / $deviceTotal) ?> %</b></li>
+          <?php endforeach; ?>
+        </ul>
+      </section>
+
+      <section class="panel panel-wide">
+        <div class="panel-head"><h2>Pages les plus vues</h2></div>
+        <?php if (!$pages): ?>
+          <p class="empty">Aucune page vue sur cette période.</p>
+        <?php else: ?>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Page</th><th>Axe</th><th>Pages vues</th><th>Visites</th></tr></thead>
+          <tbody>
+          <?php foreach ($pages as $row): $info = civilina_stats_page_info($row['path']); ?>
+            <tr>
+              <td><a href="<?= h($row['path']) ?>" target="_blank" rel="noopener"><?= h($info['label']) ?></a><?php if ($info['article']): ?><small>Article du Journal</small><?php endif; ?></td>
+              <td><?= $info['axis'] === 'other' ? '<span class="axis axis-a_qualifier">Général</span>' : civilina_axis_badge($info['axis']) ?></td>
+              <td><?= (int) $row['views'] ?></td>
+              <td><?= (int) $row['visits'] ?></td>
+            </tr>
+          <?php endforeach; ?>
+          </tbody>
+        </table></div>
+        <?php endif; ?>
+      </section>
+    </div>
+    <p class="hint">Mesure sans cookie : une visite = un visiteur sur une journée (empreinte anonyme renouvelée chaque jour, adresse IP jamais conservée). Robots et administrateurs connectés exclus. Données gardées <?= CIVILINA_STATS_RETENTION_DAYS ?> jours.</p>
+    <?php
+    civilina_admin_end();
+    exit;
+}
+
 /* Modules of later milestones */
 $upcoming = [
-    'stats' => ['Statistiques', 'Jalon M1 — jeudi 19 novembre 2026', ['Visites par jour et par page, sans cookie', 'Articles les plus lus', 'Sources : Google, LinkedIn, accès direct', 'Taux de conversion visite → demande de contact']],
     'newsletter' => ['Newsletter', 'Jalon M3 — dimanche 29 novembre 2026, 1er envoi mardi 1er décembre', ['Formulaire d\'inscription avec confirmation par e-mail', 'Listes par axe : Engineering, Entreprise, Digital', 'Campagne pré-remplie avec les derniers articles', 'Envoi via Brevo, statistiques d\'ouverture et de clic']],
     'sales' => ['Offres et prospection', 'Jalon M4 — lundi 7 décembre 2026', ['Offres des 3 axes affichées sur le site', 'Demandes de devis rattachées à un axe', 'Ressources téléchargeables contre e-mail', 'Pipeline de prospection et relances datées']],
 ];

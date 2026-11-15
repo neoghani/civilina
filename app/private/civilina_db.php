@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 date_default_timezone_set('Africa/Algiers');
 
-const CIVILINA_DB_VERSION = 1;
+const CIVILINA_DB_VERSION = 2;
 
 /** Axes used across the back-office (contacts, articles, later offers and prospects). */
 const CIVILINA_AXES = [
@@ -131,6 +131,26 @@ function civilina_db_migrate(PDO $pdo): void
 
             civilina_db_import_legacy($pdo);
             $pdo->exec('PRAGMA user_version = 1');
+            $version = 1;
+        }
+        if ($version < 2) {
+            // M1: anonymous page views (no cookie; visitor = daily-salted hash, IP never stored).
+            $pdo->exec(<<<'SQL'
+                CREATE TABLE IF NOT EXISTS page_views (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    created_at TEXT NOT NULL,
+                    day TEXT NOT NULL,
+                    path TEXT NOT NULL,
+                    visitor TEXT NOT NULL,
+                    source TEXT NOT NULL,
+                    referrer_host TEXT NOT NULL DEFAULT '',
+                    campaign TEXT NOT NULL DEFAULT '',
+                    device TEXT NOT NULL DEFAULT ''
+                );
+                CREATE INDEX IF NOT EXISTS page_views_day ON page_views(day);
+                CREATE INDEX IF NOT EXISTS page_views_path ON page_views(path, day);
+                SQL);
+            $pdo->exec('PRAGMA user_version = 2');
         }
         $pdo->exec('COMMIT');
     } catch (Throwable $e) {
