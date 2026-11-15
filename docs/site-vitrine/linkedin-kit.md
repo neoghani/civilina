@@ -323,4 +323,5 @@ Lien de partage : https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2
 ## Journal des mises à jour de la page
 
 - **15/11/2026** — Appliqué sur la page (admin LinkedIn) : slogan, présentation (1 293 caractères), site web `https://civilina.com` (case « pas de site web » décochée), 20 spécialités, bouton personnalisé « Consulter le site web » → `https://civilina.com`. Post de lancement publié depuis la page, lien en commentaire (depuis le profil d'Abdelghani), post ajouté à « Notre sélection ».
-- Non modifiés (décision du propriétaire) : secteur, type d'entreprise, adresse, téléphone, taille.
+- **15/11/2026** — Secteur passé de « Construction » à « Génie civil » (cœur de métier). LinkedIn n'autorise qu'un seul secteur : le multi-secteur est porté par la présentation et les spécialités.
+- Non modifiés (décision du propriétaire) : type d'entreprise, adresse, téléphone, taille.
