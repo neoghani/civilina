@@ -342,3 +342,20 @@ Combien de temps vos dernières réserves mettent-elles à être levées ?
 Lien de l'article en commentaire.
 Lien de partage : https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcivilina.com%2Fjournal%2Freception-reserves-levee%2F
 #GénieCivil #BTP #Réception #QAQC #GestionDeChantier
+
+### 15. Constituer un DOE complet
+
+Le chantier est terminé. Reste une pièce que l'exploitant ouvrira pendant des décennies : le dossier des ouvrages exécutés.
+
+Trois règles pour qu'il soit complet et utile :
+→ il se remplit au fil du chantier, pas après la réception ;
+→ les plans conformes à l'exécution s'annotent à chaque modification validée ;
+→ il suit la structure et les codes de la WBS, avec un index en tête.
+
+Le jour où quelqu'un doit percer une dalle, il saura si le DOE était bon.
+
+Et vous, quand commencez-vous votre DOE ?
+
+Lien de l'article en commentaire.
+Lien de partage : https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcivilina.com%2Fjournal%2Fconstituer-doe-dossier-ouvrages-executes%2F
+#GénieCivil #BTP #DOE #QAQC #GestionDeProjet
