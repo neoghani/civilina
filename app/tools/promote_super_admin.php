@@ -5,8 +5,9 @@ declare(strict_types=1);
 /*
  * One-off: grants the super administrator flag to an existing admin account.
  *
- * Deployment: copy to public_html under a random name, replace __EMAIL__,
- * call it once over HTTPS; the script deletes itself after running.
+ * Deployment: copy to public_html under a random name, put the account's
+ * e-mail in the $email placeholder below (replace the quoted placeholder,
+ * not this comment), call it once over HTTPS; the script deletes itself.
  * Locally: php promote_super_admin.php <document_root> <email>
  */
 

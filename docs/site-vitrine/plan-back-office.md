@@ -36,7 +36,7 @@ Version du 15/11/2026. Périmètre : civilina.com (hébergement Octenium, cPanel
 
 | Jalon | Date | Livrable | Critère de réussite |
 |---|---|---|---|
-| **M0 — Socle et nettoyage** | **Mar. 17/11/2026** | Base SQLite, migration des JSON, rôle super administrateur, nouveau gabarit `/admin/` en charte V2, espace membre nettoyé (navigation V2), limitation des tentatives de connexion | L'ancien visuel a disparu ; toutes les données existantes sont retrouvées |
+| **M0 — Socle et nettoyage** ✅ livré le 15/11/2026 | **Mar. 17/11/2026** | Base SQLite, migration des JSON, rôle super administrateur, nouveau gabarit `/admin/` en charte V2, espace membre nettoyé (navigation V2), limitation des tentatives de connexion | L'ancien visuel a disparu ; toutes les données existantes sont retrouvées |
 | **M1 — Statistiques** | **Jeu. 19/11/2026** | Compteur de visites sans cookie, tableau de bord des performances, demandes de contact par axe | Les chiffres du jour s'affichent et correspondent aux visites réelles |
 | **M2 — Éditeur du Journal** | **Mar. 24/11/2026** | Import des 16 articles, éditeur, aperçu, publication avec génération des pages et du sitemap | L'article 17 (fiche indicateur KPI) est publié entièrement depuis le back-office |
 | **M3 — Newsletter** | **Dim. 29/11/2026** (1er envoi **mar. 01/12**) | Formulaire d'inscription sur le site, double opt-in, segments par axe, composition et envoi via Brevo | La 1re newsletter part le mardi 1er décembre |
