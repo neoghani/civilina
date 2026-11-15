@@ -1,5 +1,5 @@
 /* Civilina day/night mode for the public site.
-   Runs in <head> (blocking, tiny) so the right mode is applied before the
+   Loaded in the document head (blocking, tiny) so the right mode is applied before the
    first paint. Choice stored in the civilina_theme cookie, shared with the
    member area and back-office (PHP); without a choice, the device decides. */
 (function () {
