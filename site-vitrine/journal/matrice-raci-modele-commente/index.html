@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La matrice RACI : modèle commenté pour clarifier qui fait quoi | Civilina</title>
+<meta name="description" content="Construire une matrice RACI utile : sens de R, A, C et I, règles de base, étapes de construction, modèle commenté pour un projet de construction, lecture par ligne et par colonne, variante RASCI, mise en Excel et checklist.">
+<link rel="canonical" href="https://civilina.com/journal/matrice-raci-modele-commente/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="La matrice RACI : modèle commenté pour clarifier qui fait quoi | Civilina">
+<meta property="og:description" content="Construire une matrice RACI utile : sens de R, A, C et I, règles de base, étapes de construction, modèle commenté pour un projet de construction, lecture par ligne et par colonne, variante RASCI, mise en Excel et checklist.">
+<meta property="og:url" content="https://civilina.com/journal/matrice-raci-modele-commente/">
+<meta property="og:image" content="https://civilina.com/assets/brand/civilina-logo.png">
+<meta property="og:locale" content="fr_FR">
+<meta name="google-adsense-account" content="ca-pub-5595911673357804">
+<link rel="icon" type="image/png" href="../../assets/brand/civilina-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"La matrice RACI : modèle commenté pour clarifier qui fait quoi","inLanguage":"fr","datePublished":"2026-11-16","dateModified":"2026-11-16","author":{"@type":"Person","name":"Abdelghani Bouhouche","jobTitle":"Ingénieur civil, PMP"},"publisher":{"@type":"Organization","name":"Civilina","url":"https://civilina.com/"},"mainEntityOfPage":"https://civilina.com/journal/matrice-raci-modele-commente/"}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5595911673357804" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header>
+  <div class="shell nav">
+    <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+    <nav class="menu" id="menu">
+      <a href="../../engineering/"><span class="dot" style="background:var(--eng)"></span>Engineering</a>
+      <a href="../../gestion-entreprise/"><span class="dot" style="background:var(--ent)"></span>Entreprise</a>
+      <a href="../../digital/"><span class="dot" style="background:var(--dig)"></span>Digital</a>
+      <a href="../../ia/"><span class="dot" style="background:var(--ia)"></span>CIVILINA IA</a>
+      <a href="../" class="active">Journal</a>
+      <a href="../../#apropos">À propos</a>
+      <a href="/login/" class="menu-login">Connexion</a>
+    </nav>
+    <a href="/login/" class="nav-login">Connexion</a>
+    <a href="../../engineering/#contact" class="btn btn-primary">Parler de votre projet</a>
+    <button class="burger" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<main>
+<article>
+  <div class="art-wrap art-head">
+    <p class="crumbs"><a href="../../">Accueil</a> › <a href="../">Journal</a> › La matrice RACI</p>
+    <span class="pill pill-ent">Entreprise · Organisation</span>
+    <h1>La matrice RACI : modèle commenté pour clarifier qui fait quoi</h1>
+    <div class="art-meta"><span>Par <b>Abdelghani Bouhouche</b>, ingénieur civil, PMP</span><span>Publié le 16 novembre 2026</span><span>Lecture : 8 min</span></div>
+  </div>
+  <figure class="art-cover"><img src="../../assets/journal/matrice-raci.svg" alt="La matrice RACI, modèle commenté"></figure>
+
+  <div class="art-wrap">
+    <p class="chapo">« Je pensais que c'était lui qui validait. » Cette phrase, entendue après un retard ou une erreur, révèle presque toujours le même problème : les responsabilités n'ont jamais été écrites. La matrice RACI est l'outil le plus simple pour y remédier. Encore faut-il la construire correctement, et la faire vivre. Voici la méthode, avec un modèle commenté issu d'un projet de construction.</p>
+
+    <nav class="toc" aria-label="Sommaire">
+      <strong>Sommaire</strong>
+      <ol>
+        <li><a href="#sens">Ce que signifient R, A, C et I</a></li>
+        <li><a href="#regles">Les règles de base</a></li>
+        <li><a href="#etapes">Construire la matrice en cinq étapes</a></li>
+        <li><a href="#modele">Le modèle commenté</a></li>
+        <li><a href="#lecture">Lire la matrice par ligne et par colonne</a></li>
+        <li><a href="#variantes">RASCI et autres variantes</a></li>
+        <li><a href="#systeme">Relier la RACI au reste du système</a></li>
+        <li><a href="#excel">La tenir dans Excel ou une plateforme</a></li>
+        <li><a href="#erreurs">Les erreurs fréquentes</a></li>
+        <li><a href="#checklist">Checklist</a></li>
+      </ol>
+    </nav>
+
+    <div class="prose">
+      <h2 id="sens">Ce que signifient R, A, C et I</h2>
+      <p>La matrice RACI croise, dans un tableau, des <strong>activités</strong> (en lignes) et des <strong>rôles</strong> (en colonnes). Chaque case indique le type d'implication du rôle dans l'activité :</p>
+      <ul>
+        <li><strong>R — Réalise</strong> (<em>Responsible</em>) : celui qui fait le travail ;</li>
+        <li><strong>A — Approuve</strong> (<em>Accountable</em>) : celui qui rend compte du résultat, tranche et signe ;</li>
+        <li><strong>C — Consulté</strong> (<em>Consulted</em>) : celui dont l'avis est demandé avant la décision, dans un échange à double sens ;</li>
+        <li><strong>I — Informé</strong> (<em>Informed</em>) : celui qui est tenu au courant du résultat, sans intervenir.</li>
+      </ul>
+      <p>Le guide PMBOK du PMI la présente comme une forme de matrice d'affectation des responsabilités, et la norme ISO 9001 demande que les rôles, responsabilités et autorités soient attribués, communiqués et compris. La RACI est une manière concrète d'y répondre.</p>
+      <div class="box box-key"><strong>À retenir</strong>La distinction essentielle est entre R et A : plusieurs personnes peuvent réaliser, une seule doit répondre du résultat.</div>
+
+      <h2 id="regles">Les règles de base</h2>
+      <ul>
+        <li><strong>Un seul A par activité.</strong> Deux approbateurs, c'est en pratique aucun : chacun attend l'autre.</li>
+        <li><strong>Au moins un R par activité.</strong> Une activité sans réalisateur ne sera pas faite.</li>
+        <li><strong>A et R peuvent être la même personne</strong>, pour une tâche simple. On note alors « A/R ».</li>
+        <li><strong>Des C limités.</strong> Chaque consultation prend du temps ; on ne consulte que ceux dont l'avis change la décision.</li>
+        <li><strong>Des rôles, pas des noms.</strong> La matrice décrit des fonctions ; une liste séparée indique qui tient chaque rôle.</li>
+      </ul>
+
+      <h2 id="etapes">Construire la matrice en cinq étapes</h2>
+      <ol>
+        <li><strong>Lister les activités.</strong> Partir des livrables de la <a href="../construire-wbs-decoupage-projet/" style="color:var(--blue);text-decoration:underline">WBS</a> et des processus clés : documents à produire, contrôles, décisions, paiements. Quinze à quarante lignes suffisent pour un projet.</li>
+        <li><strong>Lister les rôles.</strong> Reprendre l'organigramme, en ajoutant les intervenants externes concernés : maître d'œuvre, sous-traitants, laboratoire.</li>
+        <li><strong>Remplir une première version</strong>, ligne par ligne, en commençant par le A.</li>
+        <li><strong>La valider avec les intéressés.</strong> Chaque titulaire de rôle relit sa colonne et confirme qu'il accepte ce qui lui est attribué. C'est l'étape qui donne sa valeur à la matrice.</li>
+        <li><strong>La diffuser et la réviser</strong> à chaque changement d'organisation ou de phase du projet.</li>
+      </ol>
+
+      <h2 id="modele">Le modèle commenté</h2>
+      <p>Voici un extrait de matrice pour un projet de construction, côté entreprise. Rôles : DP (directeur de projet), CP (chef de projet), RQ (responsable qualité), CT (conducteur de travaux), BE (bureau d'études), ACH (achats).</p>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Activité</th><th>DP</th><th>CP</th><th>RQ</th><th>CT</th><th>BE</th><th>ACH</th></tr></thead>
+        <tbody>
+          <tr><td>Rédiger le PAQ</td><td>A</td><td>C</td><td>R</td><td>C</td><td>C</td><td>I</td></tr>
+          <tr><td>Approuver le planning de référence</td><td>A</td><td>R</td><td>I</td><td>C</td><td>C</td><td>I</td></tr>
+          <tr><td>Établir les ITP</td><td>I</td><td>A</td><td>R</td><td>C</td><td>C</td><td>—</td></tr>
+          <tr><td>Lever un point d'arrêt interne</td><td>—</td><td>I</td><td>A</td><td>R</td><td>C</td><td>—</td></tr>
+          <tr><td>Ouvrir une non-conformité</td><td>I</td><td>I</td><td>A</td><td>R</td><td>C</td><td>—</td></tr>
+          <tr><td>Décider d'une dérogation</td><td>A</td><td>R</td><td>C</td><td>I</td><td>C</td><td>—</td></tr>
+          <tr><td>Valider une facture fournisseur</td><td>I</td><td>A</td><td>—</td><td>C</td><td>—</td><td>R</td></tr>
+          <tr><td>Diffuser les plans d'exécution</td><td>—</td><td>A</td><td>I</td><td>I</td><td>R</td><td>—</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Quelques commentaires sur les choix faits :</p>
+      <ul>
+        <li><strong>Le PAQ</strong> est rédigé par le responsable qualité, mais approuvé par le directeur de projet : c'est lui qui engage l'entreprise auprès du client. Voir <a href="../rediger-plan-assurance-qualite-paq-iso-10005/" style="color:var(--blue);text-decoration:underline">rédiger un PAQ</a>.</li>
+        <li><strong>Le point d'arrêt</strong> est préparé par le conducteur de travaux, mais levé par le responsable qualité. Celui qui produit ne libère pas lui-même son propre contrôle. Voir <a href="../construire-itp-points-arret-temoin-revue/" style="color:var(--blue);text-decoration:underline">construire un ITP</a>.</li>
+        <li><strong>La non-conformité</strong> est ouverte par le terrain, qui la constate, et validée par la qualité. Voir le <a href="../cycle-non-conformite-ncr-constat-cloture/" style="color:var(--blue);text-decoration:underline">cycle d'une NCR</a>.</li>
+        <li><strong>La facture fournisseur</strong> est préparée par les achats, le conducteur de travaux est consulté pour attester le service fait, et le chef de projet l'approuve.</li>
+      </ul>
+      <p>Les tirets signalent une absence d'implication : ils comptent autant que les lettres, car ils évitent d'informer ou de consulter tout le monde par défaut.</p>
+
+      <h2 id="lecture">Lire la matrice par ligne et par colonne</h2>
+      <p>Une fois remplie, la matrice se vérifie dans les deux sens.</p>
+      <table>
+        <thead><tr><th>Lecture</th><th>Signal</th><th>Interprétation</th></tr></thead>
+        <tbody>
+          <tr><td>Ligne</td><td>Aucun A ou plusieurs A</td><td>Décision non attribuée ou disputée</td></tr>
+          <tr><td>Ligne</td><td>Aucun R</td><td>Activité qui ne sera pas faite</td></tr>
+          <tr><td>Ligne</td><td>Beaucoup de C</td><td>Décision lente, à simplifier</td></tr>
+          <tr><td>Colonne</td><td>Beaucoup de A</td><td>Goulot d'étranglement, délégation à revoir</td></tr>
+          <tr><td>Colonne</td><td>Aucun R ni A</td><td>Rôle peu utile ou mal défini</td></tr>
+          <tr><td>Colonne</td><td>Que des R</td><td>Rôle chargé mais sans autorité</td></tr>
+        </tbody>
+      </table>
+      <div class="box box-ex"><strong>Exemple type</strong>Dans une entreprise de travaux, la première version de la matrice montre que le directeur de projet est « A » sur presque toutes les lignes, jusqu'aux bons de commande de petit montant. Les validations s'accumulent sur son bureau et le chantier attend. La révision délègue au chef de projet les décisions sous un seuil défini, et laisse au directeur les décisions contractuelles et financières importantes. Les délais de validation diminuent nettement, sans perte de maîtrise.</div>
+
+      <h2 id="variantes">RASCI et autres variantes</h2>
+      <p>Plusieurs variantes existent. La plus courante, <strong>RASCI</strong>, ajoute un <strong>S</strong> (<em>Support</em>) pour ceux qui apportent des ressources ou une aide ponctuelle au réalisateur, sans porter le travail. D'autres ajoutent un V pour vérification. Elles sont utiles sur des organisations complexes, mais chaque lettre ajoutée complique la lecture : pour une PME ou un premier projet, la RACI classique suffit très bien.</p>
+
+      <h2 id="systeme">Relier la RACI au reste du système</h2>
+      <p>La matrice ne vit pas seule. Elle doit être cohérente avec :</p>
+      <ul>
+        <li><strong>les fiches de poste</strong>, qui reprennent pour chaque fonction ses R et ses A ;</li>
+        <li><strong>les procédures</strong>, où chaque étape cite le rôle qui la réalise et celui qui l'approuve ;</li>
+        <li><strong>le PAQ</strong>, dont la section organisation reprend la matrice du projet ;</li>
+        <li><strong>les délégations de signature</strong>, qui doivent couvrir les A attribués.</li>
+      </ul>
+      <p>C'est l'un des points où <a href="../iso-ou-pmi-structurer-gestion-entreprise/" style="color:var(--blue);text-decoration:underline">les approches ISO et PMI</a> se rejoignent : l'une demande des autorités définies, l'autre fournit l'outil pour les représenter.</p>
+
+      <h2 id="excel">La tenir dans Excel ou une plateforme</h2>
+      <p>Excel convient très bien pour démarrer :</p>
+      <ul>
+        <li>une liste déroulante limitée à R, A, C, I et A/R dans chaque case ;</li>
+        <li>une colonne de contrôle qui compte les A par ligne et signale tout résultat différent de 1 ;</li>
+        <li>une mise en forme conditionnelle qui colore chaque lettre ;</li>
+        <li>une ligne de synthèse qui compte les A par colonne, pour repérer les goulots.</li>
+      </ul>
+      <p>Sur une <a href="../passer-excel-plateforme-gestion/" style="color:var(--blue);text-decoration:underline">plateforme de gestion</a>, la matrice peut aller plus loin : elle définit directement qui reçoit une demande de validation, qui est notifié, et qui peut signer. La RACI cesse alors d'être un document pour devenir une règle appliquée.</p>
+
+      <h2 id="erreurs">Les erreurs fréquentes</h2>
+      <div class="box box-warn"><strong>À éviter</strong>
+        <ul>
+          <li>Mettre plusieurs A sur une même activité.</li>
+          <li>Remplir la matrice seul, sans la faire valider par les intéressés.</li>
+          <li>Écrire des noms au lieu des rôles.</li>
+          <li>Consulter et informer tout le monde « par précaution ».</li>
+          <li>Détailler trois cents tâches au lieu des activités clés.</li>
+          <li>Ne jamais la réviser après un changement d'organisation.</li>
+        </ul>
+      </div>
+
+      <h2 id="checklist">Checklist</h2>
+      <ul class="checklist">
+        <li>Les activités partent des livrables et des processus clés.</li>
+        <li>Les colonnes décrivent des rôles, avec une liste séparée des titulaires.</li>
+        <li>Chaque ligne a exactement un A et au moins un R.</li>
+        <li>Les C sont limités à ceux dont l'avis compte.</li>
+        <li>Chaque titulaire a relu et accepté sa colonne.</li>
+        <li>Les fiches de poste, procédures et délégations sont cohérentes avec la matrice.</li>
+        <li>La matrice est diffusée et révisée à chaque changement d'organisation.</li>
+      </ul>
+      <p>Une bonne matrice RACI ne se remarque pas : elle supprime simplement les « je croyais que c'était toi » et les validations qui attendent sur un bureau.</p>
+
+      <div class="sources"><strong>Références citées</strong>
+        <ul>
+          <li>PMI — Guide du corpus des connaissances en management de projet (PMBOK), matrice d'affectation des responsabilités.</li>
+          <li>ISO 9001 — Systèmes de management de la qualité — Exigences (rôles, responsabilités et autorités au sein de l'organisme).</li>
+          <li>ISO 21502 — Management de projet, de programme et de portefeuille — Recommandations sur le management de projet.</li>
+        </ul>
+        <p style="margin-top:.6rem">Le modèle présenté est un exemple : la répartition des rôles dépend de votre organisation et de vos contrats. Consultez l'édition en vigueur des normes et référentiels auprès de leur éditeur officiel.</p>
+      </div>
+    </div>
+
+    <div class="share"><span>Cet article vous a été utile ? Partagez-le.</span><a class="share-li" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcivilina.com%2Fjournal%2Fmatrice-raci-modele-commente%2F" target="_blank" rel="noopener">Partager sur LinkedIn</a><button type="button" class="share-copy" data-url="https://civilina.com/journal/matrice-raci-modele-commente/" onclick="var b=this;navigator.clipboard&amp;&amp;navigator.clipboard.writeText(b.dataset.url).then(function(){b.textContent='Lien copié';})">Copier le lien</button></div>
+
+    <div class="author">
+      <img src="../../assets/brand/abdelghani-bouhouche.jpg" alt="Abdelghani Bouhouche">
+      <div><strong>Abdelghani Bouhouche</strong><p>Ingénieur civil et PMP, fondateur de Civilina. Expérience en management de projet, qualité, QHSE et coordination opérationnelle, en Algérie et à l'international.</p></div>
+    </div>
+
+    <div class="art-cta">
+      <h3>Des responsabilités claires dans votre organisation ?</h3>
+      <p>CIVILINA Entreprise construit avec vous la matrice RACI, les fiches de poste et les délégations, puis les relie à vos tableaux de bord web et Excel.</p>
+      <a href="../../gestion-entreprise/" class="btn">Découvrir CIVILINA Entreprise →</a>
+    </div>
+  </div>
+</article>
+</main>
+
+<footer>
+  <div class="shell">
+    <div class="foot">
+      <div>
+        <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+        <p style="margin-top:.8rem;max-width:34ch">Engineering, management et digitalisation pour les projets d'ingénierie.</p>
+      </div>
+      <div><h5>Axes</h5><ul><li><a href="../../engineering/">CIVILINA Engineering</a></li><li><a href="../../gestion-entreprise/">CIVILINA Entreprise</a></li><li><a href="../../digital/">CIVILINA Digital</a></li><li><a href="../../ia/">CIVILINA IA</a></li></ul></div>
+      <div><h5>Journal</h5><ul><li><a href="../iso-ou-pmi-structurer-gestion-entreprise/">ISO ou PMI ?</a></li><li><a href="../construire-wbs-decoupage-projet/">Construire une WBS utile</a></li><li><a href="../">Tous les articles</a></li></ul></div>
+      <div><h5>Contact</h5><ul><li><a href="/#contact">Demander un diagnostic</a></li><li><a href="https://www.linkedin.com/company/civilina" rel="noopener">LinkedIn</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Civilina</span><span><a href="/mentions-legales/">Mentions légales</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/cookies/">Cookies</a> · <a href="/conditions-utilisation/">Conditions</a></span></div>
+  </div>
+</footer>
+</body>
+</html>

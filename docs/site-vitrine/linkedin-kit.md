@@ -359,3 +359,22 @@ Et vous, quand commencez-vous votre DOE ?
 Lien de l'article en commentaire.
 Lien de partage : https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcivilina.com%2Fjournal%2Fconstituer-doe-dossier-ouvrages-executes%2F
 #GénieCivil #BTP #DOE #QAQC #GestionDeProjet
+
+### 16. La matrice RACI
+
+« Je pensais que c'était lui qui validait. »
+
+Derrière cette phrase, il y a presque toujours des responsabilités jamais écrites.
+
+La matrice RACI règle le problème en un tableau :
+→ R réalise, A approuve, C est consulté, I est informé ;
+→ un seul A par activité, sinon personne ne décide ;
+→ chaque titulaire relit et accepte sa colonne.
+
+Lue par colonne, elle révèle aussi les goulots : un directeur « A » sur tout, c'est un chantier qui attend.
+
+Et vous, combien de A a votre directeur de projet ?
+
+Lien de l'article en commentaire.
+Lien de partage : https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcivilina.com%2Fjournal%2Fmatrice-raci-modele-commente%2F
+#GestionDeProjet #PMP #Organisation #GénieCivil #BTP

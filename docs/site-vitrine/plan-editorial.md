@@ -39,7 +39,7 @@
 | 12 | Réception, réserves et levée de réserves | Engineering | ✅ Écrit et publié le 16/11/2026 |
 | 13 | Constituer un DOE complet | Engineering | ✅ Écrit et publié le 16/11/2026 |
 | 14 | ISO ou PMI : quelle base pour structurer la gestion de son entreprise ? | Entreprise | ✅ Écrit le 14/11/2026 |
-| 15 | La matrice RACI : modèle commenté | Entreprise | À écrire |
+| 15 | La matrice RACI : modèle commenté | Entreprise | ✅ Écrit et publié le 16/11/2026 |
 | 16 | Choisir ses KPI : la fiche indicateur en 5 questions | Entreprise | À écrire |
 | 17 | Construire un tableau de bord de direction dans Excel | Entreprise | À écrire |
 | 18 | Le registre des risques : du tableau à la décision | Entreprise | À écrire |
