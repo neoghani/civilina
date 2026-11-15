@@ -499,3 +499,10 @@ footer{padding:56px 0 32px;font-size:.9rem;color:var(--steel)}
 .cform label,.cform .row2 > *{min-width:0}
 .cform input,.cform select,.cform textarea{width:100%;min-width:0;max-width:100%;display:block}
 .cform textarea{resize:vertical}
+/* Partage des articles */
+.share{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:2.6rem 0 0;padding:16px 18px;border:1px solid var(--line);border-radius:16px;background:var(--cloud)}
+.share > span{font-weight:700;color:var(--navy);font-size:.92rem;margin-right:auto}
+.share a,.share button{font:inherit;font-size:.88rem;font-weight:700;padding:.55rem 1rem;border-radius:999px;cursor:pointer;border:1.5px solid var(--line);background:#fff;color:var(--navy)}
+.share .share-li{background:#0a66c2;border-color:#0a66c2;color:#fff}
+.share .share-li:hover{background:#004182}
+.share button:hover{border-color:var(--blue-2)}

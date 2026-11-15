@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Applicable, non applicable, à confirmer : documenter la décision d'applicabilité | Civilina</title>
+<meta name="description" content="Décider si une exigence normative s'applique à son projet, et le prouver : les trois statuts, qui décide, les critères, le registre d'applicabilité, le lien avec l'ITP, exemple et checklist.">
+<link rel="canonical" href="https://civilina.com/journal/decision-applicabilite-norme-projet/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Applicable, non applicable, à confirmer : documenter la décision d'applicabilité | Civilina">
+<meta property="og:description" content="Décider si une exigence normative s'applique à son projet, et le prouver : les trois statuts, qui décide, les critères, le registre d'applicabilité, le lien avec l'ITP, exemple et checklist.">
+<meta property="og:url" content="https://civilina.com/journal/decision-applicabilite-norme-projet/">
+<meta property="og:image" content="https://civilina.com/assets/brand/civilina-logo.png">
+<meta property="og:locale" content="fr_FR">
+<meta name="google-adsense-account" content="ca-pub-5595911673357804">
+<link rel="icon" type="image/png" href="../../assets/brand/civilina-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Applicable, non applicable, à confirmer : documenter la décision d'applicabilité","inLanguage":"fr","datePublished":"2026-11-15","dateModified":"2026-11-15","author":{"@type":"Person","name":"Abdelghani Bouhouche","jobTitle":"Ingénieur civil, PMP"},"publisher":{"@type":"Organization","name":"Civilina","url":"https://civilina.com/"},"mainEntityOfPage":"https://civilina.com/journal/decision-applicabilite-norme-projet/"}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5595911673357804" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header>
+  <div class="shell nav">
+    <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+    <nav class="menu" id="menu">
+      <a href="../../engineering/"><span class="dot" style="background:var(--eng)"></span>Engineering</a>
+      <a href="../../gestion-entreprise/"><span class="dot" style="background:var(--ent)"></span>Entreprise</a>
+      <a href="../../digital/"><span class="dot" style="background:var(--dig)"></span>Digital</a>
+      <a href="../../ia/"><span class="dot" style="background:var(--ia)"></span>CIVILINA IA</a>
+      <a href="../" class="active">Journal</a>
+      <a href="../../#apropos">À propos</a>
+      <a href="/login/" class="menu-login">Connexion</a>
+    </nav>
+    <a href="/login/" class="nav-login">Connexion</a>
+    <a href="../../engineering/#contact" class="btn btn-primary">Parler de votre projet</a>
+    <button class="burger" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<main>
+<article>
+  <div class="art-wrap art-head">
+    <p class="crumbs"><a href="../../">Accueil</a> › <a href="../">Journal</a> › Documenter la décision d'applicabilité</p>
+    <span class="pill pill-eng">Engineering · Normes</span>
+    <h1>Applicable, non applicable, à confirmer : documenter la décision</h1>
+    <div class="art-meta"><span>Par <b>Abdelghani Bouhouche</b>, ingénieur civil, PMP</span><span>Publié le 15 novembre 2026</span><span>Lecture : 8 min</span></div>
+  </div>
+  <figure class="art-cover"><img src="../../assets/journal/decision-applicabilite.svg" alt="Applicable ou non : documenter la décision"></figure>
+
+  <div class="art-wrap">
+    <p class="chapo">Qu'une norme existe ne signifie pas qu'elle s'applique à votre projet. Entre la liste des références d'un marché et les contrôles réalisés sur le chantier, il y a une étape souvent implicite : décider, exigence par exigence, ce qui s'applique vraiment. Quand cette décision n'est écrite nulle part, elle finit par être contestée. Voici comment la prendre et la documenter.</p>
+
+    <nav class="toc" aria-label="Sommaire">
+      <strong>Sommaire</strong>
+      <ol>
+        <li><a href="#pourquoi">Pourquoi décider explicitement</a></li>
+        <li><a href="#statuts">Les trois statuts</a></li>
+        <li><a href="#qui">Qui décide</a></li>
+        <li><a href="#criteres">Les critères pour décider</a></li>
+        <li><a href="#registre">Le registre d'applicabilité</a></li>
+        <li><a href="#confirmer">Faire vivre le statut « à confirmer »</a></li>
+        <li><a href="#exemple">Exemple type</a></li>
+        <li><a href="#revision">Quand revoir les décisions</a></li>
+        <li><a href="#outils">Ce qu'un outil peut faire, et ce qu'il ne doit pas faire</a></li>
+        <li><a href="#erreurs">Les erreurs fréquentes</a></li>
+        <li><a href="#checklist">Checklist</a></li>
+      </ol>
+    </nav>
+
+    <div class="prose">
+      <h2 id="pourquoi">Pourquoi décider explicitement</h2>
+      <p>Un marché cite souvent une longue liste de normes et de documents techniques. Chacun contient des dizaines d'exigences, dont une partie seulement concerne réellement les ouvrages du projet. Si personne ne fait le tri, deux dérives apparaissent :</p>
+      <ul>
+        <li><strong>la sur-application</strong> : on contrôle tout « au cas où », on alourdit les ITP, on bloque le chantier sur des exigences qui ne le concernent pas ;</li>
+        <li><strong>la sous-application</strong> : on oublie une exigence qui s'appliquait bel et bien, et l'écart n'est découvert qu'à la réception, ou plus tard.</li>
+      </ul>
+      <p>Dans les deux cas, le problème n'est pas technique : c'est l'absence d'une décision claire, datée, prise par la bonne personne et conservée. La <a href="../lire-une-norme-edition-clause-exigence/" style="color:var(--blue);text-decoration:underline">lecture méthodique d'une norme</a> isole les exigences ; la décision d'applicabilité dit lesquelles s'appliquent au projet.</p>
+
+      <h2 id="statuts">Les trois statuts</h2>
+      <table>
+        <thead><tr><th>Statut</th><th>Signification</th><th>Conséquence</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Applicable</strong></td><td>L'exigence concerne un ouvrage, un matériau ou une activité du projet</td><td>Elle alimente une ligne d'ITP, un critère d'acceptation et un contrôle</td></tr>
+          <tr><td><strong>Non applicable</strong></td><td>L'exigence ne concerne pas le projet, pour une raison écrite</td><td>Aucun contrôle ; la justification reste disponible en cas de question</td></tr>
+          <tr><td><strong>À confirmer</strong></td><td>Une donnée manque pour décider</td><td>Une action est ouverte, avec un responsable et une échéance ; le contrôle concerné reste en attente</td></tr>
+        </tbody>
+      </table>
+      <div class="box box-key"><strong>À retenir</strong>« Non applicable » n'est pas une case vide : c'est une décision qui doit être justifiée. Et « à confirmer » est une réponse honnête, bien préférable à une applicabilité supposée.</div>
+
+      <h2 id="qui">Qui décide</h2>
+      <p>La décision d'applicabilité est une décision technique. Elle revient à une personne <strong>compétente dans le domaine concerné</strong> et désignée pour cela dans l'organisation du projet : responsable technique, ingénieur de la discipline, responsable qualité selon le sujet. Selon le contrat, elle est ensuite soumise au maître d'œuvre ou au client, qui peut l'accepter ou la contester.</p>
+      <p>La <a href="../rediger-plan-assurance-qualite-paq-iso-10005/" style="color:var(--blue);text-decoration:underline">matrice des responsabilités du plan qualité</a> doit préciser qui propose, qui valide et qui est informé. Une décision prise par défaut, par la personne qui rédige l'ITP sans validation, est fragile.</p>
+
+      <h2 id="criteres">Les critères pour décider</h2>
+      <p>Pour chaque exigence, quelques questions suffisent généralement :</p>
+      <ol>
+        <li><strong>Le domaine d'application</strong> de la norme couvre-t-il cet ouvrage, ce produit ou cette activité ?</li>
+        <li><strong>Les conditions</strong> de l'exigence sont-elles réunies : type d'élément, classe de matériau, environnement, catégorie d'ouvrage ?</li>
+        <li><strong>Les documents du marché</strong> la rendent-ils obligatoire, la remplacent-ils par une exigence plus stricte, ou l'excluent-ils ?</li>
+        <li><strong>La réglementation</strong> du pays impose-t-elle une règle différente ?</li>
+        <li><strong>L'édition</strong> retenue pour le projet contient-elle bien cette exigence, sous cette forme ?</li>
+        <li><strong>Les choix de conception</strong> (matériaux, méthodes, variantes) la rendent-ils pertinente ?</li>
+      </ol>
+      <p>Si l'une de ces réponses manque, le statut est « à confirmer », jamais « applicable par précaution » ou « non applicable par défaut ».</p>
+
+      <h2 id="registre">Le registre d'applicabilité</h2>
+      <p>Le registre d'applicabilité rassemble toutes les décisions. Un tableur suffit pour commencer ; l'essentiel est qu'il soit unique, à jour et accessible.</p>
+      <table>
+        <thead><tr><th>Colonne</th><th>Contenu</th></tr></thead>
+        <tbody>
+          <tr><td>Référence</td><td>Norme ou document, édition, article, tableau</td></tr>
+          <tr><td>Exigence</td><td>L'énoncé résumé de l'exigence, sans recopier le texte protégé</td></tr>
+          <tr><td>Périmètre</td><td>Ouvrages, lots ou activités concernés</td></tr>
+          <tr><td>Statut</td><td>Applicable, non applicable, à confirmer</td></tr>
+          <tr><td>Justification</td><td>La raison de la décision, avec la source (marché, plan, note de calcul)</td></tr>
+          <tr><td>Décideur et date</td><td>Qui a décidé, quand, et qui a validé si nécessaire</td></tr>
+          <tr><td>Suite</td><td>Ligne d'ITP créée, action ouverte, ou rien</td></tr>
+          <tr><td>Révision</td><td>Historique des changements de statut</td></tr>
+        </tbody>
+      </table>
+      <p>Seules les exigences « applicables » alimentent l'<a href="../construire-itp-points-arret-temoin-revue/" style="color:var(--blue);text-decoration:underline">ITP</a>. Chaque ligne d'ITP peut alors renvoyer à une ligne du registre, ce qui ferme la chaîne : norme, édition, exigence, décision, contrôle, PV.</p>
+
+      <h2 id="confirmer">Faire vivre le statut « à confirmer »</h2>
+      <p>Le statut « à confirmer » est utile à condition de ne pas devenir permanent. Pour chaque exigence dans ce cas :</p>
+      <ul>
+        <li>la <strong>donnée manquante</strong> est nommée précisément (classe d'environnement, choix de matériau, avis du concepteur) ;</li>
+        <li>un <strong>responsable</strong> et une <strong>échéance</strong> sont fixés, cohérents avec le planning des travaux concernés ;</li>
+        <li>le point est suivi en <strong>réunion de projet</strong> jusqu'à sa résolution ;</li>
+        <li>aucun contrôle définitif n'est réalisé sur l'élément concerné tant que le statut n'est pas tranché.</li>
+      </ul>
+      <p>Un registre avec beaucoup d'exigences « à confirmer » en début de projet est normal. Un registre qui en contient encore à la réception ne l'est pas.</p>
+
+      <h2 id="exemple">Exemple type</h2>
+      <div class="box box-ex"><strong>Exemple type</strong>Sur un projet de bâtiment, le marché cite une norme de produit pour des éléments préfabriqués. Le concepteur a finalement retenu une solution coulée en place : l'exigence est classée <em>non applicable</em>, avec la référence de la note de conception qui le justifie. Une autre exigence dépend de la classe d'environnement des façades, que les documents ne précisent pas encore : elle est classée <em>à confirmer</em>, et une question est posée au maître d'œuvre avec une échéance avant le lancement des façades. Une troisième, sur le contrôle des armatures, est <em>applicable</em> et devient une ligne de l'ITP gros œuvre.</div>
+      <p>Trois exigences, trois statuts, et pour chacune une trace qui permettra de répondre sans hésiter à un auditeur ou à un expert, même des années plus tard.</p>
+
+      <h2 id="revision">Quand revoir les décisions</h2>
+      <p>Une décision d'applicabilité n'est pas définitive. Elle doit être revue lorsque :</p>
+      <ul>
+        <li>la <strong>conception change</strong> : nouveau matériau, nouvelle méthode, variante acceptée ;</li>
+        <li>le <strong>périmètre</strong> du projet évolue : avenant, ouvrage ajouté ou supprimé ;</li>
+        <li>une <strong>nouvelle édition</strong> d'un texte est retenue pour le projet ;</li>
+        <li>le maître d'œuvre ou le client <strong>conteste</strong> une décision.</li>
+      </ul>
+      <p>Chaque révision garde l'historique : l'ancienne décision n'est pas effacée, elle est remplacée, avec la date et la raison.</p>
+
+      <h2 id="outils">Ce qu'un outil peut faire, et ce qu'il ne doit pas faire</h2>
+      <p>Une base normative ou un assistant numérique peut beaucoup aider : retrouver les références liées à un type d'ouvrage, signaler les exigences qui dépendent d'une donnée encore inconnue, rappeler les décisions déjà prises sur un projet similaire, préparer le brouillon du registre.</p>
+      <p>Il ne doit pas, en revanche, décider à la place de l'ingénieur. Une correspondance entre un mot-clé et une norme n'est pas une applicabilité. Lorsqu'aucune référence ne correspond, la bonne réponse est « aucune correspondance », pas une norme approchante. Et toute valeur proposée doit renvoyer à sa source exacte, pour être vérifiée.</p>
+      <p>C'est le principe que nous appliquons à <a href="../../ia/" style="color:var(--blue);text-decoration:underline">CIVILINA IA</a> : l'outil prépare et signale ce qui manque, l'ingénieur décide.</p>
+
+      <h2 id="erreurs">Les erreurs fréquentes</h2>
+      <div class="box box-warn"><strong>À éviter</strong>
+        <ul>
+          <li>Considérer que toute norme citée au marché s'applique en entier.</li>
+          <li>Marquer « non applicable » sans justification.</li>
+          <li>Laisser des exigences « à confirmer » sans responsable ni échéance.</li>
+          <li>Faire décider l'applicabilité par une personne non compétente dans le domaine.</li>
+          <li>Oublier de revoir les décisions après un changement de conception.</li>
+          <li>Recopier le texte des normes dans le registre au lieu de le résumer et d'y renvoyer.</li>
+        </ul>
+      </div>
+
+      <h2 id="checklist">Checklist</h2>
+      <ul class="checklist">
+        <li>Les normes et documents applicables au projet sont listés avec leur édition.</li>
+        <li>Les exigences utiles sont isolées et résumées dans un registre unique.</li>
+        <li>Chaque exigence a un statut : applicable, non applicable ou à confirmer.</li>
+        <li>Chaque statut est justifié par une source identifiée.</li>
+        <li>Le décideur et la date sont notés, ainsi que la validation si le contrat l'exige.</li>
+        <li>Chaque « à confirmer » a une donnée manquante nommée, un responsable et une échéance.</li>
+        <li>Chaque exigence applicable est reliée à une ligne d'ITP.</li>
+        <li>Le registre est revu à chaque changement de conception, de périmètre ou d'édition.</li>
+      </ul>
+      <p>Documenter l'applicabilité prend quelques heures en début de projet. C'est souvent ce qui évite des semaines de discussion à la fin.</p>
+
+      <div class="sources"><strong>Références citées</strong>
+        <ul>
+          <li>ISO 9001 — Systèmes de management de la qualité — Exigences (détermination des exigences, informations documentées).</li>
+          <li>ISO 10005 — Management de la qualité — Lignes directrices pour les plans qualité.</li>
+          <li>Documents du marché : liste des normes et éditions applicables, spécifications et plans du projet.</li>
+        </ul>
+        <p style="margin-top:.6rem">L'exemple présenté est illustratif. Les décisions d'applicabilité relèvent de professionnels compétents et des règles propres à chaque contrat.</p>
+      </div>
+    </div>
+
+    <div class="share"><span>Cet article vous a été utile ? Partagez-le.</span><a class="share-li" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcivilina.com%2Fjournal%2Fdecision-applicabilite-norme-projet%2F" target="_blank" rel="noopener">Partager sur LinkedIn</a><button type="button" class="share-copy" data-url="https://civilina.com/journal/decision-applicabilite-norme-projet/" onclick="var b=this;navigator.clipboard&amp;&amp;navigator.clipboard.writeText(b.dataset.url).then(function(){b.textContent='Lien copié';})">Copier le lien</button></div>
+
+    <div class="author">
+      <img src="../../assets/brand/abdelghani-bouhouche.jpg" alt="Abdelghani Bouhouche">
+      <div><strong>Abdelghani Bouhouche</strong><p>Ingénieur civil et PMP, fondateur de Civilina. Expérience en management de projet, qualité, QHSE et coordination opérationnelle, en Algérie et à l'international.</p></div>
+    </div>
+
+    <div class="art-cta">
+      <h3>Un registre d'applicabilité pour vos projets ?</h3>
+      <p>CIVILINA Engineering vous aide à isoler les exigences applicables, à documenter les décisions et à les relier à vos ITP, avec l'appui de sa base normative.</p>
+      <a href="../../engineering/#base-normative" class="btn">Découvrir la base normative →</a>
+    </div>
+  </div>
+</article>
+</main>
+
+<footer>
+  <div class="shell">
+    <div class="foot">
+      <div>
+        <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+        <p style="margin-top:.8rem;max-width:34ch">Engineering, management et digitalisation pour les projets d'ingénierie.</p>
+      </div>
+      <div><h5>Axes</h5><ul><li><a href="../../engineering/">CIVILINA Engineering</a></li><li><a href="../../gestion-entreprise/">CIVILINA Entreprise</a></li><li><a href="../../digital/">CIVILINA Digital</a></li><li><a href="../../ia/">CIVILINA IA</a></li></ul></div>
+      <div><h5>Journal</h5><ul><li><a href="../lire-une-norme-edition-clause-exigence/">Lire une norme</a></li><li><a href="../construire-itp-points-arret-temoin-revue/">Construire un ITP</a></li><li><a href="../">Tous les articles</a></li></ul></div>
+      <div><h5>Contact</h5><ul><li><a href="/#contact">Demander un diagnostic</a></li><li><a href="https://www.linkedin.com/company/civilina" rel="noopener">LinkedIn</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Civilina</span><span><a href="/mentions-legales/">Mentions légales</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/cookies/">Cookies</a> · <a href="/conditions-utilisation/">Conditions</a></span></div>
+  </div>
+</footer>
+</body>
+</html>
