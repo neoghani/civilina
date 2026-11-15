@@ -30,7 +30,7 @@
 | 3 | ISO 22000 et HACCP : première lecture | Entreprise | ✅ Réécrit (version longue) |
 | 4 | Construire un ITP : points d'arrêt, de témoin et de revue | Engineering | ✅ Écrit le 14/11/2026 (1 300 mots) |
 | 5 | Rédiger un Plan d'Assurance Qualité selon l'ISO 10005 | Engineering | ✅ Écrit le 14/11/2026 |
-| 6 | Le cycle d'une non-conformité : du constat à la clôture | Engineering | À écrire |
+| 6 | Le cycle d'une non-conformité : du constat à la clôture | Engineering | ✅ Écrit et publié le 15/11/2026 |
 | 7 | Le PV d'inspection : ce qu'un auditeur doit pouvoir retrouver | Engineering | À écrire |
 | 8 | Lire une norme : édition, clause, exigence applicable | Engineering | À écrire |
 | 9 | Applicable, non applicable, à confirmer : documenter la décision | Engineering | À écrire |

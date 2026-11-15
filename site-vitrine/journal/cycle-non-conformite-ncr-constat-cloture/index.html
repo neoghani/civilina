@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le cycle d'une non-conformité (NCR) : du constat à la clôture | Civilina</title>
+<meta name="description" content="Gérer une non-conformité de bout en bout : détection, isolement, décision de traitement, correction, analyse des causes, action corrective, recontrôle et clôture. Fiche NCR type, exemple et checklist.">
+<link rel="canonical" href="https://civilina.com/journal/cycle-non-conformite-ncr-constat-cloture/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Le cycle d'une non-conformité (NCR) : du constat à la clôture | Civilina">
+<meta property="og:description" content="Gérer une non-conformité de bout en bout : détection, isolement, décision de traitement, correction, analyse des causes, action corrective, recontrôle et clôture. Fiche NCR type, exemple et checklist.">
+<meta property="og:url" content="https://civilina.com/journal/cycle-non-conformite-ncr-constat-cloture/">
+<meta property="og:image" content="https://civilina.com/assets/brand/civilina-logo.png">
+<meta property="og:locale" content="fr_FR">
+<meta name="google-adsense-account" content="ca-pub-5595911673357804">
+<link rel="icon" type="image/png" href="../../assets/brand/civilina-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Le cycle d'une non-conformité : du constat à la clôture","inLanguage":"fr","datePublished":"2026-11-15","dateModified":"2026-11-15","author":{"@type":"Person","name":"Abdelghani Bouhouche","jobTitle":"Ingénieur civil, PMP"},"publisher":{"@type":"Organization","name":"Civilina","url":"https://civilina.com/"},"mainEntityOfPage":"https://civilina.com/journal/cycle-non-conformite-ncr-constat-cloture/"}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5595911673357804" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header>
+  <div class="shell nav">
+    <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+    <nav class="menu" id="menu">
+      <a href="../../engineering/"><span class="dot" style="background:var(--eng)"></span>Engineering</a>
+      <a href="../../gestion-entreprise/"><span class="dot" style="background:var(--ent)"></span>Entreprise</a>
+      <a href="../../digital/"><span class="dot" style="background:var(--dig)"></span>Digital</a>
+      <a href="../../ia/"><span class="dot" style="background:var(--ia)"></span>CIVILINA IA</a>
+      <a href="../" class="active">Journal</a>
+      <a href="../../#apropos">À propos</a>
+      <a href="/login/" class="menu-login">Connexion</a>
+    </nav>
+    <a href="/login/" class="nav-login">Connexion</a>
+    <a href="../../engineering/#contact" class="btn btn-primary">Parler de votre projet</a>
+    <button class="burger" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<main>
+<article>
+  <div class="art-wrap art-head">
+    <p class="crumbs"><a href="../../">Accueil</a> › <a href="../">Journal</a> › Le cycle d'une non-conformité</p>
+    <span class="pill pill-eng">Engineering · QA/QC</span>
+    <h1>Le cycle d'une non-conformité : du constat à la clôture</h1>
+    <div class="art-meta"><span>Par <b>Abdelghani Bouhouche</b>, ingénieur civil, PMP</span><span>Publié le 15 novembre 2026</span><span>Lecture : 8 min</span></div>
+  </div>
+  <figure class="art-cover"><img src="../../assets/journal/cycle-non-conformite.svg" alt="Le cycle d'une non-conformité"></figure>
+
+  <div class="art-wrap">
+    <p class="chapo">Sur un chantier ou dans une usine, les écarts sont inévitables. Ce qui distingue une organisation maîtrisée, ce n'est pas l'absence de non-conformités, c'est la façon dont elle les traite : vite, avec une décision claire, une cause comprise et une preuve de clôture. Voici le cycle complet d'une non-conformité, étape par étape.</p>
+
+    <nav class="toc" aria-label="Sommaire">
+      <strong>Sommaire</strong>
+      <ol>
+        <li><a href="#definition">Qu'est-ce qu'une non-conformité ?</a></li>
+        <li><a href="#cycle">Les huit étapes du cycle</a></li>
+        <li><a href="#correction">Correction ou action corrective : ne pas confondre</a></li>
+        <li><a href="#decisions">Les décisions de traitement possibles</a></li>
+        <li><a href="#causes">Analyser les causes sans chercher un coupable</a></li>
+        <li><a href="#fiche">La fiche NCR : ce qu'elle doit contenir</a></li>
+        <li><a href="#indicateurs">Suivre les non-conformités avec quelques indicateurs</a></li>
+        <li><a href="#erreurs">Les erreurs fréquentes</a></li>
+        <li><a href="#checklist">Checklist de clôture</a></li>
+      </ol>
+    </nav>
+
+    <div class="prose">
+      <h2 id="definition">Qu'est-ce qu'une non-conformité ?</h2>
+      <p>Dans le vocabulaire de la famille ISO 9000, une non-conformité est simplement la <strong>non-satisfaction d'une exigence</strong>. L'exigence peut venir d'un plan, d'une spécification du marché, d'une norme applicable, d'une procédure interne ou d'un engagement pris envers le client.</p>
+      <p>Sur le terrain, plusieurs mots désignent des situations voisines. Les distinguer évite bien des malentendus :</p>
+      <table>
+        <thead><tr><th>Terme</th><th>Ce qu'il désigne</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Non-conformité (NC)</strong></td><td>Un écart constaté par rapport à une exigence, qui doit être traité et tracé</td></tr>
+          <tr><td>Fiche NCR</td><td>Le document qui enregistre la non-conformité et son traitement (<em>Non-Conformance Report</em>)</td></tr>
+          <tr><td>Observation</td><td>Un point de vigilance ou un risque d'écart, sans exigence encore dépassée</td></tr>
+          <tr><td>Réserve</td><td>Un défaut relevé lors d'une réception, à lever avant ou après la prise de possession selon le contrat</td></tr>
+          <tr><td>Réclamation</td><td>Une insatisfaction exprimée par le client, qui peut révéler une non-conformité</td></tr>
+        </tbody>
+      </table>
+      <div class="box box-key"><strong>À retenir</strong>Une non-conformité se rattache toujours à une exigence précise. Si l'on ne sait pas dire quelle exigence n'est pas respectée, il s'agit peut-être d'une observation, pas encore d'une non-conformité.</div>
+
+      <h2 id="cycle">Les huit étapes du cycle</h2>
+      <ol>
+        <li><strong>Détecter et enregistrer.</strong> L'écart est constaté lors d'une inspection, d'un essai, d'un audit ou d'une réception. Il est enregistré immédiatement, avec photos et références : ce qui n'est pas écrit n'existe pas.</li>
+        <li><strong>Identifier et isoler.</strong> On empêche l'utilisation ou la poursuite des travaux sur l'élément concerné : étiquetage, zone de quarantaine, arrêt de l'activité si nécessaire.</li>
+        <li><strong>Évaluer.</strong> On mesure l'étendue de l'écart et ses conséquences : un élément isolé ou tout un lot ? un enjeu d'aspect, de durabilité ou de sécurité ?</li>
+        <li><strong>Décider du traitement.</strong> La personne habilitée choisit la disposition à appliquer, après accord du client ou du maître d'œuvre lorsque le contrat l'exige.</li>
+        <li><strong>Corriger.</strong> La décision est mise en œuvre : reprise, réparation, remplacement.</li>
+        <li><strong>Analyser les causes.</strong> On cherche pourquoi l'écart s'est produit, pour éviter qu'il se reproduise.</li>
+        <li><strong>Agir sur les causes.</strong> L'action corrective est définie, avec un responsable et une échéance.</li>
+        <li><strong>Vérifier et clôturer.</strong> On recontrôle l'élément corrigé, on vérifie plus tard l'efficacité de l'action corrective, puis la non-conformité est clôturée par une personne habilitée.</li>
+      </ol>
+      <p>Les cinq premières étapes traitent <em>le problème</em> ; les trois dernières traitent <em>sa cause</em>. Beaucoup d'organisations s'arrêtent à la cinquième, et voient les mêmes écarts revenir chantier après chantier.</p>
+
+      <h2 id="correction">Correction ou action corrective : ne pas confondre</h2>
+      <table>
+        <thead><tr><th></th><th>Correction</th><th>Action corrective</th></tr></thead>
+        <tbody>
+          <tr><td>Objectif</td><td>Éliminer la non-conformité détectée</td><td>Éliminer la cause, pour éviter qu'elle se reproduise</td></tr>
+          <tr><td>Porte sur</td><td>L'élément concerné</td><td>Le processus, la méthode, la formation, l'organisation</td></tr>
+          <tr><td>Exemple</td><td>Reprendre un élément mal positionné</td><td>Ajouter un contrôle avant l'étape qui a produit l'écart</td></tr>
+          <tr><td>Quand</td><td>Tout de suite</td><td>Après analyse des causes</td></tr>
+        </tbody>
+      </table>
+      <p>Une non-conformité peut nécessiter une correction sans action corrective, si l'écart est isolé et sa cause accidentelle. Mais une même non-conformité qui revient trois fois appelle forcément une action corrective.</p>
+
+      <h2 id="decisions">Les décisions de traitement possibles</h2>
+      <table>
+        <thead><tr><th>Décision</th><th>Principe</th><th>Point de vigilance</th></tr></thead>
+        <tbody>
+          <tr><td>Reprise</td><td>Refaire pour obtenir un résultat conforme à l'exigence d'origine</td><td>Recontrôler avec le même critère qu'au départ</td></tr>
+          <tr><td>Réparation</td><td>Rendre l'élément apte à l'usage, sans forcément revenir à l'état prévu</td><td>Souvent soumise à l'accord du client ou du concepteur</td></tr>
+          <tr><td>Acceptation par dérogation</td><td>Accepter l'élément en l'état, après justification</td><td>Toujours écrite et signée par la partie habilitée ; jamais implicite</td></tr>
+          <tr><td>Déclassement</td><td>Utiliser l'élément pour un usage moins exigeant</td><td>Garder la traçabilité de la nouvelle destination</td></tr>
+          <tr><td>Rejet ou démolition</td><td>Éliminer l'élément non conforme</td><td>Documenter la décision et le remplacement</td></tr>
+        </tbody>
+      </table>
+      <p>Pour un élément structurel, une réparation ou une dérogation s'appuie généralement sur l'avis du concepteur ou du bureau d'études, et parfois sur une vérification complémentaire. Ce n'est pas au contrôleur de décider seul d'accepter un écart qui touche la sécurité ou la durabilité de l'ouvrage.</p>
+
+      <h2 id="causes">Analyser les causes sans chercher un coupable</h2>
+      <p>Deux outils simples suffisent dans la plupart des cas :</p>
+      <ul>
+        <li><strong>Les « 5 pourquoi »</strong> : on se demande pourquoi l'écart s'est produit, puis pourquoi cette cause a existé, et ainsi de suite jusqu'à atteindre une cause sur laquelle l'organisation peut agir.</li>
+        <li><strong>Le diagramme d'Ishikawa (5M)</strong> : on examine les causes possibles selon cinq familles : <strong>m</strong>atière, <strong>m</strong>atériel, <strong>m</strong>éthode, <strong>m</strong>ain-d'œuvre et <strong>m</strong>ilieu.</li>
+      </ul>
+      <div class="box box-ex"><strong>Exemple type</strong>Lors de la réception du ferraillage d'une dalle, l'inspecteur constate que des cales d'enrobage manquent sur une partie de la nappe inférieure. <em>Correction</em> : mise en place des cales manquantes et nouvelle réception avant coulage. <em>Pourquoi</em> les cales manquaient-elles ? Le stock était épuisé. <em>Pourquoi</em> ? Elles n'apparaissaient pas dans la liste d'approvisionnement de la phase. <em>Action corrective</em> : ajouter les accessoires de ferraillage à la liste type de chaque phase, et un point de contrôle « accessoires disponibles » dans la préparation. La cause était organisationnelle, pas individuelle.</div>
+      <p>Une analyse qui conclut systématiquement à « l'erreur humaine » ou au « manque d'attention » est rarement utile : elle ne dit pas ce que l'organisation doit changer. La bonne question est : <em>qu'est-ce qui a rendu cette erreur possible ?</em></p>
+
+      <h2 id="fiche">La fiche NCR : ce qu'elle doit contenir</h2>
+      <table>
+        <thead><tr><th>Rubrique</th><th>Contenu</th></tr></thead>
+        <tbody>
+          <tr><td>Identification</td><td>Numéro, date, projet, ouvrage, localisation précise</td></tr>
+          <tr><td>Exigence concernée</td><td>Plan, spécification ou norme, avec indice ou édition, et la ligne d'ITP liée</td></tr>
+          <tr><td>Description de l'écart</td><td>Ce qui a été constaté, mesuré ou observé ; photos</td></tr>
+          <tr><td>Émetteur</td><td>Qui a détecté l'écart et quand</td></tr>
+          <tr><td>Décision de traitement</td><td>Disposition retenue, décideur, accord du client si requis</td></tr>
+          <tr><td>Correction</td><td>Ce qui a été fait, par qui, quand</td></tr>
+          <tr><td>Analyse des causes</td><td>Méthode utilisée et cause retenue</td></tr>
+          <tr><td>Action corrective</td><td>Action, responsable, échéance</td></tr>
+          <tr><td>Vérification</td><td>Recontrôle, résultat, preuves</td></tr>
+          <tr><td>Clôture</td><td>Date, signature de la personne habilitée, vérification d'efficacité prévue</td></tr>
+        </tbody>
+      </table>
+      <p>La fiche NCR boucle la <a href="../construire-itp-points-arret-temoin-revue/" style="color:var(--blue);text-decoration:underline">chaîne de preuve de l'ITP</a> : exigence, inspection, constat, décision, correction, recontrôle. Un auditeur doit pouvoir la parcourir sans avoir à poser de questions.</p>
+
+      <h2 id="indicateurs">Suivre les non-conformités avec quelques indicateurs</h2>
+      <p>Quatre indicateurs suffisent pour piloter le sujet en revue de projet ou en revue de direction :</p>
+      <ul>
+        <li><strong>Non-conformités ouvertes</strong>, et parmi elles celles qui dépassent leur échéance ;</li>
+        <li><strong>Délai moyen de clôture</strong>, du constat à la clôture signée ;</li>
+        <li><strong>Récurrence par cause</strong>, pour repérer les causes qui reviennent ;</li>
+        <li><strong>Répartition par lot ou par sous-traitant</strong>, pour cibler l'accompagnement.</li>
+      </ul>
+      <p>Un nombre élevé de non-conformités enregistrées n'est pas forcément mauvais signe : il peut traduire un contrôle actif. Ce qui doit alerter, ce sont les non-conformités qui restent ouvertes et celles qui reviennent.</p>
+
+      <h2 id="erreurs">Les erreurs fréquentes</h2>
+      <div class="box box-warn"><strong>À éviter</strong>
+        <ul>
+          <li>Corriger sur place sans rien enregistrer « pour gagner du temps ».</li>
+          <li>Continuer les travaux sur un élément non conforme avant la décision.</li>
+          <li>Accepter un écart oralement, sans dérogation écrite et signée.</li>
+          <li>Clôturer une fiche sans recontrôle ni preuve.</li>
+          <li>Confondre correction et action corrective, et laisser la cause intacte.</li>
+          <li>Utiliser les non-conformités pour désigner des coupables.</li>
+        </ul>
+      </div>
+
+      <h2 id="checklist">Checklist de clôture</h2>
+      <ul class="checklist">
+        <li>L'exigence non respectée est identifiée, avec sa référence et son édition.</li>
+        <li>L'élément concerné a été isolé ou les travaux arrêtés le temps de la décision.</li>
+        <li>La décision de traitement est écrite, avec le nom du décideur.</li>
+        <li>L'accord du client ou du maître d'œuvre est joint lorsqu'il est requis.</li>
+        <li>La correction est réalisée et recontrôlée selon le critère d'origine.</li>
+        <li>La cause est analysée et, si nécessaire, une action corrective est lancée.</li>
+        <li>Les preuves sont jointes : photos, rapports, PV.</li>
+        <li>La clôture est signée par une personne habilitée.</li>
+      </ul>
+      <p>Bien gérée, la non-conformité devient une source d'apprentissage pour toute l'organisation. Mal gérée, elle devient un litige qui attend son heure.</p>
+
+      <div class="sources"><strong>Références citées</strong>
+        <ul>
+          <li>ISO 9000 — Systèmes de management de la qualité — Principes essentiels et vocabulaire.</li>
+          <li>ISO 9001 — Systèmes de management de la qualité — Exigences (maîtrise des éléments de sortie non conformes, non-conformité et action corrective).</li>
+          <li>Documents du marché : spécifications, plans d'exécution, plan d'assurance qualité et ITP du projet.</li>
+        </ul>
+        <p style="margin-top:.6rem">Les modalités de décision, de dérogation et de réception dépendent du contrat de chaque projet. Cet article présente une méthode ; il ne remplace ni les documents du projet, ni le texte des normes.</p>
+      </div>
+    </div>
+
+    <div class="author">
+      <img src="../../assets/brand/abdelghani-bouhouche.jpg" alt="Abdelghani Bouhouche">
+      <div><strong>Abdelghani Bouhouche</strong><p>Ingénieur civil et PMP, fondateur de Civilina. Expérience en management de projet, qualité, QHSE et coordination opérationnelle, en Algérie et à l'international.</p></div>
+    </div>
+
+    <div class="art-cta">
+      <h3>Un circuit de non-conformités clair sur vos projets ?</h3>
+      <p>CIVILINA Engineering met en place avec vous les fiches NCR, le circuit de décision et les indicateurs de suivi, dans le cadre de votre plan qualité.</p>
+      <a href="../../engineering/" class="btn">Découvrir CIVILINA Engineering →</a>
+    </div>
+  </div>
+</article>
+</main>
+
+<footer>
+  <div class="shell">
+    <div class="foot">
+      <div>
+        <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+        <p style="margin-top:.8rem;max-width:34ch">Engineering, management et digitalisation pour les projets d'ingénierie.</p>
+      </div>
+      <div><h5>Axes</h5><ul><li><a href="../../engineering/">CIVILINA Engineering</a></li><li><a href="../../gestion-entreprise/">CIVILINA Entreprise</a></li><li><a href="../../digital/">CIVILINA Digital</a></li><li><a href="../../ia/">CIVILINA IA</a></li></ul></div>
+      <div><h5>Journal</h5><ul><li><a href="../construire-itp-points-arret-temoin-revue/">Construire un ITP</a></li><li><a href="../rediger-plan-assurance-qualite-paq-iso-10005/">Rédiger un PAQ selon l'ISO 10005</a></li><li><a href="../">Tous les articles</a></li></ul></div>
+      <div><h5>Contact</h5><ul><li><a href="/#contact">Demander un diagnostic</a></li><li><a href="https://www.linkedin.com/company/civilina" rel="noopener">LinkedIn</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Civilina</span><span><a href="/mentions-legales/">Mentions légales</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/cookies/">Cookies</a> · <a href="/conditions-utilisation/">Conditions</a></span></div>
+  </div>
+</footer>
+</body>
+</html>
