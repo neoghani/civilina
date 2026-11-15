@@ -302,3 +302,20 @@ Lien de l'article en commentaire.
 Lien de partage : https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcivilina.com%2Fjournal%2Fchangement-edition-norme-projet%2F
 Date proposée : jeudi 24 décembre (ou à intercaler plus tôt).
 #Normes #GestionDeProjet #QAQC #GénieCivil #BureauDÉtudes
+
+### 13. Construire une WBS utile
+
+Planning, budget, responsabilités, contrôles qualité, avancement : tout part d'un même découpage.
+
+La WBS décrit ce qu'il faut livrer, pas comment ni quand. Trois règles :
+→ la règle des 100 % : ce qui n'est pas dans la WBS n'est pas dans le projet ;
+→ des livrables nommés par des noms, pas des actions ;
+→ un code unique par lot, utilisé par le planning, le budget, l'ITP et les PV.
+
+Deux branches souvent oubliées : la réception avec le dossier des ouvrages exécutés, et le management de projet lui-même.
+
+Quelle logique utilisez-vous pour le deuxième niveau : phases, ouvrages ou lots ?
+
+Lien de l'article en commentaire.
+Lien de partage : https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcivilina.com%2Fjournal%2Fconstruire-wbs-decoupage-projet%2F
+#GestionDeProjet #WBS #PMP #BTP #ProjectControls

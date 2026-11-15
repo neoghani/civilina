@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Construire une WBS utile : le découpage qui structure tout le projet | Civilina</title>
+<meta name="description" content="Construire une WBS (structure de découpage du projet) réellement utile : règle des 100 %, lots de travaux, choix des niveaux, codification, dictionnaire de la WBS, exemple de bâtiment et checklist.">
+<link rel="canonical" href="https://civilina.com/journal/construire-wbs-decoupage-projet/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Construire une WBS utile : le découpage qui structure tout le projet | Civilina">
+<meta property="og:description" content="Construire une WBS (structure de découpage du projet) réellement utile : règle des 100 %, lots de travaux, choix des niveaux, codification, dictionnaire de la WBS, exemple de bâtiment et checklist.">
+<meta property="og:url" content="https://civilina.com/journal/construire-wbs-decoupage-projet/">
+<meta property="og:image" content="https://civilina.com/assets/brand/civilina-logo.png">
+<meta property="og:locale" content="fr_FR">
+<meta name="google-adsense-account" content="ca-pub-5595911673357804">
+<link rel="icon" type="image/png" href="../../assets/brand/civilina-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Construire une WBS utile : le découpage qui structure tout le projet","inLanguage":"fr","datePublished":"2026-11-15","dateModified":"2026-11-15","author":{"@type":"Person","name":"Abdelghani Bouhouche","jobTitle":"Ingénieur civil, PMP"},"publisher":{"@type":"Organization","name":"Civilina","url":"https://civilina.com/"},"mainEntityOfPage":"https://civilina.com/journal/construire-wbs-decoupage-projet/"}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5595911673357804" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header>
+  <div class="shell nav">
+    <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+    <nav class="menu" id="menu">
+      <a href="../../engineering/"><span class="dot" style="background:var(--eng)"></span>Engineering</a>
+      <a href="../../gestion-entreprise/"><span class="dot" style="background:var(--ent)"></span>Entreprise</a>
+      <a href="../../digital/"><span class="dot" style="background:var(--dig)"></span>Digital</a>
+      <a href="../../ia/"><span class="dot" style="background:var(--ia)"></span>CIVILINA IA</a>
+      <a href="../" class="active">Journal</a>
+      <a href="../../#apropos">À propos</a>
+      <a href="/login/" class="menu-login">Connexion</a>
+    </nav>
+    <a href="/login/" class="nav-login">Connexion</a>
+    <a href="../../engineering/#contact" class="btn btn-primary">Parler de votre projet</a>
+    <button class="burger" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<main>
+<article>
+  <div class="art-wrap art-head">
+    <p class="crumbs"><a href="../../">Accueil</a> › <a href="../">Journal</a> › Construire une WBS utile</p>
+    <span class="pill pill-eng">Engineering · Projet</span>
+    <h1>Construire une WBS utile : le découpage qui structure tout le projet</h1>
+    <div class="art-meta"><span>Par <b>Abdelghani Bouhouche</b>, ingénieur civil, PMP</span><span>Publié le 15 novembre 2026</span><span>Lecture : 8 min</span></div>
+  </div>
+  <figure class="art-cover"><img src="../../assets/journal/construire-wbs.svg" alt="Construire une WBS vraiment utile"></figure>
+
+  <div class="art-wrap">
+    <p class="chapo">Planning, budget, responsabilités, contrôles qualité, avancement : tout, dans un projet, s'appuie sur une même question. Qu'avons-nous exactement à livrer, et comment ce travail se découpe-t-il ? La WBS, ou structure de découpage du projet, y répond. Bien construite, elle devient la colonne vertébrale du projet. Mal construite, elle n'est qu'un schéma de plus. Voici comment en faire un outil utile.</p>
+
+    <nav class="toc" aria-label="Sommaire">
+      <strong>Sommaire</strong>
+      <ol>
+        <li><a href="#definition">Qu'est-ce qu'une WBS ?</a></li>
+        <li><a href="#regles">Les règles qui font une bonne WBS</a></li>
+        <li><a href="#niveaux">Choisir le découpage du deuxième niveau</a></li>
+        <li><a href="#lots">Jusqu'où descendre : le lot de travaux</a></li>
+        <li><a href="#exemple">Exemple type : un bâtiment</a></li>
+        <li><a href="#codification">Codifier pour relier tout le projet</a></li>
+        <li><a href="#dictionnaire">Le dictionnaire de la WBS</a></li>
+        <li><a href="#evolution">Faire évoluer la WBS sans perdre le fil</a></li>
+        <li><a href="#erreurs">Les erreurs fréquentes</a></li>
+        <li><a href="#checklist">Checklist</a></li>
+      </ol>
+    </nav>
+
+    <div class="prose">
+      <h2 id="definition">Qu'est-ce qu'une WBS ?</h2>
+      <p>La WBS (<em>Work Breakdown Structure</em>), parfois appelée structure de découpage du projet ou organigramme des tâches, est une <strong>décomposition hiérarchique de l'ensemble du travail à réaliser</strong> pour livrer le projet. En haut, le projet entier ; en dessous, ses grandes parties ; puis des éléments de plus en plus fins, jusqu'aux lots de travaux que l'on peut estimer, planifier, confier et contrôler.</p>
+      <p>Elle ne doit pas être confondue avec deux autres outils :</p>
+      <table>
+        <thead><tr><th>Outil</th><th>Ce qu'il décrit</th></tr></thead>
+        <tbody>
+          <tr><td><strong>WBS</strong></td><td><em>Quoi</em> : le périmètre du projet, découpé en livrables et lots de travaux</td></tr>
+          <tr><td>Planning</td><td><em>Quand</em> : les activités nécessaires pour réaliser chaque lot, leurs durées et leurs liens</td></tr>
+          <tr><td>Organigramme projet</td><td><em>Qui</em> : les personnes et les équipes, leurs rôles</td></tr>
+        </tbody>
+      </table>
+      <p>Les trois se croisent : chaque lot de la WBS est réalisé par des activités du planning et confié à un responsable de l'organigramme. C'est ce croisement qui rend le projet pilotable.</p>
+
+      <h2 id="regles">Les règles qui font une bonne WBS</h2>
+      <ul>
+        <li><strong>La règle des 100 %</strong> : la WBS couvre la totalité du périmètre, et rien de plus. Chaque niveau représente exactement 100 % du niveau supérieur. Ce qui n'est pas dans la WBS n'est pas dans le projet.</li>
+        <li><strong>Pas de recouvrement</strong> : un même travail n'apparaît qu'à un seul endroit, sinon il sera compté et payé deux fois.</li>
+        <li><strong>Des livrables plutôt que des actions</strong> : les éléments sont nommés par des noms (« fondations », « note de calcul de la charpente ») plutôt que par des verbes. Les verbes appartiennent au planning.</li>
+        <li><strong>Un niveau de détail adapté</strong> : trois à cinq niveaux suffisent pour la plupart des projets ; au-delà, la WBS devient illisible.</li>
+        <li><strong>Une construction collective</strong> : la WBS se construit avec les responsables des études, des achats et des travaux, pas seule au bureau du chef de projet.</li>
+      </ul>
+      <div class="box box-key"><strong>À retenir</strong>La WBS décrit ce qu'il faut livrer, pas comment ni quand. Si un élément commence par un verbe, il appartient probablement au planning.</div>
+
+      <h2 id="niveaux">Choisir le découpage du deuxième niveau</h2>
+      <p>Le choix le plus structurant est celui du deuxième niveau, juste sous le projet. Trois logiques sont courantes :</p>
+      <table>
+        <thead><tr><th>Logique</th><th>Adaptée quand…</th><th>Exemple de branches</th></tr></thead>
+        <tbody>
+          <tr><td>Par phase</td><td>Le projet enchaîne des phases bien distinctes, comme dans un contrat EPC</td><td>Études, approvisionnements, construction, mise en service</td></tr>
+          <tr><td>Par ouvrage ou zone</td><td>Le projet comporte plusieurs ouvrages ou bâtiments indépendants</td><td>Bâtiment A, bâtiment B, voiries, réseaux</td></tr>
+          <tr><td>Par lot ou discipline</td><td>Les travaux sont répartis entre corps d'état ou sous-traitants</td><td>Gros œuvre, charpente, second œuvre, lots techniques</td></tr>
+        </tbody>
+      </table>
+      <p>On combine souvent deux logiques : par exemple les phases au deuxième niveau, puis les ouvrages au troisième. L'important est de rester cohérent dans une même branche, et de choisir la logique qui correspond à la façon dont le projet sera réellement piloté et facturé.</p>
+
+      <h2 id="lots">Jusqu'où descendre : le lot de travaux</h2>
+      <p>Le niveau le plus bas de la WBS est le <strong>lot de travaux</strong> (<em>work package</em>). Un lot bien dimensionné respecte quelques critères simples :</p>
+      <ul>
+        <li>il a <strong>un seul responsable</strong> ;</li>
+        <li>on peut en <strong>estimer le coût et la durée</strong> avec une précision raisonnable ;</li>
+        <li>on peut en <strong>mesurer l'avancement</strong>, idéalement par des quantités ou des livrables acceptés ;</li>
+        <li>il correspond à un ensemble de <strong>contrôles</strong> identifiables dans l'ITP ;</li>
+        <li>il n'est ni trop gros pour être suivi, ni trop petit pour valoir la peine d'être géré séparément.</li>
+      </ul>
+      <p>Si un lot nécessite plusieurs responsables, il est probablement trop gros. Si le suivi d'un lot coûte plus d'effort que le lot lui-même, il est trop petit.</p>
+
+      <h2 id="exemple">Exemple type : un bâtiment</h2>
+      <p>Voici un extrait simplifié de WBS pour un bâtiment de bureaux réalisé par une entreprise générale :</p>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>Code</th><th>Élément</th><th>Niveau</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Bâtiment de bureaux</td><td>Projet</td></tr>
+          <tr><td>1.1</td><td>Études d'exécution</td><td>Phase</td></tr>
+          <tr><td>1.1.1</td><td>Plans de structure</td><td>Lot</td></tr>
+          <tr><td>1.1.2</td><td>Plans des lots techniques</td><td>Lot</td></tr>
+          <tr><td>1.2</td><td>Approvisionnements</td><td>Phase</td></tr>
+          <tr><td>1.2.1</td><td>Aciers et béton</td><td>Lot</td></tr>
+          <tr><td>1.2.2</td><td>Menuiseries et équipements</td><td>Lot</td></tr>
+          <tr><td>1.3</td><td>Gros œuvre</td><td>Phase</td></tr>
+          <tr><td>1.3.1</td><td>Terrassements et fondations</td><td>Lot</td></tr>
+          <tr><td>1.3.2</td><td>Structure du rez-de-chaussée</td><td>Lot</td></tr>
+          <tr><td>1.3.3</td><td>Structure des étages</td><td>Lot</td></tr>
+          <tr><td>1.4</td><td>Second œuvre et lots techniques</td><td>Phase</td></tr>
+          <tr><td>1.5</td><td>Voiries et réseaux</td><td>Phase</td></tr>
+          <tr><td>1.6</td><td>Réception et dossier des ouvrages exécutés</td><td>Phase</td></tr>
+          <tr><td>1.7</td><td>Management de projet</td><td>Phase</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Deux branches sont souvent oubliées : la <strong>réception et le dossier des ouvrages exécutés</strong>, qui demandent un vrai travail en fin de projet, et le <strong>management de projet</strong> lui-même, qui consomme des ressources et doit apparaître pour respecter la règle des 100 %.</p>
+
+      <h2 id="codification">Codifier pour relier tout le projet</h2>
+      <p>Chaque élément de la WBS reçoit un <strong>code unique et hiérarchique</strong> (1, 1.3, 1.3.2…). Ce code devient la référence commune de tout le projet :</p>
+      <ul>
+        <li>les <strong>activités du planning</strong> sont rattachées à un lot ;</li>
+        <li>le <strong>budget</strong> et les <strong>dépenses</strong> sont imputés par lot ;</li>
+        <li>la <strong>matrice RACI</strong> désigne un responsable par lot ;</li>
+        <li>les <a href="../construire-itp-points-arret-temoin-revue/" style="color:var(--blue);text-decoration:underline">ITP</a>, les <a href="../pv-inspection-tracabilite-audit/" style="color:var(--blue);text-decoration:underline">PV</a> et les <a href="../cycle-non-conformite-ncr-constat-cloture/" style="color:var(--blue);text-decoration:underline">non-conformités</a> portent le code du lot concerné ;</li>
+        <li>le <strong>registre des risques</strong> rattache chaque risque au lot qu'il menace.</li>
+      </ul>
+      <p>Avec un code commun, on peut enfin répondre à des questions simples : où en est le lot 1.3.2, combien a-t-il coûté, quels contrôles restent ouverts, quels risques le concernent ? Sans lui, chaque outil parle sa propre langue.</p>
+
+      <h2 id="dictionnaire">Le dictionnaire de la WBS</h2>
+      <p>Un intitulé de quelques mots ne suffit pas à définir un lot. Le <strong>dictionnaire de la WBS</strong> précise, pour chaque lot :</p>
+      <table>
+        <thead><tr><th>Rubrique</th><th>Contenu</th></tr></thead>
+        <tbody>
+          <tr><td>Description</td><td>Ce que le lot comprend, et ce qu'il ne comprend pas</td></tr>
+          <tr><td>Livrables</td><td>Ce qui sera remis ou réalisé</td></tr>
+          <tr><td>Responsable</td><td>La personne qui répond du lot</td></tr>
+          <tr><td>Critères d'acceptation</td><td>Comment on saura que le lot est terminé et accepté</td></tr>
+          <tr><td>Estimation</td><td>Coût et durée prévus, et leurs hypothèses</td></tr>
+          <tr><td>Interfaces</td><td>Les autres lots dont il dépend ou qui dépendent de lui</td></tr>
+        </tbody>
+      </table>
+      <p>Le dictionnaire évite les discussions de fin de projet du type « ce n'était pas prévu dans notre lot ». C'est aussi un excellent support pour les contrats de sous-traitance.</p>
+
+      <h2 id="evolution">Faire évoluer la WBS sans perdre le fil</h2>
+      <p>Une WBS approuvée devient la <strong>référence du périmètre</strong>. Elle évolue pourtant au fil du projet : avenant, ouvrage ajouté, lot redécoupé pour un nouveau sous-traitant. Trois règles évitent la confusion :</p>
+      <ul>
+        <li>toute modification passe par une <strong>demande de changement</strong>, avec son impact sur les coûts, les délais et la qualité ;</li>
+        <li>un code supprimé n'est <strong>jamais réutilisé</strong> pour un autre lot, afin de ne pas mélanger les historiques ;</li>
+        <li>chaque version de la WBS est <strong>datée et conservée</strong>, pour pouvoir comparer le périmètre initial et le périmètre final.</li>
+      </ul>
+
+      <h2 id="erreurs">Les erreurs fréquentes</h2>
+      <div class="box box-warn"><strong>À éviter</strong>
+        <ul>
+          <li>Confondre la WBS avec le planning, et y mettre des activités au lieu de livrables.</li>
+          <li>Oublier des parties du périmètre : études, réception, documentation, management.</li>
+          <li>Faire apparaître le même travail dans deux branches.</li>
+          <li>Descendre à un niveau de détail impossible à suivre.</li>
+          <li>Construire la WBS seul, sans les responsables des études et des travaux.</li>
+          <li>Utiliser des codes différents dans le planning, le budget et les documents qualité.</li>
+        </ul>
+      </div>
+
+      <h2 id="checklist">Checklist</h2>
+      <ul class="checklist">
+        <li>La WBS couvre 100 % du périmètre, y compris études, réception et management.</li>
+        <li>Aucun travail n'apparaît dans deux branches.</li>
+        <li>Les éléments sont des livrables, nommés par des noms.</li>
+        <li>La logique du deuxième niveau correspond à la façon dont le projet sera piloté.</li>
+        <li>Chaque lot a un responsable unique et un avancement mesurable.</li>
+        <li>Chaque élément a un code unique, utilisé par le planning, le budget et la qualité.</li>
+        <li>Le dictionnaire de la WBS décrit chaque lot.</li>
+        <li>La WBS de référence est approuvée et ses modifications sont tracées.</li>
+      </ul>
+      <p>Une bonne WBS se reconnaît à ce qu'on l'utilise tous les jours sans y penser : chaque document, chaque dépense et chaque contrôle y trouvent naturellement leur place.</p>
+
+      <div class="sources"><strong>Références citées</strong>
+        <ul>
+          <li>ISO 21511 — Structures de découpage du projet et du programme (lignes directrices sur la WBS).</li>
+          <li>ISO 21502 — Management de projet, de programme et de portefeuille — Recommandations sur le management de projet.</li>
+          <li>Project Management Institute — bonnes pratiques de décomposition du périmètre (WBS et dictionnaire de la WBS).</li>
+        </ul>
+        <p style="margin-top:.6rem">L'exemple présenté est simplifié et illustratif. Consultez l'édition en vigueur des normes auprès de leur éditeur officiel. PMI est une marque du Project Management Institute.</p>
+      </div>
+    </div>
+
+    <div class="share"><span>Cet article vous a été utile ? Partagez-le.</span><a class="share-li" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcivilina.com%2Fjournal%2Fconstruire-wbs-decoupage-projet%2F" target="_blank" rel="noopener">Partager sur LinkedIn</a><button type="button" class="share-copy" data-url="https://civilina.com/journal/construire-wbs-decoupage-projet/" onclick="var b=this;navigator.clipboard&amp;&amp;navigator.clipboard.writeText(b.dataset.url).then(function(){b.textContent='Lien copié';})">Copier le lien</button></div>
+
+    <div class="author">
+      <img src="../../assets/brand/abdelghani-bouhouche.jpg" alt="Abdelghani Bouhouche">
+      <div><strong>Abdelghani Bouhouche</strong><p>Ingénieur civil et PMP, fondateur de Civilina. Expérience en management de projet, qualité, QHSE et coordination opérationnelle, en Algérie et à l'international.</p></div>
+    </div>
+
+    <div class="art-cta">
+      <h3>Une WBS qui relie planning, budget et qualité ?</h3>
+      <p>CIVILINA Engineering construit avec vous la WBS et son dictionnaire dans le cadre de votre guide de gestion de projet. CIVILINA IA peut en préparer un premier brouillon structuré, à valider par vos équipes.</p>
+      <a href="../../engineering/" class="btn">Découvrir CIVILINA Engineering →</a>
+    </div>
+  </div>
+</article>
+</main>
+
+<footer>
+  <div class="shell">
+    <div class="foot">
+      <div>
+        <a href="../../" class="brand"><img src="../../assets/brand/civilina-logo.png" alt="">CIVILINA</a>
+        <p style="margin-top:.8rem;max-width:34ch">Engineering, management et digitalisation pour les projets d'ingénierie.</p>
+      </div>
+      <div><h5>Axes</h5><ul><li><a href="../../engineering/">CIVILINA Engineering</a></li><li><a href="../../gestion-entreprise/">CIVILINA Entreprise</a></li><li><a href="../../digital/">CIVILINA Digital</a></li><li><a href="../../ia/">CIVILINA IA</a></li></ul></div>
+      <div><h5>Journal</h5><ul><li><a href="../iso-10006-projets-epc-systeme-pilotable/">ISO 10006 et projets EPC</a></li><li><a href="../iso-ou-pmi-structurer-gestion-entreprise/">ISO ou PMI</a></li><li><a href="../">Tous les articles</a></li></ul></div>
+      <div><h5>Contact</h5><ul><li><a href="/#contact">Demander un diagnostic</a></li><li><a href="https://www.linkedin.com/company/civilina" rel="noopener">LinkedIn</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Civilina</span><span><a href="/mentions-legales/">Mentions légales</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/cookies/">Cookies</a> · <a href="/conditions-utilisation/">Conditions</a></span></div>
+  </div>
+</footer>
+</body>
+</html>
