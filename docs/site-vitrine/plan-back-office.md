@@ -1,0 +1,58 @@
+# Back-office CIVILINA — plan de construction accéléré
+
+Version du 15/11/2026. Périmètre : civilina.com (hébergement Octenium, cPanel).
+
+## 1. Constat sur l'existant
+
+| Élément | État actuel | Problème |
+|---|---|---|
+| `/dashboard/` | Page d'accueil membre : bannière, profil, 2 cartes | Identique pour un visiteur et pour l'administrateur ; aucune donnée, aucune action |
+| Navigation | 10 liens de l'ancienne charte (Services, Publications, Recrutement…) | Pointe vers des pages redirigées ou non indexées ; incohérente avec le site V2 |
+| `/admin/` | Formulaires « Publication + LinkedIn », « Recrutement », « MBTI » | Hérité de la V1 ; ne gère pas les articles du Journal |
+| Stockage | Fichiers JSON dans `civilina_private/` (users, contacts, MBTI, publications) | Pas de requêtes, pas de statistiques, risque d'écriture concurrente |
+| Authentification | Sessions PHP, `password_hash`, jeton CSRF, rôle `admin` | Bonne base, à conserver ; pas de limitation des tentatives de connexion |
+| Journal | 16 articles en HTML statique, publiés à la main | Toute modification passe par un déploiement technique |
+| Contacts | `contact_requests.json` + e-mail | Aucun suivi commercial, pas de rattachement à un axe |
+
+## 2. Principes retenus
+
+- **Deux espaces distincts** : l'espace membre (`/dashboard/`, clients et visiteurs inscrits) et le back-office (`/admin/`, super administrateur), avec la charte V2.
+- **PHP + SQLite**, sur le socle d'authentification existant : un seul fichier de base hors du dossier public, aucun mot de passe de base de données à gérer, sauvegarde simple, 1 inode. Migration possible vers MySQL ou vers la plateforme Laravel plus tard.
+- **Le Journal reste statique** : le back-office stocke les articles en base, puis **génère** les pages HTML (article, index du Journal, cartes de l'accueil, sitemap). Le site garde sa vitesse, son référencement et AdSense.
+- **Statistiques sans cookie** : comptage côté serveur, adresse IP hachée, aucun bandeau supplémentaire.
+- **Newsletter via un prestataire d'envoi** (Brevo, offre gratuite de 300 e-mails/jour) : l'envoi depuis l'hébergement mutualisé serait limité et finirait en spam. Double opt-in et lien de désinscription obligatoires.
+- **Tout est rattaché à un axe** : Engineering, Entreprise, Digital (et IA en transverse) — articles, contacts, abonnés, offres, prospects.
+
+## 3. Modules du back-office
+
+1. **Tableau de bord** : visites par jour, articles les plus lus, sources (Google, LinkedIn, direct), demandes de contact et abonnés par axe, taux de conversion, alertes (demande non traitée depuis 48 h).
+2. **Journal** : liste, éditeur par blocs (chapo, sections, encadrés, tableaux, checklist, sources), aperçu, statuts brouillon / programmé / publié, couverture SVG générée, liens de partage et brouillon de post LinkedIn.
+3. **Newsletter** : abonnés et segments par axe, campagne pré-remplie avec les derniers articles, envoi test, envoi, statistiques d'ouverture et de clic.
+4. **Offres** : 3 axes, chacun avec ses offres (offre d'appel, offre principale, accompagnement), affichées sur les pages du site.
+5. **Prospection (CRM)** : pistes issues du site et pistes ajoutées à la main ou importées (CSV), pipeline par axe (nouveau → qualifié → proposition → gagné / perdu), relances datées, modèles d'e-mail.
+6. **Paramètres et sécurité** : utilisateurs et rôles, journal des actions, sauvegardes.
+
+## 4. Jalons (semaines de travail du dimanche au jeudi)
+
+| Jalon | Date | Livrable | Critère de réussite |
+|---|---|---|---|
+| **M0 — Socle et nettoyage** | **Mar. 17/11/2026** | Base SQLite, migration des JSON, rôle super administrateur, nouveau gabarit `/admin/` en charte V2, espace membre nettoyé (navigation V2), limitation des tentatives de connexion | L'ancien visuel a disparu ; toutes les données existantes sont retrouvées |
+| **M1 — Statistiques** | **Jeu. 19/11/2026** | Compteur de visites sans cookie, tableau de bord des performances, demandes de contact par axe | Les chiffres du jour s'affichent et correspondent aux visites réelles |
+| **M2 — Éditeur du Journal** | **Mar. 24/11/2026** | Import des 16 articles, éditeur, aperçu, publication avec génération des pages et du sitemap | L'article 17 (fiche indicateur KPI) est publié entièrement depuis le back-office |
+| **M3 — Newsletter** | **Dim. 29/11/2026** (1er envoi **mar. 01/12**) | Formulaire d'inscription sur le site, double opt-in, segments par axe, composition et envoi via Brevo | La 1re newsletter part le mardi 1er décembre |
+| **M4 — Vente et prospection** | **Lun. 07/12/2026** | Offres par axe sur le site, demandes de devis rattachées à un axe, 3 ressources téléchargeables contre e-mail (modèle ITP, matrice RACI Excel, fiche KPI), CRM et relances | La 1re campagne de prospection est lancée |
+| **M5 — Recette et sécurité** | **Jeu. 10/12/2026** | Revue de sécurité (CSRF, injection de contenu, droits), sauvegardes automatiques, documentation | Aucun défaut bloquant ; procédure de sauvegarde testée |
+
+Le Journal continue en parallèle : un article tous les 2 à 3 jours jusqu'à M2, ensuite depuis le back-office. La demande de réexamen AdSense est envisagée vers mi-décembre, avec environ 20 articles indexés.
+
+## 5. Ce qu'il faut de votre côté
+
+- **Avant M3** : créer le compte Brevo, authentifier le domaine (enregistrements DNS fournis par Brevo) et coller la clé d'API dans le back-office vous-même.
+- **Avant M4** : valider les offres et leurs prix par axe, et fournir la liste de cibles de prospection (entreprises, rôles, secteurs).
+- **À chaque jalon** : une recette de 15 minutes sur le site en ligne.
+
+## 6. Règles de déploiement
+
+- Sauvegarde dans `~/civilina-site-backups/` avant chaque modification serveur ; contrôle d'intégrité par empreinte SHA-256.
+- Ne pas écraser `/login/`, `/entreprise/`, `/mbti/` sans migration testée ; la base SQLite reste hors de `public_html`.
+- Pas de lien vers la plateforme CIVILINA Engineering tant que les correctifs de sécurité P0 ne sont pas testés.
