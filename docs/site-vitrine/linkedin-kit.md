@@ -284,3 +284,21 @@ Lequel de ces sujets vous concerne le plus aujourd'hui ?
 
 Lien du site en commentaire : https://civilina.com
 #Civilina #GénieCivil #GestionDeProjet #QAQC #Digitalisation
+
+### 12. Nouvelle édition d'une norme en cours de projet
+
+Une norme change d'édition au milieu de votre projet. Faut-il tout mettre à jour ?
+
+Ni automatiquement oui, ni automatiquement non :
+→ l'édition fixée par le marché s'applique tant qu'aucune décision n'est prise ;
+→ l'analyse porte seulement sur les exigences utilisées par le projet, pas sur toute la norme ;
+→ la décision est écrite, datée, validée, puis les ITP et les documents sont mis à jour.
+
+Et les contrôles passés, conformes à l'édition applicable à leur date, ne sont pas à refaire.
+
+Comment suivez-vous les évolutions des normes sur vos projets ?
+
+Lien de l'article en commentaire.
+Lien de partage : https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcivilina.com%2Fjournal%2Fchangement-edition-norme-projet%2F
+Date proposée : jeudi 24 décembre (ou à intercaler plus tôt).
+#Normes #GestionDeProjet #QAQC #GénieCivil #BureauDÉtudes
