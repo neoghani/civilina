@@ -68,6 +68,8 @@ try {
     civilina_articles_publish_due();
     require_once dirname($docRoot) . '/civilina_private/civilina_newsletter.php';
     civilina_newsletter_process(4.0);
+    require_once dirname($docRoot) . '/civilina_private/civilina_backup.php';
+    civilina_backup_due();
 } catch (Throwable $e) {
     error_log('civilina scheduled work: ' . $e->getMessage());
 }

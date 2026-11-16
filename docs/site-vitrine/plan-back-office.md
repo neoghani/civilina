@@ -41,7 +41,7 @@ Version du 15/11/2026. Périmètre : civilina.com (hébergement Octenium, cPanel
 | **M2 — Éditeur du Journal** ✅ livré et validé le 16/11/2026 (fiche KPI publiée depuis le back-office) | **Mar. 24/11/2026** | Import des 16 articles, éditeur, aperçu, publication avec génération des pages et du sitemap | L'article 17 (fiche indicateur KPI) est publié entièrement depuis le back-office |
 | **M3 — Newsletter** ✅ livré le 16/11/2026 (envoi en attente de la clé Brevo) | **Dim. 29/11/2026** (1er envoi **mar. 01/12**) | Formulaire d'inscription sur le site, double opt-in, segments par axe, composition et envoi via Brevo | La 1re newsletter part le mardi 1er décembre |
 | **M4 — Vente et prospection** ✅ livré le 16/11/2026 (offres en brouillon : prix et mise en ligne à faire dans le back-office) | **Lun. 07/12/2026** | Offres par axe sur le site, demandes de devis rattachées à un axe, 3 ressources téléchargeables contre e-mail (modèle ITP, matrice RACI Excel, fiche KPI), CRM et relances | La 1re campagne de prospection est lancée |
-| **M5 — Recette et sécurité** | **Jeu. 10/12/2026** | Revue de sécurité (CSRF, injection de contenu, droits), sauvegardes automatiques, documentation | Aucun défaut bloquant ; procédure de sauvegarde testée |
+| **M5 — Recette et sécurité** ✅ livré le 16/11/2026 (procédure de restauration testée ; voir exploitation.md) | **Jeu. 10/12/2026** | Revue de sécurité (CSRF, injection de contenu, droits), sauvegardes automatiques, documentation | Aucun défaut bloquant ; procédure de sauvegarde testée |
 
 Le Journal continue en parallèle : un article tous les 2 à 3 jours jusqu'à M2, ensuite depuis le back-office. La demande de réexamen AdSense est envisagée vers mi-décembre, avec environ 20 articles indexés.
 

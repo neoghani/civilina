@@ -118,6 +118,8 @@ sont dans `docs/site-vitrine/brouillons/` et chargés avec `tools/load_draft.php
 
 - Sessions sécurisées, jeton CSRF sur tous les formulaires.
 - Connexion bloquée 15 min après 5 échecs par compte ou 20 par adresse.
+- Sauvegardes quotidiennes, vérification et restauration : `private/civilina_backup.php`
+  et `docs/site-vitrine/exploitation.md` (guide d'exploitation complet).
 - Back-office : `noindex`, `no-store`, CSP sans script, interdiction d'affichage
   en iframe.
 

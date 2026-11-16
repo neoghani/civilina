@@ -12,6 +12,7 @@ require_once __DIR__ . '/civilina_stats.php';
 require_once __DIR__ . '/civilina_admin_journal.php';
 require_once __DIR__ . '/civilina_admin_newsletter.php';
 require_once __DIR__ . '/civilina_admin_sales.php';
+require_once __DIR__ . '/civilina_backup.php';
 
 /** Back-office navigation. Modules of later milestones are shown with their date, without fake data. */
 const CIVILINA_ADMIN_NAV = [
@@ -23,9 +24,10 @@ const CIVILINA_ADMIN_NAV = [
     'sales' => ['Offres et prospection', null],
     'users' => ['Utilisateurs', null],
     'security' => ['Sécurité', null],
+    'backups' => ['Sauvegardes', null],
 ];
 
-const CIVILINA_SUPER_ADMIN_VIEWS = ['users', 'security', 'nl_settings'];
+const CIVILINA_SUPER_ADMIN_VIEWS = ['users', 'security', 'nl_settings', 'backups'];
 
 function civilina_admin_headers(): void
 {
@@ -163,4 +165,83 @@ function civilina_mbti_results_count(): int
         return 0;
     }
     return isset($data['results']) && is_array($data['results']) ? count($data['results']) : count($data);
+}
+
+/* ---------- Backups (M5, super administrator) ---------- */
+
+function civilina_admin_backups_post(array $user): void
+{
+    $action = (string) ($_POST['action'] ?? '');
+    if ($action === 'backup_now') {
+        $r = civilina_backup_run('manuelle');
+        civilina_flash($r['ok'] ? 'Sauvegarde créée : ' . $r['file'] . ' (' . $r['files'] . ' fichiers, ' . round($r['size'] / 1024) . ' Ko).' : 'Échec de la sauvegarde : ' . $r['error']);
+    } elseif ($action === 'verify') {
+        $r = civilina_backup_verify((string) ($_POST['file'] ?? ''));
+        $_SESSION['backup_report'] = ['file' => (string) ($_POST['file'] ?? ''), 'ok' => $r['ok'], 'report' => $r['report']];
+        civilina_flash($r['ok'] ? 'Sauvegarde vérifiée : restaurable.' : 'La vérification a trouvé un problème.');
+    }
+    header('Location: ' . civilina_admin_url('backups'), true, 303);
+    exit;
+}
+
+function civilina_admin_backups_view(array $user): void
+{
+    if (isset($_GET['download'])) {
+        $path = civilina_backup_path((string) $_GET['download']);
+        if ($path !== null) {
+            civilina_audit('backup.downloaded', basename($path), (string) $user['id']);
+            header('Content-Type: application/zip');
+            header('Content-Disposition: attachment; filename="' . basename($path) . '"');
+            header('Content-Length: ' . filesize($path));
+            header('Cache-Control: no-store');
+            readfile($path);
+            exit;
+        }
+    }
+    $list = civilina_backups_list();
+    $report = $_SESSION['backup_report'] ?? null;
+    unset($_SESSION['backup_report']);
+    $csrf = civilina_csrf_token();
+    $last = $list[0] ?? null;
+    civilina_admin_start('Sauvegardes', 'backups', $user);
+    ?>
+    <section class="kpis">
+      <article class="kpi"><span>Dernière sauvegarde</span><strong><?= $last ? h(civilina_admin_datetime($last['date'])) : '—' ?></strong><small>Automatique chaque jour, à la première visite après 24 h</small></article>
+      <article class="kpi"><span>Sauvegardes conservées</span><strong><?= count($list) ?></strong><small>Les <?= CIVILINA_BACKUP_KEEP_DAYS ?> plus récentes</small></article>
+    </section>
+    <?php if (is_array($report)): ?>
+      <section class="panel"><div class="panel-head"><h2>Vérification de <?= h($report['file']) ?></h2><?= $report['ok'] ? '<span class="status status-done">Restaurable</span>' : '<span class="status status-new">Problème</span>' ?></div>
+        <ul class="nl-checks"><?php foreach ($report['report'] as $line): ?><li class="<?= $report['ok'] ? 'ok' : 'ko' ?>"><?= h($line) ?></li><?php endforeach; ?></ul>
+      </section>
+    <?php endif; ?>
+    <section class="panel">
+      <div class="panel-head"><h2>Fichiers</h2>
+        <form method="post" action="<?= h(civilina_admin_url('backups')) ?>" class="inline"><input type="hidden" name="_token" value="<?= h($csrf) ?>"><button class="bo-btn" type="submit" name="action" value="backup_now">Sauvegarder maintenant</button></form>
+      </div>
+      <?php if (!$list): ?>
+        <p class="empty">Aucune sauvegarde pour le moment.</p>
+      <?php else: ?>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Sauvegarde</th><th>Taille</th><th></th></tr></thead>
+        <tbody>
+        <?php foreach ($list as $b): ?>
+          <tr>
+            <td><?= h(civilina_admin_datetime($b['date'])) ?><small><?= h($b['file']) ?></small></td>
+            <td><?= round($b['size'] / 1024) ?> Ko</td>
+            <td>
+              <form method="post" action="<?= h(civilina_admin_url('backups')) ?>" class="inline">
+                <input type="hidden" name="_token" value="<?= h($csrf) ?>"><input type="hidden" name="file" value="<?= h($b['file']) ?>">
+                <button class="bo-btn bo-btn-small bo-btn-ghost" type="submit" name="action" value="verify">Vérifier</button>
+                <a class="bo-btn bo-btn-small bo-btn-ghost" href="<?= h(civilina_admin_url('backups', ['download' => $b['file']])) ?>">Télécharger</a>
+              </form>
+            </td>
+          </tr>
+        <?php endforeach; ?>
+        </tbody>
+      </table></div>
+      <?php endif; ?>
+    </section>
+    <p class="hint">Chaque sauvegarde contient la base de données (comptes, demandes, prospects, abonnés, articles) et les pages écrites par le back-office ; elle reste hors du site public. « Vérifier » rouvre le fichier, contrôle chaque empreinte et l'intégrité de la base : c'est le test de restauration. Procédure de restauration : docs/site-vitrine/exploitation.md. Les fichiers téléchargés contiennent des données personnelles : à conserver en lieu sûr.</p>
+    <?php
+    civilina_admin_end();
 }

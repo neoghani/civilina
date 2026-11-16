@@ -249,6 +249,8 @@ function civilina_find_user_by_id(string $id): ?array
     return is_string($json) ? civilina_decode_user($json) : null;
 }
 
+const CIVILINA_SESSION_IDLE = 8 * 3600;
+
 function civilina_current_user(): ?array
 {
     static $cache = [];
@@ -256,6 +258,13 @@ function civilina_current_user(): ?array
     if ($id === '') {
         return null;
     }
+    // M5: a session left idle for 8 hours ends (shared or forgotten computers).
+    $seen = (int) ($_SESSION['seen_at'] ?? 0);
+    if ($seen > 0 && $seen < time() - CIVILINA_SESSION_IDLE) {
+        civilina_logout();
+        return null;
+    }
+    $_SESSION['seen_at'] = time();
     if (!array_key_exists($id, $cache)) {
         $cache[$id] = civilina_find_user_by_id($id);
     }

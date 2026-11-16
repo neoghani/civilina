@@ -105,6 +105,18 @@ if (civilina_value('website', 120) !== '') {
     exit;
 }
 
+// Anti-spam (M5): 6 requests per hour and per address (IP kept as a salted hash only).
+// If the database is unavailable, the request still goes through (JSON fallback below).
+try {
+    require_once $privateDir . '/civilina_db.php';
+    $allowed = civilina_form_hit_allowed('contact', 6, 3600);
+} catch (Throwable $e) {
+    $allowed = true;
+}
+if (!$allowed) {
+    civilina_error('Trop de demandes envoyées depuis votre connexion. Merci de réessayer dans une heure, ou de nous écrire sur LinkedIn.');
+}
+
 $name = civilina_value('name', 120);
 $company = civilina_value('company', 160);
 $position = civilina_value('position', 160);

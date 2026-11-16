@@ -497,6 +497,23 @@ function civilina_lead_upsert(array $data, string $eventType, string $detail, ?P
     return $id;
 }
 
+/** Simple per-address limit for public forms (IP stored as a salted hash only). */
+function civilina_form_hit_allowed(string $kind, int $max, int $window): bool
+{
+    $db = civilina_db();
+    $ip = civilina_hash(civilina_client_ip());
+    $statement = $db->prepare('SELECT COUNT(*) FROM form_hits WHERE kind = ? AND ip_hash = ? AND created_at > ?');
+    $statement->execute([$kind, $ip, time() - $window]);
+    if ((int) $statement->fetchColumn() >= $max) {
+        return false;
+    }
+    $db->prepare('INSERT INTO form_hits(kind, ip_hash, created_at) VALUES (?, ?, ?)')->execute([$kind, $ip, time()]);
+    if (random_int(1, 50) === 1) {
+        $db->prepare('DELETE FROM form_hits WHERE created_at < ?')->execute([time() - 7 * 86400]);
+    }
+    return true;
+}
+
 /* ---------- Audit log ---------- */
 
 function civilina_audit(string $action, string $detail = '', string $userId = ''): void

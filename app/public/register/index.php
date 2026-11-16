@@ -41,6 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($_POST['terms'])) {
         $errors[] = 'Vous devez accepter les conditions.';
     }
+    // Anti-spam (M5): 5 account creations attempted per hour and per address.
+    if (!$errors && !civilina_form_hit_allowed('register', 5, 3600)) {
+        $errors[] = 'Trop de tentatives depuis votre connexion. Réessayez dans une heure.';
+    }
     if (!$errors && civilina_find_user_by_email($values['email'])) {
         $errors[] = 'Un compte existe déjà avec cette adresse email.';
     }

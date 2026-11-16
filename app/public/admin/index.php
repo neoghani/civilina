@@ -20,6 +20,13 @@ try {
     error_log('civilina scheduled publishing: ' . $e->getMessage());
 }
 
+// Daily automatic backup (M5), on the first request after 24 h.
+try {
+    civilina_backup_due();
+} catch (Throwable $e) {
+    error_log('civilina backup: ' . $e->getMessage());
+}
+
 // Newsletter: due campaigns, queued e-mails, waiting confirmations (longer budget on the campaign page).
 try {
     if ($view !== 'campaign_preview') {
@@ -45,6 +52,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($view === 'article') {
         civilina_admin_journal_post($user);
+    }
+    if ($view === 'backups') {
+        civilina_admin_backups_post($user);
     }
     if (in_array($view, CIVILINA_SALES_VIEWS, true)) {
         civilina_admin_sales_post($view, $user);
@@ -188,7 +198,7 @@ if ($view === 'dashboard') {
           <li class="done"><b>M2</b> Éditeur du Journal <small>24/11</small></li>
           <li class="done"><b>M3</b> Newsletter <small>29/11 · 1er envoi 01/12</small></li>
           <li class="done"><b>M4</b> Offres et prospection <small>07/12</small></li>
-          <li><b>M5</b> Recette et sécurité <small>10/12</small></li>
+          <li class="done"><b>M5</b> Recette et sécurité <small>10/12</small></li>
         </ol>
       </section>
     </div>
@@ -363,6 +373,11 @@ if ($view === 'users') {
     exit;
 }
 
+if ($view === 'backups') {
+    civilina_admin_backups_view($user);
+    exit;
+}
+
 if ($view === 'security') {
     $events = $db->query('SELECT a.created_at, a.action, a.detail, a.user_id, u.email FROM audit_log a LEFT JOIN users u ON u.id = a.user_id ORDER BY a.id DESC LIMIT 100')->fetchAll();
     $failures24h = $db->prepare('SELECT COUNT(*) FROM login_attempts WHERE success = 0 AND created_at > ?');
@@ -397,6 +412,11 @@ if ($view === 'security') {
         'leads.imported' => 'Import de prospects',
         'offers.published' => 'Offres publiées',
         'seo.applied' => 'Référencement appliqué',
+        'backup.created' => 'Sauvegarde créée',
+        'backup.failed' => 'Échec de sauvegarde',
+        'backup.verified' => 'Sauvegarde vérifiée',
+        'backup.downloaded' => 'Sauvegarde téléchargée',
+        'security.hardened' => 'Durcissement appliqué',
     ];
     civilina_admin_start('Sécurité', $view, $user);
     ?>

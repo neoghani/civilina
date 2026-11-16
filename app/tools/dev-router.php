@@ -73,7 +73,7 @@ function civilina_dev_prepare_private_dir(string $repo, string $dir): void
         mkdir($dir, 0700, true);
     }
 
-    foreach (['civilina_auth.php', 'civilina_admin.php', 'civilina_db.php', 'civilina_journal.php', 'civilina_stats.php', 'civilina_markup.php', 'civilina_articles.php', 'civilina_publish.php', 'civilina_admin_journal.php', 'civilina_newsletter.php', 'civilina_admin_newsletter.php', 'civilina_seo.php', 'civilina_sales.php', 'civilina_admin_sales.php', 'civilina_content.php'] as $file) {
+    foreach (['civilina_auth.php', 'civilina_admin.php', 'civilina_db.php', 'civilina_journal.php', 'civilina_stats.php', 'civilina_markup.php', 'civilina_articles.php', 'civilina_publish.php', 'civilina_admin_journal.php', 'civilina_newsletter.php', 'civilina_admin_newsletter.php', 'civilina_seo.php', 'civilina_sales.php', 'civilina_admin_sales.php', 'civilina_backup.php', 'civilina_content.php'] as $file) {
         $stub = $dir . '/' . $file;
         $source = $repo . '/app/private/' . $file;
         if (!is_file($stub) && is_file($source)) {
