@@ -47,7 +47,7 @@ if ($path === '' || strlen($path) > 200 || !preg_match('~^/([a-z0-9-]+/)*$~', $p
 $docRoot = rtrim((string) ($_SERVER['DOCUMENT_ROOT'] ?? ''), '/');
 $exists = $path === '/'
     ? (is_file($docRoot . '/default.html') || is_file($docRoot . '/index.html'))
-    : is_file($docRoot . $path . 'index.html');
+    : (is_file($docRoot . $path . 'index.html') || is_file($docRoot . $path . 'index.php'));
 if (!$exists) {
     $done();
 }

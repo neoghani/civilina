@@ -7,6 +7,7 @@ declare(strict_types=1);
  *
  * - storage/civilina.sqlite holds users, contact requests, login attempts,
  *   page views (v2), articles (v3), the newsletter (v4),
+ *   offers, leads and resource downloads (v5),
  *   the audit log and settings.
  * - The schema is versioned with PRAGMA user_version; version 1 imports the
  *   legacy JSON files (users.json, contact_requests.json) once. Those files
@@ -16,7 +17,7 @@ declare(strict_types=1);
 
 date_default_timezone_set('Africa/Algiers');
 
-const CIVILINA_DB_VERSION = 4;
+const CIVILINA_DB_VERSION = 5;
 
 /** Axes used across the back-office (contacts, articles, later offers and prospects). */
 const CIVILINA_AXES = [
@@ -236,6 +237,78 @@ function civilina_db_migrate(PDO $pdo): void
                 SQL);
             $pdo->prepare('INSERT OR IGNORE INTO settings(key, value) VALUES (?, ?)')->execute(['newsletter_secret', bin2hex(random_bytes(32))]);
             $pdo->exec('PRAGMA user_version = 4');
+            $version = 4;
+        }
+        if ($version < 5) {
+            // M4: offers by axis, prospecting (leads + timeline), gated resources.
+            $pdo->exec(<<<'SQL'
+                CREATE TABLE IF NOT EXISTS offers (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    axis TEXT NOT NULL,
+                    tier TEXT NOT NULL,
+                    position INTEGER NOT NULL DEFAULT 0,
+                    status TEXT NOT NULL DEFAULT 'draft',
+                    data TEXT NOT NULL,
+                    created_at TEXT NOT NULL,
+                    updated_at TEXT NOT NULL
+                );
+                CREATE TABLE IF NOT EXISTS leads (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    created_at TEXT NOT NULL,
+                    updated_at TEXT NOT NULL,
+                    source TEXT NOT NULL DEFAULT 'manuel',
+                    source_ref TEXT NOT NULL DEFAULT '',
+                    axis TEXT NOT NULL DEFAULT 'a_qualifier',
+                    stage TEXT NOT NULL DEFAULT 'nouveau',
+                    name TEXT NOT NULL DEFAULT '',
+                    company TEXT NOT NULL DEFAULT '',
+                    position TEXT NOT NULL DEFAULT '',
+                    email TEXT NOT NULL DEFAULT '',
+                    phone TEXT NOT NULL DEFAULT '',
+                    offer_id INTEGER NOT NULL DEFAULT 0,
+                    value_da INTEGER NOT NULL DEFAULT 0,
+                    next_action TEXT NOT NULL DEFAULT '',
+                    next_action_at TEXT NOT NULL DEFAULT '',
+                    notes TEXT NOT NULL DEFAULT '',
+                    lost_reason TEXT NOT NULL DEFAULT ''
+                );
+                CREATE INDEX IF NOT EXISTS leads_stage ON leads(stage, updated_at);
+                CREATE INDEX IF NOT EXISTS leads_email ON leads(email);
+                CREATE INDEX IF NOT EXISTS leads_next ON leads(next_action_at);
+                CREATE TABLE IF NOT EXISTS lead_events (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    lead_id INTEGER NOT NULL,
+                    created_at TEXT NOT NULL,
+                    user_id TEXT NOT NULL DEFAULT '',
+                    type TEXT NOT NULL,
+                    detail TEXT NOT NULL DEFAULT ''
+                );
+                CREATE INDEX IF NOT EXISTS lead_events_lead ON lead_events(lead_id, id);
+                CREATE TABLE IF NOT EXISTS resource_downloads (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    created_at TEXT NOT NULL,
+                    resource TEXT NOT NULL,
+                    email TEXT NOT NULL,
+                    first_name TEXT NOT NULL DEFAULT '',
+                    company TEXT NOT NULL DEFAULT '',
+                    lead_id INTEGER NOT NULL DEFAULT 0,
+                    newsletter INTEGER NOT NULL DEFAULT 0,
+                    ip_hash TEXT NOT NULL DEFAULT '',
+                    downloads INTEGER NOT NULL DEFAULT 0,
+                    last_download_at TEXT NOT NULL DEFAULT ''
+                );
+                CREATE INDEX IF NOT EXISTS resource_downloads_res ON resource_downloads(resource, created_at);
+                SQL);
+            // Existing contact requests become leads (archived ones are left out).
+            $pdo->exec(<<<'SQL'
+                INSERT INTO leads(created_at, updated_at, source, source_ref, axis, stage, name, company, position, email, phone, notes)
+                SELECT created_at, updated_at, 'contact', id, axis,
+                       CASE status WHEN 'new' THEN 'nouveau' ELSE 'qualifie' END,
+                       name, company, position, email, phone, 'Besoin : ' || need
+                FROM contacts WHERE status != 'archived'
+                SQL);
+            $pdo->exec("INSERT INTO lead_events(lead_id, created_at, type, detail) SELECT id, created_at, 'creation', 'Demande de contact (reprise)' FROM leads WHERE source = 'contact'");
+            $pdo->exec('PRAGMA user_version = 5');
         }
         $pdo->exec('COMMIT');
     } catch (Throwable $e) {
@@ -328,10 +401,11 @@ function civilina_contact_insert(array $request, ?PDO $pdo = null): void
     $need = (string) ($request['need'] ?? '');
     $ip = (string) ($request['ip'] ?? '');
 
-    $pdo->prepare(
+    $insert = $pdo->prepare(
         'INSERT OR IGNORE INTO contacts(id, created_at, updated_at, status, axis, name, company, position, email, phone, need, message, ip_hash, user_agent)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-    )->execute([
+    );
+    $insert->execute([
         (string) $request['id'],
         $created,
         $created,
@@ -347,6 +421,80 @@ function civilina_contact_insert(array $request, ?PDO $pdo = null): void
         $ip !== '' ? civilina_hash($ip, $pdo) : '',
         mb_substr((string) ($request['user_agent'] ?? ''), 0, 500),
     ]);
+
+    // M4: every new request also feeds the prospecting pipeline (once the leads table exists).
+    if ($insert->rowCount() > 0 && (int) $pdo->query('PRAGMA user_version')->fetchColumn() >= 5) {
+        $isQuote = (int) ($request['offer_id'] ?? 0) > 0;
+        civilina_lead_upsert([
+            'source' => $isQuote ? 'devis' : 'contact', 'source_ref' => (string) $request['id'],
+            'axis' => (string) ($request['axis'] ?? civilina_axis_for_need($need)),
+            'name' => (string) ($request['name'] ?? ''), 'company' => (string) ($request['company'] ?? ''),
+            'position' => (string) ($request['position'] ?? ''), 'email' => (string) ($request['email'] ?? ''),
+            'phone' => (string) ($request['phone'] ?? ''), 'offer_id' => (int) ($request['offer_id'] ?? 0),
+        ], $isQuote ? 'devis' : 'contact', ($isQuote ? 'Demande de devis : ' : 'Demande de contact : ') . $need, $pdo);
+    }
+}
+
+const CIVILINA_LEAD_STAGES = [
+    'nouveau' => 'Nouveau',
+    'qualifie' => 'Qualifié',
+    'proposition' => 'Proposition envoyée',
+    'gagne' => 'Gagné',
+    'perdu' => 'Perdu',
+];
+
+/**
+ * Creates a lead, or adds the event to the open lead of the same e-mail address
+ * (a person who downloads a resource then asks for a quote stays one prospect).
+ * @return int lead id
+ */
+function civilina_lead_upsert(array $data, string $eventType, string $detail, ?PDO $pdo = null, string $userId = ''): int
+{
+    $pdo = $pdo ?? civilina_db();
+    $now = date('c');
+    $email = mb_strtolower(trim((string) ($data['email'] ?? '')));
+    $lead = null;
+    if ($email !== '') {
+        $find = $pdo->prepare("SELECT * FROM leads WHERE email = ? AND stage NOT IN ('gagne', 'perdu') ORDER BY id DESC LIMIT 1");
+        $find->execute([$email]);
+        $lead = $find->fetch() ?: null;
+    }
+    if ($lead) {
+        $id = (int) $lead['id'];
+        // Fill only the empty fields; a quote request moves a new lead to "qualified".
+        $fill = [];
+        foreach (['name', 'company', 'position', 'phone'] as $field) {
+            if ((string) $lead[$field] === '' && trim((string) ($data[$field] ?? '')) !== '') {
+                $fill[$field] = trim((string) $data[$field]);
+            }
+        }
+        if ($lead['axis'] === 'a_qualifier' && ($data['axis'] ?? 'a_qualifier') !== 'a_qualifier') {
+            $fill['axis'] = (string) $data['axis'];
+        }
+        if ((int) ($data['offer_id'] ?? 0) > 0) {
+            $fill['offer_id'] = (int) $data['offer_id'];
+        }
+        if ($eventType === 'devis' && $lead['stage'] === 'nouveau') {
+            $fill['stage'] = 'qualifie';
+        }
+        $fill['updated_at'] = $now;
+        $set = implode(', ', array_map(static fn (string $k): string => $k . ' = ?', array_keys($fill)));
+        $pdo->prepare('UPDATE leads SET ' . $set . ' WHERE id = ?')->execute([...array_values($fill), $id]);
+    } else {
+        $pdo->prepare('INSERT INTO leads(created_at, updated_at, source, source_ref, axis, stage, name, company, position, email, phone, offer_id, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+            ->execute([
+                $now, $now, (string) ($data['source'] ?? 'manuel'), (string) ($data['source_ref'] ?? ''),
+                (string) ($data['axis'] ?? 'a_qualifier'), (string) ($data['stage'] ?? 'nouveau'),
+                mb_substr(trim((string) ($data['name'] ?? '')), 0, 160), mb_substr(trim((string) ($data['company'] ?? '')), 0, 160),
+                mb_substr(trim((string) ($data['position'] ?? '')), 0, 160), $email, mb_substr(trim((string) ($data['phone'] ?? '')), 0, 80),
+                (int) ($data['offer_id'] ?? 0), mb_substr(trim((string) ($data['notes'] ?? '')), 0, 4000),
+            ]);
+        $id = (int) $pdo->lastInsertId();
+        $eventType = $eventType === '' ? 'creation' : $eventType;
+    }
+    $pdo->prepare('INSERT INTO lead_events(lead_id, created_at, user_id, type, detail) VALUES (?, ?, ?, ?, ?)')
+        ->execute([$id, $now, $userId, $eventType, mb_substr($detail, 0, 1000)]);
+    return $id;
 }
 
 /* ---------- Audit log ---------- */

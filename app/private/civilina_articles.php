@@ -292,6 +292,53 @@ function civilina_share_png(array $c): ?string
 
 /* ---------- Page ---------- */
 
+/** Gated resources: slug => title, axis, file (private/resources), summary, related article. */
+const CIVILINA_RESOURCES = [
+    'matrice-raci' => [
+        'title' => 'Matrice RACI — modèle Excel',
+        'axis' => 'entreprise',
+        'file' => 'civilina-matrice-raci.xlsx',
+        'summary' => 'Activités × rôles, listes R, A, C, I, contrôles automatiques (un seul A par ligne, au moins un R) et exemple commenté pour un projet de construction.',
+        'article' => 'matrice-raci-modele-commente',
+    ],
+    'modele-itp' => [
+        'title' => 'Plan d\'inspection et d\'essais (ITP) — modèle Excel',
+        'axis' => 'engineering',
+        'file' => 'civilina-modele-itp.xlsx',
+        'summary' => 'Trame d\'ITP prête à remplir : contrôles, références, critères d\'acceptation, points d\'arrêt (H), de témoin (W) et de revue (R) par intervenant, preuves attendues.',
+        'article' => 'construire-itp-points-arret-temoin-revue',
+    ],
+    'fiche-kpi' => [
+        'title' => 'Fiche indicateur (KPI) — modèle Excel',
+        'axis' => 'entreprise',
+        'file' => 'civilina-fiche-kpi.xlsx',
+        'summary' => 'Fiche indicateur complète (définition, formule, source, cible, seuils, responsable) et suivi mensuel avec calcul automatique de l\'état vert, orange ou rouge.',
+        'article' => 'fiche-indicateur-kpi-modele-commente',
+    ],
+];
+
+/** Box promoting the template of an article, before the newsletter box (empty when none). */
+function civilina_resource_box(string $articleSlug, string $indent = ''): string
+{
+    foreach (CIVILINA_RESOURCES as $slug => $r) {
+        if ($r['article'] === $articleSlug) {
+            $t = static fn (string $s): string => htmlspecialchars($s, ENT_NOQUOTES, 'UTF-8');
+            $lines = [
+                '<aside class="res-box" aria-label="Modèle gratuit">',
+                '  <div><p class="eyebrow">Modèle gratuit</p><h3>' . $t($r['title']) . '</h3><p>' . $t($r['summary']) . '</p></div>',
+                '  <a class="btn btn-primary" href="/ressources/#' . $slug . '">Télécharger le modèle →</a>',
+                '</aside>',
+            ];
+            return $indent . implode("
+" . $indent, $lines) . "
+
+";
+        }
+    }
+    return '';
+}
+
+
 /** Absolute URL of the PNG share image when it exists on the site, else null. */
 function civilina_article_share_image(array $a): ?string
 {
@@ -431,7 +478,7 @@ function civilina_article_page(array $a, bool $preview = false): string
     $robots = $preview ? '<meta name="robots" content="noindex, nofollow">' . "\n" : '';
     $pillClass = 'pill-' . $axis[1];
     $inline = 'civilina_md_inline';
-    $newsletter = civilina_newsletter_block('article:' . $a['slug'], '    ');
+    $newsletter = civilina_resource_box($a['slug'], '    ') . civilina_newsletter_block('article:' . $a['slug'], '    ');
 
     return <<<HTML
 <!doctype html>

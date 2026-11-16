@@ -6,7 +6,7 @@ $isSuper = civilina_is_super_admin($user);
 $db = civilina_db();
 
 $view = (string) ($_GET['view'] ?? 'dashboard');
-if (!array_key_exists($view, CIVILINA_ADMIN_NAV) && !in_array($view, array_merge(['contact', 'article', 'preview'], CIVILINA_NL_VIEWS), true)) {
+if (!array_key_exists($view, CIVILINA_ADMIN_NAV) && !in_array($view, array_merge(['contact', 'article', 'preview'], CIVILINA_NL_VIEWS, CIVILINA_SALES_VIEWS), true)) {
     $view = 'dashboard';
 }
 if (in_array($view, CIVILINA_SUPER_ADMIN_VIEWS, true) && !$isSuper) {
@@ -45,6 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($view === 'article') {
         civilina_admin_journal_post($user);
+    }
+    if (in_array($view, CIVILINA_SALES_VIEWS, true)) {
+        civilina_admin_sales_post($view, $user);
     }
     if (in_array($view, CIVILINA_NL_VIEWS, true)) {
         civilina_admin_newsletter_post($view, $user, $isSuper);
@@ -109,6 +112,7 @@ if ($view === 'dashboard') {
     $userTotal = array_sum($usersByRole);
     $mbtiCount = civilina_mbti_results_count();
     $newsletter = civilina_nl_counts();
+    $pipeline = civilina_leads_summary();
     $waiting = $db->prepare("SELECT COUNT(*) FROM contacts WHERE status = 'new' AND created_at < ?");
     $waiting->execute([date('c', strtotime('-48 hours'))]);
     $oldNew = (int) $waiting->fetchColumn();
@@ -118,6 +122,9 @@ if ($view === 'dashboard') {
 
     civilina_admin_start('Tableau de bord', $view, $user);
     ?>
+    <?php if ($pipeline['late'] > 0): ?>
+      <p class="bo-alert"><?= $pipeline['late'] ?> relance(s) de prospect en retard. <a href="<?= h(civilina_admin_url('sales', ['stage' => 'relances'])) ?>">Les voir →</a></p>
+    <?php endif; ?>
     <?php if ($oldNew > 0): ?>
       <p class="bo-alert"><?= $oldNew ?> demande<?= $oldNew > 1 ? 's' : '' ?> de contact attend<?= $oldNew > 1 ? 'ent' : '' ?> une réponse depuis plus de 48 h. <a href="<?= h(civilina_admin_url('contacts', ['status' => 'new'])) ?>">Les traiter →</a></p>
     <?php endif; ?>
@@ -128,6 +135,7 @@ if ($view === 'dashboard') {
       <article class="kpi"><span>Comptes inscrits</span><strong><?= $userTotal ?></strong><small><?= (int) ($usersByRole['admin'] ?? 0) ?> admin · <?= $userTotal - (int) ($usersByRole['admin'] ?? 0) ?> membres</small></article>
       <article class="kpi"><span>Tests MBTI</span><strong><?= $mbtiCount ?></strong><small>Résultats enregistrés</small></article>
       <a class="kpi kpi-link" href="<?= h(civilina_admin_url('newsletter')) ?>"><span>Abonnés newsletter</span><strong><?= $newsletter['status']['confirmed'] ?></strong><small><?= $newsletter['status']['pending'] ?> en attente · +<?= $newsletter['confirmed_30d'] ?> sur 30 jours</small></a>
+      <a class="kpi kpi-link" href="<?= h(civilina_admin_url('sales')) ?>"><span>Prospects ouverts</span><strong><?= $pipeline['open'] ?></strong><small><?= $pipeline['due'] ?> relance(s) à faire · <?= $pipeline['stages']['proposition'] ?> proposition(s)</small></a>
       <a class="kpi kpi-link" href="<?= h(civilina_admin_url('stats')) ?>"><span>Visites · 7 jours</span><strong><?= $audience['visits'] ?></strong><small><?= $audience['views'] ?> pages vues<?php if ($audienceTrend !== null): ?> · <?= $audienceTrend >= 0 ? '+' : '' ?><?= $audienceTrend ?> % vs 7 j précédents<?php endif; ?></small></a>
     </section>
 
@@ -179,7 +187,7 @@ if ($view === 'dashboard') {
           <li class="done"><b>M1</b> Statistiques d'audience <small>19/11</small></li>
           <li class="done"><b>M2</b> Éditeur du Journal <small>24/11</small></li>
           <li class="done"><b>M3</b> Newsletter <small>29/11 · 1er envoi 01/12</small></li>
-          <li><b>M4</b> Offres et prospection <small>07/12</small></li>
+          <li class="done"><b>M4</b> Offres et prospection <small>07/12</small></li>
           <li><b>M5</b> Recette et sécurité <small>10/12</small></li>
         </ol>
       </section>
@@ -384,6 +392,11 @@ if ($view === 'security') {
         'newsletter.campaign_sent' => 'Campagne envoyée',
         'newsletter.schedule_failed' => "Échec d'une campagne programmée",
         'article.regenerated' => "Pages d'articles régénérées",
+        'lead.saved' => 'Prospect enregistré',
+        'lead.deleted' => 'Prospect supprimé',
+        'leads.imported' => 'Import de prospects',
+        'offers.published' => 'Offres publiées',
+        'seo.applied' => 'Référencement appliqué',
     ];
     civilina_admin_start('Sécurité', $view, $user);
     ?>
@@ -578,19 +591,5 @@ if ($view === 'stats') {
     exit;
 }
 
-/* Modules of later milestones */
-$upcoming = [
-    'sales' => ['Offres et prospection', 'Jalon M4 — lundi 7 décembre 2026', ['Offres des 3 axes affichées sur le site', 'Demandes de devis rattachées à un axe', 'Ressources téléchargeables contre e-mail', 'Pipeline de prospection et relances datées']],
-];
-[$title, $milestone, $items] = $upcoming[$view];
-civilina_admin_start($title, $view, $user);
-?>
-<section class="panel soon-panel">
-  <span class="soon-tag"><?= h($milestone) ?></span>
-  <h2>Ce module est en construction.</h2>
-  <ul class="checklist">
-    <?php foreach ($items as $item): ?><li><?= h($item) ?></li><?php endforeach; ?>
-  </ul>
-</section>
-<?php
-civilina_admin_end();
+/* Offers and prospecting (M4) */
+civilina_admin_sales_view($view, $user);

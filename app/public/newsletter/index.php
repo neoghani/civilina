@@ -17,7 +17,8 @@ declare(strict_types=1);
  */
 
 header('Cache-Control: no-store, max-age=0');
-header('Referrer-Policy: no-referrer');
+// same-origin: personal links never leak to other sites, and form posts keep their Origin header.
+header('Referrer-Policy: same-origin');
 header('X-Frame-Options: DENY');
 header('X-Content-Type-Options: nosniff');
 

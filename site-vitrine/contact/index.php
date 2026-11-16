@@ -96,8 +96,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+// Quote requests (/devis/, milestone M4) post here with the id of a published offer.
+$offerId = (int) ($_POST['offer_id'] ?? 0);
+$doneUrl = $offerId > 0 ? '/devis/?ok=1' : '/?contact=ok#contact';
+
 if (civilina_value('website', 120) !== '') {
-    header('Location: /?contact=ok#contact', true, 303);
+    header('Location: ' . $doneUrl, true, 303);
     exit;
 }
 
@@ -127,6 +131,23 @@ $allowedNeeds = [
     'Autre',
 ];
 
+$offerAxis = null;
+if ($offerId > 0) {
+    try {
+        require_once $privateDir . '/civilina_db.php';
+        $offer = civilina_db()->prepare("SELECT axis, data FROM offers WHERE id = ? AND status = 'published'");
+        $offer->execute([$offerId]);
+        $offer = $offer->fetch();
+    } catch (Throwable $e) {
+        $offer = false;
+    }
+    if (!$offer) {
+        civilina_error('Cette offre n’est plus disponible. Merci d’utiliser le formulaire de contact.');
+    }
+    $need = mb_substr('Devis — ' . (string) (json_decode((string) $offer['data'], true)['title'] ?? 'offre'), 0, 160);
+    $offerAxis = (string) $offer['axis'];
+}
+
 if ($name === '' || $email === '' || $need === '' || $message === '') {
     civilina_error('Merci de renseigner le nom, l’e-mail, le besoin principal et le message.');
 }
@@ -135,7 +156,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     civilina_error('Merci de renseigner une adresse e-mail valide.');
 }
 
-if (!in_array($need, $allowedNeeds, true)) {
+if ($offerId === 0 && !in_array($need, $allowedNeeds, true)) {
     civilina_error('Merci de sélectionner un besoin principal valide.');
 }
 
@@ -157,6 +178,10 @@ $request = [
     'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
     'user_agent' => mb_substr((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 500),
 ];
+if ($offerId > 0) {
+    $request['offer_id'] = $offerId;
+    $request['axis'] = $offerAxis;
+}
 // 1. Back-office database. 2. If it is unavailable, the legacy JSON register,
 // so that a request is never lost.
 $stored = false;
@@ -185,5 +210,5 @@ if (!$stored) {
 
 civilina_notify($request, $mailLogFile);
 
-header('Location: /?contact=ok#contact', true, 303);
+header('Location: ' . $doneUrl, true, 303);
 exit;

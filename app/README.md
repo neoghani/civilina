@@ -82,6 +82,32 @@ sont dans `docs/site-vitrine/brouillons/` et chargés avec `tools/load_draft.php
   Organization/WebSite de l'accueil. Appliqué une fois par `tools/deploy_seo.php`
   (idempotent, sauvegarde des pages, dates de publication inchangées).
 
+## Offres et prospection (jalon M4)
+
+- Code : `private/civilina_sales.php` (offres, prospects, modèles, mise en page
+  des pages publiques) et `private/civilina_admin_sales.php` (écrans) ; pages
+  `public/devis/` et `public/ressources/` ; schéma v5 (offers, leads,
+  lead_events, resource_downloads).
+- Offres : 3 par axe (appel, principale, accompagnement). « Mettre en ligne »
+  réécrit la section entre `<!-- civilina:offres -->` et `<!-- /civilina:offres -->`
+  des pages Engineering, Entreprise et Digital (marqueurs ajoutés avant
+  `<section id="contact">` à la première publication). Ces pages deviennent donc,
+  elles aussi, écrites par le serveur : comparer les empreintes avant de les
+  redéployer depuis le dépôt.
+- Devis : le formulaire de `/devis/` poste sur `/contact/` avec `offer_id` ; le
+  gestionnaire de contact enregistre la demande, prévient Civilina et crée le
+  prospect (`civilina_lead_upsert`, dans `civilina_db.php`). Toute demande de
+  contact crée aussi un prospect ; une même adresse reste un seul prospect ouvert.
+- Modèles : fichiers Excel de `private/resources/` (générés par
+  `tools/build_resources.py`), servis par lien signé valable 30 jours. La case
+  newsletter est facultative et lance la double confirmation.
+- Relances : modèles d'e-mail ouverts dans la messagerie de l'administrateur
+  (lien `mailto:` affiché après préparation, la CSP du back-office interdisant
+  la redirection d'un formulaire vers `mailto:`) ; la préparation est notée dans
+  l'historique du prospect.
+- Mise en service : `tools/deploy_m4.php` (migration, 9 offres en brouillon,
+  encarts « modèle gratuit », sitemap, page Confidentialité).
+
 ## Rôles
 
 - `admin` : accès au back-office `/admin/`.

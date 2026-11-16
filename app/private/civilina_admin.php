@@ -11,6 +11,7 @@ require_once __DIR__ . '/civilina_auth.php';
 require_once __DIR__ . '/civilina_stats.php';
 require_once __DIR__ . '/civilina_admin_journal.php';
 require_once __DIR__ . '/civilina_admin_newsletter.php';
+require_once __DIR__ . '/civilina_admin_sales.php';
 
 /** Back-office navigation. Modules of later milestones are shown with their date, without fake data. */
 const CIVILINA_ADMIN_NAV = [
@@ -19,7 +20,7 @@ const CIVILINA_ADMIN_NAV = [
     'journal' => ['Journal', null],
     'stats' => ['Statistiques', null],
     'newsletter' => ['Newsletter', null],
-    'sales' => ['Offres et prospection', 'M4 · 07/12'],
+    'sales' => ['Offres et prospection', null],
     'users' => ['Utilisateurs', null],
     'security' => ['Sécurité', null],
 ];

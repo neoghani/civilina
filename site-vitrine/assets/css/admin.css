@@ -244,3 +244,14 @@ input[type=email],input[type=password],input[type=search],input[type=number],inp
 :root[data-theme="dark"] .bo-btn-ghost.bo-btn-danger:hover{background:#3a1616}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .bo-btn-ghost.bo-btn-danger{color:#ff8f8f;border-color:#6b2a2a}}
 @media (max-width:700px){.nl-row{grid-template-columns:1fr}}
+
+/* ===== Prospection (M4) ===== */
+.timeline{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.timeline li{padding:10px 12px;border-left:3px solid var(--line);background:var(--hover);border-radius:0 8px 8px 0}
+.timeline p{margin:4px 0 0;font-size:.9rem}
+.tl-type{font-weight:700;font-size:.82rem}
+.tl-date{color:var(--muted);font-size:.78rem;margin-left:6px}
+td.late{color:#b23a3a;font-weight:700}
+:root[data-theme="dark"] td.late{color:#ff8f8f}
+input[type=date],input[type=file]{font:inherit;font-size:.9rem;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:7px 10px;background:var(--input);min-width:0}
+textarea.code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.84rem}
