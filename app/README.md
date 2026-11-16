@@ -44,6 +44,28 @@ La syntaxe d'écriture est décrite en tête de `private/civilina_markup.php` et
 dans l'aide-mémoire de l'éditeur. Les brouillons préparés hors du back-office
 sont dans `docs/site-vitrine/brouillons/` et chargés avec `tools/load_draft.php`.
 
+## Newsletter (jalon M3)
+
+- Code : `private/civilina_newsletter.php` (abonnés, envoi Brevo, campagnes) et
+  `private/civilina_admin_newsletter.php` (écrans du back-office) ; page publique
+  `public/newsletter/index.php` ; schéma v4 (subscribers, campaigns,
+  campaign_sends, email_log, form_hits).
+- Double opt-in : l'e-mail de confirmation mène à une page avec un bouton (les
+  antivirus de messagerie qui ouvrent les liens ne confirment donc rien). Liens
+  personnels signés pour les thèmes et la désinscription, en-têtes
+  List-Unsubscribe (désinscription en un clic).
+- Envoi : API transactionnelle Brevo, un appel par destinataire, dans le quota
+  quotidien (réglage, 280 par défaut). La file est traitée par la page de la
+  campagne, le back-office et le collecteur `/visite/` ; une campagne programmée
+  part donc à la première visite après son heure.
+- La clé d'API est saisie par le super administrateur dans le back-office et
+  stockée dans la base privée ; elle n'est jamais réaffichée.
+- Le bloc d'inscription est écrit par le gabarit des articles
+  (`civilina_newsletter_block`) ; il a été inséré une fois sur l'accueil, la page
+  Journal et les articles existants par `tools/deploy_m3.php`.
+- Test local : le routeur de développement définit `CIVILINA_MAIL_OUTBOX` ; les
+  e-mails sont alors écrits en JSON dans `civilina_private/outbox/`.
+
 ## Rôles
 
 - `admin` : accès au back-office `/admin/`.

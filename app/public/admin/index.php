@@ -6,7 +6,7 @@ $isSuper = civilina_is_super_admin($user);
 $db = civilina_db();
 
 $view = (string) ($_GET['view'] ?? 'dashboard');
-if (!array_key_exists($view, CIVILINA_ADMIN_NAV) && !in_array($view, ['contact', 'article', 'preview'], true)) {
+if (!array_key_exists($view, CIVILINA_ADMIN_NAV) && !in_array($view, array_merge(['contact', 'article', 'preview'], CIVILINA_NL_VIEWS), true)) {
     $view = 'dashboard';
 }
 if (in_array($view, CIVILINA_SUPER_ADMIN_VIEWS, true) && !$isSuper) {
@@ -20,13 +20,22 @@ try {
     error_log('civilina scheduled publishing: ' . $e->getMessage());
 }
 
+// Newsletter: due campaigns, queued e-mails, waiting confirmations (longer budget on the campaign page).
+try {
+    if ($view !== 'campaign_preview') {
+        civilina_newsletter_process($view === 'campaign' && $_SERVER['REQUEST_METHOD'] === 'GET' ? 20.0 : 3.0);
+    }
+} catch (Throwable $e) {
+    error_log('civilina newsletter: ' . $e->getMessage());
+}
+
 /* ---------- Actions (POST, then redirect) ---------- */
 
-if ($view === 'preview') {
+if ($view === 'preview' || $view === 'campaign_preview') {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         civilina_verify_csrf();
     }
-    civilina_admin_article_preview();
+    $view === 'preview' ? civilina_admin_article_preview() : civilina_admin_campaign_preview();
     exit;
 }
 
@@ -36,6 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($view === 'article') {
         civilina_admin_journal_post($user);
+    }
+    if (in_array($view, CIVILINA_NL_VIEWS, true)) {
+        civilina_admin_newsletter_post($view, $user, $isSuper);
     }
 
     if ($action === 'update_contact') {
@@ -96,6 +108,7 @@ if ($view === 'dashboard') {
     $usersByRole = $db->query('SELECT role, COUNT(*) AS n FROM users GROUP BY role')->fetchAll(PDO::FETCH_KEY_PAIR);
     $userTotal = array_sum($usersByRole);
     $mbtiCount = civilina_mbti_results_count();
+    $newsletter = civilina_nl_counts();
     $waiting = $db->prepare("SELECT COUNT(*) FROM contacts WHERE status = 'new' AND created_at < ?");
     $waiting->execute([date('c', strtotime('-48 hours'))]);
     $oldNew = (int) $waiting->fetchColumn();
@@ -114,6 +127,7 @@ if ($view === 'dashboard') {
       <article class="kpi"><span>Demandes de contact</span><strong><?= $contactTotal ?></strong><small><?= $contactNew ?> à traiter · <?= $contactLast30 ?> sur 30 jours</small></article>
       <article class="kpi"><span>Comptes inscrits</span><strong><?= $userTotal ?></strong><small><?= (int) ($usersByRole['admin'] ?? 0) ?> admin · <?= $userTotal - (int) ($usersByRole['admin'] ?? 0) ?> membres</small></article>
       <article class="kpi"><span>Tests MBTI</span><strong><?= $mbtiCount ?></strong><small>Résultats enregistrés</small></article>
+      <a class="kpi kpi-link" href="<?= h(civilina_admin_url('newsletter')) ?>"><span>Abonnés newsletter</span><strong><?= $newsletter['status']['confirmed'] ?></strong><small><?= $newsletter['status']['pending'] ?> en attente · +<?= $newsletter['confirmed_30d'] ?> sur 30 jours</small></a>
       <a class="kpi kpi-link" href="<?= h(civilina_admin_url('stats')) ?>"><span>Visites · 7 jours</span><strong><?= $audience['visits'] ?></strong><small><?= $audience['views'] ?> pages vues<?php if ($audienceTrend !== null): ?> · <?= $audienceTrend >= 0 ? '+' : '' ?><?= $audienceTrend ?> % vs 7 j précédents<?php endif; ?></small></a>
     </section>
 
@@ -163,8 +177,8 @@ if ($view === 'dashboard') {
         <ol class="roadmap">
           <li class="done"><b>M0</b> Socle, nettoyage, sécurité <small>17/11</small></li>
           <li class="done"><b>M1</b> Statistiques d'audience <small>19/11</small></li>
-          <li><b>M2</b> Éditeur du Journal <small>24/11</small></li>
-          <li><b>M3</b> Newsletter <small>29/11 · 1er envoi 01/12</small></li>
+          <li class="done"><b>M2</b> Éditeur du Journal <small>24/11</small></li>
+          <li class="done"><b>M3</b> Newsletter <small>29/11 · 1er envoi 01/12</small></li>
           <li><b>M4</b> Offres et prospection <small>07/12</small></li>
           <li><b>M5</b> Recette et sécurité <small>10/12</small></li>
         </ol>
@@ -287,6 +301,11 @@ if ($view === 'contact') {
     exit;
 }
 
+if (in_array($view, CIVILINA_NL_VIEWS, true)) {
+    civilina_admin_newsletter_view($view, $user, $isSuper);
+    exit;
+}
+
 if ($view === 'journal') {
     civilina_admin_journal_list($user);
     exit;
@@ -348,6 +367,23 @@ if ($view === 'security') {
         'contact.updated' => 'Demande mise à jour',
         'user.role' => 'Rôle modifié',
         'db.migrated' => 'Migration des données',
+        'newsletter.confirmed' => 'Inscription newsletter confirmée',
+        'newsletter.unsubscribed' => 'Désinscription newsletter',
+        'newsletter.resubscribed' => 'Réinscription newsletter',
+        'newsletter.blocked' => 'Abonné bloqué par Brevo',
+        'newsletter.invited' => 'Invitation newsletter envoyée',
+        'newsletter.deleted' => 'Abonné supprimé',
+        'newsletter.exported' => 'Export des abonnés',
+        'newsletter.settings' => 'Réglages newsletter modifiés',
+        'newsletter.key_saved' => 'Clé Brevo enregistrée',
+        'newsletter.key_removed' => 'Clé Brevo supprimée',
+        'newsletter.campaign_created' => 'Campagne créée',
+        'newsletter.campaign_deleted' => 'Campagne supprimée',
+        'newsletter.campaign_scheduled' => 'Campagne programmée',
+        'newsletter.campaign_started' => 'Envoi de campagne lancé',
+        'newsletter.campaign_sent' => 'Campagne envoyée',
+        'newsletter.schedule_failed' => "Échec d'une campagne programmée",
+        'article.regenerated' => "Pages d'articles régénérées",
     ];
     civilina_admin_start('Sécurité', $view, $user);
     ?>
@@ -544,7 +580,6 @@ if ($view === 'stats') {
 
 /* Modules of later milestones */
 $upcoming = [
-    'newsletter' => ['Newsletter', 'Jalon M3 — dimanche 29 novembre 2026, 1er envoi mardi 1er décembre', ['Formulaire d\'inscription avec confirmation par e-mail', 'Listes par axe : Engineering, Entreprise, Digital', 'Campagne pré-remplie avec les derniers articles', 'Envoi via Brevo, statistiques d\'ouverture et de clic']],
     'sales' => ['Offres et prospection', 'Jalon M4 — lundi 7 décembre 2026', ['Offres des 3 axes affichées sur le site', 'Demandes de devis rattachées à un axe', 'Ressources téléchargeables contre e-mail', 'Pipeline de prospection et relances datées']],
 ];
 [$title, $milestone, $items] = $upcoming[$view];

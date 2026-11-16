@@ -204,9 +204,32 @@ function civilina_cover_svg(array $a): string
 
 /* ---------- Page ---------- */
 
+/**
+ * Newsletter sign-up box (milestone M3), posted to /newsletter/. The same HTML is
+ * used on the homepage and the Journal page; $source records where people signed up.
+ */
+function civilina_newsletter_block(string $source, string $indent = ''): string
+{
+    $source = htmlspecialchars($source, ENT_QUOTES, 'UTF-8');
+    $lines = [
+        '<aside class="nl-box" id="newsletter" aria-label="Newsletter">',
+        '  <div class="nl-intro"><p class="eyebrow">Newsletter</p><h3>Recevez les prochains guides du Journal.</h3><p>Modèles commentés, checklists et retours d\'expérience, selon les thèmes que vous choisissez.</p></div>',
+        '  <form class="nl-form" method="post" action="/newsletter/">',
+        '    <input type="hidden" name="action" value="subscribe"><input type="hidden" name="source" value="' . $source . '">',
+        '    <div class="hp" aria-hidden="true"><label>Site web <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>',
+        '    <div class="nl-line"><input type="email" name="email" required autocomplete="email" maxlength="180" placeholder="Votre e-mail professionnel" aria-label="Votre e-mail"><button class="btn btn-primary" type="submit">S\'inscrire</button></div>',
+        '    <fieldset class="nl-axes"><legend>Thèmes</legend><label><input type="checkbox" name="axes[]" value="engineering" checked> Engineering</label><label><input type="checkbox" name="axes[]" value="entreprise" checked> Entreprise</label><label><input type="checkbox" name="axes[]" value="digital" checked> Digital</label></fieldset>',
+        '    <p class="nl-legal">Confirmation par e-mail, désinscription en un clic. <a href="/confidentialite/">Confidentialité</a></p>',
+        '  </form>',
+        '</aside>',
+    ];
+    return $indent . implode("\n" . $indent, $lines);
+}
+
 function civilina_article_page(array $a, bool $preview = false): string
 {
-    $e = static fn (string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
+    // Attributes are always double-quoted: apostrophes stay literal, as in the hand-made pages.
+    $e = static fn (string $s): string => htmlspecialchars($s, ENT_COMPAT, 'UTF-8');
     $t = static fn (string $s): string => htmlspecialchars($s, ENT_NOQUOTES, 'UTF-8');
     $axis = CIVILINA_ARTICLE_AXES[$a['axis']] ?? CIVILINA_ARTICLE_AXES['engineering'];
     $url = civilina_article_url($a);
@@ -260,6 +283,7 @@ function civilina_article_page(array $a, bool $preview = false): string
     $robots = $preview ? '<meta name="robots" content="noindex, nofollow">' . "\n" : '';
     $pillClass = 'pill-' . $axis[1];
     $inline = 'civilina_md_inline';
+    $newsletter = civilina_newsletter_block('article:' . $a['slug'], '    ');
 
     return <<<HTML
 <!doctype html>
@@ -303,7 +327,7 @@ function civilina_article_page(array $a, bool $preview = false): string
     </nav>
     <button type="button" class="theme-switch" data-theme-toggle aria-label="Mode jour ou nuit" aria-pressed="false"><span class="ts-track"><span class="ts-knob"></span></span><span class="ts-label"></span></button>
     <a href="/login/" class="nav-login">Connexion</a>
-    <a href="/engineering/#contact" class="btn btn-primary">Parler de votre projet</a>
+    <a href="{$axis[2]}#contact" class="btn btn-primary">Parler de votre projet</a>
     <button class="burger" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
   </div>
 </header>
@@ -343,6 +367,8 @@ function civilina_article_page(array $a, bool $preview = false): string
       <div><strong>Abdelghani Bouhouche</strong><p>Ingénieur civil et PMP, fondateur de Civilina. Expérience en management de projet, qualité, QHSE et coordination opérationnelle, en Algérie et à l'international.</p></div>
     </div>
 
+{$newsletter}
+
     <div class="art-cta">
       <h3>{$t($cta['title'])}</h3>
       <p>{$t($cta['text'])}</p>
@@ -360,7 +386,7 @@ function civilina_article_page(array $a, bool $preview = false): string
         <p style="margin-top:.8rem;max-width:34ch">Engineering, management et digitalisation pour les projets d'ingénierie.</p>
       </div>
       <div><h5>Axes</h5><ul><li><a href="/engineering/">CIVILINA Engineering</a></li><li><a href="/gestion-entreprise/">CIVILINA Entreprise</a></li><li><a href="/digital/">CIVILINA Digital</a></li><li><a href="/ia/">CIVILINA IA</a></li></ul></div>
-      <div><h5>Journal</h5><ul>{$related}<li><a href="/journal/">Tous les articles</a></li></ul></div>
+      <div><h5>Journal</h5><ul>{$related}<li><a href="/journal/">Tous les articles</a></li><li><a href="/newsletter/">Newsletter</a></li></ul></div>
       <div><h5>Contact</h5><ul><li><a href="/#contact">Demander un diagnostic</a></li><li><a href="https://www.linkedin.com/company/civilina" rel="noopener">LinkedIn</a></li></ul></div>
     </div>
     <div class="legal"><span>© 2026 Civilina</span><span><a href="/mentions-legales/">Mentions légales</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/cookies/">Cookies</a> · <a href="/conditions-utilisation/">Conditions</a></span></div>

@@ -10,6 +10,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/civilina_auth.php';
 require_once __DIR__ . '/civilina_stats.php';
 require_once __DIR__ . '/civilina_admin_journal.php';
+require_once __DIR__ . '/civilina_admin_newsletter.php';
 
 /** Back-office navigation. Modules of later milestones are shown with their date, without fake data. */
 const CIVILINA_ADMIN_NAV = [
@@ -17,13 +18,13 @@ const CIVILINA_ADMIN_NAV = [
     'contacts' => ['Demandes de contact', null],
     'journal' => ['Journal', null],
     'stats' => ['Statistiques', null],
-    'newsletter' => ['Newsletter', 'M3 · 29/11'],
+    'newsletter' => ['Newsletter', null],
     'sales' => ['Offres et prospection', 'M4 · 07/12'],
     'users' => ['Utilisateurs', null],
     'security' => ['Sécurité', null],
 ];
 
-const CIVILINA_SUPER_ADMIN_VIEWS = ['users', 'security'];
+const CIVILINA_SUPER_ADMIN_VIEWS = ['users', 'security', 'nl_settings'];
 
 function civilina_admin_headers(): void
 {
@@ -63,7 +64,7 @@ function civilina_admin_url(string $view, array $params = []): string
     return '/admin/' . ($params ? '?' . http_build_query($params) : '');
 }
 
-function civilina_admin_start(string $title, string $view, array $user): void
+function civilina_admin_start(string $title, string $view, array $user, string $head = ''): void
 {
     civilina_admin_headers();
     $flash = civilina_flash();
@@ -81,6 +82,7 @@ function civilina_admin_start(string $title, string $view, array $user): void
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/admin.css">
+<?= $head ?>
 </head>
 <body>
 <div class="bo">

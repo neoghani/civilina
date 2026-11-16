@@ -39,7 +39,7 @@ Version du 15/11/2026. Périmètre : civilina.com (hébergement Octenium, cPanel
 | **M0 — Socle et nettoyage** ✅ livré le 15/11/2026 | **Mar. 17/11/2026** | Base SQLite, migration des JSON, rôle super administrateur, nouveau gabarit `/admin/` en charte V2, espace membre nettoyé (navigation V2), limitation des tentatives de connexion | L'ancien visuel a disparu ; toutes les données existantes sont retrouvées |
 | **M1 — Statistiques** ✅ livré le 15/11/2026 | **Jeu. 19/11/2026** | Compteur de visites sans cookie, tableau de bord des performances, demandes de contact par axe | Les chiffres du jour s'affichent et correspondent aux visites réelles |
 | **M2 — Éditeur du Journal** ✅ livré et validé le 16/11/2026 (fiche KPI publiée depuis le back-office) | **Mar. 24/11/2026** | Import des 16 articles, éditeur, aperçu, publication avec génération des pages et du sitemap | L'article 17 (fiche indicateur KPI) est publié entièrement depuis le back-office |
-| **M3 — Newsletter** | **Dim. 29/11/2026** (1er envoi **mar. 01/12**) | Formulaire d'inscription sur le site, double opt-in, segments par axe, composition et envoi via Brevo | La 1re newsletter part le mardi 1er décembre |
+| **M3 — Newsletter** ✅ livré le 16/11/2026 (envoi en attente de la clé Brevo) | **Dim. 29/11/2026** (1er envoi **mar. 01/12**) | Formulaire d'inscription sur le site, double opt-in, segments par axe, composition et envoi via Brevo | La 1re newsletter part le mardi 1er décembre |
 | **M4 — Vente et prospection** | **Lun. 07/12/2026** | Offres par axe sur le site, demandes de devis rattachées à un axe, 3 ressources téléchargeables contre e-mail (modèle ITP, matrice RACI Excel, fiche KPI), CRM et relances | La 1re campagne de prospection est lancée |
 | **M5 — Recette et sécurité** | **Jeu. 10/12/2026** | Revue de sécurité (CSRF, injection de contenu, droits), sauvegardes automatiques, documentation | Aucun défaut bloquant ; procédure de sauvegarde testée |
 
@@ -47,7 +47,7 @@ Le Journal continue en parallèle : un article tous les 2 à 3 jours jusqu'à M2
 
 ## 5. Ce qu'il faut de votre côté
 
-- **Avant M3** : créer le compte Brevo, authentifier le domaine (enregistrements DNS fournis par Brevo) et coller la clé d'API dans le back-office vous-même.
+- **Avant le 1er envoi (01/12)** : créer le compte Brevo, authentifier le domaine civilina.com (enregistrements DNS fournis par Brevo, à ajouter dans cPanel → Zone Editor), valider l'adresse d'expéditeur, puis coller la clé d'API dans Newsletter → Réglages d'envoi et cliquer sur « Vérifier ». Les inscriptions reçues avant sont enregistrées ; leurs e-mails de confirmation partent dès que la clé est en place.
 - **Avant M4** : valider les offres et leurs prix par axe, et fournir la liste de cibles de prospection (entreprises, rôles, secteurs).
 - **À chaque jalon** : une recette de 15 minutes sur le site en ligne.
 

@@ -456,3 +456,75 @@ function civilina_article_linkedin_post(array $a): string
         . 'Lien de partage : https://www.linkedin.com/sharing/share-offsite/?url=' . rawurlencode(civilina_article_url($a)) . "\n"
         . ($tags[$a['axis']] ?? '');
 }
+
+/**
+ * One-time step of M3 for the articles already online: inserts the newsletter
+ * box (before the closing call to action) and the footer link, exactly where
+ * the template now writes them. Nothing else in the pages changes; articles
+ * published or republished later get them from the template. Idempotent.
+ * @return list<string> modified pages
+ */
+function civilina_articles_insert_newsletter_box(string $userId): array
+{
+    return civilina_with_publish_lock(static function () use ($userId): array {
+        $root = civilina_site_root();
+        $cta = "\n\n    <div class=\"art-cta\">";
+        $footer = 'Tous les articles</a></li></ul></div>';
+        $changed = [];
+        foreach (civilina_articles_published() as $a) {
+            $page = $root . '/journal/' . $a['slug'] . '/index.html';
+            $html = is_file($page) ? str_replace("\r\n", "\n", (string) file_get_contents($page)) : '';
+            if ($html === '' || str_contains($html, 'class="nl-box"')) {
+                continue;
+            }
+            if (substr_count($html, $cta) !== 1 || substr_count($html, $footer) !== 1) {
+                throw new RuntimeException('Emplacement de la newsletter introuvable dans journal/' . $a['slug'] . '/');
+            }
+            $html = str_replace($cta, "\n\n" . civilina_newsletter_block('article:' . $a['slug'], '    ') . $cta, $html);
+            $changed[$page] = str_replace($footer, 'Tous les articles</a></li><li><a href="/newsletter/">Newsletter</a></li></ul></div>', $html);
+        }
+        if ($changed !== []) {
+            civilina_backup_files(array_keys($changed), 'newsletter-articles');
+            foreach ($changed as $page => $html) {
+                civilina_write_file($page, $html);
+            }
+            civilina_audit('article.regenerated', count($changed) . ' pages (bloc newsletter)', $userId);
+        }
+        return array_map(static fn (string $p): string => substr($p, strlen($root)), array_keys($changed));
+    });
+}
+
+/**
+ * One-time step of M3: adds the newsletter box to the homepage (after the
+ * Journal cards) and to the Journal page (after the article list). Idempotent;
+ * outside the regions rewritten by civilina_articles_rebuild_lists().
+ * @return list<string> modified files
+ */
+function civilina_newsletter_insert_boxes(): array
+{
+    return civilina_with_publish_lock(static function (): array {
+        $root = civilina_site_root();
+        $targets = [
+            civilina_home_file() => ['    <p style="margin-top:24px"><a href="journal/" class="btn btn-ghost">Tous les articles →</a></p>', 'accueil'],
+            $root . '/journal/index.html' => ['    <p id="empty" class="lead" style="display:none;margin-top:12px">Les premiers articles de cette rubrique sont en cours de rédaction.</p>', 'journal'],
+        ];
+        $changed = [];
+        foreach ($targets as $file => [$anchor, $source]) {
+            $html = str_replace("\r\n", "\n", (string) file_get_contents($file));
+            if (str_contains($html, 'class="nl-box"')) {
+                continue;
+            }
+            if (substr_count($html, $anchor) !== 1) {
+                throw new RuntimeException('Emplacement de la newsletter introuvable dans ' . basename(dirname($file)) . '/' . basename($file));
+            }
+            $changed[$file] = str_replace($anchor, $anchor . "\n" . civilina_newsletter_block($source, '    '), $html);
+        }
+        if ($changed !== []) {
+            civilina_backup_files(array_keys($changed), 'newsletter');
+            foreach ($changed as $file => $html) {
+                civilina_write_file($file, $html);
+            }
+        }
+        return array_map(static fn (string $f): string => substr($f, strlen($root)), array_keys($changed));
+    });
+}

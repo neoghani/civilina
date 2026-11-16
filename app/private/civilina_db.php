@@ -6,6 +6,7 @@ declare(strict_types=1);
  * Civilina data layer: one SQLite file outside public_html.
  *
  * - storage/civilina.sqlite holds users, contact requests, login attempts,
+ *   page views (v2), articles (v3), the newsletter (v4),
  *   the audit log and settings.
  * - The schema is versioned with PRAGMA user_version; version 1 imports the
  *   legacy JSON files (users.json, contact_requests.json) once. Those files
@@ -15,7 +16,7 @@ declare(strict_types=1);
 
 date_default_timezone_set('Africa/Algiers');
 
-const CIVILINA_DB_VERSION = 3;
+const CIVILINA_DB_VERSION = 4;
 
 /** Axes used across the back-office (contacts, articles, later offers and prospects). */
 const CIVILINA_AXES = [
@@ -170,6 +171,71 @@ function civilina_db_migrate(PDO $pdo): void
                 CREATE INDEX IF NOT EXISTS articles_status ON articles(status, date_published);
                 SQL);
             $pdo->exec('PRAGMA user_version = 3');
+            $version = 3;
+        }
+        if ($version < 4) {
+            // M3: newsletter (double opt-in subscribers, campaigns, per-recipient sends, e-mail quota log).
+            $pdo->exec(<<<'SQL'
+                CREATE TABLE IF NOT EXISTS subscribers (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    email TEXT NOT NULL UNIQUE,
+                    first_name TEXT NOT NULL DEFAULT '',
+                    axes TEXT NOT NULL DEFAULT 'engineering,entreprise,digital',
+                    status TEXT NOT NULL DEFAULT 'pending',
+                    source TEXT NOT NULL DEFAULT '',
+                    confirm_hash TEXT NOT NULL DEFAULT '',
+                    confirm_sent_at TEXT NOT NULL DEFAULT '',
+                    consent_at TEXT NOT NULL DEFAULT '',
+                    confirmed_at TEXT NOT NULL DEFAULT '',
+                    unsubscribed_at TEXT NOT NULL DEFAULT '',
+                    ip_hash TEXT NOT NULL DEFAULT '',
+                    created_at TEXT NOT NULL,
+                    updated_at TEXT NOT NULL
+                );
+                CREATE INDEX IF NOT EXISTS subscribers_status ON subscribers(status);
+                CREATE TABLE IF NOT EXISTS campaigns (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    status TEXT NOT NULL DEFAULT 'draft',
+                    subject TEXT NOT NULL DEFAULT '',
+                    data TEXT NOT NULL,
+                    scheduled_at TEXT NOT NULL DEFAULT '',
+                    started_at TEXT NOT NULL DEFAULT '',
+                    sent_at TEXT NOT NULL DEFAULT '',
+                    recipients INTEGER NOT NULL DEFAULT 0,
+                    stats TEXT NOT NULL DEFAULT '',
+                    stats_at TEXT NOT NULL DEFAULT '',
+                    created_at TEXT NOT NULL,
+                    updated_at TEXT NOT NULL
+                );
+                CREATE TABLE IF NOT EXISTS campaign_sends (
+                    campaign_id INTEGER NOT NULL,
+                    subscriber_id INTEGER NOT NULL,
+                    status TEXT NOT NULL DEFAULT 'queued',
+                    message_id TEXT NOT NULL DEFAULT '',
+                    error TEXT NOT NULL DEFAULT '',
+                    sent_at TEXT NOT NULL DEFAULT '',
+                    PRIMARY KEY (campaign_id, subscriber_id)
+                );
+                CREATE INDEX IF NOT EXISTS campaign_sends_status ON campaign_sends(status, campaign_id);
+                CREATE TABLE IF NOT EXISTS email_log (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    created_at TEXT NOT NULL,
+                    day TEXT NOT NULL,
+                    kind TEXT NOT NULL,
+                    ok INTEGER NOT NULL,
+                    detail TEXT NOT NULL DEFAULT ''
+                );
+                CREATE INDEX IF NOT EXISTS email_log_day ON email_log(day);
+                CREATE TABLE IF NOT EXISTS form_hits (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    kind TEXT NOT NULL,
+                    ip_hash TEXT NOT NULL,
+                    created_at INTEGER NOT NULL
+                );
+                CREATE INDEX IF NOT EXISTS form_hits_ip ON form_hits(kind, ip_hash, created_at);
+                SQL);
+            $pdo->prepare('INSERT OR IGNORE INTO settings(key, value) VALUES (?, ?)')->execute(['newsletter_secret', bin2hex(random_bytes(32))]);
+            $pdo->exec('PRAGMA user_version = 4');
         }
         $pdo->exec('COMMIT');
     } catch (Throwable $e) {

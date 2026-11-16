@@ -62,12 +62,14 @@ try {
     error_log('civilina visite: ' . $e->getMessage());
 }
 
-// Scheduled Journal articles are published on the first visit after their time.
+// Scheduled articles and newsletter e-mails are processed on the first visit after their time.
 try {
     require_once dirname($docRoot) . '/civilina_private/civilina_publish.php';
     civilina_articles_publish_due();
+    require_once dirname($docRoot) . '/civilina_private/civilina_newsletter.php';
+    civilina_newsletter_process(4.0);
 } catch (Throwable $e) {
-    error_log('civilina scheduled publishing: ' . $e->getMessage());
+    error_log('civilina scheduled work: ' . $e->getMessage());
 }
 
 $done();

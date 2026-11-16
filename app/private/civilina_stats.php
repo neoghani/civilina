@@ -22,6 +22,7 @@ const CIVILINA_STATS_SOURCES = [
     'linkedin' => 'LinkedIn',
     'social' => 'Autres réseaux sociaux',
     'referral' => 'Sites référents',
+    'newsletter' => 'Newsletter',
     'campaign' => 'Campagnes (liens suivis)',
     'direct' => 'Accès direct',
 ];
@@ -77,6 +78,9 @@ function civilina_stats_source(string $referrerHost, string $siteHost, array $ut
     }
     if (preg_match('~(^|\.)(facebook\.com|fb\.com|instagram\.com|t\.co|x\.com|twitter\.com|youtube\.com|whatsapp\.com|wa\.me|tiktok\.com)$|^(facebook|instagram|twitter|x|youtube|whatsapp)$~', $probe)) {
         return ['social', $host, $campaign];
+    }
+    if ($utmSource === 'newsletter') {
+        return ['newsletter', '', $campaign];
     }
     if ($utmSource !== '') {
         return ['campaign', $host !== '' ? $host : mb_substr($utmSource, 0, 80), $campaign];
