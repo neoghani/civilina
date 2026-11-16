@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * Journal articles (milestone M2): storage, page template, cover, publishing.
  *
- * - Articles live in the `articles` table (schema v3); the content is a JSON
+ * - Articles live in the articles table (schema v3); the content is a JSON
  *   document whose body uses the Civilina writing syntax (civilina_markup.php).
  * - Publishing writes static files, exactly like the hand-made pages:
  *   journal/<slug>/index.html, assets/journal/<cover>.svg, and rebuilds the
