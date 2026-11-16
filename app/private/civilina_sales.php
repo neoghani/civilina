@@ -578,3 +578,96 @@ function civilina_offers_seed(): int
     }
     return count($drafts);
 }
+
+/* ---------- Links to the free templates across the site ---------- */
+
+/** "Free templates" band, between <!-- civilina:modeles --> markers (homepage, Journal, axis pages). */
+function civilina_resources_band_html(array $slugs, string $title, string $lead): string
+{
+    $t = static fn (string $s): string => htmlspecialchars($s, ENT_NOQUOTES, 'UTF-8');
+    $cards = '';
+    foreach ($slugs as $slug) {
+        $r = CIVILINA_RESOURCES[$slug];
+        $axis = CIVILINA_ARTICLE_AXES[$r['axis']];
+        $cards .= "\n      <a class=\"res-mini\" href=\"/ressources/#" . $slug . '">'
+            . '<span class="pill pill-' . $axis[1] . '">' . $t($axis[0]) . ' · Excel</span>'
+            . '<strong>' . $t((string) preg_replace('~\s+—\s+modèle Excel$~u', '', $r['title'])) . '</strong>'
+            . '<span class="res-desc">' . $t($r['summary']) . '</span>'
+            . '<span class="more">Télécharger gratuitement →</span></a>';
+    }
+    return "<!-- civilina:modeles -->\n<section class=\"res-band\" id=\"modeles\">\n  <div class=\"shell\">\n    <div class=\"section-head\">\n      <p class=\"eyebrow\">Modèles gratuits</p>\n      <h2>" . $t($title) . "</h2>\n      <p class=\"lead\">" . $t($lead) . "</p>\n    </div>\n    <div class=\"res-mini-grid\">"
+        . $cards . "\n    </div>\n    <p style=\"margin-top:22px\"><a href=\"/ressources/\" class=\"btn btn-ghost\">Tous les modèles gratuits →</a></p>\n  </div>\n</section>\n<!-- /civilina:modeles -->";
+}
+
+/**
+ * Links the free templates from the site: a band on the homepage, the Journal
+ * page and the axis pages (templates of the axis), and a footer link on these
+ * pages and on every article. Idempotent (the band is rewritten between its
+ * markers); pages are backed up before any change.
+ * @return array{changed: list<string>, skipped: list<string>}
+ */
+function civilina_site_link_resources(string $userId): array
+{
+    return civilina_with_publish_lock(static function () use ($userId): array {
+        $root = civilina_site_root();
+        $all = array_keys(CIVILINA_RESOURCES);
+        $lead = 'Les trames que nous utilisons sur le terrain, avec un exemple rempli et des contrôles automatiques. Gratuites, en échange de votre adresse e-mail.';
+        $contact = '<section id="contact">';
+        $pages = [
+            civilina_home_file() => [civilina_resources_band_html($all, 'Des modèles Excel prêts à l\'emploi.', $lead), "<!-- CONTACT -->\n" . $contact],
+            $root . '/journal/index.html' => [civilina_resources_band_html($all, 'Passez de la lecture à la pratique.', $lead), "<section class=\"alt\">\n  <div class=\"shell\">\n    <div class=\"section-head\">\n      <p class=\"eyebrow\">Ligne éditoriale</p>"],
+            $root . '/engineering/index.html' => [civilina_resources_band_html(['modele-itp'], 'Votre ITP en quelques minutes.', 'Notre trame de plan d\'inspection et d\'essais, avec un exemple commenté sur des voiles en béton armé.'), $contact],
+            $root . '/gestion-entreprise/index.html' => [civilina_resources_band_html(['matrice-raci', 'fiche-kpi'], 'Deux outils de pilotage, prêts à l\'emploi.', 'La matrice RACI pour clarifier qui fait quoi, la fiche indicateur pour suivre ce qui compte.'), $contact],
+            $root . '/digital/index.html' => [civilina_resources_band_html(['fiche-kpi'], 'Préparez vos indicateurs avant la plateforme.', 'Une fiche indicateur claire est la base d\'un bon tableau de bord, sous Excel comme sur une plateforme.'), $contact],
+            $root . '/ia/index.html' => [null, null],
+        ];
+        $footerFrom = '<h5>Ressources</h5><ul>';
+        $footerTo = '<h5>Ressources</h5><ul><li><a href="/ressources/">Modèles gratuits</a></li>';
+        $changed = [];
+        $skipped = [];
+        foreach ($pages as $path => [$band, $anchor]) {
+            if (!is_file($path)) {
+                $skipped[] = basename(dirname($path)) . ' (absente)';
+                continue;
+            }
+            $html = str_replace("\r\n", "\n", (string) file_get_contents($path));
+            $new = $html;
+            if ($band !== null) {
+                if (str_contains($new, '<!-- civilina:modeles -->')) {
+                    $new = (string) preg_replace_callback('~<!-- civilina:modeles -->.*?<!-- /civilina:modeles -->~s', static fn (): string => $band, $new, 1);
+                } elseif (substr_count($new, $anchor) === 1) {
+                    $new = str_replace($anchor, $band . "\n\n" . $anchor, $new);
+                } else {
+                    $skipped[] = substr($path, strlen($root)) . ' (emplacement du bandeau introuvable)';
+                }
+            }
+            if (!str_contains($new, 'href="/ressources/">Modèles gratuits') && substr_count($new, $footerFrom) === 1) {
+                $new = str_replace($footerFrom, $footerTo, $new);
+            }
+            if ($new !== $html) {
+                $changed[$path] = $new;
+            }
+        }
+        $articleFrom = 'Tous les articles</a></li><li><a href="/newsletter/">Newsletter</a></li>';
+        foreach (civilina_articles_published() as $a) {
+            $path = $root . '/journal/' . $a['slug'] . '/index.html';
+            $html = is_file($path) ? str_replace("\r\n", "\n", (string) file_get_contents($path)) : '';
+            if ($html === '' || str_contains($html, 'href="/ressources/">Modèles gratuits')) {
+                continue;
+            }
+            if (substr_count($html, $articleFrom) !== 1) {
+                $skipped[] = 'journal/' . $a['slug'] . ' (pied de page)';
+                continue;
+            }
+            $changed[$path] = str_replace($articleFrom, $articleFrom . '<li><a href="/ressources/">Modèles gratuits</a></li>', $html);
+        }
+        if ($changed !== []) {
+            civilina_backup_files(array_keys($changed), 'liens-modeles');
+            foreach ($changed as $path => $html) {
+                civilina_write_file($path, $html);
+            }
+        }
+        civilina_audit('resources.linked', count($changed) . ' pages', $userId);
+        return ['changed' => array_map(static fn (string $p): string => substr($p, strlen($root)), array_keys($changed)), 'skipped' => $skipped];
+    });
+}

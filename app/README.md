@@ -101,6 +101,13 @@ sont dans `docs/site-vitrine/brouillons/` et chargés avec `tools/load_draft.php
 - Modèles : fichiers Excel de `private/resources/` (générés par
   `tools/build_resources.py`), servis par lien signé valable 30 jours. La case
   newsletter est facultative et lance la double confirmation.
+- Liens vers les modèles (16/11/2026, `tools/deploy_links.php`) : bandeau
+  « Modèles gratuits » entre `<!-- civilina:modeles -->` et
+  `<!-- /civilina:modeles -->` sur l'accueil, la page Journal et les pages
+  d'axe (modèles du thème : ITP pour Engineering, RACI et KPI pour Entreprise,
+  KPI pour Digital), lien « Modèles gratuits » dans le pied de page de ces pages
+  et de tous les articles (le gabarit l'écrit pour les prochains).
+  `civilina_site_link_resources()` réécrit le bandeau entre ses marqueurs.
 - Relances : modèles d'e-mail ouverts dans la messagerie de l'administrateur
   (lien `mailto:` affiché après préparation, la CSP du back-office interdisant
   la redirection d'un formulaire vers `mailto:`) ; la préparation est notée dans

@@ -649,3 +649,13 @@ footer{padding:56px 0 32px;font-size:.9rem;color:var(--steel)}
 .res-box p:last-child{color:var(--steel);font-size:.92rem}
 .res-box .btn{flex-shrink:0}
 @media (max-width:760px){.res-box{flex-direction:column;align-items:flex-start}}
+
+/* ===== Bandeau « Modèles gratuits » (accueil, Journal, pages d'axe) ===== */
+.res-mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,370px));gap:18px}
+.res-mini{display:flex;flex-direction:column;gap:.55rem;padding:22px;border:1px solid var(--line);border-radius:18px;background:var(--white);box-shadow:var(--shadow);transition:transform .15s,border-color .15s}
+.res-mini:hover{transform:translateY(-2px);border-color:var(--ent)}
+.res-mini .pill{align-self:flex-start}
+.res-mini strong{color:var(--navy);font-size:1.08rem;line-height:1.3}
+.res-desc{color:var(--steel);font-size:.9rem}
+.res-mini .more{margin-top:auto;padding-top:.4rem;font-weight:700;color:var(--ent);font-size:.92rem}
+:root[data-theme="dark"] .res-mini{background:var(--surface)}

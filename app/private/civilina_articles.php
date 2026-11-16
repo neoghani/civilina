@@ -571,7 +571,7 @@ function civilina_article_page(array $a, bool $preview = false): string
         <p style="margin-top:.8rem;max-width:34ch">Engineering, management et digitalisation pour les projets d'ingénierie.</p>
       </div>
       <div><h5>Axes</h5><ul><li><a href="/engineering/">CIVILINA Engineering</a></li><li><a href="/gestion-entreprise/">CIVILINA Entreprise</a></li><li><a href="/digital/">CIVILINA Digital</a></li><li><a href="/ia/">CIVILINA IA</a></li></ul></div>
-      <div><h5>Journal</h5><ul>{$related}<li><a href="/journal/">Tous les articles</a></li><li><a href="/newsletter/">Newsletter</a></li></ul></div>
+      <div><h5>Journal</h5><ul>{$related}<li><a href="/journal/">Tous les articles</a></li><li><a href="/newsletter/">Newsletter</a></li><li><a href="/ressources/">Modèles gratuits</a></li></ul></div>
       <div><h5>Contact</h5><ul><li><a href="/#contact">Demander un diagnostic</a></li><li><a href="https://www.linkedin.com/company/civilina" rel="noopener">LinkedIn</a></li></ul></div>
     </div>
     <div class="legal"><span>© 2026 Civilina</span><span><a href="/mentions-legales/">Mentions légales</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/cookies/">Cookies</a> · <a href="/conditions-utilisation/">Conditions</a></span></div>
