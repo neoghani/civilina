@@ -202,7 +202,161 @@ function civilina_cover_svg(array $a): string
         . '</svg>' . "\n";
 }
 
+/* ---------- Share image (PNG for LinkedIn, Facebook, X) ---------- */
+
+/** Social networks do not accept SVG: the same cover is drawn as a 1200 × 630 PNG. */
+function civilina_cover_png_file(array $a): string
+{
+    return (string) preg_replace('~\.svg$~', '', civilina_article_cover_file($a)) . '.png';
+}
+
+function civilina_cover_png(array $a): ?string
+{
+    $c = $a['cover'];
+    return civilina_share_png([
+        'kicker' => $c['kicker'] !== '' ? $c['kicker'] : mb_strtoupper(civilina_article_pill($a)),
+        'line1' => $c['line1'], 'line2' => $c['line2'], 'subtitle' => $c['subtitle'], 'color' => $c['color'], 'brand' => 'Journal',
+    ]);
+}
+
+/**
+ * Draws the Civilina cover layout (see civilina_cover_svg) with GD and the Inter
+ * fonts of private/fonts. Returns the PNG bytes, or null when GD or the fonts
+ * are missing (publishing then keeps the logo as share image).
+ */
+function civilina_share_png(array $c): ?string
+{
+    $fonts = __DIR__ . '/fonts';
+    $regular = $fonts . '/Inter-Regular.ttf';
+    $bold = $fonts . '/Inter-Bold.ttf';
+    $black = $fonts . '/Inter-ExtraBold.ttf';
+    if (!function_exists('imagettftext') || !is_file($regular) || !is_file($bold) || !is_file($black)) {
+        return null;
+    }
+    $w = 1200;
+    $h = 630;
+    $img = imagecreatetruecolor($w, $h);
+    imagealphablending($img, true);
+    $hex = static fn (string $c): array => sscanf(preg_match('~^#[0-9a-f]{6}$~i', $c) ? $c : '#003b8c', '#%02x%02x%02x');
+    $color = static fn (string $c, float $opacity = 1.0): int => imagecolorallocatealpha($img, ...[...$hex($c), (int) round(127 * (1 - $opacity))]);
+
+    // Diagonal gradient #0b1a33 → cover colour (objectBoundingBox: t = (x/w + y/h) / 2).
+    [$r1, $g1, $b1] = $hex('#0b1a33');
+    [$r2, $g2, $b2] = $hex((string) ($c['color'] ?? '#003b8c'));
+    for ($y = 0; $y < $h; $y++) {
+        for ($x = 0; $x < $w; $x += 2) {
+            $t = ($x / $w + $y / $h) / 2;
+            $px = imagecolorallocate($img, (int) ($r1 + ($r2 - $r1) * $t), (int) ($g1 + ($g2 - $g1) * $t), (int) ($b1 + ($b2 - $b1) * $t));
+            imagesetpixel($img, $x, $y, $px);
+            imagesetpixel($img, $x + 1, $y, $px);
+        }
+    }
+    imagefilledellipse($img, 1060, 70, 460, 460, $color('#ffffff', .06));
+    imagefilledellipse($img, 80, 610, 340, 340, $color('#ffffff', .05));
+    imagesetthickness($img, 2);
+    foreach ([[760, 190], [860, 290], [960, 390]] as [$x0, $y1]) {
+        imageline($img, $x0, 630, 1200, $y1, $color('#ffffff', .08));
+    }
+    imagesetthickness($img, 1);
+    imagefilledrectangle($img, 88, 112, 143, 116, $color('#f0b44c'));
+
+    // Sizes in pixels as in the SVG (GD works in points at 96 dpi: pt = px × 0.75).
+    $text = static function (float $px, int $x, int $y, int $ink, string $font, string $s, float $spacing = 0) use ($img): int {
+        $pt = $px * 0.75;
+        if ($spacing == 0) {
+            $box = imagettftext($img, $pt, 0, $x, $y, $ink, $font, $s);
+            return $box[2];
+        }
+        foreach (mb_str_split($s) as $ch) {
+            $box = imagettftext($img, $pt, 0, $x, $y, $ink, $font, $ch);
+            $x = (int) round($box[2] + $spacing);
+        }
+        return $x;
+    };
+    $text(30, 88, 172, $color('#7fd3ff'), $bold, (string) $c['kicker'], 1);
+    $text(62, 88, 262, $color('#ffffff'), $black, (string) $c['line1']);
+    if ((string) $c['line2'] !== '') {
+        $text(62, 88, 338, $color('#ffffff'), $black, (string) $c['line2']);
+    }
+    $text(30, 88, 418, $color('#c9d6ea'), $regular, (string) $c['subtitle']);
+    $end = $text(28, 88, 552, $color('#ffffff'), $black, 'CIVILINA', 3);
+    if ((string) ($c['brand'] ?? '') !== '') {
+        $text(28, $end + 8, 552, $color('#9fb0c8'), $regular, (string) $c['brand']);
+    }
+
+    ob_start();
+    imagepng($img, null, 9);
+    imagedestroy($img);
+    return (string) ob_get_clean();
+}
+
 /* ---------- Page ---------- */
+
+/** Absolute URL of the PNG share image when it exists on the site, else null. */
+function civilina_article_share_image(array $a): ?string
+{
+    $file = civilina_cover_png_file($a);
+    $root = rtrim((string) ($_SERVER['DOCUMENT_ROOT'] ?? ''), '/\\');
+    return $root !== '' && is_file($root . '/assets/journal/' . $file) ? 'https://civilina.com/assets/journal/' . $file : null;
+}
+
+/** Title, description, canonical, Open Graph and X (Twitter) tags of an article. */
+function civilina_article_meta_html(array $a, bool $preview = false): string
+{
+    $e = static fn (string $s): string => htmlspecialchars($s, ENT_COMPAT, 'UTF-8');
+    $url = civilina_article_url($a);
+    $seoTitle = trim($a['seo_title']) !== '' ? $a['seo_title'] : $a['title'] . ' | Civilina';
+    $image = $preview ? null : civilina_article_share_image($a);
+    $lines = [
+        '<title>' . htmlspecialchars($seoTitle, ENT_NOQUOTES, 'UTF-8') . '</title>',
+        '<meta name="description" content="' . $e($a['description']) . '">',
+        '<link rel="canonical" href="' . $e($url) . '">',
+        '<meta property="og:type" content="article">',
+        '<meta property="og:site_name" content="Civilina">',
+        '<meta property="og:title" content="' . $e($a['title']) . '">',
+        '<meta property="og:description" content="' . $e($a['description']) . '">',
+        '<meta property="og:url" content="' . $e($url) . '">',
+    ];
+    if ($image !== null) {
+        $lines[] = '<meta property="og:image" content="' . $e($image) . '">';
+        $lines[] = '<meta property="og:image:width" content="1200">';
+        $lines[] = '<meta property="og:image:height" content="630">';
+        $lines[] = '<meta property="og:image:alt" content="' . $e($a['cover']['alt'] !== '' ? $a['cover']['alt'] : $a['title']) . '">';
+        $lines[] = '<meta name="twitter:card" content="summary_large_image">';
+    } else {
+        $lines[] = '<meta property="og:image" content="https://civilina.com/assets/brand/civilina-logo.png">';
+        $lines[] = '<meta name="twitter:card" content="summary">';
+    }
+    $lines[] = '<meta property="og:locale" content="fr_FR">';
+    return implode("\n", $lines);
+}
+
+/** Structured data: Article (first, read back by the importer) and BreadcrumbList. */
+function civilina_article_jsonld(array $a): string
+{
+    $url = civilina_article_url($a);
+    $published = $a['date_published'] !== '' ? $a['date_published'] : date('Y-m-d');
+    $modified = $a['date_modified'] !== '' ? $a['date_modified'] : $published;
+    $flags = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
+    $article = json_encode([
+        '@context' => 'https://schema.org', '@type' => 'Article', 'headline' => trim($a['headline']) !== '' ? $a['headline'] : $a['title'], 'inLanguage' => 'fr',
+        'description' => $a['description'],
+        'image' => [civilina_article_share_image($a) ?? 'https://civilina.com/assets/journal/' . civilina_article_cover_file($a)],
+        'datePublished' => $published, 'dateModified' => $modified,
+        'author' => ['@type' => 'Person', 'name' => CIVILINA_AUTHOR, 'jobTitle' => 'Ingénieur civil, PMP', 'url' => 'https://civilina.com/#apropos'],
+        'publisher' => ['@type' => 'Organization', 'name' => 'Civilina', 'url' => 'https://civilina.com/', 'logo' => ['@type' => 'ImageObject', 'url' => 'https://civilina.com/assets/brand/civilina-logo.png']],
+        'mainEntityOfPage' => $url,
+    ], $flags);
+    $crumbs = json_encode([
+        '@context' => 'https://schema.org', '@type' => 'BreadcrumbList',
+        'itemListElement' => [
+            ['@type' => 'ListItem', 'position' => 1, 'name' => 'Accueil', 'item' => 'https://civilina.com/'],
+            ['@type' => 'ListItem', 'position' => 2, 'name' => 'Journal', 'item' => 'https://civilina.com/journal/'],
+            ['@type' => 'ListItem', 'position' => 3, 'name' => $a['crumb'] !== '' ? $a['crumb'] : $a['title'], 'item' => $url],
+        ],
+    ], $flags);
+    return "<script type=\"application/ld+json\">\n" . $article . "\n</script>\n<script type=\"application/ld+json\">\n" . $crumbs . "\n</script>";
+}
 
 /**
  * Newsletter sign-up box (milestone M3), posted to /newsletter/. The same HTML is
@@ -233,7 +387,6 @@ function civilina_article_page(array $a, bool $preview = false): string
     $t = static fn (string $s): string => htmlspecialchars($s, ENT_NOQUOTES, 'UTF-8');
     $axis = CIVILINA_ARTICLE_AXES[$a['axis']] ?? CIVILINA_ARTICLE_AXES['engineering'];
     $url = civilina_article_url($a);
-    $seoTitle = trim($a['seo_title']) !== '' ? $a['seo_title'] : $a['title'] . ' | Civilina';
     $published = $a['date_published'] !== '' ? $a['date_published'] : date('Y-m-d');
     $modified = $a['date_modified'] !== '' ? $a['date_modified'] : $published;
     $render = civilina_md_render($a['body']);
@@ -243,13 +396,8 @@ function civilina_article_page(array $a, bool $preview = false): string
         $cover = 'data:image/svg+xml;base64,' . base64_encode(civilina_cover_svg($a));
     }
 
-    $jsonLd = json_encode([
-        '@context' => 'https://schema.org', '@type' => 'Article', 'headline' => trim($a['headline']) !== '' ? $a['headline'] : $a['title'], 'inLanguage' => 'fr',
-        'datePublished' => $published, 'dateModified' => $modified,
-        'author' => ['@type' => 'Person', 'name' => CIVILINA_AUTHOR, 'jobTitle' => 'Ingénieur civil, PMP'],
-        'publisher' => ['@type' => 'Organization', 'name' => 'Civilina', 'url' => 'https://civilina.com/'],
-        'mainEntityOfPage' => $url,
-    ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    $meta = civilina_article_meta_html($a, $preview);
+    $jsonLd = civilina_article_jsonld($a);
 
     $dates = 'Publié le ' . civilina_fr_date($published) . ($modified !== $published ? ' · mis à jour le ' . civilina_fr_date($modified) : '');
 
@@ -291,15 +439,7 @@ function civilina_article_page(array $a, bool $preview = false): string
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-{$robots}<title>{$t($seoTitle)}</title>
-<meta name="description" content="{$e($a['description'])}">
-<link rel="canonical" href="{$e($url)}">
-<meta property="og:type" content="article">
-<meta property="og:title" content="{$e($seoTitle)}">
-<meta property="og:description" content="{$e($a['description'])}">
-<meta property="og:url" content="{$e($url)}">
-<meta property="og:image" content="https://civilina.com/assets/brand/civilina-logo.png">
-<meta property="og:locale" content="fr_FR">
+{$robots}{$meta}
 <meta name="google-adsense-account" content="ca-pub-5595911673357804">
 <link rel="icon" type="image/png" href="/assets/brand/civilina-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -307,9 +447,7 @@ function civilina_article_page(array $a, bool $preview = false): string
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme.js"></script>
-<script type="application/ld+json">
 {$jsonLd}
-</script>
 {$ads}</head>
 <body>
 

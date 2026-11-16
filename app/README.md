@@ -66,6 +66,22 @@ sont dans `docs/site-vitrine/brouillons/` et chargés avec `tools/load_draft.php
 - Test local : le routeur de développement définit `CIVILINA_MAIL_OUTBOX` ; les
   e-mails sont alors écrits en JSON dans `civilina_private/outbox/`.
 
+## Référencement et images de partage (16/11/2026)
+
+- Chaque publication écrit, à côté de la couverture SVG, une image PNG
+  1200 × 630 (`assets/journal/<couverture>.png`) dessinée avec GD et la police
+  Inter de `private/fonts/` (licence OFL) : LinkedIn, Facebook et X refusent le
+  SVG. Les pages d'articles déclarent cette image (og:image, dimensions, texte
+  alternatif, twitter:card) et des données structurées Article (image, auteur,
+  logo) et BreadcrumbList.
+- Titre de recherche : champ « Titre SEO » de l'éditeur, 60 caractères au plus ;
+  description : 155 caractères au plus. Le titre Open Graph reste le titre complet.
+- `private/civilina_seo.php` contient les titres et descriptions courts appliqués
+  le 16/11 aux 17 articles et aux 6 pages principales (accueil, axes, IA,
+  Journal), leurs images de partage (`assets/brand/share/`) et les données
+  Organization/WebSite de l'accueil. Appliqué une fois par `tools/deploy_seo.php`
+  (idempotent, sauvegarde des pages, dates de publication inchangées).
+
 ## Rôles
 
 - `admin` : accès au back-office `/admin/`.

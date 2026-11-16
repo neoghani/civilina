@@ -370,8 +370,14 @@ function civilina_article_publish(int $id, string $userId, ?string $date = null)
         $root = civilina_site_root();
         $page = $root . '/journal/' . $a['slug'] . '/index.html';
         $cover = $root . '/assets/journal/' . $a['cover']['file'];
-        civilina_backup_files([$page, $cover], $a['slug']);
+        $share = $root . '/assets/journal/' . civilina_cover_png_file($a);
+        civilina_backup_files([$page, $cover, $share], $a['slug']);
         civilina_write_file($cover, civilina_cover_svg($a));
+        // Share image for LinkedIn and the other networks (written before the page, which links it).
+        $png = civilina_cover_png($a);
+        if ($png !== null) {
+            civilina_write_file($share, $png);
+        }
         civilina_write_file($page, civilina_article_page($a));
         civilina_article_save($a);
         $lists = civilina_articles_rebuild_lists();
