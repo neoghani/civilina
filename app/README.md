@@ -21,6 +21,29 @@ dynamique, déployé sur l'hébergement Octenium (cPanel).
 - Ne jamais versionner la base, `users.json`, `contact_requests.json` ni
   `mbti_results.json` : ils contiennent des données personnelles.
 
+## Journal (jalon M2) : le serveur devient la source
+
+Depuis M2, les articles sont rédigés et publiés dans le back-office
+(`/admin/?view=journal`). La publication écrit sur le serveur :
+
+- `journal/<slug>/index.html` et `assets/journal/<couverture>.svg` ;
+- la liste des articles de `journal/index.html` ;
+- les 3 cartes de l'accueil (`default.html`) : le dernier article de chaque axe ;
+- les entrées Journal de `sitemap.xml`.
+
+Conséquences pour les déploiements depuis ce dépôt :
+
+- ne plus copier ces fichiers depuis `site-vitrine/` vers le serveur sans
+  vérifier qu'ils n'ont pas été republiés entre-temps (comparer les empreintes) ;
+- le contenu de référence des articles est dans la base SQLite du serveur
+  (table `articles`), pas dans `site-vitrine/journal/`.
+
+Chaque fichier remplacé est d'abord copié dans
+`civilina_private/backups/journal/<date>-<objet>/` (25 dernières sauvegardes).
+La syntaxe d'écriture est décrite en tête de `private/civilina_markup.php` et
+dans l'aide-mémoire de l'éditeur. Les brouillons préparés hors du back-office
+sont dans `docs/site-vitrine/brouillons/` et chargés avec `tools/load_draft.php`.
+
 ## Rôles
 
 - `admin` : accès au back-office `/admin/`.

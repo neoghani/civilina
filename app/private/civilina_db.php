@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 date_default_timezone_set('Africa/Algiers');
 
-const CIVILINA_DB_VERSION = 2;
+const CIVILINA_DB_VERSION = 3;
 
 /** Axes used across the back-office (contacts, articles, later offers and prospects). */
 const CIVILINA_AXES = [
@@ -151,6 +151,25 @@ function civilina_db_migrate(PDO $pdo): void
                 CREATE INDEX IF NOT EXISTS page_views_path ON page_views(path, day);
                 SQL);
             $pdo->exec('PRAGMA user_version = 2');
+            $version = 2;
+        }
+        if ($version < 3) {
+            // M2: Journal articles (content as JSON, body in the Civilina writing syntax).
+            $pdo->exec(<<<'SQL'
+                CREATE TABLE IF NOT EXISTS articles (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    slug TEXT NOT NULL UNIQUE,
+                    status TEXT NOT NULL DEFAULT 'draft',
+                    publish_at TEXT NOT NULL DEFAULT '',
+                    date_published TEXT NOT NULL DEFAULT '',
+                    date_modified TEXT NOT NULL DEFAULT '',
+                    data TEXT NOT NULL,
+                    created_at TEXT NOT NULL,
+                    updated_at TEXT NOT NULL
+                );
+                CREATE INDEX IF NOT EXISTS articles_status ON articles(status, date_published);
+                SQL);
+            $pdo->exec('PRAGMA user_version = 3');
         }
         $pdo->exec('COMMIT');
     } catch (Throwable $e) {

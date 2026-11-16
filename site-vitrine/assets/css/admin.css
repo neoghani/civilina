@@ -150,6 +150,35 @@ textarea{width:100%;resize:vertical}
 .list.compact{gap:6px;font-size:.88rem}
 .list.compact small{display:inline;margin-left:6px}
 .panel .hint{margin-top:10px}
+/* Journal editor (M2) */
+.nowrap{white-space:nowrap}
+.bo-alert ul{margin:6px 0 0 1.1rem;font-weight:500}
+.editor-bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;background:var(--bg);padding:10px 0 12px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+.editor-actions{display:flex;flex-wrap:wrap;gap:8px}
+.editor-grid{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(280px,1fr);gap:18px;align-items:start}
+.editor fieldset{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:14px 18px 16px;margin:0 0 16px;min-width:0}
+.editor legend{font-weight:700;font-size:.95rem;padding:0 6px}
+.editor label{display:grid;gap:5px;font-size:.84rem;font-weight:600;color:var(--muted);margin-top:10px}
+.editor label small{font-weight:500;color:var(--muted);opacity:.85}
+.editor input[type=text],.editor input[type=date],.editor input[type=time],.editor input[type=number],.editor select,.editor textarea{width:100%;font:inherit;font-size:.92rem;color:var(--text);background:var(--input);border:1px solid var(--line);border-radius:9px;padding:8px 10px}
+.editor input[readonly]{opacity:.7}
+.editor textarea.code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.86rem;line-height:1.55}
+.editor select + select{margin-top:8px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.cover-preview img{display:block;width:100%;height:auto;border-radius:10px;margin-bottom:4px}
+.syntax{margin-top:10px}
+.syntax summary{cursor:pointer;font-weight:600;color:var(--link);font-size:.88rem}
+.syntax pre{white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;font-size:.8rem;line-height:1.55;overflow-x:auto}
+.bo-btn.wide{width:100%;margin-top:10px}
+.bo-btn-danger{background:#b23a3a;border-color:#b23a3a}
+.bo-btn-danger:hover{background:#962f2f}
+.danger-zone{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;border:1px dashed var(--line);border-radius:var(--radius);padding:14px 18px;color:var(--muted);font-size:.9rem}
+.published-panel{margin-bottom:16px;border-color:var(--ok-line)}
+.published-panel textarea{width:100%;font:inherit;font-size:.88rem;color:var(--text);background:var(--input);border:1px solid var(--line);border-radius:9px;padding:10px}
+.stack-label{display:grid;gap:6px;font-size:.84rem;font-weight:600;color:var(--muted);margin-top:8px}
+@media(max-width:1080px){.editor-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.row2,.row3{grid-template-columns:1fr}}
 /* Day/night switch: both links are rendered, CSS shows the one leading to the other mode. */
 .theme-switch a{display:inline-flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;font-weight:600;font-size:.85rem}
 .theme-switch a:hover{color:var(--text)}

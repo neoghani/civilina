@@ -62,4 +62,12 @@ try {
     error_log('civilina visite: ' . $e->getMessage());
 }
 
+// Scheduled Journal articles are published on the first visit after their time.
+try {
+    require_once dirname($docRoot) . '/civilina_private/civilina_publish.php';
+    civilina_articles_publish_due();
+} catch (Throwable $e) {
+    error_log('civilina scheduled publishing: ' . $e->getMessage());
+}
+
 $done();

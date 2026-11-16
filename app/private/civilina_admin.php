@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/civilina_auth.php';
 require_once __DIR__ . '/civilina_stats.php';
+require_once __DIR__ . '/civilina_admin_journal.php';
 
 /** Back-office navigation. Modules of later milestones are shown with their date, without fake data. */
 const CIVILINA_ADMIN_NAV = [

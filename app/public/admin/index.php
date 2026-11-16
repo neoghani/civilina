@@ -6,18 +6,37 @@ $isSuper = civilina_is_super_admin($user);
 $db = civilina_db();
 
 $view = (string) ($_GET['view'] ?? 'dashboard');
-if (!array_key_exists($view, CIVILINA_ADMIN_NAV) && $view !== 'contact') {
+if (!array_key_exists($view, CIVILINA_ADMIN_NAV) && !in_array($view, ['contact', 'article', 'preview'], true)) {
     $view = 'dashboard';
 }
 if (in_array($view, CIVILINA_SUPER_ADMIN_VIEWS, true) && !$isSuper) {
     $view = 'dashboard';
 }
 
+// Scheduled articles whose time has come are published on the next request.
+try {
+    civilina_articles_publish_due();
+} catch (Throwable $e) {
+    error_log('civilina scheduled publishing: ' . $e->getMessage());
+}
+
 /* ---------- Actions (POST, then redirect) ---------- */
+
+if ($view === 'preview') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        civilina_verify_csrf();
+    }
+    civilina_admin_article_preview();
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     civilina_verify_csrf();
     $action = (string) ($_POST['action'] ?? '');
+
+    if ($view === 'article') {
+        civilina_admin_journal_post($user);
+    }
 
     if ($action === 'update_contact') {
         $id = (string) ($_POST['id'] ?? '');
@@ -269,28 +288,12 @@ if ($view === 'contact') {
 }
 
 if ($view === 'journal') {
-    $articles = civilina_journal_articles();
-    civilina_admin_start('Journal', $view, $user);
-    ?>
-    <p class="bo-note">L'éditeur d'articles arrive au jalon M2 (mardi 24/11) : rédaction, aperçu et publication directement depuis cette page. En attendant, voici l'inventaire des articles en ligne.</p>
-    <section class="panel">
-      <div class="table-wrap"><table>
-        <thead><tr><th>Titre</th><th>Axe</th><th>Publié le</th><th>Mots</th><th>Partage</th></tr></thead>
-        <tbody>
-        <?php foreach ($articles as $a): ?>
-          <tr>
-            <td><a href="<?= h($a['url']) ?>" target="_blank" rel="noopener"><?= h($a['title']) ?></a><small><?= h($a['category']) ?></small></td>
-            <td><?= civilina_axis_badge($a['axis']) ?></td>
-            <td><?= h(civilina_format_date($a['date'])) ?></td>
-            <td><?= (int) $a['words'] ?></td>
-            <td><a href="https://www.linkedin.com/sharing/share-offsite/?url=<?= h(rawurlencode('https://civilina.com' . $a['url'])) ?>" target="_blank" rel="noopener">LinkedIn ↗</a></td>
-          </tr>
-        <?php endforeach; ?>
-        </tbody>
-      </table></div>
-    </section>
-    <?php
-    civilina_admin_end();
+    civilina_admin_journal_list($user);
+    exit;
+}
+
+if ($view === 'article') {
+    civilina_admin_article_form($user);
     exit;
 }
 

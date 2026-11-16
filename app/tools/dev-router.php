@@ -18,7 +18,8 @@ declare(strict_types=1);
  */
 
 $repo = dirname(__DIR__, 2);
-$privateDir = $repo . '/civilina_private';
+// Next to the served document root, as on the server (repo: <repo>/civilina_private).
+$privateDir = dirname(rtrim((string) $_SERVER['DOCUMENT_ROOT'], '/\\')) . '/civilina_private';
 putenv('CIVILINA_PRIVATE_DIR=' . $privateDir);
 
 civilina_dev_prepare_private_dir($repo, $privateDir);
@@ -70,7 +71,7 @@ function civilina_dev_prepare_private_dir(string $repo, string $dir): void
         mkdir($dir, 0700, true);
     }
 
-    foreach (['civilina_auth.php', 'civilina_admin.php', 'civilina_db.php', 'civilina_journal.php', 'civilina_stats.php', 'civilina_content.php'] as $file) {
+    foreach (['civilina_auth.php', 'civilina_admin.php', 'civilina_db.php', 'civilina_journal.php', 'civilina_stats.php', 'civilina_markup.php', 'civilina_articles.php', 'civilina_publish.php', 'civilina_admin_journal.php', 'civilina_content.php'] as $file) {
         $stub = $dir . '/' . $file;
         $source = $repo . '/app/private/' . $file;
         if (!is_file($stub) && is_file($source)) {
