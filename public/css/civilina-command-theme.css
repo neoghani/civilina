@@ -239,6 +239,48 @@ body.civ-theme .civ-eng-nav__project{
   color:rgba(255,255,255,.65) !important;
 }
 
+/* Page headers turned dark above: their titles, text and buttons must be
+   light too (the global heading colour and white .btn made them invisible). */
+body.civ-theme header.top h1,
+body.civ-theme header.top h2,
+body.civ-theme header.top h3,
+body.civ-theme header.top strong,
+body.civ-theme .top h1,
+body.civ-theme .top h2,
+body.civ-theme .top h3,
+body.civ-theme .top strong{
+  color:#fff !important;
+}
+
+body.civ-theme header.top p,
+body.civ-theme header.top .muted,
+body.civ-theme header.top small,
+body.civ-theme .top p,
+body.civ-theme .top .muted,
+body.civ-theme .top small{
+  color:rgba(255,255,255,.72) !important;
+}
+
+body.civ-theme header.top .btn,
+body.civ-theme header.top button,
+body.civ-theme .top .btn,
+body.civ-theme .top button{
+  background:rgba(255,255,255,.08) !important;
+  border-color:rgba(255,255,255,.24) !important;
+  color:#fff !important;
+}
+
+body.civ-theme header.top .btn:hover,
+body.civ-theme .top .btn:hover{
+  background:rgba(255,255,255,.16) !important;
+}
+
+body.civ-theme header.top .btn.primary,
+body.civ-theme .top .btn.primary{
+  background:var(--civ-teal, #0b7b78) !important;
+  border-color:var(--civ-teal, #0b7b78) !important;
+}
+
 /* PAGE D'ACCUEIL / HERO */
 body.civ-theme main{
   position:relative;

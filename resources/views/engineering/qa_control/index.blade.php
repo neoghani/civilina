@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
+@section('title', 'Contrôles & PV · Civilina Engineering')
+
 @section('content')
+@include('engineering._engineering-nav')
 <div style="max-width:1500px;margin:0 auto;padding:24px;font-family:Arial,sans-serif">
     <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:20px">
         <div>
@@ -49,7 +52,7 @@
                             <strong>{{ $inspection->inspection_code }}</strong> — {{ $inspection->title }}
                             <div style="font-size:12px;color:#64748b;margin-top:4px">{{ $workTypes[$inspection->work_type] ?? $inspection->work_type }} · {{ $inspection->scope_label }} · {{ $inspection->checkpoint_type ?: '—' }}</div>
                         </div>
-                        <div style="font-size:12px;text-align:right">Statut : <strong>{{ $inspection->status }}</strong><br>Autorisation : <strong>{{ $inspection->authorization_status }}</strong></div>
+                        <div style="font-size:12px;text-align:right">Statut : <strong>{{ ['planned'=>'Planifié','requested'=>'Demandé','conforming'=>'Conforme','nonconforming'=>'Non conforme','conditional'=>'Conditionnel','cancelled'=>'Annulé'][$inspection->status] ?? $inspection->status }}</strong><br>Autorisation : <strong>{{ ['none'=>'Non requise','requested'=>'Demandée','granted'=>'Accordée','rejected'=>'Refusée'][$inspection->authorization_status] ?? $inspection->authorization_status }}</strong></div>
                     </div>
 
                     <div style="padding:14px 16px">
