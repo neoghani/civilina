@@ -65,7 +65,7 @@ class EngineeringCrossTenantAccessTest extends TestCase
         );
 
         $this->actingAs($memberA)
-            ->post('/engineering/'.$organizationB->getKey().'/projects/'.$projectB->getKey().'/itp')
+            ->post('/engineering/'.$organizationB->getRouteKey().'/projects/'.$projectB->getRouteKey().'/itp')
             ->assertForbidden();
 
         $this->assertDatabaseCount('engineering_itps', 0);
@@ -84,7 +84,7 @@ class EngineeringCrossTenantAccessTest extends TestCase
         );
 
         $this->actingAs($viewer)
-            ->post('/engineering/'.$organizationB->getKey().'/projects/'.$projectB->getKey().'/itp')
+            ->post('/engineering/'.$organizationB->getRouteKey().'/projects/'.$projectB->getRouteKey().'/itp')
             ->assertForbidden();
 
         $this->assertDatabaseCount('engineering_itps', 0);
@@ -113,7 +113,7 @@ class EngineeringCrossTenantAccessTest extends TestCase
         );
 
         $this->actingAs($viewer)
-            ->post('/engineering/'.$organizationB->getKey().'/projects/'.$projectB->getKey().'/itp/'.$itp->getKey().'/approve')
+            ->post('/engineering/'.$organizationB->getRouteKey().'/projects/'.$projectB->getRouteKey().'/itp/'.$itp->getKey().'/approve')
             ->assertForbidden();
     }
 
@@ -123,7 +123,7 @@ class EngineeringCrossTenantAccessTest extends TestCase
         $projectB = $this->projectFor($organizationB, 'P-02');
 
         $this->actingAs($ownerB)
-            ->get('/engineering/'.$organizationB->getKey().'/projects/'.$projectB->getKey().'/itp')
+            ->get('/engineering/'.$organizationB->getRouteKey().'/projects/'.$projectB->getRouteKey().'/itp')
             ->assertOk();
     }
 
@@ -167,7 +167,7 @@ class EngineeringCrossTenantAccessTest extends TestCase
         );
 
         $this->actingAs($viewerA)
-            ->get('/engineering/'.$organizationB->getKey().'/projects/'.$projectB->getKey().'/qa-control/evidences/'.$evidence->getKey().'/download')
+            ->get('/engineering/'.$organizationB->getRouteKey().'/projects/'.$projectB->getRouteKey().'/qa-control/evidences/'.$evidence->getKey().'/download')
             ->assertForbidden();
     }
 
@@ -190,7 +190,7 @@ class EngineeringCrossTenantAccessTest extends TestCase
 
     private function moduleReadPaths(Organization $organization, Project $project): array
     {
-        $base = '/engineering/'.$organization->getKey().'/projects/'.$project->getKey();
+        $base = '/engineering/'.$organization->getRouteKey().'/projects/'.$project->getRouteKey();
 
         return [
             $base.'/itp',
@@ -201,6 +201,7 @@ class EngineeringCrossTenantAccessTest extends TestCase
             $base.'/normative-library',
             $base.'/normative-librarian',
             $base.'/normative-registry',
+            $base.'/workspace-safe',
         ];
     }
 }

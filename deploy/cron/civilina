@@ -1,0 +1,9 @@
+# CIVILINA Engineering — /etc/cron.d/civilina (pilot server)
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Laravel scheduler
+* * * * * civilina cd /srv/civilina/app && php artisan schedule:run >> /dev/null 2>&1
+
+# Daily backup at 02:30 (database + uploaded evidence, 14 days)
+30 2 * * * civilina /srv/civilina/app/deploy/backup.sh >> /srv/civilina/backups/backup.log 2>&1

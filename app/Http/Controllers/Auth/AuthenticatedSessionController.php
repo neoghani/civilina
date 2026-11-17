@@ -54,8 +54,31 @@ class AuthenticatedSessionController extends Controller
             ->session()
             ->regenerate();
 
+        // A page requested before login wins; otherwise members of a firm
+        // that has a project go straight to their Engineering workspace.
         return redirect()
-            ->intended('/');
+            ->intended(
+                $this->hasEngineeringProject($request->user())
+                    ? route('engineering.entry')
+                    : '/'
+            );
+    }
+
+    private function hasEngineeringProject(?\App\Models\User $user): bool
+    {
+        if (! $user) {
+            return false;
+        }
+
+        return \App\Models\Project::query()
+            ->whereIn(
+                'organization_id',
+                \App\Models\OrganizationMembership::query()
+                    ->where('user_id', $user->getKey())
+                    ->where('status', 'active')
+                    ->select('organization_id')
+            )
+            ->exists();
     }
 
     public function destroy(

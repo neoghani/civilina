@@ -9,7 +9,7 @@
             <div style="color:#64748b">Projet : {{ $project->name ?? $project->title ?? $project->getKey() }}</div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <a href="{{ route('engineering.itp.index', [$organization->getKey(), $project->getKey()]) }}" style="padding:10px 14px;border:1px solid #cbd5e1;border-radius:7px;text-decoration:none;color:#0f172a">ITP</a>
+            <a href="{{ route('engineering.itp.index', [$organization->getRouteKey(), $project->getRouteKey()]) }}" style="padding:10px 14px;border:1px solid #cbd5e1;border-radius:7px;text-decoration:none;color:#0f172a">ITP</a>
             <a href="{{ route('engineering.workspace.bridge',['organization'=>$organization,'project'=>$project]) }}" style="padding:10px 14px;border:1px solid #cbd5e1;border-radius:7px;text-decoration:none;color:#0f172a">Workspace</a>
         </div>
     </div>
@@ -27,7 +27,7 @@
     <section style="border:1px solid #e2e8f0;border-radius:10px;padding:18px;margin-bottom:22px;background:#fff">
         <h2 style="margin:0 0 6px;font-size:19px">Générer la matrice QA/QC selon le type de travaux</h2>
         <p style="margin:0 0 16px;color:#64748b">Civilina génère les enregistrements attendus. Les valeurs d’acceptation restent à renseigner depuis le CCTP, Design Basis, plans, procédures ou normes applicables au projet.</p>
-        <form method="POST" action="{{ route('engineering.qa-control.generate', [$organization->getKey(), $project->getKey()]) }}" style="display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:10px;align-items:end">
+        <form method="POST" action="{{ route('engineering.qa-control.generate', [$organization->getRouteKey(), $project->getRouteKey()]) }}" style="display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:10px;align-items:end">
             @csrf
             <label>Type de travaux<br><select name="work_type" required style="width:100%;padding:9px"><option value="">— Choisir —</option>@foreach($workTypes as $key=>$label)<option value="{{ $key }}">{{ $label }}</option>@endforeach</select></label>
             <label>Portée<br><select name="scope_type" style="width:100%;padding:9px"><option value="project">Projet</option><option value="work_package">Work Package</option><option value="activity">Activity</option><option value="zone">Zone</option><option value="ouvrage">Ouvrage</option></select></label>
@@ -53,7 +53,7 @@
                     </div>
 
                     <div style="padding:14px 16px">
-                        <form method="POST" action="{{ route('engineering.qa-control.inspections.update', [$organization->getKey(), $project->getKey(), $inspection->getKey()]) }}">
+                        <form method="POST" action="{{ route('engineering.qa-control.inspections.update', [$organization->getRouteKey(), $project->getRouteKey(), $inspection->getKey()]) }}">
                             @csrf
                             <div style="display:grid;grid-template-columns:repeat(4,minmax(140px,1fr));gap:9px">
                                 <label>Statut<br><select name="status" style="width:100%;padding:8px">@foreach(['planned'=>'Planifié','requested'=>'Demandé','conforming'=>'Conforme','nonconforming'=>'Non conforme','conditional'=>'Conditionnel','cancelled'=>'Annulé'] as $k=>$v)<option value="{{ $k }}" @selected($inspection->status===$k)>{{ $v }}</option>@endforeach</select></label>
@@ -76,7 +76,7 @@
 
                     <div style="padding:14px 16px;border-top:1px solid #e2e8f0;background:#fafafa">
                         <h3 style="margin:0 0 10px;font-size:16px">PV / preuves (PDF, JPG, PNG, WEBP)</h3>
-                        <form method="POST" enctype="multipart/form-data" action="{{ route('engineering.qa-control.evidences.store', [$organization->getKey(), $project->getKey(), $inspection->getKey()]) }}" style="display:grid;grid-template-columns:repeat(6,minmax(110px,1fr));gap:8px;align-items:end">
+                        <form method="POST" enctype="multipart/form-data" action="{{ route('engineering.qa-control.evidences.store', [$organization->getRouteKey(), $project->getRouteKey(), $inspection->getKey()]) }}" style="display:grid;grid-template-columns:repeat(6,minmax(110px,1fr));gap:8px;align-items:end">
                             @csrf
                             <label>Référence<br><input name="reference" required style="width:100%;padding:7px"></label>
                             <label>Type document<br><input name="document_type" required placeholder="PV / rapport labo / photo" style="width:100%;padding:7px"></label>
@@ -91,7 +91,7 @@
                             <table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:13px">
                                 <tr><th align="left">Réf.</th><th align="left">Type</th><th>Date</th><th>Fichier</th><th>SHA-256</th><th></th></tr>
                                 @foreach($inspection->evidences as $evidence)
-                                    <tr style="border-top:1px solid #e2e8f0"><td>{{ $evidence->reference }}</td><td>{{ $evidence->document_type }}</td><td align="center">{{ optional($evidence->issued_at)->format('d/m/Y') }}</td><td>{{ $evidence->original_name }}</td><td><code title="{{ $evidence->sha256 }}">{{ substr($evidence->sha256,0,12) }}…</code></td><td><a href="{{ route('engineering.qa-control.evidences.download', [$organization->getKey(), $project->getKey(), $evidence->getKey()]) }}">Télécharger</a></td></tr>
+                                    <tr style="border-top:1px solid #e2e8f0"><td>{{ $evidence->reference }}</td><td>{{ $evidence->document_type }}</td><td align="center">{{ optional($evidence->issued_at)->format('d/m/Y') }}</td><td>{{ $evidence->original_name }}</td><td><code title="{{ $evidence->sha256 }}">{{ substr($evidence->sha256,0,12) }}…</code></td><td><a href="{{ route('engineering.qa-control.evidences.download', [$organization->getRouteKey(), $project->getRouteKey(), $evidence->getKey()]) }}">Télécharger</a></td></tr>
                                 @endforeach
                             </table>
                         @endif
@@ -100,7 +100,7 @@
                     @if($schema)
                         <div style="padding:14px 16px;border-top:1px solid #e2e8f0">
                             <h3 style="margin:0 0 10px;font-size:16px">Tableau de suivi — {{ $schema['label'] }}</h3>
-                            <form method="POST" action="{{ route('engineering.qa-control.register-entries.store', [$organization->getKey(), $project->getKey(), $inspection->getKey()]) }}">
+                            <form method="POST" action="{{ route('engineering.qa-control.register-entries.store', [$organization->getRouteKey(), $project->getRouteKey(), $inspection->getKey()]) }}">
                                 @csrf
                                 <div style="display:grid;grid-template-columns:repeat(4,minmax(140px,1fr));gap:8px">
                                     <label>Référence ligne<br><input name="reference" required style="width:100%;padding:7px"></label>
@@ -139,7 +139,7 @@
                     <strong>{{ $handover->code }}</strong>
                     <div style="font-size:13px;color:#64748b;margin:4px 0 10px">{{ $handover->scope_label }}</div>
                     <div style="font-size:13px;margin-bottom:9px"><strong>Critères de remise :</strong><ul style="padding-left:18px">@foreach(($handover->criteria ?? []) as $criterion)<li>{{ $criterion }}</li>@endforeach</ul></div>
-                    <form method="POST" action="{{ route('engineering.qa-control.handovers.update', [$organization->getKey(), $project->getKey(), $handover->getKey()]) }}">
+                    <form method="POST" action="{{ route('engineering.qa-control.handovers.update', [$organization->getRouteKey(), $project->getRouteKey(), $handover->getKey()]) }}">
                         @csrf
                         <label>Statut<br><select name="status" style="width:100%;padding:7px">@foreach(['draft'=>'Draft','requested'=>'Demandé','accepted'=>'Accepté','rejected'=>'Rejeté'] as $k=>$v)<option value="{{ $k }}" @selected($handover->status===$k)>{{ $v }}</option>@endforeach</select></label><br>
                         <label>Date demande<br><input type="datetime-local" name="requested_at" value="{{ optional($handover->requested_at)->format('Y-m-d\TH:i') }}" style="width:100%;padding:7px"></label><br>
