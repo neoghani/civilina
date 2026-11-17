@@ -39,6 +39,7 @@ const CIVILINA_LEAD_SOURCES = [
     'contact' => 'Formulaire de contact',
     'devis' => 'Demande de devis',
     'ressource' => 'Ressource téléchargée',
+    'pilote' => 'Candidature programme pilote',
     'manuel' => 'Saisie manuelle',
     'import' => 'Import CSV',
 ];
@@ -61,10 +62,15 @@ const CIVILINA_RESOURCE_TTL = 30 * 86400;
 
 /* ---------- Public page layout (/devis/, /ressources/) ---------- */
 
-function civilina_public_start(string $title, string $description, string $canonical, bool $index): void
+/**
+ * $image: share image in assets/brand/share/; $bodyStyle: axis colours (--c, --c-soft);
+ * $bare: full-width sections (the page writes its own <section> blocks).
+ */
+function civilina_public_start(string $title, string $description, string $canonical, bool $index, string $image = 'civilina-home.png', string $bodyStyle = '', bool $bare = false): void
 {
     $e = static fn (string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
     $robots = $index ? '' : '<meta name="robots" content="noindex, nofollow">' . "\n";
+    $GLOBALS['civilina_public_bare'] = $bare;
     echo '<!doctype html>
 <html lang="fr">
 <head>
@@ -77,7 +83,7 @@ function civilina_public_start(string $title, string $description, string $canon
 <meta property="og:title" content="' . $e($title) . '">
 <meta property="og:description" content="' . $e($description) . '">
 <meta property="og:url" content="' . $e($canonical) . '">
-<meta property="og:image" content="https://civilina.com/assets/brand/share/civilina-home.png">
+<meta property="og:image" content="https://civilina.com/assets/brand/share/' . $e($image) . '">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="/assets/brand/civilina-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,7 +92,7 @@ function civilina_public_start(string $title, string $description, string $canon
 <link rel="stylesheet" href="/assets/css/site.css">
 <script src="/assets/js/theme.js"></script>
 </head>
-<body>
+<body' . ($bodyStyle !== '' ? ' style="' . $e($bodyStyle) . '"' : '') . '>
 <header>
   <div class="shell nav">
     <a href="/" class="brand"><img src="/assets/brand/civilina-logo.png" alt="">CIVILINA</a>
@@ -105,16 +111,18 @@ function civilina_public_start(string $title, string $description, string $canon
     <button class="burger" aria-label="Menu" onclick="document.getElementById(\'menu\').classList.toggle(\'open\')">☰</button>
   </div>
 </header>
-<main class="nl-page">
+' . ($bare ? '<main>
+' : '<main class="nl-page">
   <div class="shell">
-';
+');
 }
 
 function civilina_public_end(): void
 {
-    echo '
+    echo (empty($GLOBALS['civilina_public_bare']) ? '
   </div>
-</main>
+</main>' : '
+</main>') . '
 <footer>
   <div class="shell">
     <div class="foot">
@@ -123,7 +131,7 @@ function civilina_public_end(): void
         <p style="margin-top:.8rem;max-width:34ch">Engineering, management et digitalisation pour les projets d\'ingénierie.</p>
       </div>
       <div><h5>Axes</h5><ul><li><a href="/engineering/">CIVILINA Engineering</a></li><li><a href="/gestion-entreprise/">CIVILINA Entreprise</a></li><li><a href="/digital/">CIVILINA Digital</a></li><li><a href="/ia/">CIVILINA IA</a></li></ul></div>
-      <div><h5>Ressources</h5><ul><li><a href="/journal/">Journal</a></li><li><a href="/ressources/">Modèles gratuits</a></li><li><a href="/newsletter/">Newsletter</a></li></ul></div>
+      <div><h5>Ressources</h5><ul><li><a href="/bureaux-etudes/">Espace bureaux d\'études</a></li><li><a href="/journal/">Journal</a></li><li><a href="/ressources/">Modèles gratuits</a></li><li><a href="/newsletter/">Newsletter</a></li></ul></div>
       <div><h5>Contact</h5><ul><li><a href="/devis/">Demander un devis</a></li><li><a href="/#contact">Demander un diagnostic</a></li><li><a href="https://www.linkedin.com/company/civilina" rel="noopener">LinkedIn</a></li></ul></div>
     </div>
     <div class="legal"><span>© 2026 Civilina</span><span><a href="/mentions-legales/">Mentions légales</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/cookies/">Cookies</a> · <a href="/conditions-utilisation/">Conditions</a></span></div>
@@ -668,6 +676,142 @@ function civilina_site_link_resources(string $userId): array
             }
         }
         civilina_audit('resources.linked', count($changed) . ' pages', $userId);
+        return ['changed' => array_map(static fn (string $p): string => substr($p, strlen($root)), array_keys($changed)), 'skipped' => $skipped];
+    });
+}
+
+/* ---------- Bureaux d'études: pilot programme (phase 1) ---------- */
+
+const CIVILINA_BET_SIZES = ['1-5' => '1 à 5 ingénieurs', '6-20' => '6 à 20', '21-50' => '21 à 50', '50+' => 'Plus de 50'];
+const CIVILINA_BET_DOMAINS = [
+    'beton' => 'Structures en béton', 'metal' => 'Charpente métallique', 'routes' => 'Routes et chaussées', 'geotech' => 'Géotechnique',
+    'vrd' => 'VRD', 'batiment' => 'Bâtiment', 'labo' => 'Laboratoire', 'autre' => 'Autre',
+];
+const CIVILINA_BET_TOOLS = ['excel' => 'Excel et Word', 'logiciel' => 'Un logiciel métier', 'papier' => 'Papier et e-mails', 'autre' => 'Autre'];
+
+/** E-mail to Civilina (same mailbox and sender as the contact form). */
+function civilina_notify_owner(string $subject, string $body, string $replyTo): bool
+{
+    $replyTo = filter_var($replyTo, FILTER_VALIDATE_EMAIL) ? $replyTo : 'contact@civilina.com';
+    $headers = ['From: Civilina <contact@civilina.com>', 'Reply-To: ' . $replyTo, 'MIME-Version: 1.0', 'Content-Type: text/plain; charset=UTF-8', 'Content-Transfer-Encoding: 8bit'];
+    return @mail('abdelghani.bouhouche@civilina.com', mb_encode_mimeheader($subject, 'UTF-8', 'B', "\r\n"), str_replace("\n", "\r\n", $body), implode("\r\n", $headers), '-fcontact@civilina.com');
+}
+
+/**
+ * Pilot application: stored as a contact request (back-office "Demandes de
+ * contact") and as a lead with the source "pilote" (axis Engineering).
+ * @return string ok | invalid
+ */
+function civilina_bet_apply(array $in): string
+{
+    $line = static fn (string $key, int $max): string => mb_substr(trim((string) preg_replace('~\s+~u', ' ', (string) ($in[$key] ?? ''))), 0, $max);
+    $name = $line('name', 120);
+    $company = $line('company', 160);
+    $email = mb_strtolower($line('email', 180));
+    if ($name === '' || $company === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return 'invalid';
+    }
+    $size = CIVILINA_BET_SIZES[(string) ($in['size'] ?? '')] ?? 'Non précisée';
+    $domains = array_values(array_intersect_key(CIVILINA_BET_DOMAINS, array_flip(array_map('strval', (array) ($in['domains'] ?? [])))));
+    $tools = CIVILINA_BET_TOOLS[(string) ($in['tools'] ?? '')] ?? 'Non précisé';
+    $message = mb_substr(trim(str_replace("\r\n", "\n", (string) ($in['message'] ?? ''))), 0, 2000);
+    $summary = "Candidature au programme pilote bureaux d'études\n"
+        . 'Taille : ' . $size . "\n"
+        . 'Domaines : ' . ($domains ? implode(', ', $domains) : 'non précisés') . "\n"
+        . 'Outils actuels : ' . $tools . "\n"
+        . 'Ville / pays : ' . ($line('city', 120) !== '' ? $line('city', 120) : '—') . "\n\n"
+        . ($message !== '' ? $message : '(pas de message)');
+    $request = [
+        'id' => bin2hex(random_bytes(8)), 'created_at' => date('c'), 'status' => 'new',
+        'name' => $name, 'company' => $company, 'position' => $line('position', 160), 'email' => $email, 'phone' => $line('phone', 80),
+        'need' => "Programme pilote bureaux d'études", 'message' => $summary, 'axis' => 'engineering', 'lead_source' => 'pilote',
+        'ip' => civilina_client_ip(), 'user_agent' => mb_substr((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 500),
+    ];
+    civilina_contact_insert($request);
+    // The answers also go to the notes of the lead (the contact keeps the full request).
+    civilina_db()->prepare("UPDATE leads SET notes = ? WHERE email = ? AND source = 'pilote' AND notes = ''")->execute([$summary, $email]);
+    civilina_notify_owner('Candidature programme pilote — ' . $company, "Nouvelle candidature au programme pilote bureaux d'études.\n\n"
+        . 'Nom : ' . $name . "\nBureau d'études : " . $company . "\nFonction : " . ($request['position'] !== '' ? $request['position'] : '—')
+        . "\nE-mail : " . $email . "\nTéléphone : " . ($request['phone'] !== '' ? $request['phone'] : '—') . "\n\n" . $summary
+        . "\n\n—\nSuivi : https://civilina.com/admin/?view=sales&source=pilote", $email);
+    return 'ok';
+}
+
+/** Band promoting the space for engineering firms, between <!-- civilina:bet --> markers. */
+function civilina_bet_band_html(): string
+{
+    return "<!-- civilina:bet -->\n<section class=\"bet-band\">\n  <div class=\"shell\">\n    <div class=\"bet-inner\">\n      <div>\n        <p class=\"eyebrow\">Nouveau · Programme pilote</p>\n        <h2>Un espace de travail dédié aux bureaux d'études.</h2>\n        <p>Base normative, ITP, WBS, contrôles QA/QC et brouillons préparés par CIVILINA IA, dans un espace réservé à votre équipe. 5 bureaux d'études pilotes, 3 mois offerts.</p>\n      </div>\n      <div class=\"bet-actions\"><a class=\"btn btn-primary\" href=\"/bureaux-etudes/\">Découvrir l'espace</a><a class=\"btn bet-ghost\" href=\"/bureaux-etudes/#pilote\">Candidater</a></div>\n    </div>\n  </div>\n</section>\n<!-- /civilina:bet -->";
+}
+
+/**
+ * Promotes /bureaux-etudes/ from the site: band on the homepage (after the
+ * hero), the Engineering page (before the normative base) and the Journal page;
+ * pilot calls to action of the IA and Engineering pages pointed to the
+ * application form. Idempotent; pages backed up first.
+ * @return array{changed: list<string>, skipped: list<string>}
+ */
+function civilina_site_promote_bet(string $userId): array
+{
+    return civilina_with_publish_lock(static function () use ($userId): array {
+        $root = civilina_site_root();
+        $band = civilina_bet_band_html();
+        $pages = [
+            civilina_home_file() => ["<!-- 3 AXES -->\n<section id=\"axes\" class=\"alt\">", []],
+            $root . '/engineering/index.html' => ['<section id="base-normative">', [
+                '<a href="/?besoin=Autre#contact">Demander l\'accès pilote à la base normative <span>→</span></a>' => '<a href="/bureaux-etudes/#pilote">Rejoindre le programme pilote bureaux d\'études <span>→</span></a>',
+            ]],
+            $root . '/journal/index.html' => ['<!-- civilina:modeles -->', []],
+            $root . '/ia/index.html' => [null, [
+                '<a href="#contact" class="btn btn-primary">Demander l\'accès pilote</a>' => '<a href="/bureaux-etudes/#pilote" class="btn btn-primary">Demander l\'accès pilote</a>',
+                '<a href="/?besoin=Autre#contact">Demander l\'accès pilote <span>→</span></a>' => '<a href="/bureaux-etudes/#pilote">Candidater au programme pilote bureaux d\'études <span>→</span></a>',
+                'Présentez-nous votre besoin via le formulaire de contact.</p>' => 'Les bureaux d\'études peuvent <a href="/bureaux-etudes/#pilote" style="color:var(--ia);text-decoration:underline">candidater au programme pilote</a>.</p>',
+            ]],
+        ];
+        $changed = [];
+        $skipped = [];
+        foreach ($pages as $path => [$anchor, $replacements]) {
+            if (!is_file($path)) {
+                $skipped[] = substr($path, strlen($root)) . ' (absente)';
+                continue;
+            }
+            $html = str_replace("\r\n", "\n", (string) file_get_contents($path));
+            $new = $html;
+            if ($anchor !== null) {
+                if (str_contains($new, '<!-- civilina:bet -->')) {
+                    $new = (string) preg_replace_callback('~<!-- civilina:bet -->.*?<!-- /civilina:bet -->~s', static fn (): string => $band, $new, 1);
+                } elseif (substr_count($new, $anchor) === 1) {
+                    $new = str_replace($anchor, $band . "\n\n" . $anchor, $new);
+                } else {
+                    $skipped[] = substr($path, strlen($root)) . ' (emplacement du bandeau introuvable)';
+                }
+            }
+            foreach ($replacements as $from => $to) {
+                if (substr_count($new, $from) === 1) {
+                    $new = str_replace($from, $to, $new);
+                } elseif (!str_contains($new, $to)) {
+                    $skipped[] = substr($path, strlen($root)) . ' (lien introuvable : ' . mb_substr(strip_tags($from), 0, 40) . ')';
+                }
+            }
+            if ($new !== $html) {
+                $changed[$path] = $new;
+            }
+        }
+        $sitemapFile = $root . '/sitemap.xml';
+        $sitemap = str_replace("\r\n", "\n", (string) file_get_contents($sitemapFile));
+        if (!str_contains($sitemap, '<loc>https://civilina.com/bureaux-etudes/</loc>')) {
+            $changed[$sitemapFile] = str_replace('</urlset>', "  <url>\n    <loc>https://civilina.com/bureaux-etudes/</loc>\n    <lastmod>" . date('Y-m-d') . "</lastmod>\n  </url>\n</urlset>", $sitemap);
+        }
+        $share = $root . '/assets/brand/share/civilina-bet.png';
+        if (!is_file($share) && ($png = civilina_share_png(['kicker' => 'CIVILINA ENGINEERING · PILOTE', 'line1' => 'L\'espace de travail', 'line2' => 'des bureaux d\'études', 'subtitle' => 'Normes, ITP, WBS, QA/QC et CIVILINA IA', 'color' => '#003b8c', 'brand' => ''])) !== null) {
+            civilina_write_file($share, $png);
+        }
+        if ($changed !== []) {
+            civilina_backup_files(array_keys($changed), 'bureaux-etudes');
+            foreach ($changed as $path => $html) {
+                civilina_write_file($path, $html);
+            }
+        }
+        civilina_audit('bet.promoted', count($changed) . ' fichiers', $userId);
         return ['changed' => array_map(static fn (string $p): string => substr($p, strlen($root)), array_keys($changed)), 'skipped' => $skipped];
     });
 }

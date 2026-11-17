@@ -426,7 +426,7 @@ function civilina_contact_insert(array $request, ?PDO $pdo = null): void
     if ($insert->rowCount() > 0 && (int) $pdo->query('PRAGMA user_version')->fetchColumn() >= 5) {
         $isQuote = (int) ($request['offer_id'] ?? 0) > 0;
         civilina_lead_upsert([
-            'source' => $isQuote ? 'devis' : 'contact', 'source_ref' => (string) $request['id'],
+            'source' => (string) ($request['lead_source'] ?? ($isQuote ? 'devis' : 'contact')), 'source_ref' => (string) $request['id'],
             'axis' => (string) ($request['axis'] ?? civilina_axis_for_need($need)),
             'name' => (string) ($request['name'] ?? ''), 'company' => (string) ($request['company'] ?? ''),
             'position' => (string) ($request['position'] ?? ''), 'email' => (string) ($request['email'] ?? ''),
