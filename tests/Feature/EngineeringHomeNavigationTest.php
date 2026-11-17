@@ -79,7 +79,10 @@ class EngineeringHomeNavigationTest extends TestCase
             ->get($url)
             ->assertOk()
             ->assertSee(
-                'href="'.url('/').'"',
+                'href="'.e(route('engineering.normative-v22.index', [
+                    'organization' => $organization,
+                    'project' => $project,
+                ])).'"',
                 false
             )
             ->assertSee(

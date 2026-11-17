@@ -37,6 +37,7 @@
                 </div>
             </div>
 
+            @civilinastaff
             <form method="POST" action="{{ route('engineering.qa-normative.scan', [$organization->getKey(), $project->getKey()]) }}" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
                 @csrf
                 <select name="batch_size" style="padding:9px 8px;border:1px solid #cbd5e1;border-radius:7px">
@@ -48,8 +49,10 @@
                     Scanner le lot suivant
                 </button>
             </form>
+            @endcivilinastaff
         </div>
 
+        @civilinastaff
         <div style="margin-top:12px;padding:10px 12px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:7px;font-size:13px">
             <strong>Scan par lots activé.</strong>
             Les fichiers déjà scannés et non modifiés sont ignorés.
@@ -78,6 +81,7 @@
                 </table>
             </div>
         @endif
+        @endcivilinastaff
 
         <div style="margin-top:12px;padding:10px 12px;background:#fffbeb;border:1px solid #fde68a;border-radius:7px;font-size:13px">
             <strong>Important :</strong> le scan inventorie les fichiers et rapproche les documents.

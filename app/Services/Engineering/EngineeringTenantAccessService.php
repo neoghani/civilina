@@ -91,6 +91,30 @@ class EngineeringTenantAccessService
         return $project;
     }
 
+    public function authorizeProject(
+        string $ability,
+        User $user,
+        Organization $organization,
+        Project $project
+    ): void {
+        if (
+            $project->organization_id !== null &&
+            (int) $project->organization_id !== (int) $organization->getKey()
+        ) {
+            throw (new ModelNotFoundException())
+                ->setModel(
+                    Project::class,
+                    [$project->getKey()]
+                );
+        }
+
+        match ($ability) {
+            'edit' => $this->authorizeEdit($user, $organization),
+            'approve' => $this->authorizeApprove($user, $organization),
+            default => $this->authorizeView($user, $organization),
+        };
+    }
+
     private function authorizeRoles(
         User $user,
         Organization $organization,

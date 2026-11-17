@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\NormativeLibrarianDocument;
 use App\Models\Organization;
 use App\Models\Project;
+use App\Services\Engineering\EngineeringTenantAccessService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ class NormativeCanonicalReviewController extends Controller
         Organization $organization,
         Project $project
     ): View {
-        $this->guardProject($organization,$project);
+        $this->guardProject('view', $organization, $project);
 
         $status = trim((string)$request->query('status',''));
         $q = trim((string)$request->query('q',''));
@@ -83,7 +84,7 @@ class NormativeCanonicalReviewController extends Controller
         Project $project,
         NormativeLibrarianDocument $document
     ): RedirectResponse {
-        $this->guardProject($organization,$project);
+        $this->guardProject('approve', $organization, $project);
 
         abort_unless(
             $document->canonical_group_key && $document->edition_key,
@@ -128,13 +129,16 @@ class NormativeCanonicalReviewController extends Controller
         );
     }
 
-    private function guardProject(Organization $organization, Project $project): void
-    {
-        if (isset($project->organization_id)) {
-            abort_unless(
-                (int)$project->organization_id === (int)$organization->id,
-                404
-            );
-        }
+    private function guardProject(
+        string $ability,
+        Organization $organization,
+        Project $project
+    ): void {
+        app(EngineeringTenantAccessService::class)->authorizeProject(
+            $ability,
+            request()->user(),
+            $organization,
+            $project
+        );
     }
 }

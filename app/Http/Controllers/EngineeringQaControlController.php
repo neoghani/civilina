@@ -11,9 +11,9 @@ use App\Models\Organization;
 use App\Models\Project;
 use App\Services\Engineering\EngineeringQaInspectionService;
 use App\Services\Engineering\EngineeringQaWorkTypeCatalog;
+use App\Services\Engineering\EngineeringTenantAccessService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -27,7 +27,7 @@ class EngineeringQaControlController extends Controller
         string $project,
         EngineeringQaWorkTypeCatalog $catalog
     ): View {
-        [$organizationModel, $projectModel] = $this->resolveScope($organization, $project);
+        [$organizationModel, $projectModel] = $this->resolveScope('view', $organization, $project);
 
         $inspections = EngineeringQaInspection::query()
             ->where('organization_id', (string) $organizationModel->getKey())
@@ -66,7 +66,7 @@ class EngineeringQaControlController extends Controller
         EngineeringQaInspectionService $service,
         EngineeringQaWorkTypeCatalog $catalog
     ): RedirectResponse {
-        [$organizationModel, $projectModel] = $this->resolveScope($organization, $project);
+        [$organizationModel, $projectModel] = $this->resolveScope('edit', $organization, $project);
 
         $validated = $request->validate([
             'work_type' => ['required', Rule::in(array_keys($catalog->workTypes()))],
@@ -109,7 +109,7 @@ class EngineeringQaControlController extends Controller
         string $project,
         EngineeringQaInspection $inspection
     ): RedirectResponse {
-        [$organizationModel, $projectModel] = $this->resolveScope($organization, $project);
+        [$organizationModel, $projectModel] = $this->resolveScope('edit', $organization, $project);
         $this->assertInspectionScope($inspection, $organizationModel, $projectModel);
 
         $validated = $request->validate([
@@ -149,6 +149,16 @@ class EngineeringQaControlController extends Controller
             ])->withInput();
         }
 
+        // A verdict (conforming / non-conforming / conditional) or a client
+        // authorization decision is an approval: editors may prepare the
+        // record, only approvers may set or withdraw a decision.
+        if (
+            $this->changesDecision($inspection->status, $validated['status'], self::INSPECTION_DECISIONS)
+            || $this->changesDecision($inspection->authorization_status, $validated['authorization_status'], self::AUTHORIZATION_DECISIONS)
+        ) {
+            $this->resolveScope('approve', $organization, $project);
+        }
+
         $inspection->update($validated);
 
         return back()->with('success', 'Contrôle / essai mis à jour.');
@@ -160,7 +170,7 @@ class EngineeringQaControlController extends Controller
         string $project,
         EngineeringQaInspection $inspection
     ): RedirectResponse {
-        [$organizationModel, $projectModel] = $this->resolveScope($organization, $project);
+        [$organizationModel, $projectModel] = $this->resolveScope('edit', $organization, $project);
         $this->assertInspectionScope($inspection, $organizationModel, $projectModel);
 
         $validated = $request->validate([
@@ -208,7 +218,7 @@ class EngineeringQaControlController extends Controller
         string $project,
         EngineeringQaEvidence $evidence
     ): StreamedResponse {
-        [$organizationModel, $projectModel] = $this->resolveScope($organization, $project);
+        [$organizationModel, $projectModel] = $this->resolveScope('view', $organization, $project);
 
         abort_unless(
             (string) $evidence->organization_id === (string) $organizationModel->getKey()
@@ -228,7 +238,7 @@ class EngineeringQaControlController extends Controller
         EngineeringQaInspection $inspection,
         EngineeringQaWorkTypeCatalog $catalog
     ): RedirectResponse {
-        [$organizationModel, $projectModel] = $this->resolveScope($organization, $project);
+        [$organizationModel, $projectModel] = $this->resolveScope('edit', $organization, $project);
         $this->assertInspectionScope($inspection, $organizationModel, $projectModel);
 
         $schema = $catalog->registerSchema($inspection->register_type);
@@ -280,7 +290,7 @@ class EngineeringQaControlController extends Controller
         string $project,
         EngineeringQaHandover $handover
     ): RedirectResponse {
-        [$organizationModel, $projectModel] = $this->resolveScope($organization, $project);
+        [$organizationModel, $projectModel] = $this->resolveScope('edit', $organization, $project);
 
         abort_unless(
             (string) $handover->organization_id === (string) $organizationModel->getKey()
@@ -305,22 +315,51 @@ class EngineeringQaControlController extends Controller
             return back()->withErrors(['accepted_at' => 'La date d’acceptation est obligatoire pour clôturer le handover.'])->withInput();
         }
 
+        if ($this->changesDecision($handover->status, $validated['status'], self::HANDOVER_DECISIONS)) {
+            $this->resolveScope('approve', $organization, $project);
+        }
+
         $handover->update($validated);
 
         return back()->with('success', 'Handover mis à jour.');
     }
 
-    private function resolveScope(string $organization, string $project): array
+    private const INSPECTION_DECISIONS = [
+        EngineeringQaInspection::STATUS_CONFORMING,
+        EngineeringQaInspection::STATUS_NONCONFORMING,
+        EngineeringQaInspection::STATUS_CONDITIONAL,
+    ];
+
+    private const AUTHORIZATION_DECISIONS = [
+        EngineeringQaInspection::AUTH_GRANTED,
+        EngineeringQaInspection::AUTH_REJECTED,
+    ];
+
+    private const HANDOVER_DECISIONS = ['accepted', 'rejected'];
+
+    /**
+     * True when the update sets, changes or withdraws a decision value.
+     */
+    private function changesDecision(?string $current, string $next, array $decisions): bool
+    {
+        if ((string) $current === $next) {
+            return false;
+        }
+
+        return in_array($next, $decisions, true) || in_array((string) $current, $decisions, true);
+    }
+
+    private function resolveScope(string $ability, string $organization, string $project): array
     {
         $organizationModel = Organization::query()->whereKey($organization)->firstOrFail();
         $projectModel = Project::query()->whereKey($project)->firstOrFail();
 
-        if (
-            Schema::hasColumn($projectModel->getTable(), 'organization_id')
-            && (string) $projectModel->getAttribute('organization_id') !== (string) $organizationModel->getKey()
-        ) {
-            abort(404);
-        }
+        app(EngineeringTenantAccessService::class)->authorizeProject(
+            $ability,
+            request()->user(),
+            $organizationModel,
+            $projectModel
+        );
 
         return [$organizationModel, $projectModel];
     }

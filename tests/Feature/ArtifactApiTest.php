@@ -3,12 +3,20 @@
 namespace Tests\Feature;
 
 use App\Models\Artifact;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ArtifactApiTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->actingAs(User::factory()->create());
+    }
 
     public function test_api_creates_a_persistent_artifact(): void
     {

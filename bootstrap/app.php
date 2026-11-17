@@ -12,7 +12,16 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias([
+            'civilina.staff' => \App\Http\Middleware\EnsureCivilinaPlatformStaff::class,
+        ]);
+
+        // Deny non-staff before route-model binding answers 404 for
+        // unknown corpus documents.
+        $middleware->prependToPriorityList(
+            before: \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            prepend: \App\Http\Middleware\EnsureCivilinaPlatformStaff::class,
+        );
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

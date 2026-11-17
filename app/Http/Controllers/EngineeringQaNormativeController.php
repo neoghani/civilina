@@ -9,6 +9,7 @@ use App\Models\Organization;
 use App\Models\Project;
 use App\Services\Engineering\EngineeringQaNormativeAgentService;
 use App\Services\Engineering\EngineeringStandardInboxService;
+use App\Services\Engineering\EngineeringTenantAccessService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -22,7 +23,7 @@ class EngineeringQaNormativeController extends Controller
         string $project,
         EngineeringStandardInboxService $inbox
     ): View {
-        [$organizationModel, $projectModel] = $this->resolveScope($organization, $project);
+        [$organizationModel, $projectModel] = $this->resolveScope('view', $organization, $project);
 
         $inspections = EngineeringQaInspection::query()
             ->where('organization_id', (string) $organizationModel->getKey())
@@ -61,7 +62,7 @@ class EngineeringQaNormativeController extends Controller
         string $project,
         EngineeringStandardInboxService $inbox
     ): RedirectResponse {
-        $this->resolveScope($organization, $project);
+        $this->resolveScope('edit', $organization, $project);
 
         $validated = $request->validate([
             'batch_size' => ['nullable', 'integer', Rule::in([10, 20, 50])],
@@ -93,7 +94,7 @@ class EngineeringQaNormativeController extends Controller
         EngineeringQaInspection $inspection,
         EngineeringQaNormativeAgentService $agent
     ): RedirectResponse {
-        [$organizationModel, $projectModel] = $this->resolveScope($organization, $project);
+        [$organizationModel, $projectModel] = $this->resolveScope('edit', $organization, $project);
         $this->assertInspectionScope($inspection, $organizationModel, $projectModel);
 
         $validated = $request->validate([
@@ -116,7 +117,7 @@ class EngineeringQaNormativeController extends Controller
         string $project,
         EngineeringQaNormativeLink $link
     ): RedirectResponse {
-        [$organizationModel, $projectModel] = $this->resolveScope($organization, $project);
+        [$organizationModel, $projectModel] = $this->resolveScope('approve', $organization, $project);
 
         abort_unless(
             (string) $link->organization_id === (string) $organizationModel->getKey()
@@ -152,7 +153,7 @@ class EngineeringQaNormativeController extends Controller
         string $project,
         EngineeringQaInspection $inspection
     ): RedirectResponse {
-        [$organizationModel, $projectModel] = $this->resolveScope($organization, $project);
+        [$organizationModel, $projectModel] = $this->resolveScope('edit', $organization, $project);
         $this->assertInspectionScope($inspection, $organizationModel, $projectModel);
 
         $validated = $request->validate([
@@ -184,17 +185,17 @@ class EngineeringQaNormativeController extends Controller
         return back()->with('success', 'Référence normative manuelle ajoutée et validée.');
     }
 
-    private function resolveScope(string $organization, string $project): array
+    private function resolveScope(string $ability, string $organization, string $project): array
     {
         $organizationModel = Organization::query()->whereKey($organization)->firstOrFail();
         $projectModel = Project::query()->whereKey($project)->firstOrFail();
 
-        if (
-            Schema::hasColumn($projectModel->getTable(), 'organization_id')
-            && (string) $projectModel->getAttribute('organization_id') !== (string) $organizationModel->getKey()
-        ) {
-            abort(404);
-        }
+        app(EngineeringTenantAccessService::class)->authorizeProject(
+            $ability,
+            request()->user(),
+            $organizationModel,
+            $projectModel
+        );
 
         return [$organizationModel, $projectModel];
     }

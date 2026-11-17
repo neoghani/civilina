@@ -7,9 +7,9 @@ use App\Models\EngineeringItpRow;
 use App\Models\Organization;
 use App\Models\Project;
 use App\Services\Engineering\EngineeringItpReadinessService;
+use App\Services\Engineering\EngineeringTenantAccessService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -21,7 +21,7 @@ class EngineeringItpController extends Controller
         string $project,
         EngineeringItpReadinessService $readiness
     ): View {
-        [$organizationModel, $projectModel] = $this->resolveScope($organization, $project);
+        [$organizationModel, $projectModel] = $this->resolveScope('view', $organization, $project);
 
         $itps = EngineeringItp::query()
             ->where('organization_id', (string) $organizationModel->getKey())
@@ -42,7 +42,7 @@ class EngineeringItpController extends Controller
 
     public function store(Request $request, string $organization, string $project): RedirectResponse
     {
-        [$organizationModel, $projectModel] = $this->resolveScope($organization, $project);
+        [$organizationModel, $projectModel] = $this->resolveScope('edit', $organization, $project);
 
         $validated = $request->validate([
             'code' => ['required', 'string', 'max:80'],
@@ -106,7 +106,7 @@ class EngineeringItpController extends Controller
         string $project,
         EngineeringItp $itp
     ): RedirectResponse {
-        [$organizationModel, $projectModel] = $this->resolveScope($organization, $project);
+        [$organizationModel, $projectModel] = $this->resolveScope('edit', $organization, $project);
         $this->assertItpScope($itp, $organizationModel, $projectModel);
 
         abort_unless($itp->isDraft(), 422, 'Seul un ITP en brouillon peut être modifié.');
@@ -151,7 +151,7 @@ class EngineeringItpController extends Controller
         EngineeringItp $itp,
         EngineeringItpReadinessService $readiness
     ): RedirectResponse {
-        [$organizationModel, $projectModel] = $this->resolveScope($organization, $project);
+        [$organizationModel, $projectModel] = $this->resolveScope('edit', $organization, $project);
         $this->assertItpScope($itp, $organizationModel, $projectModel);
         abort_unless($itp->isDraft(), 422, 'L’ITP doit être en brouillon.');
 
@@ -178,7 +178,7 @@ class EngineeringItpController extends Controller
         EngineeringItp $itp,
         EngineeringItpReadinessService $readiness
     ): RedirectResponse {
-        [$organizationModel, $projectModel] = $this->resolveScope($organization, $project);
+        [$organizationModel, $projectModel] = $this->resolveScope('approve', $organization, $project);
         $this->assertItpScope($itp, $organizationModel, $projectModel);
         abort_unless($itp->isInReview(), 422, 'L’ITP doit être en revue avant approbation.');
 
@@ -198,17 +198,17 @@ class EngineeringItpController extends Controller
         return back()->with('success', 'ITP approuvé.');
     }
 
-    private function resolveScope(string $organization, string $project): array
+    private function resolveScope(string $ability, string $organization, string $project): array
     {
         $organizationModel = Organization::query()->whereKey($organization)->firstOrFail();
         $projectModel = Project::query()->whereKey($project)->firstOrFail();
 
-        if (
-            Schema::hasColumn($projectModel->getTable(), 'organization_id')
-            && (string) $projectModel->getAttribute('organization_id') !== (string) $organizationModel->getKey()
-        ) {
-            abort(404);
-        }
+        app(EngineeringTenantAccessService::class)->authorizeProject(
+            $ability,
+            request()->user(),
+            $organizationModel,
+            $projectModel
+        );
 
         return [$organizationModel, $projectModel];
     }

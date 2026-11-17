@@ -31,3 +31,5 @@ yarn-error.log
 /database/*.sqlite3-*
 *.bak
 /New/civilina-database-structure.zip
+
+/storage/framework/sessions/

@@ -2,7 +2,7 @@
 use App\Http\Controllers\EngineeringNormativeDeepReviewController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth'])
+Route::middleware(['auth', 'civilina.staff'])
     ->prefix('engineering/{organization}/projects/{project}/normative-deep-review')
     ->name('engineering.normative-deep-review.')
     ->group(function(){

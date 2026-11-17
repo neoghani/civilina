@@ -203,12 +203,16 @@ class OrganizationArtifactCreateTest extends TestCase
 
     public function test_legacy_global_endpoint_remains_available(): void
     {
-        $response = $this->postJson(
-            '/api/artifacts',
-            $this->artifactPayload(
-                'Legacy WBS'
-            )
-        );
+        $user = User::factory()->create();
+
+        $response = $this
+            ->actingAs($user)
+            ->postJson(
+                '/api/artifacts',
+                $this->artifactPayload(
+                    'Legacy WBS'
+                )
+            );
 
         $response->assertCreated();
 

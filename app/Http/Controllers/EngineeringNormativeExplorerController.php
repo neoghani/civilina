@@ -10,6 +10,7 @@ use App\Models\EngineeringQaInspection;
 use App\Models\EngineeringQaNormativeLink;
 use App\Models\Organization;
 use App\Models\Project;
+use App\Services\Engineering\EngineeringTenantAccessService;
 use App\Services\Engineering\Normative\NormativeControlCompatibilityService;
 use App\Services\Engineering\Normative\NormativeQaMatcher;
 use App\Services\Engineering\Normative\NormativeRegistryService;
@@ -23,7 +24,7 @@ class EngineeringNormativeExplorerController extends Controller
 {
     public function index(Request $request, Organization $organization, Project $project, NormativeTaxonomyService $taxonomy, NormativeControlCompatibilityService $compatibility): View
     {
-        $this->guardProject($organization, $project);
+        $this->guardProject('view', $organization, $project);
 
         $tab = (string) $request->query('tab', 'registry');
         $q = trim((string) $request->query('q', ''));
@@ -89,14 +90,14 @@ class EngineeringNormativeExplorerController extends Controller
 
     public function refresh(Organization $organization, Project $project, NormativeTaxonomyIndexer $indexer): RedirectResponse
     {
-        $this->guardProject($organization,$project);
+        $this->guardProject('edit', $organization, $project);
         $stats = $indexer->refresh();
         return back()->with('normative_message',"Taxonomie actualisée : {$stats['sources']} source(s), {$stats['standards']} norme(s) actualisée(s).");
     }
 
     public function deepScan(Request $request, Organization $organization, Project $project, NormativeRegistryService $registry, NormativeTaxonomyIndexer $indexer): RedirectResponse
     {
-        $this->guardProject($organization,$project);
+        $this->guardProject('edit', $organization, $project);
         $limit = $request->boolean('all') ? null : max(1,$request->integer('limit',100));
         $stats = $registry->scan($limit,$request->boolean('force'));
         $tax = $indexer->refresh();
@@ -105,7 +106,7 @@ class EngineeringNormativeExplorerController extends Controller
 
     public function runAgent(Organization $organization, Project $project, NormativeQaMatcher $matcher): RedirectResponse
     {
-        $this->guardProject($organization,$project);
+        $this->guardProject('edit', $organization, $project);
         $created = 0;
         foreach (EngineeringQaInspection::query()->where('project_id',$project->getKey())->get() as $inspection) {
             $created += $matcher->suggestForInspection($inspection);
@@ -115,14 +116,22 @@ class EngineeringNormativeExplorerController extends Controller
 
     public function suggest(Organization $organization, Project $project, EngineeringQaInspection $inspection, NormativeQaMatcher $matcher): RedirectResponse
     {
-        $this->guardProject($organization,$project);
+        $this->guardProject('edit', $organization, $project);
         abort_unless((int)$inspection->project_id === (int)$project->getKey(),404);
         $created = $matcher->suggestForInspection($inspection);
         return back()->with('normative_message',"{$created} proposition(s) créée(s) pour {$inspection->code}.");
     }
 
-    private function guardProject(Organization $organization, Project $project): void
-    {
-        if (isset($project->organization_id)) abort_unless((int)$project->organization_id === (int)$organization->getKey(),404);
+    private function guardProject(
+        string $ability,
+        Organization $organization,
+        Project $project
+    ): void {
+        app(EngineeringTenantAccessService::class)->authorizeProject(
+            $ability,
+            request()->user(),
+            $organization,
+            $project
+        );
     }
 }

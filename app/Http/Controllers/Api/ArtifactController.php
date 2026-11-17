@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Artifact;
 use App\Models\ArtifactRevision;
 use App\Services\Artifacts\ArtifactService;
+use App\Services\Artifacts\ArtifactTenantAccessService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -56,19 +57,10 @@ class ArtifactController extends Controller
                 'string',
                 'max:50',
             ],
-
-            'created_by' => [
-                'nullable',
-                'integer',
-                'exists:users,id',
-            ],
-
-            'owner_id' => [
-                'nullable',
-                'integer',
-                'exists:users,id',
-            ],
         ]);
+
+        $validated['created_by'] = $request->user()?->getKey();
+        $validated['owner_id'] = $request->user()?->getKey();
 
         $artifact = $service->create($validated);
 
@@ -78,8 +70,18 @@ class ArtifactController extends Controller
     }
 
     public function show(
-        Artifact $artifact
+        Request $request,
+        Artifact $artifact,
+        ArtifactTenantAccessService $artifactAccess
     ): JsonResponse {
+        abort_unless(
+            $artifactAccess->canViewArtifact(
+                $request->user(),
+                $artifact
+            ),
+            403
+        );
+
         $artifact->load([
             'currentRevision',
             'revisions',
@@ -91,8 +93,18 @@ class ArtifactController extends Controller
     }
 
     public function revisions(
-        Artifact $artifact
+        Request $request,
+        Artifact $artifact,
+        ArtifactTenantAccessService $artifactAccess
     ): JsonResponse {
+        abort_unless(
+            $artifactAccess->canViewArtifact(
+                $request->user(),
+                $artifact
+            ),
+            403
+        );
+
         $revisions = $artifact
             ->revisions()
             ->get();
@@ -110,8 +122,17 @@ class ArtifactController extends Controller
     public function revise(
         Request $request,
         Artifact $artifact,
-        ArtifactService $service
+        ArtifactService $service,
+        ArtifactTenantAccessService $artifactAccess
     ): JsonResponse {
+        abort_unless(
+            $artifactAccess->canEditArtifact(
+                $request->user(),
+                $artifact
+            ),
+            403
+        );
+
         $validated = $request->validate([
             'payload' => [
                 'required',
@@ -134,13 +155,9 @@ class ArtifactController extends Controller
                 'string',
                 'max:50',
             ],
-
-            'created_by' => [
-                'nullable',
-                'integer',
-                'exists:users,id',
-            ],
         ]);
+
+        $validated['created_by'] = $request->user()?->getKey();
 
         $revision = $service->revise(
             $artifact,
@@ -155,8 +172,17 @@ class ArtifactController extends Controller
     public function transition(
         Request $request,
         Artifact $artifact,
-        ArtifactService $service
+        ArtifactService $service,
+        ArtifactTenantAccessService $artifactAccess
     ): JsonResponse {
+        abort_unless(
+            $artifactAccess->canEditArtifact(
+                $request->user(),
+                $artifact
+            ),
+            403
+        );
+
         $validated = $request->validate([
             'status' => [
                 'required',
@@ -181,13 +207,9 @@ class ArtifactController extends Controller
                 'string',
                 'max:50',
             ],
-
-            'created_by' => [
-                'nullable',
-                'integer',
-                'exists:users,id',
-            ],
         ]);
+
+        $validated['created_by'] = $request->user()?->getKey();
 
         try {
             $revision = $service->transition(

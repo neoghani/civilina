@@ -17,15 +17,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get(
         'engineering/{organization}/projects/{project}/normative-library/standards/{standard}/sources/{source}/inline',
         [EngineeringNormativeLibraryController::class, 'inline']
-    )->name('engineering.normative-library.inline');
+    )->middleware('civilina.staff')->name('engineering.normative-library.inline');
 
     Route::patch(
         'engineering/{organization}/projects/{project}/normative-library/standards/{standard}',
         [EngineeringNormativeLibraryController::class, 'updateStandard']
-    )->name('engineering.normative-library.standard.update');
+    )->middleware('civilina.staff')->name('engineering.normative-library.standard.update');
 
     Route::patch(
         'engineering/{organization}/projects/{project}/normative-library/requirements/{requirement}',
         [EngineeringNormativeLibraryController::class, 'updateRequirement']
-    )->name('engineering.normative-library.requirement.update');
+    )->middleware('civilina.staff')->name('engineering.normative-library.requirement.update');
 });

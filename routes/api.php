@@ -3,7 +3,8 @@
 use App\Http\Controllers\Api\ArtifactController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('artifacts')
+Route::middleware(['web', 'auth'])
+    ->prefix('artifacts')
     ->name('artifacts.')
     ->group(function (): void {
         Route::post(

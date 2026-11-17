@@ -9,6 +9,7 @@ use App\Models\EngineeringQaInspection;
 use App\Models\EngineeringQaNormativeLink;
 use App\Models\Organization;
 use App\Models\Project;
+use App\Services\Engineering\EngineeringTenantAccessService;
 use App\Services\Engineering\Normative\NormativeQaMatcher;
 use App\Services\Engineering\Normative\NormativeRegistryService;
 use Illuminate\Http\RedirectResponse;
@@ -24,7 +25,7 @@ class EngineeringNormativeRegistryController extends Controller
         Project $project,
         NormativeQaMatcher $matcher
     ): View {
-        $this->guardProject($organization, $project);
+        $this->guardProject('view', $organization, $project);
 
         $tab = (string) $request->query('tab', 'registry');
 
@@ -90,7 +91,7 @@ class EngineeringNormativeRegistryController extends Controller
         Project $project,
         NormativeRegistryService $registry
     ): RedirectResponse {
-        $this->guardProject($organization, $project);
+        $this->guardProject('edit', $organization, $project);
 
         $validated = $request->validate([
             'limit' => ['nullable', 'integer', 'min:1', 'max:2000'],
@@ -110,7 +111,7 @@ class EngineeringNormativeRegistryController extends Controller
         Project $project,
         NormativeQaMatcher $matcher
     ): RedirectResponse {
-        $this->guardProject($organization, $project);
+        $this->guardProject('edit', $organization, $project);
 
         $total = 0;
         $errors = [];
@@ -147,7 +148,7 @@ class EngineeringNormativeRegistryController extends Controller
         EngineeringQaInspection $inspection,
         NormativeQaMatcher $matcher
     ): RedirectResponse {
-        $this->guardProject($organization, $project);
+        $this->guardProject('edit', $organization, $project);
         abort_unless((int) $inspection->project_id === (int) $project->getKey(), 404);
 
         try {
@@ -172,7 +173,7 @@ class EngineeringNormativeRegistryController extends Controller
         Project $project,
         EngineeringQaNormativeLink $link
     ): RedirectResponse {
-        $this->guardProject($organization, $project);
+        $this->guardProject('approve', $organization, $project);
 
         $inspection = EngineeringQaInspection::query()->findOrFail($link->inspection_id);
         abort_unless((int) $inspection->project_id === (int) $project->getKey(), 404);
@@ -209,7 +210,7 @@ class EngineeringNormativeRegistryController extends Controller
         Project $project,
         EngineeringQaNormativeLink $link
     ): RedirectResponse {
-        $this->guardProject($organization, $project);
+        $this->guardProject('approve', $organization, $project);
 
         $inspection = EngineeringQaInspection::query()->findOrFail($link->inspection_id);
         abort_unless((int) $inspection->project_id === (int) $project->getKey(), 404);
@@ -224,10 +225,16 @@ class EngineeringNormativeRegistryController extends Controller
         return back()->with('normative_message', 'Proposition rejetee.');
     }
 
-    private function guardProject(Organization $organization, Project $project): void
-    {
-        if (isset($project->organization_id)) {
-            abort_unless((int) $project->organization_id === (int) $organization->getKey(), 404);
-        }
+    private function guardProject(
+        string $ability,
+        Organization $organization,
+        Project $project
+    ): void {
+        app(EngineeringTenantAccessService::class)->authorizeProject(
+            $ability,
+            request()->user(),
+            $organization,
+            $project
+        );
     }
 }

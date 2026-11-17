@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Organization;
 use App\Models\Project;
+use App\Services\Engineering\EngineeringTenantAccessService;
 use App\Services\Engineering\NormativeLibrarian\NormativePhysicalLibraryOrganizer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,9 +17,12 @@ class NormativePhysicalLibraryController extends Controller
         Project $project,
         NormativePhysicalLibraryOrganizer $organizer
     ): RedirectResponse {
-        if (isset($project->organization_id)) {
-            abort_unless((int)$project->organization_id === (int)$organization->id, 404);
-        }
+        app(EngineeringTenantAccessService::class)->authorizeProject(
+            'edit',
+            request()->user(),
+            $organization,
+            $project
+        );
 
         $validated = $request->validate([
             'limit'=>['nullable','integer','min:1','max:500'],
