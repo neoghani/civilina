@@ -107,7 +107,7 @@ class CivilinaPlatformStaffAccessTest extends TestCase
 
     private function base(Organization $organization, Project $project): string
     {
-        return '/engineering/'.$organization->getKey().'/projects/'.$project->getKey();
+        return '/engineering/'.$organization->getRouteKey().'/projects/'.$project->getRouteKey();
     }
 
     private function staffGetPaths(Organization $organization, Project $project): array

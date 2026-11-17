@@ -103,7 +103,7 @@ class EngineeringQaApprovalRoleTest extends TestCase
     {
         [$organization, $project] = $this->scope();
         $handover = $this->handover($organization, $project);
-        $url = '/engineering/'.$organization->getKey().'/projects/'.$project->getKey().'/qa-control/handovers/'.$handover->getKey();
+        $url = '/engineering/'.$organization->getRouteKey().'/projects/'.$project->getRouteKey().'/qa-control/handovers/'.$handover->getKey();
         $payload = ['status' => 'accepted', 'accepted_at' => now()->toDateTimeString()];
 
         $member = $this->memberWithRole($organization, OrganizationRole::Member);
@@ -169,6 +169,6 @@ class EngineeringQaApprovalRoleTest extends TestCase
 
     private function inspectionUrl(Organization $organization, Project $project, EngineeringQaInspection $inspection): string
     {
-        return '/engineering/'.$organization->getKey().'/projects/'.$project->getKey().'/qa-control/inspections/'.$inspection->getKey();
+        return '/engineering/'.$organization->getRouteKey().'/projects/'.$project->getRouteKey().'/qa-control/inspections/'.$inspection->getKey();
     }
 }

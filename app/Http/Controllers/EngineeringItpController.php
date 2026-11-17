@@ -200,8 +200,8 @@ class EngineeringItpController extends Controller
 
     private function resolveScope(string $ability, string $organization, string $project): array
     {
-        $organizationModel = Organization::query()->whereKey($organization)->firstOrFail();
-        $projectModel = Project::query()->whereKey($project)->firstOrFail();
+        $organizationModel = Organization::query()->where('public_id', $organization)->firstOrFail();
+        $projectModel = Project::query()->where('public_id', $project)->firstOrFail();
 
         app(EngineeringTenantAccessService::class)->authorizeProject(
             $ability,

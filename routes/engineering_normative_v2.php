@@ -17,12 +17,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post(
         'engineering/{organization}/projects/{project}/qa-normative-v2/run',
         [EngineeringNormativeRegistryController::class, 'runAgent']
-    )->name('engineering.normative-v2.run');
+    )->middleware('throttle:engineering-heavy')->name('engineering.normative-v2.run');
 
     Route::post(
         'engineering/{organization}/projects/{project}/qa-normative-v2/inspections/{inspection}/suggest',
         [EngineeringNormativeRegistryController::class, 'suggest']
-    )->name('engineering.normative-v2.suggest');
+    )->middleware('throttle:engineering-heavy')->name('engineering.normative-v2.suggest');
 
     Route::post(
         'engineering/{organization}/projects/{project}/qa-normative-v2/links/{link}/validate',

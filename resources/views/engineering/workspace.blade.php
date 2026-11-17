@@ -118,21 +118,21 @@
 
     <div class="civilina-qaqc-menu__children">
         <a
-                    href="{{ route('engineering.itp.index', [$organization->getKey(), $project->getKey()]) }}"
+                    href="{{ route('engineering.itp.index', [$organization->getRouteKey(), $project->getRouteKey()]) }}"
                     data-civilina-block="2k-itp"
                     style="display:block;padding:11px 12px;margin:4px 0;border-radius:7px;color:#fff;text-decoration:none"
                 >
                     · ITP
                 </a>
         <a
-                    href="{{ route('engineering.qa-control.index', [$organization->getKey(), $project->getKey()]) }}"
+                    href="{{ route('engineering.qa-control.index', [$organization->getRouteKey(), $project->getRouteKey()]) }}"
                     data-civilina-block="2k1-qa-control"
                     style="display:block;padding:11px 12px;margin:4px 0;border-radius:7px;color:#fff;text-decoration:none"
                 >
                     · Controles & PV
                 </a>
         <a
-                    href="{{ route('engineering.normative-library.index', [$organization->getKey(), $project->getKey()]) }}"
+                    href="{{ route('engineering.normative-library.index', [$organization->getRouteKey(), $project->getRouteKey()]) }}"
                     data-civilina-block="2k2-qa-normative"
                     style="display:block;padding:11px 12px;margin:4px 0;border-radius:7px;color:#fff;text-decoration:none"
                 >

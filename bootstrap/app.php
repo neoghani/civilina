@@ -16,6 +16,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'civilina.staff' => \App\Http\Middleware\EnsureCivilinaPlatformStaff::class,
         ]);
 
+        // Per-account request limit on every web (and web-based API) route.
+        $middleware->web(append: [
+            \Illuminate\Routing\Middleware\ThrottleRequests::class.':app',
+        ]);
+
         // Deny non-staff before route-model binding answers 404 for
         // unknown corpus documents.
         $middleware->prependToPriorityList(

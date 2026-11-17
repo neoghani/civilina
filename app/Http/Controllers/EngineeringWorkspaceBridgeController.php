@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Organization;
 use App\Models\Project;
+use App\Services\Engineering\EngineeringTenantAccessService;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 
@@ -13,12 +14,14 @@ class EngineeringWorkspaceBridgeController extends Controller
         Organization $organization,
         Project $project
     ): View {
-        if (isset($project->organization_id)) {
-            abort_unless(
-                (int) $project->organization_id === (int) $organization->id,
-                404
-            );
-        }
+        // Same tenant rule as the workspace: active member of the
+        // organization, project belonging to it.
+        app(EngineeringTenantAccessService::class)->authorizeProject(
+            'view',
+            request()->user(),
+            $organization,
+            $project
+        );
 
         $links = array_values(array_filter([
             $this->link(

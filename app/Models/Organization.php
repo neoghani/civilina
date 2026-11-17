@@ -16,6 +16,13 @@ class Organization extends Model
         'slug',
     ];
 
+    // URLs carry the public UUID, never the sequential id (no enumeration of
+    // firms or projects).
+    public function getRouteKeyName(): string
+    {
+        return 'public_id';
+    }
+
     protected static function booted(): void
     {
         static::creating(function (Organization $organization): void {

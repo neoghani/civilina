@@ -19,7 +19,7 @@ Mot de passe oublié : lien « Mot de passe oublié ? » sur la page de connexio
 - **Une organisation par bureau d'études.** Vos projets et vos données ne sont
   visibles que par les membres de votre organisation.
 - **Un premier projet** est déjà créé (code et nom convenus avec Civilina).
-  Après connexion, l'adresse `/engineering` vous y amène directement.
+  Après connexion, vous arrivez directement dans ce projet.
 - **Rôles** :
 
   | Rôle | Consulter | Préparer / modifier | Approuver (ITP, verdicts, autorisations, handovers) |

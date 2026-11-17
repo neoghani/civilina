@@ -9,4 +9,10 @@ return [
         'trim',
         explode(',', (string) env('CIVILINA_PLATFORM_STAFF', ''))
     ))),
+
+    // Requests per minute and per account (per IP before login).
+    'rate_limits' => [
+        'app' => (int) env('CIVILINA_RATE_LIMIT_APP', 300),
+        'heavy' => (int) env('CIVILINA_RATE_LIMIT_HEAVY', 30),
+    ],
 ];

@@ -1,0 +1,50 @@
+name: tests
+
+on:
+  push:
+    branches: [civilina-hermes-preparation, 'feat/**', 'fix/**']
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  phpunit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, intl, gd, zip, pdo_sqlite, sqlite3
+          coverage: none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Build front-end assets (Vite manifest used by the layouts)
+        run: |
+          npm ci
+          npm run build
+
+      # Tests always run on in-memory SQLite (forced in phpunit.xml); no
+      # database service and no secret is needed.
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate --force
+
+      - name: Run test suite
+        run: vendor/bin/phpunit --no-progress

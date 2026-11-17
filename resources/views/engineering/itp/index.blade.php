@@ -27,7 +27,7 @@
         <div class="project"><span>Projet</span><strong>{{ $project->code ?? $project->name ?? $project->getKey() }}</strong></div>
         <nav class="nav">
             <a href="{{ route('engineering.workspace.bridge',['organization'=>$organization,'project'=>$project]) }}">Vue Engineering</a>
-            <a class="active" href="{{ route('engineering.itp.index', [$organization->getKey(), $project->getKey()]) }}">QA/QC · ITP</a>
+            <a class="active" href="{{ route('engineering.itp.index', [$organization->getRouteKey(), $project->getRouteKey()]) }}">QA/QC · ITP</a>
         </nav>
     </aside>
 
@@ -91,7 +91,7 @@
                             @if($itp->isDraft())
                                 <div class="add-row">
                                     <h3>Ajouter une ligne de contrôle</h3>
-                                    <form class="form" method="post" action="{{ route('engineering.itp.rows.store', [$organization->getKey(), $project->getKey(), $itp]) }}">
+                                    <form class="form" method="post" action="{{ route('engineering.itp.rows.store', [$organization->getRouteKey(), $project->getRouteKey(), $itp]) }}">
                                         @csrf
                                         <div class="row"><label>Code<input name="code" required placeholder="ITP-STR-001-010"></label><label>Séquence<input name="sequence" type="number" min="1" placeholder="10"></label></div>
                                         <label>Inspection / essai<textarea name="inspection_test" required placeholder="Contrôle du ferraillage avant bétonnage"></textarea></label>
@@ -107,8 +107,8 @@
                             @endif
 
                             <div class="actions">
-                                @if($itp->isDraft() && $ready['ready'])<form method="post" action="{{ route('engineering.itp.submit-review', [$organization->getKey(), $project->getKey(), $itp]) }}">@csrf<button class="secondary" type="submit">Soumettre en revue</button></form>@endif
-                                @if($itp->isInReview())<form method="post" action="{{ route('engineering.itp.approve', [$organization->getKey(), $project->getKey(), $itp]) }}">@csrf<button class="approve" type="submit">Approuver l’ITP</button></form>@endif
+                                @if($itp->isDraft() && $ready['ready'])<form method="post" action="{{ route('engineering.itp.submit-review', [$organization->getRouteKey(), $project->getRouteKey(), $itp]) }}">@csrf<button class="secondary" type="submit">Soumettre en revue</button></form>@endif
+                                @if($itp->isInReview())<form method="post" action="{{ route('engineering.itp.approve', [$organization->getRouteKey(), $project->getRouteKey(), $itp]) }}">@csrf<button class="approve" type="submit">Approuver l’ITP</button></form>@endif
                             </div>
                         </article>
                     @empty
@@ -118,7 +118,7 @@
 
                 <aside class="card pad">
                     <h3>Nouvel ITP</h3>
-                    <form class="form" method="post" action="{{ route('engineering.itp.store', [$organization->getKey(), $project->getKey()]) }}">
+                    <form class="form" method="post" action="{{ route('engineering.itp.store', [$organization->getRouteKey(), $project->getRouteKey()]) }}">
                         @csrf
                         <div class="row"><label>Code<input name="code" value="{{ old('code') }}" required placeholder="ITP-STR-001"></label><label>Révision<input name="revision" value="{{ old('revision', 'DRAFT-01') }}"></label></div>
                         <label>Titre<input name="title" value="{{ old('title') }}" required placeholder="ITP Ferraillage et bétonnage poteaux"></label>

@@ -9,7 +9,7 @@
             <div style="color:#64748b">Contrôle → norme → section → exigence → validation humaine.</div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <a href="{{ route('engineering.qa-control.index', [$organization->getKey(), $project->getKey()]) }}" style="padding:10px 14px;border:1px solid #cbd5e1;border-radius:7px;text-decoration:none;color:#0f172a">Contrôles & PV</a>
+            <a href="{{ route('engineering.qa-control.index', [$organization->getRouteKey(), $project->getRouteKey()]) }}" style="padding:10px 14px;border:1px solid #cbd5e1;border-radius:7px;text-decoration:none;color:#0f172a">Contrôles & PV</a>
             <a href="{{ route('engineering.workspace.bridge',['organization'=>$organization,'project'=>$project]) }}" style="padding:10px 14px;border:1px solid #cbd5e1;border-radius:7px;text-decoration:none;color:#0f172a">Workspace</a>
         </div>
     </div>
@@ -38,7 +38,7 @@
             </div>
 
             @civilinastaff
-            <form method="POST" action="{{ route('engineering.qa-normative.scan', [$organization->getKey(), $project->getKey()]) }}" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <form method="POST" action="{{ route('engineering.qa-normative.scan', [$organization->getRouteKey(), $project->getRouteKey()]) }}" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
                 @csrf
                 <select name="batch_size" style="padding:9px 8px;border:1px solid #cbd5e1;border-radius:7px">
                     <option value="10">10 fichiers</option>
@@ -98,7 +98,7 @@
                     <strong>{{ $inspection->inspection_code }}</strong> — {{ $inspection->title }}
                     <div style="font-size:12px;color:#64748b;margin-top:4px">{{ $inspection->work_type }} · {{ $inspection->scope_label }}</div>
                 </div>
-                <form method="POST" action="{{ route('engineering.qa-normative.suggest', [$organization->getKey(), $project->getKey(), $inspection->getKey()]) }}">
+                <form method="POST" action="{{ route('engineering.qa-normative.suggest', [$organization->getRouteKey(), $project->getRouteKey(), $inspection->getKey()]) }}">
                     @csrf
                     <input type="hidden" name="limit" value="5">
                     <button style="padding:9px 12px;border:0;border-radius:7px;background:#0f172a;color:#fff;cursor:pointer">Rechercher les références</button>
@@ -129,12 +129,12 @@
 
                                 @if($link->status === 'suggested')
                                     <div style="display:flex;gap:8px;margin-top:10px">
-                                        <form method="POST" action="{{ route('engineering.qa-normative.decision', [$organization->getKey(), $project->getKey(), $link->getKey()]) }}">
+                                        <form method="POST" action="{{ route('engineering.qa-normative.decision', [$organization->getRouteKey(), $project->getRouteKey(), $link->getKey()]) }}">
                                             @csrf
                                             <input type="hidden" name="status" value="validated">
                                             <button style="padding:7px 10px">Valider</button>
                                         </form>
-                                        <form method="POST" action="{{ route('engineering.qa-normative.decision', [$organization->getKey(), $project->getKey(), $link->getKey()]) }}">
+                                        <form method="POST" action="{{ route('engineering.qa-normative.decision', [$organization->getRouteKey(), $project->getRouteKey(), $link->getKey()]) }}">
                                             @csrf
                                             <input type="hidden" name="status" value="rejected">
                                             <button style="padding:7px 10px">Rejeter</button>

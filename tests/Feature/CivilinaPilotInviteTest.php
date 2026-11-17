@@ -93,6 +93,19 @@ class CivilinaPilotInviteTest extends TestCase
             ]));
     }
 
+    public function test_firm_member_lands_in_engineering_after_login(): void
+    {
+        $this->artisan('civilina:pilot-invite', [
+            '--name' => 'Responsable BET', '--email' => 'resp@bet.test', '--organization' => 'BET Routes',
+        ])->assertSuccessful();
+
+        User::query()->where('email', 'resp@bet.test')->firstOrFail()
+            ->forceFill(['password' => Hash::make('Une-phrase-de-passe-solide')])->save();
+
+        $this->post('/login', ['email' => 'resp@bet.test', 'password' => 'Une-phrase-de-passe-solide'])
+            ->assertRedirect(route('engineering.entry'));
+    }
+
     public function test_invitation_link_stays_valid_beyond_the_reset_delay(): void
     {
         $user = User::factory()->create();
