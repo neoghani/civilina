@@ -106,11 +106,13 @@
                 <div class="subtitle">Référence → édition → section / article → exigence ou tolérance → contrôle QA/QC → validation humaine.</div>
             </div>
             <div class="actions">
+                @civilinastaff
                 <form method="post" action="{{ route('engineering.normative-v2.scan', ['organization'=>$organization,'project'=>$project]) }}">
                     @csrf
                     <input type="hidden" name="limit" value="50">
                     <button class="btn" type="submit">Indexer 50 fichiers</button>
                 </form>
+                @endcivilinastaff
                 <form method="post" action="{{ route('engineering.normative-v2.run', ['organization'=>$organization,'project'=>$project]) }}">
                     @csrf
                     <button class="btn primary" type="submit">Lancer l’agent</button>

@@ -149,6 +149,16 @@ class EngineeringQaControlController extends Controller
             ])->withInput();
         }
 
+        // A verdict (conforming / non-conforming / conditional) or a client
+        // authorization decision is an approval: editors may prepare the
+        // record, only approvers may set or withdraw a decision.
+        if (
+            $this->changesDecision($inspection->status, $validated['status'], self::INSPECTION_DECISIONS)
+            || $this->changesDecision($inspection->authorization_status, $validated['authorization_status'], self::AUTHORIZATION_DECISIONS)
+        ) {
+            $this->resolveScope('approve', $organization, $project);
+        }
+
         $inspection->update($validated);
 
         return back()->with('success', 'Contrôle / essai mis à jour.');
@@ -305,9 +315,38 @@ class EngineeringQaControlController extends Controller
             return back()->withErrors(['accepted_at' => 'La date d’acceptation est obligatoire pour clôturer le handover.'])->withInput();
         }
 
+        if ($this->changesDecision($handover->status, $validated['status'], self::HANDOVER_DECISIONS)) {
+            $this->resolveScope('approve', $organization, $project);
+        }
+
         $handover->update($validated);
 
         return back()->with('success', 'Handover mis à jour.');
+    }
+
+    private const INSPECTION_DECISIONS = [
+        EngineeringQaInspection::STATUS_CONFORMING,
+        EngineeringQaInspection::STATUS_NONCONFORMING,
+        EngineeringQaInspection::STATUS_CONDITIONAL,
+    ];
+
+    private const AUTHORIZATION_DECISIONS = [
+        EngineeringQaInspection::AUTH_GRANTED,
+        EngineeringQaInspection::AUTH_REJECTED,
+    ];
+
+    private const HANDOVER_DECISIONS = ['accepted', 'rejected'];
+
+    /**
+     * True when the update sets, changes or withdraws a decision value.
+     */
+    private function changesDecision(?string $current, string $next, array $decisions): bool
+    {
+        if ((string) $current === $next) {
+            return false;
+        }
+
+        return in_array($next, $decisions, true) || in_array((string) $current, $decisions, true);
     }
 
     private function resolveScope(string $ability, string $organization, string $project): array

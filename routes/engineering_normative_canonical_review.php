@@ -3,7 +3,7 @@
 use App\Http\Controllers\NormativeCanonicalReviewController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'civilina.staff'])->group(function () {
     Route::get(
         'engineering/{organization}/projects/{project}/normative-librarian/canonical-review',
         [NormativeCanonicalReviewController::class,'index']

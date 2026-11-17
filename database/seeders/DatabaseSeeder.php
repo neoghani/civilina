@@ -13,6 +13,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Demo account with a known factory password: never in production.
+        if (app()->environment('production')) {
+            $this->command?->warn('DatabaseSeeder ignoré en production (compte de démonstration).');
+
+            return;
+        }
+
         // User::factory(10)->create();
 
         User::factory()->create([

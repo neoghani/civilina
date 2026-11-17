@@ -12,7 +12,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post(
         'engineering/{organization}/projects/{project}/qa-normative-v2/scan',
         [EngineeringNormativeRegistryController::class, 'scan']
-    )->name('engineering.normative-v2.scan');
+    )->middleware('civilina.staff')->name('engineering.normative-v2.scan');
 
     Route::post(
         'engineering/{organization}/projects/{project}/qa-normative-v2/run',

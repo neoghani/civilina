@@ -28,6 +28,15 @@ class CivilinaPilotBootstrap extends Command
     public function handle(
         OrganizationService $organizations
     ): int {
+        // Local/demo tool: the password is typed or passed as an option and
+        // an existing account's password is overwritten. Real pilot access
+        // uses civilina:pilot-invite.
+        if (app()->environment('production')) {
+            $this->error('Commande réservée au poste local. En production : php artisan civilina:pilot-invite.');
+
+            return self::FAILURE;
+        }
+
         $name = trim(
             (string) (
                 $this->option('name')

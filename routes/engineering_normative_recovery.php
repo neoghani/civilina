@@ -3,7 +3,7 @@
 use App\Http\Controllers\NormativeRecoveryController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'civilina.staff'])->group(function () {
     Route::post(
         'engineering/{organization}/projects/{project}/normative-librarian/recover-references',
         [NormativeRecoveryController::class,'recover']

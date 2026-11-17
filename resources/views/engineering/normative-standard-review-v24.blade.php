@@ -40,11 +40,15 @@ textarea{min-height:90px}.btn{display:inline-flex;padding:8px 11px;border:1px so
 @endif
 </div>
 
+@civilinastaff
 @if($selectedSource && in_array(strtolower(pathinfo($selectedSource->relative_path,PATHINFO_EXTENSION)),['pdf','txt','md','png','jpg','jpeg','webp']))
 <iframe class="viewerframe" src="{{ route('engineering.normative-library.inline',['organization'=>$organization,'project'=>$project,'standard'=>$standard,'source'=>$selectedSource]) }}"></iframe>
 @else
 <div style="padding:24px"><strong>Aperçu navigateur indisponible pour ce format.</strong><p class="muted">Les sections/exigences déjà extraites restent consultables à droite.</p></div>
 @endif
+@else
+<div style="padding:24px"><strong>Consultez votre exemplaire officiel de la norme.</strong><p class="muted">Le texte intégral des normes n’est pas diffusé dans l’espace bureau d’études. Les références, sections et exigences indexées restent consultables à droite.</p></div>
+@endcivilinastaff
 </section>
 
 <aside class="details">
@@ -52,6 +56,7 @@ textarea{min-height:90px}.btn{display:inline-flex;padding:8px 11px;border:1px so
 
 <section class="card">
 <h2>Fiche normative</h2>
+@civilinastaff
 <form method="post" action="{{ route('engineering.normative-library.standard.update',['organization'=>$organization,'project'=>$project,'standard'=>$standard]) }}">
 @csrf @method('PATCH')
 <div class="grid2">
@@ -65,6 +70,16 @@ textarea{min-height:90px}.btn{display:inline-flex;padding:8px 11px;border:1px so
 </div>
 <div style="margin-top:9px"><button class="btn primary">Enregistrer la fiche</button></div>
 </form>
+@else
+<div class="grid2">
+<div><label>Titre</label><div>{{ $standard->title ?: '—' }}</div></div>
+<div><label>Organisme</label><div>{{ $standard->issuing_body ?: '—' }}</div></div>
+<div><label>Discipline</label><div>{{ $standard->discipline ?: '—' }}</div></div>
+<div><label>Domaine</label><div>{{ $standard->domain ?: '—' }}</div></div>
+<div><label>Sous-domaine</label><div>{{ $standard->subdomain ?: '—' }}</div></div>
+<div><label>Famille</label><div>{{ $standard->family_name ?: '—' }}</div></div>
+</div>
+@endcivilinastaff
 </section>
 
 <section class="card">
@@ -76,6 +91,7 @@ textarea{min-height:90px}.btn{display:inline-flex;padding:8px 11px;border:1px so
 <strong>Section {{ $section->section_code ?? '—' }} {{ $section->heading ? '— '.$section->heading : '' }}</strong>
 <div class="muted" style="font-size:12px;margin:4px 0">Page {{ $section->page_number ?? '—' }}</div>
 @foreach($section->requirements as $requirement)
+@civilinastaff
 <form method="post" action="{{ route('engineering.normative-library.requirement.update',['organization'=>$organization,'project'=>$project,'requirement'=>$requirement]) }}" style="border-top:1px solid #e8edf1;padding-top:8px;margin-top:8px">
 @csrf @method('PATCH')
 <div class="grid2">
@@ -92,6 +108,12 @@ textarea{min-height:90px}.btn{display:inline-flex;padding:8px 11px;border:1px so
 </div>
 <button class="btn" style="margin-top:8px">Corriger cette exigence</button>
 </form>
+@else
+<div style="border-top:1px solid #e8edf1;padding-top:8px;margin-top:8px">
+<div class="muted" style="font-size:12px">{{ $requirement->requirement_type }}{{ $requirement->subject ? ' · '.$requirement->subject : '' }}</div>
+<div>{{ $requirement->requirement_text }}</div>
+</div>
+@endcivilinastaff
 @endforeach
 </div>
 @empty<div class="muted">Aucune section extraite pour cette édition.</div>@endforelse

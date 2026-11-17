@@ -135,6 +135,16 @@
             Accès sécurisé à votre environnement de pilotage.
         </p>
 
+        @if (session('status'))
+            <div
+                class="error"
+                role="status"
+                style="border-color:#c4e3cf;background:#f3fbf6;color:#1d5a35"
+            >
+                {{ session('status') }}
+            </div>
+        @endif
+
         @if ($errors->any())
             <div
                 class="error"
@@ -197,6 +207,12 @@
                 Se connecter
             </button>
         </form>
+
+        <p style="margin:18px 0 0;text-align:center;font-size:0.9rem">
+            <a href="{{ route('password.request') }}" style="color:#163f67">
+                Mot de passe oublié ?
+            </a>
+        </p>
     </main>
 </body>
 </html>

@@ -13,9 +13,18 @@ class NormativeReviewInterfaceTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_authorized_owner_can_open_source_and_atomic_review_queues(): void
+    public function test_owner_without_platform_staff_role_cannot_open_source_review(): void
     {
         $context = $this->context();
+
+        $this->actingAs($context['owner'])->get($context['source_url'])
+            ->assertForbidden();
+    }
+
+    public function test_platform_staff_owner_can_open_source_and_atomic_review_queues(): void
+    {
+        $context = $this->context();
+        config(['civilina.platform_staff' => [$context['owner']->email]]);
 
         $this->actingAs($context['owner'])->get($context['source_url'])
             ->assertOk()
