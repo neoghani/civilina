@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Civilina - Digitalisation, pilotage de projets et intelligence métier</title>
+    <title>@yield('title', 'Civilina - Digitalisation, pilotage de projets et intelligence métier')</title>
     <meta name="description" content="Civilina aide les entreprises à digitaliser leurs processus, piloter leurs projets et opérations, consolider leur performance et transformer leurs données en décisions.">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#ffffff">

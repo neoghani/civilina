@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
+@section('title', 'Agent normatif QA/QC · Civilina Engineering')
+
 @section('content')
+@include('engineering._engineering-nav')
 <div style="max-width:1500px;margin:0 auto;padding:24px;font-family:Arial,sans-serif">
     <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:20px">
         <div>
@@ -28,10 +31,12 @@
     <section style="border:1px solid #e2e8f0;border-radius:10px;padding:18px;margin-bottom:20px;background:#fff">
         <div style="display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap">
             <div>
-                <h2 style="margin:0 0 6px;font-size:19px">Dossier normes</h2>
+                <h2 style="margin:0 0 6px;font-size:19px">Base normative</h2>
+                @civilinastaff
                 <div style="font-size:13px;color:#64748b">
                     <code style="word-break:break-all">{{ $inboxDirectory }}</code>
                 </div>
+                @endcivilinastaff
                 <div style="font-size:13px;color:#64748b;margin-top:4px">
                     Sections normatives indexées : <strong>{{ $standardSectionCount }}</strong>
                 </div>
@@ -83,10 +88,17 @@
         @endif
         @endcivilinastaff
 
+        @civilinastaff
         <div style="margin-top:12px;padding:10px 12px;background:#fffbeb;border:1px solid #fde68a;border-radius:7px;font-size:13px">
             <strong>Important :</strong> le scan inventorie les fichiers et rapproche les documents.
             La recherche de clauses utilise les <strong>StandardSection</strong> déjà indexées.
         </div>
+        @else
+        <div style="margin-top:12px;font-size:13px;color:#64748b">
+            « Rechercher les références » propose des clauses de la base indexée pour chaque contrôle ;
+            chaque proposition doit être validée ou rejetée par un ingénieur.
+        </div>
+        @endcivilinastaff
     </section>
 
     <h2 style="font-size:20px;margin:0 0 12px">Contrôles QA/QC ({{ $inspections->count() }})</h2>
@@ -117,7 +129,7 @@
                                 <div style="font-size:12px;color:#64748b;margin-top:4px">
                                     Pertinence : <strong>{{ number_format((float)$link->confidence_score, 0) }} %</strong>
                                     · Profil projet : <strong>{{ $link->project_profile_match ? 'oui' : 'non/indéterminé' }}</strong>
-                                    · Statut : <strong>{{ $link->status }}</strong>
+                                    · Statut : <strong>{{ ['proposed'=>'Proposée','suggested'=>'Proposée','validated'=>'Validée','rejected'=>'Rejetée'][$link->status] ?? $link->status }}</strong>
                                 </div>
 
                                 @if($link->excerpt)

@@ -242,6 +242,15 @@
         outcome: document.getElementById('ai-outcome')
     };
 
+    // Pages that share the layout without the Civilina AI journey (QA/QC,
+    // normative agent…): nothing to wire, and every listener below would
+    // throw on a missing element.
+    if (!elements.commandCenter || !elements.form || !elements.conversation) {
+        const yearOnly = document.getElementById('current-year');
+        if (yearOnly) yearOnly.textContent = new Date().getFullYear();
+        return;
+    }
+
     let state = createInitialState();
     let pendingArtifactPersistence = null;
 
